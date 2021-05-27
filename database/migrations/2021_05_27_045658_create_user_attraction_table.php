@@ -17,13 +17,13 @@ class CreateUserAttractionTable extends Migration
             $table->id();
 
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')
                     ->references('id')
                     ->on('users')
                     ->onDelete('cascade');
 
-            $table->unsignedBigInteger('attraction_id');
+            $table->unsignedBigInteger('attraction_id')->index();
             $table->foreign('attraction_id')
                     ->references('id')
                     ->on('attractions')

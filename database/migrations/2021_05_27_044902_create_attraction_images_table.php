@@ -15,10 +15,11 @@ class CreateAttractionImagesTable extends Migration
     {
         Schema::create('attraction_images', function (Blueprint $table) {
             $table->id();
+
             $table->string('url');
             $table->string('image_desc');
 
-            $table->unsignedBigInteger('attraction_id');
+            $table->unsignedBigInteger('attraction_id')->index();
             $table->foreign('attraction_id')
                     ->references('id')
                     ->on('attractions')

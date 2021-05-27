@@ -15,13 +15,14 @@ class CreateMapAttractionTable extends Migration
     {
         Schema::create('map_attraction', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('map_id');
+
+            $table->unsignedBigInteger('map_id')->index();
             $table->foreign('map_id')
                     ->references('id')
                     ->on('maps')
                     ->onDelete('cascade');
 
-            $table->unsignedBigInteger('attraction_id');
+            $table->unsignedBigInteger('attraction_id')->index();
             $table->foreign('attraction_id')
                     ->references('id')
                     ->on('attractions')

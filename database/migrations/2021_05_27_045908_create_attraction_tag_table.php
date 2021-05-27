@@ -16,13 +16,13 @@ class CreateAttractionTagTable extends Migration
         Schema::create('attraction_tag', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('attraction_id');
+            $table->unsignedBigInteger('attraction_id')->index();
             $table->foreign('attraction_id')
                     ->references('id')
                     ->on('attractions')
                     ->onDelete('cascade');
 
-            $table->unsignedBigInteger('tag_id');
+            $table->unsignedBigInteger('tag_id')->index();
             $table->foreign('tag_id')
                     ->references('id')
                     ->on('tags')

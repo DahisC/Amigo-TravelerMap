@@ -17,7 +17,7 @@ class CreateMapsTable extends Migration
             $table->id();
             $table->string('name');
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')
                     ->references('id')
                     ->on('users')
