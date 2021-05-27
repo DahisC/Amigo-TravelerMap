@@ -15,6 +15,9 @@ class CreateAttractionPositionsTable extends Migration
     {
         Schema::create('attraction_positions', function (Blueprint $table) {
             $table->id();
+            $table->string('country');
+            $table->string('region');
+            $table->string('town');
             $table->string('address');
             $table->decimal('px');
             $table->decimal('py');
