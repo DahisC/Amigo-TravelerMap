@@ -24,6 +24,7 @@ class CreateAttractionsTable extends Migration
             $table->string('parking_info')->nullable();
 
             $table->unsignedBigInteger('user_id')->default('0')->index();
+
             $table->foreign('user_id')
                     ->references('id')
                     ->on('users')
