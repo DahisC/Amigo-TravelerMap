@@ -1,6 +1,8 @@
 <?php
 
 // use view;
+
+use App\Http\Controllers\ItinerarieController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +22,7 @@ Route::get('/', function () {
 
 //地圖
 //?search=
-Route::get('/maps', 'AmigoController@index')->name('map.index');
+Route::resource('/maps', 'MapController');
 
 //註冊登入
 Route::prefix('/sign-in')->group(function () {
@@ -39,11 +41,12 @@ Route::prefix('/travelers')->group(function () {
     Route::get('/profile', 'AmigoController@create')->name('travelers.profile');
     Route::get('/maps', 'AmigoController@index')->name('travelers.maps');
     //商人
-    Route::resource('/attractions', 'AmigoController@index')->except('show');
+    Route::resource('/attractions', 'AttractionController')->except('show');
 });
 
 //我關注的地點
-Route::get('/itineraries', 'AmigoController@index')->name('itineraries.index');
+// Route::view('/itineraries', 'itineraries.index')->name('itineraries.index');
+Route::resource('/itineraries', 'ItinerarieController', ['only' => ['index', 'store']]);
 
 //後台
 Route::prefix('/admin')->group(function () {
