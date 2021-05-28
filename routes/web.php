@@ -34,7 +34,7 @@ Route::prefix('/sign-up')->group(function () {
 });
 
 //個人頁面
-Route::prefix('/travelers/{id}')->group(function () {
+Route::prefix('/travelers')->group(function () {
     Route::get('/', 'AmigoController@create')->name('travelers.index');
     Route::get('/profile', 'AmigoController@create')->name('travelers.profile');
     Route::get('/maps', 'AmigoController@index')->name('travelers.maps');
