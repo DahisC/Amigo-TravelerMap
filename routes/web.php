@@ -39,7 +39,7 @@ Route::prefix('/sign-up')->group(function () {
 Route::prefix('/traveler')->group(function () {
     Route::get('/', 'AmigoController@create')->name('traveler.index');
     Route::get('/profile', 'AmigoController@create')->name('traveler.profile');
-    Route::get('/maps', 'AmigoController@index')->name('traveler.maps');
+    // Route::get('/maps', 'AmigoController@index')->name('traveler.maps');
     //商人
     Route::resource('/attractions', 'AttractionController')->except('show');
 });

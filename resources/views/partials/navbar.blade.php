@@ -9,14 +9,17 @@
     <li>
       <a href="{{ route('itineraries.index') }}">我關注的地點</a>
     </li>
-    <li>
-      <a href="{{ route('sign-in.get') }}">旅人簽到</a>
-    </li>
-    <li>
-      <a href="{{ route('sign-up.get') }}">加入冒險</a>
-    </li>
-    <li>
-      <a href="{{ route('traveler.index') }}">1</a>
-    </li>
+    @if (Auth::check())
+      <li>
+        <a href="{{ route('traveler.index') }}">{{ Auth::user()->name }}</a>
+      </li>
+    @else
+      <li>
+        <a href="{{ route('sign-in.get') }}">旅人簽到</a>
+      </li>
+      <li>
+        <a href="{{ route('sign-up.get') }}">加入冒險</a>
+      </li>
+    @endif
   </ul>
 </nav>

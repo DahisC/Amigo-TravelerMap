@@ -13,7 +13,7 @@ class ItinerarieController extends Controller
      */
     public function index()
     {
-        //
+        return view('itineraries.index');
     }
 
     /**
