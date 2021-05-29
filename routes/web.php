@@ -36,7 +36,7 @@ Route::prefix('/sign-up')->group(function () {
 });
 
 //個人頁面
-Route::prefix('/traveler')->group(function () {
+Route::prefix('/travelers')->group(function () {
     Route::get('/', 'AmigoController@create')->name('traveler.index');
     Route::get('/profile', 'AmigoController@create')->name('traveler.profile');
     // Route::get('/maps', 'AmigoController@index')->name('traveler.maps');
@@ -46,7 +46,7 @@ Route::prefix('/traveler')->group(function () {
 
 //我關注的地點
 // Route::view('/itineraries', 'itineraries.index')->name('itineraries.index');
-Route::resource('/itineraries', 'ItinerarieController', ['only' => ['index', 'store']]);
+Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']);
 
 //後台
 Route::prefix('/admin')->group(function () {
