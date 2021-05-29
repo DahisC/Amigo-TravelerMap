@@ -25,15 +25,17 @@ Route::get('/', function () {
 Route::resource('/maps', 'MapController');
 
 //註冊登入
-Route::prefix('/sign-in')->group(function () {
-    Route::get('/', 'AmigoController@index')->name('sign-in.get');
-    Route::post('/', 'AmigoController@index')->name('sign-in.post');
-});
+Route::view('/sign-in', 'sign-in')->name('sign-in');
+Route::view('/sign-up', 'sign-up')->name('sign-up');
+// Route::prefix('/sign-in')->group(function () {
+//     Route::get('/', 'AmigoController@index')->name('sign-in.get');
+//     Route::post('/', 'AmigoController@index')->name('sign-in.post');
+// });
 
-Route::prefix('/sign-up')->group(function () {
-    Route::get('/', 'AmigoController@index')->name('sign-up.get');
-    Route::post('/', 'AmigoController@index')->name('sign-up.post');
-});
+// Route::prefix('/sign-up')->group(function () {
+//     Route::get('/', 'AmigoController@index')->name('sign-up.get');
+//     Route::post('/', 'AmigoController@index')->name('sign-up.post');
+// });
 
 //個人頁面
 Route::prefix('/traveler')->group(function () {
@@ -49,10 +51,10 @@ Route::prefix('/traveler')->group(function () {
 Route::resource('/itineraries', 'ItinerarieController', ['only' => ['index', 'store']]);
 
 //後台
-Route::prefix('/admin')->group(function () {
-    Route::get('/', 'AmigoController@index');
+Route::prefix('/backstage')->group(function () {
+    Route::view('/', 'backstage.index');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');

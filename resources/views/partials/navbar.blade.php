@@ -15,10 +15,10 @@
       </li>
     @else
       <li>
-        <a href="{{ route('sign-in.get') }}">旅人簽到</a>
+        <a href="{{ route('sign-in') }}">旅人簽到</a>
       </li>
       <li>
-        <a href="{{ route('sign-up.get') }}">加入冒險</a>
+        <a href="{{ route('sign-up') }}">旅発ちます</a>
       </li>
     @endif
   </ul>
