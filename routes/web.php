@@ -24,16 +24,6 @@ Route::get('/', function () {
 //?search=
 Route::resource('/maps', 'MapController');
 
-//註冊登入
-Route::prefix('/sign-in')->group(function () {
-    Route::get('/', 'AmigoController@index')->name('sign-in.get');
-    Route::post('/', 'AmigoController@index')->name('sign-in.post');
-});
-
-Route::prefix('/sign-up')->group(function () {
-    Route::get('/', 'AmigoController@index')->name('sign-up.get');
-    Route::post('/', 'AmigoController@index')->name('sign-up.post');
-});
 
 //個人頁面
 Route::prefix('/travelers')->group(function () {
