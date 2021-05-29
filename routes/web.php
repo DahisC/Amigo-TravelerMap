@@ -46,7 +46,7 @@ Route::prefix('/travelers')->group(function () {
 
 //我關注的地點
 // Route::view('/itineraries', 'itineraries.index')->name('itineraries.index');
-Route::resource('/itineraries', 'ItinerarieController', ['only' => ['index', 'store']]);
+Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']);
 
 //後台
 Route::prefix('/admin')->group(function () {
