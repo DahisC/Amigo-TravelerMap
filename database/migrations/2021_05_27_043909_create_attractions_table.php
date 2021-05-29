@@ -15,7 +15,7 @@ class CreateAttractionsTable extends Migration
     {
         Schema::create('attractions', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('website')->nullable();
             $table->string('tel')->nullable();
             $table->longText('description');
@@ -26,21 +26,21 @@ class CreateAttractionsTable extends Migration
             $table->unsignedBigInteger('user_id')->default('0')->index();
 
             $table->foreign('user_id')
-                    ->references('id')
-                    ->on('users')
-                    ->onDelete('cascade');
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->unsignedBigInteger('position_id')->index();
             $table->foreign('position_id')
-                    ->references('id')
-                    ->on('attraction_positions')
-                    ->onDelete('cascade');
+                ->references('id')
+                ->on('attraction_positions')
+                ->onDelete('cascade');
 
-            $table->unsignedBigInteger('opentime_id')->index();
-            $table->foreign('opentime_id')
-                    ->references('id')
-                    ->on('attraction_opentimes')
-                    ->onDelete('cascade');
+            // $table->unsignedBigInteger('opentime_id')->index();
+            // $table->foreign('opentime_id')
+            //     ->references('id')
+            //     ->on('attraction_opentimes')
+            //     ->onDelete('cascade');
 
             $table->timestamps();
         });
