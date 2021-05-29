@@ -1,9 +1,24 @@
 @extends('layouts.amigo')
 
+@section('title')
+  @parent
+  旅人簽到
+@endsection
+
+@section('nav')
+  <div class="position-fixed w-100 text-center h1">
+    <a class="logo text-secondary" href="/">Amigo</a>
+  </div>
+@endsection
+
 @section('css')
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Megrim&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #9ad3bc;
+      /* background-color: #9ad3bc; */
+      background: url('img/3.png') no-repeat center center;
+      background-size: cover;
     }
 
     .row {
@@ -14,15 +29,25 @@
       transform: rotate(-15deg);
     }
 
+    .logo {
+      font-family: 'Megrim', cursive !important;
+      text-decoration: none;
+    }
+
   </style>
 @endsection
 
 @section('content')
   <div class="container">
     <div class="row justify-content-center align-items-center">
-      <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+      <div class="col-10 col-sm-8 col-md-6 col-lg-5">
         <div class="card">
-          <div class="card-header">Amigo Logo</div>
+          {{-- <div class="card-body text-center h2 mb-0">
+            <div>
+              <span>Hola!</span>
+            </div>
+          </div> --}}
+          <hr class="my-0" />
           <div class="card-body p-4">
             <form method="POST" action="{{ route('login') }}">
               @csrf
@@ -44,7 +69,7 @@
               <div class="mb-3">
                 <label for="login-form__password" class="form-label">
                   <i class="fas fa-fw fa-key me-1"></i>
-                  密碼
+                  Password
                 </label>
                 <input id="login-form__password" type="password"
                   class="form-control @error('password') is-invalid @enderror" name="password" required
