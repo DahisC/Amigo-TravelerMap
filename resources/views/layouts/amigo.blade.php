@@ -7,7 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{{ config('app.name', 'Amigo') }} | @yield('title')</title>
   {{-- Bootstrap 5 CSS --}}
-  <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/amigo.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
   @yield('css')
 </head>
 

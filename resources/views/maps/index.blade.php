@@ -7,8 +7,8 @@
         <h1>地圖頁面</h1>
         <p>需要的後端資料：</p>
         <ol>
-          <li>全部的地點（來自表 attractions）</li>
-          <li>使用者關注的所有地點（來自表 user_attraction）</li>
+          <li>全部的地點 $attractions（來自表 attractions）</li>
+          <li>使用者關注的所有地點 $（來自表 user_attraction）</li>
         </ol>
         <hr />
         <p>使用者可以做的動作：</p>
@@ -19,16 +19,16 @@
               @csrf
               <input hidden name="attraction_id" value="10" />
               <button class="btn btn-primary">收藏此地點</button>
-            </form>（在 maps 表中新增一筆資料後回傳 ID）
-            （在表 user_attraction 中新增一筆資料）
+            </form>時，在 user_attraction 表中新增一筆資料後重新導回此頁面（redirect()->back()）
           </li>
-          <li>可以點擊
+          <li>或者使用者也可以點擊
             <form action="{{ route('maps.store') }}" method="POST">
               @csrf
               <button class="btn btn-primary">建立地圖</button>
             </form>（在 maps 表中新增一筆資料後回傳 ID）
+            <p class="text-warning">最佳化：回傳的是雜湊過的 ID</p>
           </li>
-          <li>最佳化：點選地圖後，可以透過下拉選單將地點放入地圖中（所以需要從表 maps 撈出此使用者建立的地圖）</li>
+          <li class="text-warning">最佳化：點選地圖後，可以透過下拉選單將地點放入地圖中（所以需要從表 maps 撈出此使用者建立的地圖）</li>
         </ul>
         <hr />
         <p>當使用者按下搜尋按紐，可能會傳送以下形式的 query string：</p>
