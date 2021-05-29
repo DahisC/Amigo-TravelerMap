@@ -16,7 +16,7 @@
       <a href="{{ route('sign-up.get') }}">加入冒險</a>
     </li>
     <li>
-      <a href="{{ route('traveler.index') }}">1</a>
+      <a href="{{ route('travelers.index') }}">1</a>
     </li>
   </ul>
 </nav>
