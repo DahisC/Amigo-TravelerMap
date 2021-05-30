@@ -7,8 +7,8 @@
         <h1>地圖頁面</h1>
         <p>需要的後端資料：</p>
         <ol>
-          <li>全部的地點 $attractions（來自表 attractions）</li>
-          <li>使用者關注的所有地點 $（來自表 user_attraction）</li>
+          <li>所有地點 $attractions（來自表 attractions）</li>
+          <li>使用者收藏的所有地點 $favorites（來自表 user_attraction）</li>
         </ol>
         <hr />
         <p>使用者可以做的動作：</p>

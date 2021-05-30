@@ -6,9 +6,9 @@
 @endsection
 
 @section('nav')
-  <div class="position-fixed w-100 text-center h1">
+  {{-- <div class="position-fixed w-100 text-center h1">
     <a class="logo text-secondary" href="/">Amigo</a>
-  </div>
+  </div> --}}
 @endsection
 
 @section('css')
@@ -17,7 +17,7 @@
   <style>
     body {
       /* background-color: #9ad3bc; */
-      background: url('img/3.png') no-repeat center center;
+      background: url('images/sign-in.png') no-repeat center center;
       background-size: cover;
     }
 

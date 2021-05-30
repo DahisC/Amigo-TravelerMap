@@ -20,41 +20,35 @@ Route::get('/', function () {
     return view('index');
 });
 
-//地圖
-//?search=
+// 地圖
+// ?search=
 Route::resource('/maps', 'MapController');
 
-//註冊登入
+// 註冊登入
 Route::view('/sign-in', 'sign-in')->name('sign-in');
 Route::view('/sign-up', 'sign-up')->name('sign-up');
-// Route::prefix('/sign-in')->group(function () {
-//     Route::get('/', 'AmigoController@index')->name('sign-in.get');
-//     Route::post('/', 'AmigoController@index')->name('sign-in.post');
-// });
 
-// Route::prefix('/sign-up')->group(function () {
-//     Route::get('/', 'AmigoController@index')->name('sign-up.get');
-//     Route::post('/', 'AmigoController@index')->name('sign-up.post');
-// });
-
-//個人頁面
+// 個人頁面
 Route::prefix('/travelers')->group(function () {
     Route::get('/', 'AmigoController@create')->name('traveler.index');
     Route::get('/profile', 'AmigoController@create')->name('traveler.profile');
-    // Route::get('/maps', 'AmigoController@index')->name('traveler.maps');
-    //商人
+    // 商人
     Route::resource('/attractions', 'AttractionController')->except('show');
 });
 
-//我關注的地點
+// 我關注的地點
 // Route::view('/itineraries', 'itineraries.index')->name('itineraries.index');
 Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']);
 
-//後台
+// 後台
 Route::prefix('/backstage')->group(function () {
     Route::view('/', 'backstage.index');
 });
 
+// 測試用路由
+Route::view('/mapstest', 'maps.test');
+
+// 會員模組
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
