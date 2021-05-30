@@ -23,9 +23,12 @@ class AttractionsTableSeeder extends Seeder
             // break($a['Name'] == '台灣金屬創意館');
             Attraction::create([
                 'name' => $a['Name'],
+                'website' => $a['Website'],
+                'tel' => $a['Tel'],
                 'description' => $a['Description'] ?? '',
                 'ticket_info' => $a['Ticketinfo'] ?? '',
-                'traffic_info' => 'None',
+                'traffic_info' =>  $a['Travellinginfo'] ?? '',
+                'parking_info' =>  $a['Parkinginfo'] ?? '',
                 'user_id' => '1',
                 'position_id' => AttractionPosition::create([
                     'address' => $a['Add'] ?? '',
