@@ -20,9 +20,24 @@ class AttractionsSeeder extends Seeder
         // 整理資料
         $json_ = $json['XML_Head']['Infos']['Info'];
         foreach ($json_ as $data){
-            dd($data['Name']);
+            // dd($data['Name']);
             //存進資料庫
-            AttractionsTest::create(['name' => $data->Name],[]);
+            DB::table('attractions_tests')->
+                create(['name' =>  "ce",
+                'tel' =>  "123",
+                'description' => "123",
+                'ticket_info' => "123",
+                'traffic_info' => "123",
+                'parking_info' => "123",
+
+                // 'name' => $data->Name,
+                // 'tel' => $data->tel,
+                // 'description' => $data->description,
+                // 'ticket_info' => $data->ticket_info,
+                // 'traffic_info' => $data->traffic_info,
+                // 'parking_info' => $data->parking_info,
+            
+            ]);
         }
 
     }
