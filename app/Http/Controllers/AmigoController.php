@@ -6,26 +6,31 @@ use Illuminate\Http\Request;
 
 class AmigoController extends Controller
 {
-   
-    public function index(){
-        return view('test');
+
+    public function index()
+    {
+        return view('home');
     }
 
-    public function create(){
-        return view('test2');
+    public function create(Request $request)
+    {
+        // dd($request->user());
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
     }
 
 
-    public function edit($id){
+    public function edit($id)
+    {
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
     }
 }
-
