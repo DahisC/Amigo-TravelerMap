@@ -20,7 +20,6 @@ class AttractionsTableSeeder extends Seeder
         // dd(array_keys($json['XML_Head']['Infos']['Info']));
         $attractions = $json['XML_Head']['Infos']['Info'];
         foreach ($attractions as $a) {
-            // break($a['Name'] == '台灣金屬創意館');
             Attraction::create([
                 'name' => $a['Name'],
                 'website' => $a['Website'],
