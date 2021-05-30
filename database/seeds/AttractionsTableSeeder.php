@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Attraction;
 use App\AttractionOpentime;
 use App\AttractionPosition;
@@ -19,6 +20,7 @@ class AttractionsTableSeeder extends Seeder
         // dd(array_keys($json['XML_Head']['Infos']['Info']));
         $attractions = $json['XML_Head']['Infos']['Info'];
         foreach ($attractions as $a) {
+            // break($a['Name'] == '台灣金屬創意館');
             Attraction::create([
                 'name' => $a['Name'],
                 'description' => $a['Description'] ?? '',
@@ -35,6 +37,9 @@ class AttractionsTableSeeder extends Seeder
                 ])->id,
                 // 'opentime_id' => '3'
             ]);
+            // if ($a['Name'] == '台灣金屬創意館') {
+            //     break;    /* You could also write 'break 1;' here. */
+            // };
         }
     }
 }
