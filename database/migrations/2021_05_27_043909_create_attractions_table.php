@@ -15,13 +15,13 @@ class CreateAttractionsTable extends Migration
     {
         Schema::create('attractions', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('website')->nullable();
             $table->string('tel')->nullable();
             $table->longText('description');
             $table->string('ticket_info');
             $table->longText('traffic_info');
-            $table->string('parking_info')->nullable();
+            $table->string('parking_info');
             $table->string('opentime');
 
             $table->unsignedBigInteger('user_id')->default(0)->index()->comment('店家的user_id');
