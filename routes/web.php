@@ -2,8 +2,9 @@
 
 // use view;
 
-use App\Http\Controllers\ItinerarieController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ItinerarieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ Route::get('/', function () {
 // ?search=
 Route::resource('/maps', 'MapController');
 
-// 註冊登入
+// 登入與註冊
 Route::view('/sign-in', 'sign-in')->name('sign-in');
 Route::view('/sign-up', 'sign-up')->name('sign-up');
 
