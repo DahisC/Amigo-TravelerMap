@@ -33,4 +33,18 @@ class AmigoController extends Controller
     public function destroy($id)
     {
     }
+
+    //middleware測試用
+    public function traveler(Request $request)
+    {
+        return view('test-traveler');
+    }
+    public function trader(Request $request)
+    {
+        return view('test-trader');
+    }
+    public function admin(Request $request)
+    {
+        return view('test-admin');
+    }
 }
