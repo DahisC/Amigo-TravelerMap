@@ -15,32 +15,27 @@ class CreateAttractionsTable extends Migration
     {
         Schema::create('attractions', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('website')->nullable();
             $table->string('tel')->nullable();
             $table->longText('description');
             $table->string('ticket_info');
             $table->longText('traffic_info');
-            $table->string('parking_info')->nullable();
+            $table->string('parking_info');
+            $table->string('opentime');
 
-            $table->unsignedBigInteger('user_id')->default(0)->index();
+            $table->unsignedBigInteger('user_id')->default(0)->index()->comment('店家的user_id');
 
             $table->foreign('user_id')
-                    ->references('id')
-                    ->on('users')
-                    ->onDelete('cascade');
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->unsignedBigInteger('position_id')->index();
             $table->foreign('position_id')
-                    ->references('id')
-                    ->on('attraction_positions')
-                    ->onDelete('cascade');
-
-            $table->unsignedBigInteger('opentime_id')->index();
-            $table->foreign('opentime_id')
-                    ->references('id')
-                    ->on('attraction_opentimes')
-                    ->onDelete('cascade');
+                ->references('id')
+                ->on('attraction_positions')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

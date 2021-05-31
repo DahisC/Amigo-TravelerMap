@@ -9,7 +9,7 @@
     font-family: "Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif !important;
 } */
 
-* {
+*:not(i) {
     font-family: 'Noto Sans TC', sans-serif !important;
 }
 
