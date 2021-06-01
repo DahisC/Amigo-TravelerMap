@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Attraction;
 use Illuminate\Http\Request;
 
 class MapController extends Controller
@@ -11,10 +12,10 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        // dd($request->query());
-        return view('maps.index');
+        // dd(Attraction::get());
+        return view('maps.index',['attractions'=>Attraction::get()]);
     }
 
     /**

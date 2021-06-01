@@ -34,7 +34,7 @@ Route::prefix('/travelers')->group(function () {
     Route::get('/', 'AmigoController@create')->name('traveler.index');
     Route::get('/profile', 'AmigoController@create')->name('traveler.profile');
     // Route::get('/maps', 'AmigoController@index')->name('traveler.maps');
-    //商人 
+    //商人
     Route::resource('/attractions', 'AttractionController')->except('show');
 
     //middleware測試用
