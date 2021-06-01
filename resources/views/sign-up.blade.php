@@ -20,7 +20,6 @@
       height: 100vh;
     }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  transform: rotate(-15deg);
     .logo {
       font-family: 'Megrim', cursive !important;
       text-decoration: none;
