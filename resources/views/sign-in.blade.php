@@ -82,7 +82,7 @@
                 @enderror
               </div>
               {{-- 記住我 --}}
-              <div class="form-check d-flex justify-content-between mb-3 py-2">
+              <div class="form-check d-flex justify-content-between mb-1 py-1">
                 <div class="d-flex align-items-center">
                   <input class="form-check-input me-1" type="checkbox" name="remember" id="remember"
                     {{ old('remember') ? 'checked' : '' }}>
@@ -97,6 +97,14 @@
                   </a>
                 @endif
               </div>
+              {{--  --}}
+              @if (Route::has('sign-up'))
+                <div class="mb-3 py-1 text-end">
+                  <a href="{{ route('sign-up') }}">
+                    <small>先註冊一個帳號</small>
+                  </a>
+                </div>
+              @endif
               {{-- 按鈕 --}}
               <button type="submit" class="btn btn-primary w-100">登入</button>
             </form>
