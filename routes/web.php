@@ -35,7 +35,14 @@ Route::prefix('/travelers')->group(function () {
     Route::get('/profile', 'AmigoController@create')->name('traveler.profile');
     // 商人
     Route::resource('/attractions', 'AttractionController')->except('show');
+
+    //middleware測試用
+    Route::get('/user/traveler', 'AmigoController@traveler')->middleware(['auth.user']);
+    Route::get('/user/trader', 'AmigoController@trader')->middleware(['auth.user']);
+    Route::get('/user/admin', 'AmigoController@admin')->middleware(['auth.user']);
+    //秘密通道
 });
+Route::get('/daniel', 'AmigoController@admin')->middleware('auth.basic');
 
 // 我關注的地點
 // Route::view('/itineraries', 'itineraries.index')->name('itineraries.index');
