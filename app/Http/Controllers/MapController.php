@@ -15,9 +15,9 @@ class MapController extends Controller
     public function index()
     {
         //這兩行測試用
-        $a = Attraction::with('tags','position','image')->get();
-        dd($a[0]);
-        return view('maps.index',['attractions'=>Attraction::with('tags','position','image')->get()]);
+        $attraction = Attraction::with('tags','position','image')->get();
+        dd($attraction[0]);
+        return view('maps.index',compact('attraction'));
     }
 
     /**
