@@ -11,3 +11,10 @@ $factory->define(Tag::class, function (Faker $faker) {
         'color'=>$faker->hexcolor
     ];
 });
+
+$factory->state(Tag::class, 'Daniel' ,function (Faker $faker){
+    return[
+        'name'=>$faker->name,
+        'color'=>'#ffffff'
+    ];
+});
