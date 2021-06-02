@@ -52,6 +52,7 @@ Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']
 
 // 後台
 Route::prefix('/backstage')->group(function () {
+    Route::view('/', 'backstage.index');
     Route::resource('/', 'BackstageController');
 });
 

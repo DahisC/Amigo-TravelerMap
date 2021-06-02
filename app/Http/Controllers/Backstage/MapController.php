@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backstage;
 
 use App\Attraction;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class BackstageController extends Controller
+class MapController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class BackstageController extends Controller
      */
     public function index()
     {
-        return view('backstage.index',['attractions'=>Attraction::with('tags','position','image')->get()]);
+        return view('maps.index',['attractions'=>Attraction::with('tags','position','image')->get()]);
     }
 
     /**
