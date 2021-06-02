@@ -12,8 +12,4 @@ $factory->define(Map::class, function (Faker $faker) {
         'user_id'=>User::find(1),
     ];
 });
-$factory->afterCreating(Map::class, function ($map, $faker) {
-    return [
-        $map->user()->associate(factory(App\User::class))->make(),
-    ];
-});
+
