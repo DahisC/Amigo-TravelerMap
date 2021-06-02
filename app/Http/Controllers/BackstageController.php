@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Attraction;
 use Illuminate\Http\Request;
 
-class MapController extends Controller
+class BackstageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,7 @@ class MapController extends Controller
      */
     public function index()
     {
-        //這兩行測試用
-        $a = Attraction::with('tags','position','image')->get();
-        dd($a[0]);
-        return view('maps.index',['attractions'=>Attraction::with('tags','position','image')->get()]);
+        return view('backstage.index',['attractions'=>Attraction::with('tags','position','image')->get()]);
     }
 
     /**
@@ -27,8 +24,7 @@ class MapController extends Controller
      */
     public function create()
     {
-        $action = 'Create';
-        return view('maps.factory', compact('action'));
+        //
     }
 
     /**
@@ -39,7 +35,7 @@ class MapController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('maps.edit', ['map' => 5]);
+        //
     }
 
     /**
@@ -61,8 +57,7 @@ class MapController extends Controller
      */
     public function edit($id)
     {
-        $action = 'Edit';
-        return view('maps.factory', compact('action'));
+        //
     }
 
     /**

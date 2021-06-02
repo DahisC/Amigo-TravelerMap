@@ -2,6 +2,7 @@
 
 // use view;
 
+use App\Http\Controllers\BackstageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItinerarieController;
@@ -51,7 +52,7 @@ Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']
 
 // 後台
 Route::prefix('/backstage')->group(function () {
-    Route::view('/', 'backstage.index');
+    Route::resource('/', 'BackstageController');
 });
 
 Auth::routes();
