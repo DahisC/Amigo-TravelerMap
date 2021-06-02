@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backstage;
 
 use App\Attraction;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class MapController extends Controller
 {
@@ -14,10 +15,9 @@ class MapController extends Controller
      */
     public function index()
     {
-        //這兩行測試用
+        dd(1);
         $attraction = Attraction::with('tags','position','image')->get();
-        dd($attraction[0]);
-        return view('maps.index',compact('attraction'));
+        return view('backstage.index',compact('attraction'));
     }
 
     /**
@@ -27,8 +27,7 @@ class MapController extends Controller
      */
     public function create()
     {
-        $action = 'Create';
-        return view('maps.factory', compact('action'));
+        //
     }
 
     /**
@@ -39,7 +38,7 @@ class MapController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('maps.edit', ['map' => 5]);
+        //
     }
 
     /**
@@ -61,8 +60,7 @@ class MapController extends Controller
      */
     public function edit($id)
     {
-        $action = 'Edit';
-        return view('maps.factory', compact('action'));
+        //
     }
 
     /**
