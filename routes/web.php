@@ -51,9 +51,9 @@ Route::get('/daniel', 'AmigoController@admin')->middleware('auth.basic');
 Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']);
 
 // 後台
-Route::prefix('/backstage')->namespace('Backstage')->group(function () {
+Route::prefix('/backstage')->group(function () {
     Route::view('/', 'backstage.index');
-    Route::resource('/maps', 'MapController');
+    Route::resource('/maps', 'Backstage\MapController');
 });
 
 Auth::routes();
