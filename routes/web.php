@@ -42,10 +42,11 @@ Route::group([
     // Route::get('/maps', 'AmigoController@index')->name('traveler.maps');
     //商人
     Route::resource('/attractions', 'AttractionController')->except('show');
-    //middleware測試用
+    //middleware
     Route::group([
         'prefix' => 'user',
-        'middleware' => 'auth.user'
+        'middleware' => 'auth.user',
+        'as' => 'user'
     ], function () {
         Route::get('/', 'AmigoController@traveler');
     });
