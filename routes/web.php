@@ -2,6 +2,7 @@
 
 // use view;
 
+use App\Http\Controllers\BackstageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItinerarieController;
@@ -36,7 +37,14 @@ Route::prefix('/travelers')->group(function () {
     // Route::get('/maps', 'AmigoController@index')->name('traveler.maps');
     //商人
     Route::resource('/attractions', 'AttractionController')->except('show');
+
+    //middleware測試用
+    Route::get('/user/traveler', 'AmigoController@traveler')->middleware(['auth.user']);
+    Route::get('/user/trader', 'AmigoController@trader')->middleware(['auth.user']);
+    Route::get('/user/admin', 'AmigoController@admin')->middleware(['auth.user']);
+    //秘密通道
 });
+Route::get('/daniel', 'AmigoController@admin')->middleware('auth.basic');
 
 // 我關注的地點
 // Route::view('/itineraries', 'itineraries.index')->name('itineraries.index');
@@ -45,6 +53,7 @@ Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']
 // 後台
 Route::prefix('/backstage')->group(function () {
     Route::view('/', 'backstage.index');
+    Route::resource('/maps', 'Backstage\MapController');
 });
 
 Auth::routes();
