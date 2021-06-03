@@ -34,8 +34,7 @@ Route::view('/sign-up', 'sign-up')->name('sign-up');
 Route::prefix('/travelers')->group(function () {
     Route::get('/', 'AmigoController@create')->name('traveler.index');
     Route::get('/profile', 'AmigoController@create')->name('traveler.profile');
-    // Route::get('/maps', 'AmigoController@index')->name('traveler.maps');
-    //商人
+    // 商人
     Route::resource('/attractions', 'AttractionController')->except('show');
 
     //middleware測試用
@@ -56,6 +55,10 @@ Route::prefix('/backstage')->group(function () {
     Route::resource('/maps', 'Backstage\MapController');
 });
 
+// 測試用路由
+Route::view('/mapstest', 'maps.test');
+
+// 會員模組
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
