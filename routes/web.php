@@ -43,8 +43,8 @@ Route::group([
     //middleware
     Route::group([
         'prefix' => 'user',
-        'middleware' => 'auth.user',
-        'as' => 'user'
+        'as' => 'user',
+        'middleware' => 'auth.user'
     ], function () {
         Route::get('/', 'AmigoController@traveler');
     });
