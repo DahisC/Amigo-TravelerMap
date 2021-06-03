@@ -31,17 +31,19 @@ Route::view('/sign-in', 'sign-in')->name('sign-in');
 Route::view('/sign-up', 'sign-up')->name('sign-up');
 
 // 個人頁面
-Route::prefix('/travelers')->group(function () {
-    Route::get('/', 'AmigoController@create')->name('traveler.index');
-    Route::get('/profile', 'AmigoController@create')->name('traveler.profile');
+Route::prefix('travelers')->name('traveler.')->group(function() {
+    Route::get('/', 'AmigoController@create')->name('index');
+    Route::get('/profile', 'AmigoController@create')->name('profile');
     // Route::get('/maps', 'AmigoController@index')->name('traveler.maps');
     //商人
     Route::resource('/attractions', 'AttractionController')->except('show');
 
     //middleware測試用
-    Route::get('/user/traveler', 'AmigoController@traveler')->middleware(['auth.user']);
-    Route::get('/user/trader', 'AmigoController@trader')->middleware(['auth.user']);
-    Route::get('/user/admin', 'AmigoController@admin')->middleware(['auth.user']);
+    Route::prefix('uesr')->middleware(['auth.user'])->group(function(){
+        Route::get('/traveler', 'AmigoController@traveler');
+        Route::get('/trader', 'AmigoController@trader');
+        Route::get('/admin', 'AmigoController@admin');
+    });
 });
 
 
@@ -50,7 +52,7 @@ Route::prefix('/travelers')->group(function () {
 Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']);
 
 // 後台
-Route::prefix('/backstage')->group(function () {
+Route::prefix('backstage')->group(function () {
     Route::view('/', 'backstage.index');
     Route::resource('/maps', 'Backstage\MapController');
 });
