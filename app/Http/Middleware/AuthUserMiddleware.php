@@ -21,31 +21,28 @@ class AuthUserMiddleware
     {
         //全部拒絕存取
         $is_user = false;
-        
-        // 取得目前已認證使用者-兩種方法
-        // $request->user()
-        // Auth::user();
-        //從驗證過的資料中撈資料
         $user =  Auth::user();
-     
+
         //若有資料
         if(!is_null($user)){
             User::where('id','$user_id')->get();
             // dd($user['role']);
-            if($user['role'] == "Trader\r\n"){
-                dd("Trader");
+            if($user['role'] == "Tourist"){
+                dd($user['role']);
             }
-            if($user['role'] == "Traveler"){
-                dd("Traveler");
+            if($user['role'] == "Trader"){
+                dd($user['role']);
             }
             if($user['role'] == "Admin"){
-                dd("Admin");
+                dd($user['role']);
             }
+            $is_user = true;
         };
 
         //若不允許存取，重新導向至首頁
         if(!$is_user){
-            redirect('/');};
+           return  redirect()->route('login');
+        };
         return $next($request);
     }
 }

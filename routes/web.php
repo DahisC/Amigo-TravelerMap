@@ -31,20 +31,26 @@ Route::view('/sign-in', 'sign-in')->name('sign-in');
 Route::view('/sign-up', 'sign-up')->name('sign-up');
 
 // 個人頁面
-Route::prefix('travelers')->name('traveler.')->group(function() {
+//as 是name
+//prefix url
+Route::group([
+    'prefix' => 'travelers',
+    'as' => 'traveler.'
+], function () {
     Route::get('/', 'AmigoController@create')->name('index');
     Route::get('/profile', 'AmigoController@create')->name('profile');
     // Route::get('/maps', 'AmigoController@index')->name('traveler.maps');
     //商人
     Route::resource('/attractions', 'AttractionController')->except('show');
-
     //middleware測試用
-    Route::prefix('uesr')->middleware(['auth.user'])->group(function(){
-        Route::get('/traveler', 'AmigoController@traveler');
-        Route::get('/trader', 'AmigoController@trader');
-        Route::get('/admin', 'AmigoController@admin');
+    Route::group([
+        'prefix' => 'user',
+        'middleware' => 'auth.user'
+    ], function () {
+        Route::get('/', 'AmigoController@traveler');
     });
 });
+
 
 
 // 我關注的地點
