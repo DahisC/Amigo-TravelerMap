@@ -29,12 +29,6 @@ class CreateAttractionsTable extends Migration
                 ->on('users')
                 ->onDelete('cascade');
 
-            $table->unsignedBigInteger('position_id')->index();
-            $table->foreign('position_id')
-                ->references('id')
-                ->on('attraction_positions')
-                ->onDelete('cascade');
-
             $table->timestamps();
         });
     }

@@ -21,6 +21,14 @@ class CreateAttractionPositionsTable extends Migration
             $table->string('address');
             $table->decimal('px');
             $table->decimal('py');
+
+            $table->unsignedBigInteger('attraction_id')->index();
+            $table->foreign('attraction_id')
+                ->references('id')
+                ->on('attractions')
+                ->onDelete('cascade');
+
+
             $table->timestamps();
         });
     }
