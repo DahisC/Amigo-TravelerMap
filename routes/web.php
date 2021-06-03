@@ -42,7 +42,6 @@ Route::prefix('/travelers')->group(function () {
     Route::get('/user/traveler', 'AmigoController@traveler')->middleware(['auth.user']);
     Route::get('/user/trader', 'AmigoController@trader')->middleware(['auth.user']);
     Route::get('/user/admin', 'AmigoController@admin')->middleware(['auth.user']);
-    //秘密通道
 });
 
 
