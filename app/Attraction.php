@@ -9,7 +9,7 @@ class Attraction extends Model
     protected $table = 'attractions';
 
     protected $fillable = [
-        'name', 'website', 'tel', 'description', 'ticket_info', 'traffic_info', 'parking_info','user_id', 'position_id'
+        'name', 'website', 'tel', 'description', 'ticket_info', 'traffic_info', 'parking_info','user_id',
     ];
     public function position()
     {
