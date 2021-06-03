@@ -45,6 +45,7 @@
                 overflow: hidden;
                
             }
+
         </style>
     </head>
     <body style="position: relative">
@@ -62,103 +63,107 @@
         ></i>
 
         <!-- aside -->
-        <div class="dropdown position-absolute end-0" style="z-index: 99999">
-            <a
-                class="btn btn-secondary dropdown-toggle me-1"
-                href="#"
-                role="button"
-                id="dropdownMenuLink"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-            >
-                Dropdown link
-            </a>
-            <nav
-                class="position-absolute end-0 overflow-auto dropdown-menu"
-                aria-labelledby="dropdownMenuLink"
-                style="
-                    width: 400px;
-                    height: calc(100vh - 40px);
-                    z-index: 1000;
-                    background-color: white;
-                "
-            >
-                <div class="input-group mb-3">
-                    <button
-                        class="btn btn-secondary"
-                        type="button"
-                        id="button-addon1"
-                    >
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="顯示附近景點"
-                        aria-label="Recipient's username"
-                        aria-describedby="button-addon1"
-                    />
-                </div>
-
-                <div class="card m-auto mb-3" style="width: 90%">
-                    <img src="..." class="card-img-top" alt="..." />
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                        </p>
-                        <div class="d-flex">    
-                            <button type="button" class="btn btn-light">
-                                標籤
-                            </button>
-                            <button type="button" class="btn btn-light">
-                                標籤
-                            </button>
-                            <a href="#" class="btn btn-info ms-auto">導航</a>
+        <div class="accordion accordion-flush position-absolute end-0" id="accordionFlushExample" style="z-index: 99999">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  
+                </button>
+              </h2>
+              
+              <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <nav
+                    class="accordion-body overflow-auto"
+                    
+                    style="
+                        width: 400px;
+                        height: calc(100vh - 40px);
+                        z-index: 1000;
+                        background-color: white;
+                    "
+                >
+                    <div class="input-group mb-3">
+                        <button
+                            class="btn btn-secondary"
+                            type="button"
+                            id="button-addon1"
+                        >
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="顯示附近景點"
+                            aria-label="Recipient's username"
+                            aria-describedby="button-addon1"
+                        />
+                    </div>
+    
+                    <div class="card m-auto mb-3" style="width: 90%">
+                        <img src="..." class="card-img-top" alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">
+                                Some quick example text to build on the card title
+                                and make up the bulk of the card's content.
+                            </p>
+                            <div class="d-flex">    
+                                <button type="button" class="btn btn-light">
+                                    標籤
+                                </button>
+                                <button type="button" class="btn btn-light">
+                                    標籤
+                                </button>
+                                <a href="#" class="btn btn-info ms-auto">導航</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card m-auto mb-3" style="width: 90%">
-                    <img src="..." class="card-img-top" alt="..." />
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                        </p>
-                        <div class="d-flex">
-                            <button type="button" class="btn btn-light">
-                                標籤
-                            </button>
-                            <button type="button" class="btn btn-light">
-                                標籤
-                            </button>
-                            <a href="#" class="btn btn-info ms-auto">導航</a>
+                    <div class="card m-auto mb-3" style="width: 90%">
+                        <img src="..." class="card-img-top" alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">
+                                Some quick example text to build on the card title
+                                and make up the bulk of the card's content.
+                            </p>
+                            <div class="d-flex">
+                                <button type="button" class="btn btn-light">
+                                    標籤
+                                </button>
+                                <button type="button" class="btn btn-light">
+                                    標籤
+                                </button>
+                                <a href="#" class="btn btn-info ms-auto">導航</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card m-auto mb-3" style="width: 90%">
-                    <img src="..." class="card-img-top" alt="..." />
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                        </p>
-                        <div class="d-flex">
-                            <button type="button" class="btn btn-light">
-                                標籤
-                            </button>
-                            <button type="button" class="btn btn-light">
-                                標籤
-                            </button>
-                            <a href="#" class="btn btn-info ms-auto">導航</a>
+                    <div class="card m-auto mb-3" style="width: 90%">
+                        <img src="..." class="card-img-top" alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">
+                                Some quick example text to build on the card title
+                                and make up the bulk of the card's content.
+                            </p>
+                            <div class="d-flex">
+                                <button type="button" class="btn btn-light">
+                                    標籤
+                                </button>
+                                <button type="button" class="btn btn-light">
+                                    標籤
+                                </button>
+                                <a href="#" class="btn btn-info ms-auto">導航</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+              </div>
+            </div>
         </div>
+        
+
+
+      
 
         <!-- 地圖 -->
         <div id="mapid"></div>
