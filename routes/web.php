@@ -44,7 +44,7 @@ Route::prefix('/travelers')->group(function () {
     Route::get('/user/admin', 'AmigoController@admin')->middleware(['auth.user']);
     //秘密通道
 });
-Route::get('/daniel', 'AmigoController@admin')->middleware('auth.basic');
+
 
 // 我關注的地點
 // Route::view('/itineraries', 'itineraries.index')->name('itineraries.index');
