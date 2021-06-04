@@ -27,7 +27,7 @@ class AttractionsTableSeeder extends Seeder
                 'address' => $a['Add'] ?? '',
                 'px' => $a['Px'] ?? '',
                 'py' => $a['Py'] ?? '',
-                'attraction_id'=> Attraction::create([
+                'attraction_id' => Attraction::create([
                     'name' => $a['Name'],
                     'website' => $a['Website'],
                     'tel' => $a['Tel'],
@@ -35,8 +35,9 @@ class AttractionsTableSeeder extends Seeder
                     'ticket_info' => $a['Ticketinfo'] ?? '',
                     'traffic_info' =>  $a['Travellinginfo'] ?? '',
                     'parking_info' =>  $a['Parkinginfo'] ?? '',
-                    'user_id' => '1',])->id,
-                    ]);
+                    'user_id' => '1',
+                ])->id,
+            ]);
         }
     }
 }
