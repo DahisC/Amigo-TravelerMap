@@ -1,10 +1,7 @@
 <style>
   nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #fff8dc;
-    z-index: 999;
+    background-color: var(--bs-secondary);
+    padding: 20px;
   }
 
   nav>ul {
@@ -15,7 +12,7 @@
 </style>
 
 <nav>
-  <ul class="d-flex justify-content-between">
+  <ul class="d-flex justify-content-between mb-0">
     <li>臨時導覽列</li>
     <li>
       <a href="/">Logo</a>
