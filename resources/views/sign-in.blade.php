@@ -6,9 +6,9 @@
 @endsection
 
 @section('nav')
-  <div class="position-fixed w-100 text-center h1">
+  {{-- <div class="position-fixed w-100 text-center h1">
     <a class="logo text-secondary" href="/">Amigo</a>
-  </div>
+  </div> --}}
 @endsection
 
 @section('css')
@@ -17,7 +17,7 @@
   <style>
     body {
       /* background-color: #9ad3bc; */
-      background: url('img/3.png') no-repeat center center;
+      background: url('images/sign-in.png') no-repeat center center;
       background-size: cover;
     }
 
@@ -82,7 +82,7 @@
                 @enderror
               </div>
               {{-- 記住我 --}}
-              <div class="form-check d-flex justify-content-between mb-3 py-2">
+              <div class="form-check d-flex justify-content-between mb-1 py-1">
                 <div class="d-flex align-items-center">
                   <input class="form-check-input me-1" type="checkbox" name="remember" id="remember"
                     {{ old('remember') ? 'checked' : '' }}>
@@ -97,6 +97,14 @@
                   </a>
                 @endif
               </div>
+              {{--  --}}
+              @if (Route::has('sign-up'))
+                <div class="mb-3 py-1 text-end">
+                  <a href="{{ route('sign-up') }}">
+                    <small>先註冊一個帳號</small>
+                  </a>
+                </div>
+              @endif
               {{-- 按鈕 --}}
               <button type="submit" class="btn btn-primary w-100">登入</button>
             </form>

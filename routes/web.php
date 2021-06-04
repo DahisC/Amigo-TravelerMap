@@ -68,6 +68,10 @@ Route::prefix('backstage')->group(function () {
     Route::resource('/maps', 'Backstage\MapController');
 });
 
+// 測試用路由
+Route::view('/mapstest', 'maps.test');
+
+// 會員模組
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
