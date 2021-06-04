@@ -18,6 +18,12 @@ use App\Http\Controllers\ItinerarieController;
 |
 */
 
+
+//用來測試 Route::pattern('id', '[0-9]+')
+Route::get('/user/{id?}', function ($id = 2) {
+    return 'hey' . $id;
+})->name('user.show');
+
 //主頁
 Route::view('/', 'index')->name('home');
 
