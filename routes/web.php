@@ -19,7 +19,8 @@ use App\Http\Controllers\ItinerarieController;
 */
 
 
-//用來測試 Route::pattern('id', '[0-9]+')
+//用來測試 Route::pattern('id', '[0-9]+') 
+//都確認完就可以刪除了
 Route::get('/user/{id?}', function ($id = 2) {
     return 'hey' . $id;
 })->name('user.show');
