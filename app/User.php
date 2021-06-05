@@ -41,4 +41,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Map');
     }
+    public function attractions()
+    {
+        return $this->belongsToMany('App\Attraction','user_attraction','user_id','attraction_id')->withTimestamps();
+    }
 }
