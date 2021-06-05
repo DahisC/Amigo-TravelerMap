@@ -15,4 +15,8 @@ class Map extends Model
     {
         return $this->belongsTo('App\User');
     }
+    public function attractions()
+    {
+        return $this->belongsToMany('App\Attraction','map_attraction','map_id','attraction_id')->withTimestamps();
+    }
 }

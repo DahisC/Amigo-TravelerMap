@@ -11,9 +11,9 @@ class MapTableSeeder extends Seeder
      */
     public function run()
     {
-         //map
-         $allUser = App\User::all();
-         factory(App\Map::class, 5)->make()->each(function ($map) use ($allUser) {
+        //map
+        $allUser = App\User::all();
+        factory(App\Map::class, 50)->make()->each(function ($map) use ($allUser) {
             $map->user_id = $allUser->random()->id;
             $map->save();
         });

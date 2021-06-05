@@ -19,5 +19,7 @@ class UsersTableSeeder extends Seeder
         factory(App\User::class)->states('Tourist')->create();
         //假資料user
         factory(App\User::class, 5)->create();
+
+
     }
 }

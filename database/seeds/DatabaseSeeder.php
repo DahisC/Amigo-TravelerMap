@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
             TagTableSeeder::class,
             AttractionsTableSeeder::class,
             AttractionImageTableSeeder::class,
+            MapAttractionTableSeeder::class,
+            UserAttractionTableSeeder::class,
+            AttractionTagTableSeeder::class
         ]);
     }
 }

@@ -25,4 +25,12 @@ class Attraction extends Model
     {
         return $this->belongsToMany('App\Tag')->withTimestamps();
     }
+    public function maps()
+    {
+        return $this->belongsToMany('App\Map','map_attraction','attraction_id','map_id')->withTimestamps();
+    }
+    public function users()
+    {
+        return $this->belongsToMany('App\User','user_attraction','attraction_id','user_id')->withTimestamps();
+    }
 }
