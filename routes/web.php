@@ -19,14 +19,14 @@ use App\Http\Controllers\ItinerarieController;
 */
 
 
-//用來測試 Route::pattern('id', '[0-9]+') 
+//用來測試 Route::pattern('id', '[0-9]+')
 //都確認完就可以刪除了
 Route::get('/user/{id?}', function ($id = 2) {
     return 'hey' . $id;
 })->name('user.show');
 
 //主頁
-Route::view('/', 'index')->name('home');
+Route::view('/', 'index')->name('homepage');
 
 // 地圖
 Route::resource('/maps', 'MapController');
@@ -44,17 +44,17 @@ Route::group([
 ], function () {
     Route::get('/', 'AmigoController@create')->name('index');
     Route::get('/profile', 'AmigoController@create')->name('profile');
-    Route::get('/maps', 'AmigoController@index')->name('traveler.maps');
+    Route::get('/maps', 'AmigoController@index')->name('maps');
     //商人
     Route::resource('/attractions', 'AttractionController')->except('show');
-    //middleware
-    Route::group([
-        'prefix' => 'user',
-        'as' => 'user',
-        'middleware' => 'auth.user'
-    ], function () {
-        Route::get('/', 'AmigoController@traveler');
-    });
+    //middleware ??
+    // Route::group([
+    //     'prefix' => 'user',
+    //     'as' => 'user',
+    //     'middleware' => 'auth.user'
+    // ], function () {
+    //     Route::get('/', 'AmigoController@traveler');
+    // });
 });
 
 
@@ -64,8 +64,8 @@ Route::group([
 Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']);
 
 // 後台
-Route::prefix('backstage')->group(function () {
-    Route::view('/', 'backstage.index');
+Route::prefix('backstage')->middleware('auth')->group(function () {
+    Route::view('/', 'backstage.index')->name('backstage');
     Route::resource('/maps', 'Backstage\MapController');
 });
 

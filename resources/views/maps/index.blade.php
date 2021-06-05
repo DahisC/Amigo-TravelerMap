@@ -9,11 +9,6 @@
   <!-- 引入Leaflet  -->
   <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}" />
   <style>
-    .logo {
-      width: 80px;
-      height: 80px;
-    }
-
     /*  */
 
     body {
@@ -36,8 +31,6 @@
     }
 
     .nav-icon {
-      width: 40px;
-      height: 40px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
@@ -71,6 +64,20 @@
 
     /* Custom offCanvas */
     @media (min-width: 576px) {
+      .logo {
+        width: 80px;
+        height: 80px;
+      }
+
+      .nav-icon {
+        width: 40px;
+        height: 40px;
+      }
+
+      .nav-icon>i {
+        font-size: 20px;
+      }
+
       .offcanvas-custom {
         top: 0;
         right: 0;
@@ -79,9 +86,35 @@
         border-left: 1px solid rgba(0, 0, 0, 0.2);
         transform: translateX(100%);
       }
+
+      .attraction-card {
+        max-width: 335px;
+      }
+
+      .attraction-card__top {
+        height: 167px;
+      }
+
+      .attraction-card__bot {
+        height: 168px;
+      }
     }
 
     @media (max-width: 575px) {
+      .logo {
+        width: 60px;
+        height: 60px;
+      }
+
+      .nav-icon {
+        width: 30px;
+        height: 30px;
+      }
+
+      .nav-icon>i {
+        font-size: 15px;
+      }
+
       .offcanvas-custom {
         right: 0;
         left: 0;
@@ -90,6 +123,14 @@
         border-top: 1px solid rgba(0, 0, 0, 0.2);
         -webkit-transform: translateY(100%);
         transform: translateY(100%);
+      }
+
+      .attraction-card {
+        max-width: 50%;
+      }
+
+      .attraction-card__top {
+        height: 40%;
       }
     }
 
@@ -101,12 +142,18 @@
     <div class="logo rounded-circle bg-dark shadow"></div>
     <nav class="rounded-pill d-flex flex-row flex-sm-column shadow">
 
-      <div class="nav-icon">
-        <i class="fas fa-feather-alt"></i>
-      </div>
 
       <div class="nav-icon">
-        <i class="fas fa-user-plus"></i>
+        <a href="{{ route('sign-in') }}">
+          <i class="fas fa-feather-alt"></i>
+        </a>
+      </div>
+
+
+      <div class="nav-icon">
+        <a href="{{ route('sign-up') }}">
+          <i class="fas fa-user-plus"></i>
+        </a>
       </div>
 
       <hr class="mx-3" />
@@ -125,7 +172,7 @@
     </nav>
   </div>
 
-  <div class="offcanvas offcanvas-custom" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
+  <div class="offcanvas offcanvas-custom bg-white" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
     data-bs-backdrop="false">
     <div class="offcanvas-header">
       {{-- <h5 id="offcanvasRightLabel">Offcanvas right</h5> --}}
@@ -150,11 +197,11 @@
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <hr class="my-0" />
-    <div class="p-4 overflow-auto d-flex flex-row flex-sm-column flex-grow-1">
+    <div class="p-3 p-sm-4  overflow-auto d-flex flex-row flex-sm-column">
       {{--  --}}
       @foreach ($attractions->take(10) as $a)
-        <div class="card mb-0 mb-sm-3 me-3 me-sm-0 flex-shrink-0" style="max-width: 335px;">
-          <div class="position-relative shadow flex-shrink-0" style="height: 200px;">
+        <div class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 flex-shrink-0">
+          <div class="attraction-card__top position-relative shadow flex-shrink-0">
             <div class="position-absolute w-100 h-100">
               <div>
                 <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
@@ -162,23 +209,24 @@
               </div>
               <button type="button" class="btn btn-primary btn-sm position-absolute end-0 bottom-0 m-2">
                 <i class="far fa-star"></i>
-                收藏
+                <span class="d-none d-sm-inline">收藏</span>
               </button>
             </div>
-            <img src="{{ $a->Picture1 ?? '123' }}" alt="{{ $a->Picdescribe1 }}" class="h-100 card-img-top img-fluid"
+            <img src="{{ $a->Picture1 ?? 'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg' }}"
+              alt="{{ $a->Picdescribe1 }}" class="h-100 card-img-top img-fluid"
               alt="當整個東海岸被層層的消坡塊鎖住時，綿延兩公里長的水璉牛山，卻散發出難能可貴的自然光采" />
           </div>
-          <div class="card-body d-flex flex-column justify-content-between">
-            <h6>{{ $a->name }}</h6>
-            <p class="card-text">{{ $a->description }}</p>
+          <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-auto">
+            <h6 class="text-primary">{{ $a->name }}</h6>
+            <p class="card-text" style="font-size: 0.9rem;">{{ $a->description }}</p>
             <div class="d-flex">
-              <button type="button" class="btn btn-primary me-2 w-100">
+              <button type="button" class="btn btn-primary btn-sm me-2 w-100">
                 <i class="fas fa-fw fa-map-marker-alt"></i>
-                地圖標示
+                <span class="d-none d-sm-inline">地圖標示</span>
               </button>
-              <button type="button" class="btn btn-outline-primary w-100">
+              <button type="button" class="btn btn-outline-primary btn-sm w-100">
                 <i class="fas fa-fw fa-book-open"></i>
-                詳細資訊
+                <span class="d-none d-sm-inline">詳細資訊</span>
               </button>
             </div>
           </div>
