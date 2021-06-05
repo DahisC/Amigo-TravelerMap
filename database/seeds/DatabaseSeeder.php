@@ -1,5 +1,6 @@
 <?php
 
+use App\Tag;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,7 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UsersTableSeeder::class);
-        $this->call(AttractionsTableSeeder::class);
+        $this->call([
+            UsersTableSeeder::class,
+            TagTableSeeder::class,
+            AttractionsTableSeeder::class,
+            ImgTableSeeder::class,
+            ]);
     }
 }
