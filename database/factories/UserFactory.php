@@ -26,11 +26,27 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
-$factory->state(User::class,'DahisC' ,function (Faker $faker){
+$factory->state(User::class,'admin' ,function (Faker $faker){
         return[
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'role' => 'Admin',
             'password' => bcrypt('a')
         ];
+});
+$factory->state(User::class,'Trader',function(Faker $faker){
+    return[
+        'name' => 'Trader',
+        'email' => 'Trader@gmail.com',
+        'role' => 'Trader',
+        'password' => bcrypt('T')
+    ];
+});
+$factory->state(User::class,'Tourist',function(Faker $faker){
+    return[
+        'name' => 'Tourist',
+        'email' => 'Tourist@gmail.com',
+        'role' => 'Tourist',
+        'password' => bcrypt('T')
+    ];
 });

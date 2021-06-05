@@ -28,13 +28,13 @@ class AuthUserMiddleware
             User::where('id','$user_id')->get();
             // dd($user['role']);
             if($user['role'] == "Tourist"){
-                dd($user['role']);
+                return redirect()->back();
             }
             if($user['role'] == "Trader"){
-                dd($user['role']);
+                return redirect()->back();
             }
             if($user['role'] == "Admin"){
-                dd($user['role']);
+                return redirect()->back();
             }
             $is_user = true;
         };
