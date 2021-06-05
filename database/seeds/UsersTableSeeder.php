@@ -11,13 +11,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        //admin
-        factory(App\User::class)->states('admin')->create();
-        //Trader
+        // Admin
+        factory(App\User::class)->states('Admin')->create();
+        // Trader
         factory(App\User::class)->states('Trader')->create();
-        //Tourist
-        factory(App\User::class)->states('Tourist')->create();
-        //假資料user
+        // Traveler
+        factory(App\User::class)->states('Traveler')->create();
+        // Fake users
         factory(App\User::class, 5)->create();
     }
 }
