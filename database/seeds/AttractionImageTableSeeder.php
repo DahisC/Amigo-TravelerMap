@@ -28,6 +28,7 @@ class AttractionImageTableSeeder extends Seeder
             $img->attraction_id = $attr->random()->id;
             foreach ($all as $url) {
                 $img->url = $url;
+                //用for跑看看
                 // $path = Storage::disk('myfile')->putFile('AttractionImg', $url);
                 // $img->url = Storage::disk('myfile')->url($path);
                 // dd($img->url);
