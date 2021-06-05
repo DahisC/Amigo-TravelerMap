@@ -70,8 +70,8 @@ Route::prefix('backstage')->middleware('auth')->group(function () {
 });
 
 // 前端測試用路由
-Route::view('/snow', 'snow.test');
-Route::view('/allen', 'allen.test');
+Route::view('/snow', 'Snow.test');
+Route::view('/allen', 'Allen.test');
 
 // 會員模組
 Auth::routes();
