@@ -43,7 +43,7 @@ class LoginController extends Controller
         switch ($user->role) {
             case 'Admin':
                 return redirect()->route('backstage');
-            case 'Tourist':
+            case 'Traveler':
             case 'Trader':
                 return redirect()->route('traveler.index');
             default:
