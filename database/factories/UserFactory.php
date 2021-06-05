@@ -29,7 +29,7 @@ $factory->define(User::class, function (Faker $faker) {
 $factory->state(User::class,'admin' ,function (Faker $faker){
         return[
             'name' => 'admin',
-            'email' => 'admin@gmail.com',
+            'email' => 'Admin@gmail.com',
             'role' => 'Admin',
             'password' => bcrypt('a')
         ];
@@ -39,14 +39,14 @@ $factory->state(User::class,'Trader',function(Faker $faker){
         'name' => 'Trader',
         'email' => 'Trader@gmail.com',
         'role' => 'Trader',
-        'password' => bcrypt('T')
+        'password' => bcrypt('a')
     ];
 });
 $factory->state(User::class,'Tourist',function(Faker $faker){
-    return[
-        'name' => 'Tourist',
-        'email' => 'Tourist@gmail.com',
-        'role' => 'Tourist',
-        'password' => bcrypt('T')
+    return[ Tourist->Traveler
+        'name' => 'Traveler',
+        'email' => 'Traveler@gmail.com',
+        'role' => 'Traveler',
+        'password' => bcrypt('a')
     ];
 });
