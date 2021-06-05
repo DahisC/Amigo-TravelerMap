@@ -37,6 +37,7 @@
       align-items: center;
       background: linear-gradient(45deg, var(--bs-light), #fff8dc);
       box-shadow: 0 0 10px 1px #f9f6ed;
+      text-decoration: none;
     }
 
     .nav-icon>i {
@@ -44,7 +45,7 @@
       color: var(--bs-dark);
     }
 
-    nav>div {
+    nav>.nav-icon {
       /* margin-bottom: 20px; */
       margin: 10px;
     }
@@ -143,32 +144,29 @@
     <nav class="rounded-pill d-flex flex-row flex-sm-column shadow">
 
 
-      <div class="nav-icon">
-        <a href="{{ route('sign-in') }}">
-          <i class="fas fa-feather-alt"></i>
-        </a>
-      </div>
+      <a class="nav-icon" href="">
+        <i class="fas fa-feather-alt"></i>
+      </a>
 
 
-      <div class="nav-icon">
-        <a href="{{ route('sign-up') }}">
-          <i class="fas fa-user-plus"></i>
-        </a>
-      </div>
+      <a class="nav-icon" href="">
+        <i class="fas fa-user-plus"></i>
+      </a>
 
       <hr class="mx-3" />
 
-      <div class="nav-icon">
+      <a class="nav-icon" href="">
         <i class="fas fa-crosshairs"></i>
-      </div>
+      </a>
 
-      <div class="nav-icon d-none d-" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+      {{-- <a class="nav-icon d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
         aria-controls="offcanvasRight">
         <i class="fas fa-search"></i>
-      </div>
-      <div class="nav-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+      </a> --}}
+      <a class="nav-icon" href="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+        aria-controls="offcanvasRight">
         <i class="fas fa-search"></i>
-      </div>
+      </a>
     </nav>
   </div>
 
@@ -177,19 +175,25 @@
     <div class="offcanvas-header">
       {{-- <h5 id="offcanvasRightLabel">Offcanvas right</h5> --}}
       <div class="d-flex align-items-center">
-        <span class="badge rounded bg-primary me-1">
+        {{-- <span class="badge rounded bg-primary me-1">
           <i class="fas fa-fw fa-search"></i>
           條件：
-        </span>
-        <span class="badge rounded-pill bg-primary me-1">
+        </span> --}}
+        {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
+            Launch demo modal
+          </button> --}}
+        <a class="nav-icon mx-1" href="#" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
+          <i class="fas fa-search"></i>
+        </a>
+        <span class="badge rounded-pill bg-primary mx-1">
           景點
           <i class="fas fa-fw fa-times"></i>
         </span>
-        <span class="badge rounded-pill bg-primary me-1">
+        <span class="badge rounded-pill bg-primary mx-1">
           自然環境
           <i class="fas fa-fw fa-times"></i>
         </span>
-        <span class="badge rounded-pill bg-primary">
+        <span class="badge rounded-pill bg-primary mx-1">
           人為藝術
           <i class="fas fa-fw fa-times"></i>
         </span>
@@ -207,7 +211,8 @@
                 <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
                 <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span>
               </div>
-              <button type="button" class="btn btn-primary btn-sm position-absolute end-0 bottom-0 m-2">
+              <button type="button" class="btn btn-primary btn-sm position-absolute end-0 bottom-0 m-2"
+                style="font-size: 0.8rem;">
                 <i class="far fa-star"></i>
                 <span class="d-none d-sm-inline">收藏</span>
               </button>
@@ -234,6 +239,27 @@
       @endforeach
     </div>
   </div>
+
+  <div class="fade modal" id="page-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">搜尋景點</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  @include('partials.maps.search-attraction-modal')
 
   {{-- <div class="test h-100 position-fixed bg-primary d-flex">
     <aside class="h-100 bg-dark" style="width: 200px;">
