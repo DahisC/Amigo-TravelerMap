@@ -69,8 +69,9 @@ Route::prefix('backstage')->middleware('auth')->group(function () {
     Route::resource('/maps', 'Backstage\MapController');
 });
 
-// 測試用路由
-Route::view('/mapstest', 'maps.test');
+// 前端測試用路由
+Route::view('/snow', 'snow.test');
+Route::view('/allen', 'allen.test');
 
 // 會員模組
 Auth::routes();
