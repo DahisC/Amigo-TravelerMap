@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Tag;
 use App\Attraction;
 use App\AttractionImage;
 use App\AttractionOpentime;
@@ -21,7 +22,7 @@ class AttractionsTableSeeder extends Seeder
         // dd(array_keys($json['XML_Head']['Infos']['Info']));
         $attractions = $json['XML_Head']['Infos']['Info'];
         foreach ($attractions as $a) {
-            $attraction_id = Attraction::create([
+            $attraction = Attraction::create([
                 'name' => $a['Name'],
                 'website' => $a['Website'],
                 'tel' => $a['Tel'],
@@ -30,7 +31,7 @@ class AttractionsTableSeeder extends Seeder
                 'traffic_info' =>  $a['Travellinginfo'] ?? '',
                 'parking_info' =>  $a['Parkinginfo'] ?? '',
                 'user_id' => '1',
-            ])->id;
+            ]);
 
             AttractionPosition::create([
                 'country' => '台灣',
@@ -39,7 +40,7 @@ class AttractionsTableSeeder extends Seeder
                 'address' => $a['Add'] ?? '',
                 'px' => $a['Px'] ?? '',
                 'py' => $a['Py'] ?? '',
-                'attraction_id' => $attraction_id
+                'attraction_id' => $attraction->id
             ]);
 
             for ($i = 1; $i <= 3; $i++) {
@@ -49,9 +50,28 @@ class AttractionsTableSeeder extends Seeder
                 AttractionImage::create([
                     'url' => $image_url,
                     'image_desc' => $image_desc,
-                    'attraction_id' => $attraction_id
+                    'attraction_id' => $attraction->id
                 ]);
             }
-        }
+
+            //tags
+            $tagsData =[];
+            array_push($tagsData,preg_split("/[,|、|，]+/mu",$a['Keyword']));
+            foreach($tagsData as $tags){
+                foreach($tags as $tag){
+                    $cc = factory(App\Tag::class)->raw([ 
+                        'name' => $tag ?? '',
+                    ]);
+
+                    // factory(App\Tag::class,$tag->count())->make()->each(function ($map) use ($allUser) {
+                    //     $map->user_id = $allUser->random()->id;
+                    //     $map->save();
+                    // });
+                }
+                
+                dd($cc);
+            }
+            $attraction->tags()->attach($tagsData);
+        };
     }
 }
