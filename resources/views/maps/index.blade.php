@@ -41,15 +41,7 @@
       align-items: center;
       background: linear-gradient(45deg, var(--bs-light), #fff8dc);
       box-shadow: 0 0 10px 1px #f9f6ed;
-<<<<<<< Updated upstream
       text-decoration: none;
-=======
-      cursor: pointer;
-    }
-
-    .nav-icon:hover {
-      box-shadow: 1px 1px 2px 2.5px;
->>>>>>> Stashed changes
     }
 
     .nav-icon>i {
@@ -215,11 +207,7 @@
 
       <hr class="mx-3" />
 
-<<<<<<< Updated upstream
-      <a class="nav-icon" href="">
-=======
-      <div class="nav-icon search">
->>>>>>> Stashed changes
+      <a class="nav-icon search" href="">
         <i class="fas fa-crosshairs"></i>
       </a>
 
@@ -268,15 +256,8 @@
     <div class="p-3 p-sm-4  overflow-auto d-flex flex-row flex-sm-column">
       {{--  --}}
       @foreach ($attractions->take(10) as $a)
-<<<<<<< Updated upstream
         <div class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 flex-shrink-0">
           <div class="attraction-card__top position-relative shadow flex-shrink-0">
-=======
-        {{-- {{dd($a->position->px)}} --}}
-
-        <div class="card mb-0 mb-sm-3 me-3 me-sm-0 flex-shrink-0" style="max-width: 335px;">
-          <div class="position-relative shadow flex-shrink-0" style="height: 200px;">
->>>>>>> Stashed changes
             <div class="position-absolute w-100 h-100">
               <div>
                 <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
@@ -296,11 +277,7 @@
             <h6 class="text-primary">{{ $a->name }}</h6>
             <p class="card-text" style="font-size: 0.9rem;">{{ $a->description }}</p>
             <div class="d-flex">
-<<<<<<< Updated upstream
-              <button type="button" class="btn btn-primary btn-sm me-2 w-100">
-=======
-              <button type="button" class="btn btn-primary me-2 w-100 guide">
->>>>>>> Stashed changes
+              <button type="button" class="btn btn-primary btn-sm me-2 w-100 guide">
                 <i class="fas fa-fw fa-map-marker-alt"></i>
                 <span class="d-none d-sm-inline">地圖標示</span>
               </button>
