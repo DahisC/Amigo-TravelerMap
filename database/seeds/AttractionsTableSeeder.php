@@ -7,6 +7,7 @@ use App\AttractionImage;
 use App\AttractionOpentime;
 use App\AttractionPosition;
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
 
 class AttractionsTableSeeder extends Seeder
 {
@@ -46,7 +47,9 @@ class AttractionsTableSeeder extends Seeder
             for ($i = 1; $i <= 3; $i++) {
                 $image_url = $a["Picture$i"];
                 $image_desc = $a["Picdescribe$i"];
-                if (empty($image_url)) break;
+                if (empty($image_url)) {
+                    $image_url = '/images' . '/AttractionImg' . '/noImg' . '/noImg.' . 'jpg';
+                };
                 AttractionImage::create([
                     'url' => $image_url,
                     'image_desc' => $image_desc,
@@ -54,24 +57,13 @@ class AttractionsTableSeeder extends Seeder
                 ]);
             }
 
-            //tags
-            $tagsData =[];
-            array_push($tagsData,preg_split("/[,|、|，]+/mu",$a['Keyword']));
-            foreach($tagsData as $tags){
-                foreach($tags as $tag){
-                    $cc = factory(App\Tag::class)->raw([ 
-                        'name' => $tag ?? '',
-                    ]);
-
-                    // factory(App\Tag::class,$tag->count())->make()->each(function ($map) use ($allUser) {
-                    //     $map->user_id = $allUser->random()->id;
-                    //     $map->save();
-                    // });
+            if (!empty($a['Keyword'])) {
+                $tags = preg_split("/[、|,|，]+/u", $a['Keyword']);
+                foreach ($tags as $tag) {
+                    $attraction_tag = Tag::firstOrCreate(['name' => $tag], factory(App\Tag::class)->raw(['name' => $tag]));
+                    $attraction->tags()->attach($attraction_tag);
                 }
-                
-                dd($cc);
             }
-            $attraction->tags()->attach($tagsData);
-        };
+        }
     }
 }
