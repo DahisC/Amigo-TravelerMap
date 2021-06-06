@@ -204,7 +204,7 @@
     <nav class="rounded-pill d-flex flex-row flex-sm-column shadow">
 
 
-      <a class="nav-icon" href="">
+      <a class="nav-icon" data-bs-toggle="modal" data-bs-target="#search-attraction-modal" href="">
         <i class="fas fa-feather-alt"></i>
       </a>
 
@@ -234,8 +234,8 @@
     </nav>
   </div>
 
-  <div class="offcanvas offcanvas-custom bg-white" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
-    data-bs-backdrop="false">
+  <div class="offcanvas offcanvas-custom bg-white" tabindex="-1" id="offcanvasRight"
+    aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
       {{-- <h5 id="offcanvasRightLabel">Offcanvas right</h5> --}}
       <div class="d-flex align-items-center">
@@ -333,80 +333,8 @@
     </div>
   </div>
 
-
   @include('partials.maps.search-attraction-modal')
-
-  {{-- <div class="test h-100 position-fixed bg-primary d-flex">
-    <aside class="h-100 bg-dark" style="width: 200px;">
-      123
-    </aside>
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body">
-        <div>
-          Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists,
-          etc.
-        </div>
-        <div class="dropdown mt-3">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-            data-bs-toggle="dropdown">
-            Dropdown button
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-  </div> --}}
-
-
-  {{-- <aside class="position-fixed h-100 end-0 bg-white">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="card mb-3">
-            <div class="position-relative shadow" style="height: 200px;">
-              <div class="position-absolute w-100 h-100">
-                <div>
-                  <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
-                  <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span>
-                </div>
-                <button type="button" class="btn btn-primary btn-sm position-absolute end-0 bottom-0 m-2">
-                  <i class="far fa-star"></i>
-                  收藏
-                </button>
-              </div>
-              <img src="https://www.eastcoast-nsa.gov.tw/image/40/640x480" class="h-100 card-img-top img-fluid"
-                alt="當整個東海岸被層層的消坡塊鎖住時，綿延兩公里長的水璉牛山，卻散發出難能可貴的自然光采" />
-            </div>
-            <div class="card-body">
-              <h6>水璉、牛山海岸</h6>
-              <p class="card-text">水璉位在花蓮縣壽豐鄉海濱，蒼翠的山丘環抱著寬廣的河谷盆地，水璉溪蜿蜒而過，沿著公路邊的小徑往下，水璉濕地牛山海岸彷彿一片臨海的秘密樂園。</p>
-              <div class="d-flex">
-                <button type="button" class="btn btn-primary me-2 w-100">
-                  <i class="fas fa-fw fa-map-marker-alt"></i>
-                  地圖標示
-                </button>
-                <button type="button" class="btn btn-outline-primary w-100">
-                  <i class="fas fa-fw fa-book-open"></i>
-                  詳細資訊
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </aside> --}}
-
-  @include('partials.maps.create-map-button-modal')
+  {{-- @include('partials.maps.create-map-modal') --}}
 
   <!-- 地圖 -->
   <div id="mapid"></div>

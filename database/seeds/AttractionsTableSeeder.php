@@ -2,6 +2,7 @@
 
 
 use App\Attraction;
+use App\AttractionImage;
 use App\AttractionOpentime;
 use App\AttractionPosition;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,17 @@ class AttractionsTableSeeder extends Seeder
         // dd(array_keys($json['XML_Head']['Infos']['Info']));
         $attractions = $json['XML_Head']['Infos']['Info'];
         foreach ($attractions as $a) {
+            $attraction_id = Attraction::create([
+                'name' => $a['Name'],
+                'website' => $a['Website'],
+                'tel' => $a['Tel'],
+                'description' => $a['Description'] ?? '',
+                'ticket_info' => $a['Ticketinfo'] ?? '',
+                'traffic_info' =>  $a['Travellinginfo'] ?? '',
+                'parking_info' =>  $a['Parkinginfo'] ?? '',
+                'user_id' => '1',
+            ])->id;
+
             AttractionPosition::create([
                 'country' => '台灣',
                 'region' => $a['Region'] ?? '',
@@ -27,17 +39,19 @@ class AttractionsTableSeeder extends Seeder
                 'address' => $a['Add'] ?? '',
                 'px' => $a['Px'] ?? '',
                 'py' => $a['Py'] ?? '',
-                'attraction_id' => Attraction::create([
-                    'name' => $a['Name'],
-                    'website' => $a['Website'],
-                    'tel' => $a['Tel'],
-                    'description' => $a['Description'] ?? '',
-                    'ticket_info' => $a['Ticketinfo'] ?? '',
-                    'traffic_info' =>  $a['Travellinginfo'] ?? '',
-                    'parking_info' =>  $a['Parkinginfo'] ?? '',
-                    'user_id' => '1',
-                ])->id,
+                'attraction_id' => $attraction_id
             ]);
+
+            for ($i = 1; $i <= 3; $i++) {
+                $image_url = $a["Picture$i"];
+                $image_desc = $a["Picdescribe$i"];
+                if (empty($image_url)) break;
+                AttractionImage::create([
+                    'url' => $image_url,
+                    'image_desc' => $image_desc,
+                    'attraction_id' => $attraction_id
+                ]);
+            }
         }
     }
 }

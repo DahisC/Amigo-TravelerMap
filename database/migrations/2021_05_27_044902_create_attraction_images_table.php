@@ -17,13 +17,13 @@ class CreateAttractionImagesTable extends Migration
             $table->id();
 
             $table->string('url');
-            $table->string('image_desc');
+            $table->string('image_desc')->nullable();
 
             $table->unsignedBigInteger('attraction_id')->index();
             $table->foreign('attraction_id')
-                    ->references('id')
-                    ->on('attractions')
-                    ->onDelete('cascade');
+                ->references('id')
+                ->on('attractions')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });
