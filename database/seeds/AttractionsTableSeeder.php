@@ -7,6 +7,7 @@ use App\AttractionImage;
 use App\AttractionOpentime;
 use App\AttractionPosition;
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
 
 class AttractionsTableSeeder extends Seeder
 {
@@ -57,8 +58,7 @@ class AttractionsTableSeeder extends Seeder
             if (!empty($a['Keyword'])) {
                 $tags = preg_split("/[、|,|，]+/u", $a['Keyword']);
                 foreach ($tags as $tag) {
-                    // $attraction_tag = Tag::firstOrCreate(factory(App\Tag::class)->raw(['name' => $tag])); // 救我
-                    $attraction_tag = Tag::firstOrCreate(['name' => $tag, 'color' => '#222222']); // 我很好
+                    $attraction_tag = Tag::firstOrCreate(['name' => $tag], factory(App\Tag::class)->raw(['name' => $tag]));
                     $attraction->tags()->attach($attraction_tag);
                 }
             }
