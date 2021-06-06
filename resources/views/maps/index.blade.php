@@ -353,50 +353,45 @@
         navigator.geolocation.getCurrentPosition(function(position) {
           let latitude = position.coords.latitude;
           let longitude = position.coords.longitude;
-          mymap.flyTo([latitude, longitude], 15, {
-            animate: true,
-            duration: 2
-          });
-          var marker = L.marker([latitude, longitude], {
-            draggable: true,
-            autoPan: true,
-            autoPanPadding: [200, 200],
-            autoPanSpeed: 25,
-            icon: customIcon,
-          }).addTo(mymap);
-        }, error);
+          console.log(typeof latitude);
+          // mymap.flyTo([latitude, longitude], 15, {
+          //   animate: true,
+          //   duration: 2
+          // });
+          // var marker = L.marker([latitude, longitude], {
+          //   draggable: true,
+          //   autoPan: true,
+          //   autoPanPadding: [200, 200],
+          //   autoPanSpeed: 25,
+          //   icon: customIcon,
+          // }).addTo(mymap);
+        });
       } else {
         x.innerHTML = "抱歉！瀏覽器不支援Geolocation";
       }
     })
 
-    function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
-    // var url = './public/attraction.json';
-    var url = '{{ asset('attraction.json') }}'
-    fetch(url)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(location) {
-        var markers = new L.MarkerClusterGroup().addTo(mymap);
-        var data = [];
-        for (var i = 0; i < 10; i++) {
-          data.push({
-            "Name": location.XML_Head.Infos.Info[i].Name,
-            "Px": location.XML_Head.Infos.Info[i].Px,
-            "Py": location.XML_Head.Infos.Info[i].Py,
-            "Tel": location.XML_Head.Infos.Info[i].Tel,
-            "Add": location.XML_Head.Infos.Info[i].Add
-          })
+    // function error(err) {
+    //   console.warn(`ERROR(${err.code}): ${err.message}`);
+    // }
 
-          markers.addLayer(L.marker([data[i].Py, data[i].Px], {
-            icon: customIcon
-          }).bindPopup(`<b>${data[i].Name}</b><br>${data[i].Tel}<br>${data[i].Add}`));
-        }
-        const guideToBtn = document.querySelectorAll('.guide');
-        guideToBtn.forEach(function(value, index) {
+    var object = {!! json_encode($attractions->toArray()) !!};
+    var markers = new L.MarkerClusterGroup().addTo(mymap);
+    var data = [];
+    for (var i = 0; i < object.length; i++) {
+      data.push({
+        "Name": object[i].name,
+        "Px": object[i].position.px,
+        "Py": object[i].position.py,
+        "Tel": object[i].tel,
+        "Add": object[i].position.address
+      })
+      markers.addLayer(L.marker([data[i].Py, data[i].Px], {
+        icon: customIcon
+      }).bindPopup(`<b>${data[i].Name}</b><br>${data[i].Tel}<br>${data[i].Add}`));
+    }
+    const guideToBtn = document.querySelectorAll('.guide');
+    guideToBtn.forEach(function(value, index) {
           value.setAttribute('data-index', index);
           value.addEventListener('click', function() {
             var dataindex = this.getAttribute("data-index");
@@ -405,13 +400,7 @@
               duration: 2
             });
           })
-
-          // value.addEventListener('click',function () {
-          //   var location = this.getAttribute("data-index");
-          //   console.log(location);
-          // })
         })
-      });
 
   </script>
 @endsection
