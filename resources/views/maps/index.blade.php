@@ -8,6 +8,10 @@
   {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css    " /> --}}
   <!-- 引入Leaflet  -->
   <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
+
   <style>
     /*  */
 
@@ -37,7 +41,15 @@
       align-items: center;
       background: linear-gradient(45deg, var(--bs-light), #fff8dc);
       box-shadow: 0 0 10px 1px #f9f6ed;
+<<<<<<< Updated upstream
       text-decoration: none;
+=======
+      cursor: pointer;
+    }
+
+    .nav-icon:hover {
+      box-shadow: 1px 1px 2px 2.5px;
+>>>>>>> Stashed changes
     }
 
     .nav-icon>i {
@@ -62,6 +74,54 @@
       width: fit-content;
       height: fit-content;
     }
+
+    /* marker group */
+    .marker-cluster-small {
+      background-color: rgba(181, 226, 140, 0.6);
+    }
+
+    .marker-cluster-small div {
+      background-color: rgba(110, 204, 57, 0.6);
+    }
+
+    .marker-cluster-medium {
+      background-color: rgba(241, 211, 87, 0.6);
+    }
+
+    .marker-cluster-medium div {
+      background-color: rgba(240, 194, 12, 0.6);
+    }
+
+    .marker-cluster-large {
+      background-color: rgba(253, 156, 115, 0.6);
+    }
+
+    .marker-cluster-large div {
+      background-color: rgba(241, 128, 23, 0.6);
+    }
+
+    .marker-cluster {
+      background-clip: padding-box;
+      border-radius: 20px;
+    }
+
+    .marker-cluster div {
+      width: 30px;
+      height: 30px;
+      margin-left: 5px;
+      margin-top: 5px;
+
+      text-align: center;
+      border-radius: 15px;
+      font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+    }
+
+    .marker-cluster span {
+      line-height: 30px;
+    }
+
+    /* marker group */
+
 
     /* Custom offCanvas */
     @media (min-width: 576px) {
@@ -155,7 +215,11 @@
 
       <hr class="mx-3" />
 
+<<<<<<< Updated upstream
       <a class="nav-icon" href="">
+=======
+      <div class="nav-icon search">
+>>>>>>> Stashed changes
         <i class="fas fa-crosshairs"></i>
       </a>
 
@@ -204,8 +268,15 @@
     <div class="p-3 p-sm-4  overflow-auto d-flex flex-row flex-sm-column">
       {{--  --}}
       @foreach ($attractions->take(10) as $a)
+<<<<<<< Updated upstream
         <div class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 flex-shrink-0">
           <div class="attraction-card__top position-relative shadow flex-shrink-0">
+=======
+        {{-- {{dd($a->position->px)}} --}}
+
+        <div class="card mb-0 mb-sm-3 me-3 me-sm-0 flex-shrink-0" style="max-width: 335px;">
+          <div class="position-relative shadow flex-shrink-0" style="height: 200px;">
+>>>>>>> Stashed changes
             <div class="position-absolute w-100 h-100">
               <div>
                 <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
@@ -225,7 +296,11 @@
             <h6 class="text-primary">{{ $a->name }}</h6>
             <p class="card-text" style="font-size: 0.9rem;">{{ $a->description }}</p>
             <div class="d-flex">
+<<<<<<< Updated upstream
               <button type="button" class="btn btn-primary btn-sm me-2 w-100">
+=======
+              <button type="button" class="btn btn-primary me-2 w-100 guide">
+>>>>>>> Stashed changes
                 <i class="fas fa-fw fa-map-marker-alt"></i>
                 <span class="d-none d-sm-inline">地圖標示</span>
               </button>
@@ -339,10 +414,11 @@
 
 @section('js')
   <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
 
   <script>
-    //地圖
-    var mymap = L.map("mapid").setView([24.194, 120.54535], 15);
+    //地圖      
+    let mymap = L.map("mapid").setView([23.8759391, 120.588669], 8);
     var map = L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -351,12 +427,86 @@
         tileSize: 512,
         zoomOffset: -1,
         accessToken: "pk.eyJ1IjoiYWN0aXZpdGExNTkiLCJhIjoiY2tvcGRiZWlzMGJ1ODJ2a2hoamd0MGsxbyJ9.Kpk1ux9XXckK6NPE-qPhlw",
-
       }
     );
-
     map.addTo(mymap);
+
+    //縮放功能放左下角
     mymap.zoomControl.setPosition("bottomleft");
+
+    //icon 樣式
+    const customIcon = L.icon({
+      iconUrl: "./images/lovelyicon.png",
+      iconSize: [50, 50],
+    });
+
+    //搜尋本地位置
+    const searchBtn = document.querySelector('.search');
+    searchBtn.addEventListener('click', function() {
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          let latitude = position.coords.latitude;
+          let longitude = position.coords.longitude;
+          mymap.flyTo([latitude, longitude], 15, {
+            animate: true,
+            duration: 2
+          });
+          var marker = L.marker([latitude, longitude], {
+            draggable: true,
+            autoPan: true,
+            autoPanPadding: [200, 200],
+            autoPanSpeed: 25,
+            icon: customIcon,
+          }).addTo(mymap);
+        }, error);
+      } else {
+        x.innerHTML = "抱歉！瀏覽器不支援Geolocation";
+      }
+    })
+
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    // var url = './public/attraction.json';
+    var url = '{{ asset('attraction.json') }}'
+    fetch(url)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(location) {
+        var markers = new L.MarkerClusterGroup().addTo(mymap);
+        var data = [];
+        for (var i = 0; i < 10; i++) {
+          data.push({
+            "Name": location.XML_Head.Infos.Info[i].Name,
+            "Px": location.XML_Head.Infos.Info[i].Px,
+            "Py": location.XML_Head.Infos.Info[i].Py,
+            "Tel": location.XML_Head.Infos.Info[i].Tel,
+            "Add": location.XML_Head.Infos.Info[i].Add
+          })
+
+          markers.addLayer(L.marker([data[i].Py, data[i].Px], {
+            icon: customIcon
+          }).bindPopup(`<b>${data[i].Name}</b><br>${data[i].Tel}<br>${data[i].Add}`));
+        }
+        const guideToBtn = document.querySelectorAll('.guide');
+        guideToBtn.forEach(function(value, index) {
+          value.setAttribute('data-index', index);
+          value.addEventListener('click', function() {
+            var dataindex = this.getAttribute("data-index");
+            mymap.flyTo([data[dataindex].Py, data[dataindex].Px], 15, {
+              animate: true,
+              duration: 2
+            });
+          })
+
+          // value.addEventListener('click',function () {
+          //   var location = this.getAttribute("data-index");
+          //   console.log(location);
+          // })
+        })
+      });
 
   </script>
 @endsection
