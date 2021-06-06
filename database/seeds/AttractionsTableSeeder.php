@@ -45,13 +45,15 @@ class AttractionsTableSeeder extends Seeder
             for ($i = 1; $i <= 3; $i++) {
                 $image_url = $a["Picture$i"];
                 $image_desc = $a["Picdescribe$i"];
-                if (empty($image_url)) break;
+                if (empty($image_url)) {
+                    $image_url = '/images' . '/AttractionImg' . '/noImg' . '/noImg.' . 'jpg';
+                };
                 AttractionImage::create([
                     'url' => $image_url,
                     'image_desc' => $image_desc,
                     'attraction_id' => $attraction_id
                 ]);
             }
-        }
+        };
     }
 }
