@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Attraction extends Model
 {
+    use SoftDeletes;
     protected $table = 'attractions';
 
     protected $fillable = [
@@ -22,5 +24,13 @@ class Attraction extends Model
     public function tags()
     {
         return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
+    public function maps()
+    {
+        return $this->belongsToMany('App\Map','map_attraction','attraction_id','map_id')->withTimestamps();
+    }
+    public function users()
+    {
+        return $this->belongsToMany('App\User','user_attraction','attraction_id','user_id')->withTimestamps();
     }
 }

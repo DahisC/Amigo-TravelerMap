@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AttractionPosition extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'country', 'region', 'town','address','px', 'py'
     ];

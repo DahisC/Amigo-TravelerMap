@@ -1,6 +1,5 @@
 <?php
 
-use App\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -12,11 +11,15 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'role' => 'Admin',
-            'password' => bcrypt('a')
-        ]);
+        // Admin
+        factory(App\User::class)->states('Admin')->create();
+        // Trader
+        factory(App\User::class)->states('Trader')->create();
+        // Traveler
+        factory(App\User::class)->states('Traveler')->create();
+        // Fake users
+        factory(App\User::class, 5)->create();
+
+
     }
 }
