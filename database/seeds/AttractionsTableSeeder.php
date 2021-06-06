@@ -60,6 +60,7 @@ class AttractionsTableSeeder extends Seeder
             if (!empty($a['Keyword'])) {
                 $tags = preg_split("/[、|,|，]+/u", $a['Keyword']);
                 foreach ($tags as $tag) {
+                    $tag = str_replace(' ','',$tag);
                     $attraction_tag = Tag::firstOrCreate(['name' => $tag], factory(App\Tag::class)->raw(['name' => $tag]));
                     $attraction->tags()->attach($attraction_tag);
                 }
