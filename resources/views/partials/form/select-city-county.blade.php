@@ -1,12 +1,12 @@
-<div class="col-12 mb-3">
+<div x-data="data()" class="col-12 mb-3">
   <label for="search-form__input_range" class="form-label">位置</label>
   <div class="row">
     <div class="col-12 mb-3 d-none">
       <label for="search-form__input_range" class="form-label">
         <small>國家</small>
       </label>
-      <select class="form-select" disabled hidden>
-        <option selected>台灣 Taiwan</option>
+      <select class="form-select" name="country" hidden>
+        <option selected value="台灣">台灣 Taiwan</option>
       </select>
     </div>
     <div class="col-6">
@@ -16,6 +16,11 @@
       <select id="select_city" name="region" class="form-select"
         x-on:change="selectedCityName = $event.target.value; selectedAreaName = '';" onchange="select_area.value = ''">
         <option selected value="">選擇</option>
+        @if ($defaultCity)
+          <option selected value="{{ $defaultCity }}">{{ $defaultCity }}</option>
+        @else
+          <option selected value="">選擇</option>
+        @endif
         <template x-for="city of cityCounty">
           <option x-text="city.CityName" :value="city.CityName"></option>
         </template>
@@ -25,8 +30,12 @@
       <label for="search-form__input_range" class="form-label">
         <small>鄉鎮區</small>
       </label>
-      <select id="select_area" name="town" class="form-select" aria-label="Default select example">
-        <option selected value="">選擇</option>
+      <select id="select_area" name="town" class="form-select">
+        @if ($defaultArea)
+          <option selected value="{{ $defaultArea }}">{{ $defaultArea }}</option>
+        @else
+          <option selected value="">選擇</option>
+        @endif
         <template x-if="selectedCityName !== ''"
           x-for="area of cityCounty.find(c => c.CityName === selectedCityName).AreaList">
           <option x-text="area.AreaName" x-on:click="selectedArea = area"></option>

@@ -11,7 +11,7 @@
       </div>
       <div class="modal-body">
         <form id="search_form" method="GET" action="{{ route('maps.index') }}">
-          <div x-data="data()" class="container">
+          <div class="container">
             <div class="row">
               <div class="col-12 mb-3">
                 <!-- 距離 -->
