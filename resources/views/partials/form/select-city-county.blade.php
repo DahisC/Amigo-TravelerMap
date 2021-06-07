@@ -13,7 +13,7 @@
       <label for="search-form__input_range" class="form-label">
         <small>縣市</small>
       </label>
-      <select id="select_city" class="form-select"
+      <select id="select_city" name="region" class="form-select"
         x-on:change="selectedCityName = $event.target.value; selectedAreaName = '';" onchange="select_area.value = ''">
         <option selected value="">選擇</option>
         <template x-for="city of cityCounty">
@@ -25,7 +25,7 @@
       <label for="search-form__input_range" class="form-label">
         <small>鄉鎮區</small>
       </label>
-      <select id="select_area" class="form-select" aria-label="Default select example">
+      <select id="select_area" name="town" class="form-select" aria-label="Default select example">
         <option selected value="">選擇</option>
         <template x-if="selectedCityName !== ''"
           x-for="area of cityCounty.find(c => c.CityName === selectedCityName).AreaList">

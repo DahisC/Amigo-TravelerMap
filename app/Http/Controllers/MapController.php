@@ -13,7 +13,7 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //這兩行測試用
         $attractions = Attraction::with('tags', 'position', 'image')->get();

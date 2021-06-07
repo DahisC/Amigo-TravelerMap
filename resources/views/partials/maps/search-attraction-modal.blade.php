@@ -18,7 +18,7 @@
                 <label for="search-form__input_range" class="form-label">距離</label>
                 <div class="range text-primary">
                   <input type="range" class="form-range" min="1" max="10" step="0.5" value="1"
-                    id="search-form__input_range" onchange="range_displayer.textContent = this.value">
+                    id="search-form__input_range" onchange="range_displayer.textContent = this.value" name="range">
                 </div>
                 <div class="form-text text-end"><span id="range_displayer" class="me-1">1</span>公里內</div>
               </div>
@@ -37,7 +37,7 @@
                           onclick="input_tag1.value = this.textContent">{{ $tag->name }}</a></li>
                     @endforeach
                   </ul>
-                  <input id="input_tag1" type="text" class="form-control text-center" />
+                  <input id="input_tag1" type="text" class="form-control text-center" name="tag" />
                 </div>
               </div>
             </div>
