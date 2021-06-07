@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Traveler;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AttractionController extends Controller
 {
@@ -23,7 +24,7 @@ class AttractionController extends Controller
      */
     public function create()
     {
-        //
+        return view('traveler.attractions.factory');
     }
 
     /**
@@ -34,7 +35,7 @@ class AttractionController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        //
     }
 
     /**
