@@ -15,7 +15,6 @@ class MapController extends Controller
      */
     public function index(Request $request)
     {
-        //這兩行測試用
         $attractions = Attraction::with('tags', 'position', 'image')->get();
         $tags = Tag::get();
         return view('maps.index', compact('attractions', 'tags'));
