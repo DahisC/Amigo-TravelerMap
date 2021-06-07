@@ -47,14 +47,6 @@ Route::group([
     Route::get('/maps', 'AmigoController@index')->name('maps');
     //商人
     Route::resource('/attractions', 'AttractionController')->except('show');
-    //middleware ??
-    // Route::group([
-    //     'prefix' => 'user',
-    //     'as' => 'user',
-    //     'middleware' => 'auth.user'
-    // ], function () {
-    //     Route::get('/', 'AmigoController@traveler');
-    // });
 });
 
 
@@ -64,8 +56,12 @@ Route::group([
 Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']);
 
 // 後台
-Route::prefix('backstage')->middleware('auth')->group(function () {
-    Route::view('/', 'backstage.index')->name('backstage');
+Route::group([
+    'prefix' => 'backstage',
+    'as' => 'backstage.',
+    'middleware' => 'auth'
+], function () {
+    Route::view('/', 'backstage.index')->name('index');
     Route::resource('/maps', 'Backstage\MapController');
 });
 
