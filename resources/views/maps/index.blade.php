@@ -354,17 +354,17 @@
           let latitude = position.coords.latitude;
           let longitude = position.coords.longitude;
           console.log(typeof latitude);
-          // mymap.flyTo([latitude, longitude], 15, {
-          //   animate: true,
-          //   duration: 2
-          // });
-          // var marker = L.marker([latitude, longitude], {
-          //   draggable: true,
-          //   autoPan: true,
-          //   autoPanPadding: [200, 200],
-          //   autoPanSpeed: 25,
-          //   icon: customIcon,
-          // }).addTo(mymap);
+          mymap.flyTo([latitude, longitude], 15, {
+            animate: true,
+            duration: 2
+          });
+          var marker = L.marker([latitude, longitude], {
+            draggable: true,
+            autoPan: true,
+            autoPanPadding: [200, 200],
+            autoPanSpeed: 25,
+            icon: customIcon,
+          }).addTo(mymap);
         });
       } else {
         x.innerHTML = "抱歉！瀏覽器不支援Geolocation";
