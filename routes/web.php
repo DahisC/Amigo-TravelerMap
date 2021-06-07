@@ -66,7 +66,7 @@ Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']
 // 後台
 Route::prefix('backstage')->middleware('auth')->group(function () {
     Route::view('/', 'backstage.index')->name('backstage');
-    Route::resource('/maps', 'Backstage\MapController');
+    Route::resource('/maps', 'Backstage/MapController');
 });
 
 // 前端測試用路由

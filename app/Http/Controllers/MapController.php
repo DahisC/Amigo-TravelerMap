@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\Attraction;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class MapController extends Controller
     {
         //這兩行測試用
         $attractions = Attraction::with('tags', 'position', 'image')->get();
-        return view('maps.index', compact('attractions'));
+        $tags = Tag::get();
+        return view('maps.index', compact('attractions', 'tags'));
     }
 
     /**

@@ -218,8 +218,7 @@
               </button>
             </div>
             <img src="{{ $a->Picture1 ?? 'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg' }}"
-              alt="{{ $a->Picdescribe1 }}" class="h-100 card-img-top img-fluid"
-              alt="當整個東海岸被層層的消坡塊鎖住時，綿延兩公里長的水璉牛山，卻散發出難能可貴的自然光采" />
+              alt="{{ $a->Picdescribe1 }}" class="h-100 card-img-top img-fluid" />
           </div>
           <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-auto">
             <h6 class="text-primary">{{ $a->name }}</h6>
@@ -240,25 +239,7 @@
     </div>
   </div>
 
-  <div class="fade modal" id="page-modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">搜尋景點</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  @include('partials.maps.search-attraction-modal')
+  @include('partials.maps.search-attraction-modal', compact('tags'))
   {{-- @include('partials.maps.create-map-modal') --}}
 
   <!-- 地圖 -->
