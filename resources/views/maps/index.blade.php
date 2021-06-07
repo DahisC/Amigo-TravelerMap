@@ -378,18 +378,19 @@
     var object = {!! json_encode($attractions->toArray()) !!};
     var markers = new L.MarkerClusterGroup().addTo(mymap);
     var data = [];
-    for (var i = 0; i < object.length; i++) {
+    object.forEach(function (objectData , objectIndex) {
       data.push({
-        "Name": object[i].name,
-        "Px": object[i].position.px,
-        "Py": object[i].position.py,
-        "Tel": object[i].tel,
-        "Add": object[i].position.address
+        "Name": objectData.name,
+        "Px": objectData.position.px,
+        "Py": objectData.position.py,
+        "Tel": objectData.tel,
+        "Add": objectData.position.address
       })
-      markers.addLayer(L.marker([data[i].Py, data[i].Px], {
+
+      markers.addLayer(L.marker([data[objectIndex].Py, data[objectIndex].Px], {
         icon: customIcon
-      }).bindPopup(`<b>${data[i].Name}</b><br>${data[i].Tel}<br>${data[i].Add}`));
-    }
+      }).bindPopup(`<b>${data[objectIndex].Name}</b><br>${data[objectIndex].Tel}<br>${data[objectIndex].Add}`));
+    })
     const guideToBtn = document.querySelectorAll('.guide');
     guideToBtn.forEach(function(value, index) {
           value.setAttribute('data-index', index);
