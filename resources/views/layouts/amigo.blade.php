@@ -14,6 +14,7 @@
   <!-- MDB -->
   {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet" /> --}}
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/amigo.css') }}">
   {{-- <link rel="stylesheet" href="{{ asset('css/amigo.css') }}"> --}}
   {{-- <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" /> --}}
   {{-- Font Awesome 5 CSS --}}
@@ -31,7 +32,7 @@
   {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script> --}}
   <script src="{{ asset('js/app.js') }}"></script>
   {{-- Bootstrap 5 JavaScript bundle --}}
-  {{-- <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script> --}}
+  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   @yield('js')
 </body>
 
