@@ -170,8 +170,7 @@
     </nav>
   </div>
 
-  <div class="offcanvas offcanvas-custom bg-white" tabindex="-1" id="offcanvasRight"
-    aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas offcanvas-custom bg-white" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
       {{-- <h5 id="offcanvasRightLabel">Offcanvas right</h5> --}}
       <div class="d-flex align-items-center">
@@ -217,7 +216,8 @@
                 <span class="d-none d-sm-inline">收藏</span>
               </button>
             </div>
-            <img src="{{ $a->Picture1 ?? 'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg' }}"
+            <img
+              src="{{ $a->image[0]->url ?? 'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg' }}"
               alt="{{ $a->Picdescribe1 }}" class="h-100 card-img-top img-fluid" />
           </div>
           <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-auto">
