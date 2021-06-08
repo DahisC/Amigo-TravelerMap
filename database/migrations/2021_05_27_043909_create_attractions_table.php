@@ -19,9 +19,9 @@ class CreateAttractionsTable extends Migration
             $table->string('website')->nullable();
             $table->string('tel')->nullable();
             $table->longText('description');
-            $table->string('ticket_info');
-            $table->longText('traffic_info');
-            $table->string('parking_info');
+            $table->string('ticket_info')->default('');
+            $table->longText('traffic_info')->default('');
+            $table->string('parking_info')->default('');
 
             $table->unsignedBigInteger('user_id')->default(0)->index()->comment('店家的user_id');
             $table->foreign('user_id')
