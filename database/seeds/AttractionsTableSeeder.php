@@ -6,6 +6,7 @@ use App\Attraction;
 use App\AttractionImage;
 use App\AttractionOpentime;
 use App\AttractionPosition;
+use App\AttractionTag;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 
@@ -43,6 +44,7 @@ class AttractionsTableSeeder extends Seeder
                 'py' => $a['Py'] ?? '',
                 'attraction_id' => $attraction->id
             ]);
+
 
             for ($i = 1; $i <= 3; $i++) {
                 $image_url = $a["Picture$i"];
