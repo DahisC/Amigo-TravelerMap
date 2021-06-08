@@ -25,36 +25,31 @@ Route::get('/user/{id?}', function ($id = 2) {
     return 'hey' . $id;
 })->name('user.show');
 
-//主頁
+// 主頁
 Route::view('/', 'index')->name('homepage');
 
 // 地圖
-Route::resource('/maps', 'MapController');
+Route::resource('maps', 'MapController');
+
+// 地點
+Route::resource('attractions', 'AttractionController')->except(['index', 'show']);
 
 // 登入
 Route::view('/sign-in', 'sign-in')->name('sign-in');
-//註冊
+// 註冊
 Route::view('/sign-up', 'sign-up')->name('sign-up');
 
 // 個人頁面
 //as 是name
 Route::group([
-    'prefix' => 'travelers',
+    'prefix' => 'traveler',
     'as' => 'traveler.'
 ], function () {
     Route::get('/', 'AmigoController@create')->name('index');
     Route::get('/profile', 'AmigoController@create')->name('profile');
     Route::get('/maps', 'AmigoController@index')->name('maps');
     //商人
-    Route::resource('/attractions', 'AttractionController')->except('show');
-    //middleware ??
-    // Route::group([
-    //     'prefix' => 'user',
-    //     'as' => 'user',
-    //     'middleware' => 'auth.user'
-    // ], function () {
-    //     Route::get('/', 'AmigoController@traveler');
-    // });
+    Route::resource('/attractions', 'Traveler\AttractionController')->only(['index', 'create']);
 });
 
 
@@ -64,8 +59,12 @@ Route::group([
 Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']);
 
 // 後台
-Route::prefix('backstage')->middleware('auth')->group(function () {
-    Route::view('/', 'backstage.index')->name('backstage');
+Route::group([
+    'prefix' => 'backstage',
+    'as' => 'backstage.',
+    'middleware' => 'auth'
+], function () {
+    Route::view('/', 'backstage.index')->name('index');
     Route::resource('/maps', 'Backstage\MapController');
 });
 
