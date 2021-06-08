@@ -29441,11 +29441,9 @@ module.exports = function(module) {
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Lodash & Axios
+// require('./leaflet'); // Leaflet & Leaflet Marker Cluster
 
-__webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
-
-__webpack_require__(/*! mdb-ui-kit */ "./node_modules/mdb-ui-kit/js/mdb.min.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js"); // window.Vue = require('vue');
 
@@ -29484,17 +29482,20 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
-// try {
-//     window.Popper = require('popper.js').default;
-//     window.$ = window.jQuery = require('jquery');
-//     require('bootstrap');
-// } catch (e) {}
 
+try {
+  // window.Popper = require('popper.js').default;
+  // window.$ = window.jQuery = require('jquery');
+  __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+
+  __webpack_require__(/*! mdb-ui-kit */ "./node_modules/mdb-ui-kit/js/mdb.min.js");
+} catch (e) {}
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
+
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -29525,15 +29526,27 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/sass/leaflet.scss":
+/*!*************************************!*\
+  !*** ./resources/sass/leaflet.scss ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!*******************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/leaflet.scss ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! D:\Coding\Amigo-TravelerMap\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Coding\Amigo-TravelerMap\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Coding\Amigo-TravelerMap\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\Coding\Amigo-TravelerMap\resources\sass\leaflet.scss */"./resources/sass/leaflet.scss");
 
 
 /***/ })
