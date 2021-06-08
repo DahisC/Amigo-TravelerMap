@@ -46,6 +46,7 @@
 </div>
 
 @section('js')
+  @parent
   <script>
     function data() {
       return {

@@ -8,9 +8,9 @@
   {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css    " /> --}}
   <!-- 引入Leaflet  -->
   <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
+  {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"> --}}
 
   <style>
     /*  */
@@ -61,7 +61,7 @@
 
     nav {
       /* background: linear-gradient(40deg, var(--bs-primary), var(--bs-secondary)); */
-      background: url('images/sign-in.png') center center;
+      background: url("{{ asset('images/sign-in.png') }}") center center;
       background-size: cover;
       width: fit-content;
       height: fit-content;
@@ -194,23 +194,16 @@
   <div class="test position-fixed d-flex flex-row flex-sm-column justify-content-between align-items-center p-3">
     <div class="logo rounded-circle bg-dark shadow"></div>
     <nav class="rounded-pill d-flex flex-row flex-sm-column shadow">
-
-
       <a class="nav-icon" data-bs-toggle="modal" data-bs-target="#search-attraction-modal" href="">
         <i class="fas fa-feather-alt"></i>
       </a>
-
-
       <a class="nav-icon" href="">
         <i class="fas fa-user-plus"></i>
       </a>
-
       <hr class="mx-3" />
-
       <a class="nav-icon search" href="">
         <i class="fas fa-crosshairs"></i>
       </a>
-
       {{-- <a class="nav-icon d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
         aria-controls="offcanvasRight">
         <i class="fas fa-search"></i>
@@ -222,7 +215,7 @@
     </nav>
   </div>
 
-  <div class="offcanvas offcanvas-custom bg-white" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas offcanvas-custom bg-white" id="offcanvasRight" data-bs-backdrop="false">
     <div class="offcanvas-header">
       {{-- <h5 id="offcanvasRightLabel">Offcanvas right</h5> --}}
       <div class="d-flex align-items-center">
@@ -255,7 +248,7 @@
     <div class="p-3 p-sm-4  overflow-auto d-flex flex-row flex-sm-column">
       {{--  --}}
       @foreach ($attractions->take(10) as $a)
-        <div class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 flex-shrink-0">
+        <div class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 shadow">
           <div class="attraction-card__top position-relative shadow flex-shrink-0">
             <div class="position-absolute w-100 h-100">
               <div>
@@ -272,15 +265,16 @@
               src="{{ $a->image[0]->url ?? 'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg' }}"
               alt="{{ $a->Picdescribe1 }}" class="h-100 card-img-top img-fluid" />
           </div>
-          <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-auto">
+          <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-hidden">
             <h6 class="text-primary">{{ $a->name }}</h6>
-            <p class="card-text" style="font-size: 0.9rem;">{{ $a->description }}</p>
+            <p class="card-text overflow-hidden" style="font-size: 0.9rem;">{{ $a->description }}</p>
             <div class="d-flex">
               <button type="button" class="btn btn-primary btn-sm me-2 w-100 guide">
                 <i class="fas fa-fw fa-map-marker-alt"></i>
                 <span class="d-none d-sm-inline">地圖標示</span>
               </button>
-              <button type="button" class="btn btn-outline-primary btn-sm w-100">
+              <button type="button" class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
                 <i class="fas fa-fw fa-book-open"></i>
                 <span class="d-none d-sm-inline">詳細資訊</span>
               </button>
@@ -291,6 +285,26 @@
     </div>
   </div>
 
+  {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div> --}}
+
+
+
   @include('partials.maps.search-attraction-modal', compact('tags'))
   {{-- @include('partials.maps.create-map-modal') --}}
 
@@ -299,11 +313,27 @@
 @endsection
 
 @section('js')
+  {{-- <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script> --}}
+  <script>
+    var map = L.map('mapid').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([51.5, -0.09]).addTo(map)
+      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+      .openPopup();
+
+  </script>
+@endsection
+
+{{-- @section('js')
   <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
 
   <script>
-    //地圖      
+    //地圖
     let mymap = L.map("mapid").setView([23.8759391, 120.588669], 8);
     var map = L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -373,15 +403,15 @@
     }
     const guideToBtn = document.querySelectorAll('.guide');
     guideToBtn.forEach(function(value, index) {
-          value.setAttribute('data-index', index);
-          value.addEventListener('click', function() {
-            var dataindex = this.getAttribute("data-index");
-            mymap.flyTo([data[dataindex].Py, data[dataindex].Px], 15, {
-              animate: true,
-              duration: 2
-            });
-          })
-        })
+      value.setAttribute('data-index', index);
+      value.addEventListener('click', function() {
+        var dataindex = this.getAttribute("data-index");
+        mymap.flyTo([data[dataindex].Py, data[dataindex].Px], 15, {
+          animate: true,
+          duration: 2
+        });
+      })
+    })
 
   </script>
-@endsection
+@endsection --}}

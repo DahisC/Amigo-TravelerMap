@@ -106,7 +106,7 @@
                 style="background: url(https://www.deachsword.com/db/sinoalice/images/character/134) top center no-repeat; background-size: cover;">
               </div>
               <hr />
-              <small class="text-danger">※你將無法在網站中建立自己的活動</small>
+              <small class="text-danger">※無法在網站中建立自己的活動</small>
             </div>
 
             <div class="role-card d-flex flex-column ms-sm-3 py-2 px-sm-3 px-md-5 py-md-3 rounded">
@@ -122,7 +122,7 @@
                 style="background: url(https://www.deachsword.com/db/sinoalice/images/character/278) top center no-repeat; background-size: cover;">
               </div>
               <hr />
-              <small class="text-success">※你將可以在網站中建立自己的活動</small>
+              <small class="text-success">※可以在網站中建立自己的活動</small>
             </div>
 
           </div>
@@ -143,7 +143,7 @@
                       <div class="form-outline mb-4">
                         <input id="register-form__name" type="text"
                           class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"
-                          required placeholder="暱稱" />
+                          required />
                         <label for="register-form__name" class="form-label">
                           <i class="fas fa-fw fa-user me-1"></i>
                           暱稱
@@ -159,7 +159,7 @@
                       <div class="form-outline mb-4">
                         <input id="register-form__email" type="email"
                           class="form-control @error('email') is-invalid @enderror" name="email"
-                          value="{{ old('email') }}" required placeholder="Email" />
+                          value="{{ old('email') }}" required />
                         <label for="register-form__email" class="form-label">
                           <i class="fas fa-fw fa-envelope me-1"></i>
                           Email
@@ -175,8 +175,7 @@
                         <div class="col">
                           <div class="form-outline">
                             <input id="register-form__password" type="password"
-                              class="form-control @error('password') is-invalid @enderror" name="password" required
-                              placeholder="密碼" />
+                              class="form-control @error('password') is-invalid @enderror" name="password" required />
                             <label for="register-form__password" class="form-label">
                               <i class="fas fa-fw fa-key me-1"></i>
                               密碼
@@ -192,7 +191,7 @@
                         <div class="col mb-4">
                           <div class="form-outline">
                             <input id="register-form__password-confirm" type="password" class="form-control"
-                              name="password_confirmation" required placeholder="確認密碼" />
+                              name="password_confirmation" required />
                             <label for="register-form__password-confirm" class="form-label">
                               確認密碼
                             </label>
