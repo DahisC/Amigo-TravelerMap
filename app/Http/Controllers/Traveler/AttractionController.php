@@ -1,23 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Traveler;
 
-use App\Tag;
-use App\Attraction;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class MapController extends Controller
+class AttractionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $attractions = Attraction::with('tags', 'position', 'image')->get();
-        $tags = Tag::get();
-        return view('maps.index', compact('attractions', 'tags'));
+        //
     }
 
     /**
@@ -27,8 +24,7 @@ class MapController extends Controller
      */
     public function create()
     {
-        $action = 'Create';
-        return view('maps.factory', compact('action'));
+        return view('traveler.attractions.factory');
     }
 
     /**
@@ -39,7 +35,7 @@ class MapController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('maps.edit', ['map' => 5]);
+        //
     }
 
     /**
@@ -61,8 +57,7 @@ class MapController extends Controller
      */
     public function edit($id)
     {
-        $action = 'Edit';
-        return view('maps.factory', compact('action'));
+        //
     }
 
     /**

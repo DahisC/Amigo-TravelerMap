@@ -8,6 +8,10 @@
   {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css    " /> --}}
   <!-- 引入Leaflet  -->
   <link rel="stylesheet" href="{{ asset('vendor/leaflet/leaflet.css') }}" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
+
   <style>
     /*  */
 
@@ -62,6 +66,54 @@
       width: fit-content;
       height: fit-content;
     }
+
+    /* marker group */
+    .marker-cluster-small {
+      background-color: rgba(181, 226, 140, 0.6);
+    }
+
+    .marker-cluster-small div {
+      background-color: rgba(110, 204, 57, 0.6);
+    }
+
+    .marker-cluster-medium {
+      background-color: rgba(241, 211, 87, 0.6);
+    }
+
+    .marker-cluster-medium div {
+      background-color: rgba(240, 194, 12, 0.6);
+    }
+
+    .marker-cluster-large {
+      background-color: rgba(253, 156, 115, 0.6);
+    }
+
+    .marker-cluster-large div {
+      background-color: rgba(241, 128, 23, 0.6);
+    }
+
+    .marker-cluster {
+      background-clip: padding-box;
+      border-radius: 20px;
+    }
+
+    .marker-cluster div {
+      width: 30px;
+      height: 30px;
+      margin-left: 5px;
+      margin-top: 5px;
+
+      text-align: center;
+      border-radius: 15px;
+      font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+    }
+
+    .marker-cluster span {
+      line-height: 30px;
+    }
+
+    /* marker group */
+
 
     /* Custom offCanvas */
     @media (min-width: 576px) {
@@ -155,7 +207,7 @@
 
       <hr class="mx-3" />
 
-      <a class="nav-icon" href="">
+      <a class="nav-icon search" href="">
         <i class="fas fa-crosshairs"></i>
       </a>
 
@@ -170,8 +222,7 @@
     </nav>
   </div>
 
-  <div class="offcanvas offcanvas-custom bg-white" tabindex="-1" id="offcanvasRight"
-    aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas offcanvas-custom bg-white" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
       {{-- <h5 id="offcanvasRightLabel">Offcanvas right</h5> --}}
       <div class="d-flex align-items-center">
@@ -217,15 +268,15 @@
                 <span class="d-none d-sm-inline">收藏</span>
               </button>
             </div>
-            <img src="{{ $a->Picture1 ?? 'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg' }}"
-              alt="{{ $a->Picdescribe1 }}" class="h-100 card-img-top img-fluid"
-              alt="當整個東海岸被層層的消坡塊鎖住時，綿延兩公里長的水璉牛山，卻散發出難能可貴的自然光采" />
+            <img
+              src="{{ $a->image[0]->url ?? 'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg' }}"
+              alt="{{ $a->Picdescribe1 }}" class="h-100 card-img-top img-fluid" />
           </div>
           <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-auto">
             <h6 class="text-primary">{{ $a->name }}</h6>
             <p class="card-text" style="font-size: 0.9rem;">{{ $a->description }}</p>
             <div class="d-flex">
-              <button type="button" class="btn btn-primary btn-sm me-2 w-100">
+              <button type="button" class="btn btn-primary btn-sm me-2 w-100 guide">
                 <i class="fas fa-fw fa-map-marker-alt"></i>
                 <span class="d-none d-sm-inline">地圖標示</span>
               </button>
@@ -240,25 +291,7 @@
     </div>
   </div>
 
-  <div class="fade modal" id="page-modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">搜尋景點</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  @include('partials.maps.search-attraction-modal')
+  @include('partials.maps.search-attraction-modal', compact('tags'))
   {{-- @include('partials.maps.create-map-modal') --}}
 
   <!-- 地圖 -->
@@ -267,10 +300,11 @@
 
 @section('js')
   <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
 
   <script>
-    //地圖
-    var mymap = L.map("mapid").setView([24.194, 120.54535], 15);
+    //地圖      
+    let mymap = L.map("mapid").setView([23.8759391, 120.588669], 8);
     var map = L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -279,12 +313,75 @@
         tileSize: 512,
         zoomOffset: -1,
         accessToken: "pk.eyJ1IjoiYWN0aXZpdGExNTkiLCJhIjoiY2tvcGRiZWlzMGJ1ODJ2a2hoamd0MGsxbyJ9.Kpk1ux9XXckK6NPE-qPhlw",
-
       }
     );
-
     map.addTo(mymap);
+
+    //縮放功能放左下角
     mymap.zoomControl.setPosition("bottomleft");
+
+    //icon 樣式
+    const customIcon = L.icon({
+      iconUrl: "./images/lovelyicon.png",
+      iconSize: [50, 50],
+    });
+
+    //搜尋本地位置
+    const searchBtn = document.querySelector('.search');
+    searchBtn.addEventListener('click', function() {
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          let latitude = position.coords.latitude;
+          let longitude = position.coords.longitude;
+          console.log(typeof latitude);
+          mymap.flyTo([latitude, longitude], 15, {
+            animate: true,
+            duration: 2
+          });
+          var marker = L.marker([latitude, longitude], {
+            draggable: true,
+            autoPan: true,
+            autoPanPadding: [200, 200],
+            autoPanSpeed: 25,
+            icon: customIcon,
+          }).addTo(mymap);
+        });
+      } else {
+        x.innerHTML = "抱歉！瀏覽器不支援Geolocation";
+      }
+    })
+
+    // function error(err) {
+    //   console.warn(`ERROR(${err.code}): ${err.message}`);
+    // }
+
+    var object = {!! json_encode($attractions->toArray()) !!};
+    var markers = new L.MarkerClusterGroup().addTo(mymap);
+    var data = [];
+    for (var i = 0; i < object.length; i++) {
+      data.push({
+        "Name": object[i].name,
+        "Px": object[i].position.px,
+        "Py": object[i].position.py,
+        "Tel": object[i].tel,
+        "Add": object[i].position.address
+      })
+      markers.addLayer(L.marker([data[i].Py, data[i].Px], {
+        icon: customIcon
+      }).bindPopup(`<b>${data[i].Name}</b><br>${data[i].Tel}<br>${data[i].Add}`));
+    }
+    const guideToBtn = document.querySelectorAll('.guide');
+    guideToBtn.forEach(function(value, index) {
+          value.setAttribute('data-index', index);
+          value.addEventListener('click', function() {
+            var dataindex = this.getAttribute("data-index");
+            mymap.flyTo([data[dataindex].Py, data[dataindex].Px], 15, {
+              animate: true,
+              duration: 2
+            });
+          })
+        })
 
   </script>
 @endsection
