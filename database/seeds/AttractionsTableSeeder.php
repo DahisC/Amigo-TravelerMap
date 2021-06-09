@@ -54,7 +54,7 @@ class AttractionsTableSeeder extends Seeder
                 };
                 AttractionImage::create([
                     'url' => $image_url,
-                    'image_desc' => $image_desc,
+                    'image_desc' => $image_desc ?? '',
                     'attraction_id' => $attraction->id
                 ]);
             }
