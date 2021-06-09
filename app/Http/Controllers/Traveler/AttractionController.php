@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Traveler;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
+
 
 class AttractionController extends Controller
 {
@@ -36,6 +38,7 @@ class AttractionController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**

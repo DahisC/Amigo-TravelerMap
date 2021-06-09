@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backstage;
 use App\Attraction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use GuzzleHttp;
 
 class MapController extends Controller
 {
@@ -15,8 +16,8 @@ class MapController extends Controller
      */
     public function index()
     {
-        $attractions = Attraction::with('tags','position','images')->get();
-        return view('backstage.index',compact('attractions'));
+        $attractions = Attraction::with('tags', 'position', 'images')->get();
+        return view('backstage.index', compact('attractions'));
     }
 
     /**

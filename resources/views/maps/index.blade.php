@@ -207,7 +207,7 @@
         <i class="fas fa-search"></i>
       </a> --}}
       <a class="nav-icon" href="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-        aria-controls="offcanvasRight">
+         aria-controls="offcanvasRight">
         <i class="fas fa-search"></i>
       </a>
     </nav>
@@ -245,7 +245,7 @@
     <hr class="my-0" />
     <div class="p-3 p-sm-4  overflow-auto d-flex flex-row flex-sm-column">
       {{--  --}}
-      @foreach ($attractions->take(10) as $a)
+      @foreach ($attractions as $a)
         <div class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 shadow">
           <div class="attraction-card__top position-relative shadow flex-shrink-0">
             <div class="position-absolute w-100 h-100">
@@ -254,14 +254,13 @@
                 <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span>
               </div>
               <button type="button" class="btn btn-primary btn-sm position-absolute end-0 bottom-0 m-2"
-                style="font-size: 0.8rem;">
+                      style="font-size: 0.8rem;">
                 <i class="far fa-star"></i>
                 <span class="d-none d-sm-inline">收藏</span>
               </button>
             </div>
-            <img
-              src="{{ $a->image[0]->url ?? 'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg' }}"
-              alt="{{ $a->Picdescribe1 }}" class="h-100 card-img-top img-fluid" />
+            <img src="{{ $a->images[0]->url ?? 'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg' }}"
+                 alt="{{ $a->Picdescribe1 }}" class="h-100 card-img-top img-fluid" />
           </div>
           <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-hidden">
             <h6 class="text-primary">{{ $a->name }}</h6>
@@ -272,7 +271,7 @@
                 <span class="d-none d-sm-inline">地圖標示</span>
               </button>
               <button type="button" class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
+                      data-bs-target="#exampleModal">
                 <i class="fas fa-fw fa-book-open"></i>
                 <span class="d-none d-sm-inline">詳細資訊</span>
               </button>
@@ -283,6 +282,7 @@
     </div>
   </div>
 
+  @include('partials.maps.attraction-detail-modal')
   @include('partials.maps.search-attraction-modal', compact('tags'))
   {{-- @include('partials.maps.create-map-modal') --}}
 
@@ -294,6 +294,10 @@
   <script src="{{ asset('js/leaflet.js') }}"></script>
 
   <script>
+    // window.onload = () => {
+    //   getUserPositionQueryString();
+    // }
+
     const map = L.map('traveler-map').setView([51.505, -0.09], 13);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -320,11 +324,32 @@
     });
 
     userMarker.addEventListener('moveend', function() {
-      console.log(this.getLatLng());
+      const position = this.getLatLng();
+      updateUserPositionQueryString([position.lat, position.lng]);
     });
 
-    function updateUserPositionField() {
+    // function getUserPositionQueryString() {
+    //   const url = new URL(window.location.href);
+    //   const params = new URLSearchParams(url.search);
+    //   const px = params.get('px');
+    //   const py = params.get('py');
+    //   if (px && py) flyToUserPosition([py, px], false);
+    // }
 
+    function updateUserPositionQueryString([px, py]) {
+      const url = new URL(window.location.href);
+      const params = new URLSearchParams(url.search);
+      params.set('px', px);
+      params.set('py', py);
+      window.location.replace(url.origin + url.pathname + '?' + params);
+    }
+
+    function flyToUserPosition(userPosition = []) {
+      map.flyTo(userPosition, 15, {
+        animate: true,
+        duration: 2
+      });
+      userMarker.setLatLng(userPosition).setOpacity(1).addTo(map);
     }
 
     function locateUser(e) {
@@ -340,11 +365,7 @@
             longitude
           } = position.coords;
           const userPosition = [latitude, longitude];
-          map.flyTo(userPosition, 15, {
-            animate: true,
-            duration: 2
-          });
-          userMarker.setLatLng(userPosition).setOpacity(1).addTo(map);
+          flyToUserPosition(userPosition);
         };
 
         const locateFailedHandler = () => {
