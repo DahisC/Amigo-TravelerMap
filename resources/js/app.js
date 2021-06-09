@@ -4,8 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
- require('./bootstrap');
-// require('bootstrap');
+require('./bootstrap'); // Lodash & Axios
+// require('./leaflet'); // Leaflet & Leaflet Marker Cluster
+require('alpinejs');
 
 // window.Vue = require('vue');
 

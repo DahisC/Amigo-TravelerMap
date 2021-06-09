@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateActivitiesRequest;
 
 class AttractionController extends Controller
 {
@@ -32,9 +33,12 @@ class AttractionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateActivitiesRequest $request)
     {
-        //
+        dd(122222223);
+        // CreateActivities
+        dd($request->session());
+        dd($request->all());
     }
 
     /**

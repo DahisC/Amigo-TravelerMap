@@ -13,6 +13,6 @@ class AttractionImage extends Model
     ];
     public function Attraction()
     {
-        return $this->belongsTo('App\Attraction');
+        return $this->belongsTo('App\Attraction')->withDefault();
     }
 }
