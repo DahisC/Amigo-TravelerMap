@@ -18,6 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 //如果取attraction他會先連外面的controller 我才加api
-Route::name('api')->namespace('API')->group(function(){
+Route::name('api')->group(function(){
    Route::apiResource('attractions','API\AttractionController');
 });
