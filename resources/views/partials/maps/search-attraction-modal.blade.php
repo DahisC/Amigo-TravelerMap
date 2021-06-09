@@ -2,11 +2,11 @@
 
 
 <!-- Modal -->
-<div class="fade modal" id="search-attraction-modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="fade modal" id="search-attraction-modal">
   <div class="modal-dialog modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">尋找有趣的地點</h5>
+        <h5 class="modal-title" id="exampleModalLabel">發現有趣的地點</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal2" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -23,7 +23,7 @@
                 <div class="form-text text-end"><span id="range_displayer" class="me-1">1</span>公里內</div>
               </div>
               {{--  --}}
-              @include('partials.form.select-city-county')
+              @include('partials.form.select-city-county', ['defaultCity' => '', 'defaultArea' => ''])
               {{--  --}}
               <div class="col-12">
                 <label for="search-form__input_range" class="form-label">標籤</label>

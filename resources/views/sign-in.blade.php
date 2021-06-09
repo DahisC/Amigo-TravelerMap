@@ -61,12 +61,12 @@
                 </label>
                 @error('email')
                   <div class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
+                    <strong><small>{{ $message }}</small></strong>
                   </div>
                 @enderror
               </div>
               {{-- 輸入密碼欄位 --}}
-              <div class="form-outline mb-4">
+              <div class="form-outline my-4">
                 <input id="login-form__password" type="password"
                   class="form-control @error('password') is-invalid @enderror" name="password" required />
                 <label class="form-label" for="login-form__password">
@@ -81,7 +81,7 @@
               </div>
               {{-- 記住我 --}}
               <div class="row mb-4">
-                <div class="col-6">
+                <div class="col-6 d-flex align-items-center">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
                     <label class="form-check-label" for="form1Example3">
@@ -89,19 +89,21 @@
                     </label>
                   </div>
                 </div>
-
                 <div class="col-6 text-end">
-                  @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}">
-                      <small>我忘記密碼了！</small>
-                    </a>
-                  @endif
-                </div>
-
-                <div class="col-12 text-end">
-                  <a href="{{ route('sign-up') }}">
-                    <small>先註冊一個帳號</small>
-                  </a>
+                  <div class="row">
+                    <div class="col-12">
+                      @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}">
+                          <small>我忘記密碼了！</small>
+                        </a>
+                      @endif
+                    </div>
+                    <div class="col-12">
+                      <a href="{{ route('sign-up') }}">
+                        <small>先註冊一個帳號</small>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
 

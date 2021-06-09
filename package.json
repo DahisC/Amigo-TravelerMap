@@ -11,11 +11,14 @@
     },
     "devDependencies": {
         "@popperjs/core": "^2.9.2",
+        "alpinejs": "^2.8.2",
         "axios": "^0.19",
         "bootstrap": "^5.0.1",
         "cross-env": "^7.0",
         "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
+        "leaflet": "^1.7.1",
+        "leaflet.markercluster": "^1.5.0",
         "lodash": "^4.17.13",
         "mdb-ui-kit": "^3.6.0",
         "popper.js": "^1.12",
@@ -25,7 +28,5 @@
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
     },
-    "dependencies": {
-        "alpinejs": "^2.8.2"
-    }
+    "dependencies": {}
 }
