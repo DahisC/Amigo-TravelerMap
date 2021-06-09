@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Backstage;
+namespace App\Http\Controllers\API;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Map;
 
-class MapController extends Controller
+class AttractionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,17 +14,6 @@ class MapController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-       $maps = Map::with(['user','attractions'])->get();
-       return view('backstage.maps.index',compact('maps'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         //
     }
@@ -37,7 +26,16 @@ class MapController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $client = new Client();
+        $request = $client->get('https://maps.googleapis.com/maps/api/geocode/json', [
+            'query' => [
+                'address' => '中興大學',
+                'key' => 'AIzaSyDzlrWxUgqiX2s22EHfVBdtRmWCj2c77g4'
+            ],
+        ]);
+        $response = json_decode($request->getBody());
+        dd($response);
     }
 
     /**
@@ -47,17 +45,6 @@ class MapController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }
