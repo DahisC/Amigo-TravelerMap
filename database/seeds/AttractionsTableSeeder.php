@@ -48,7 +48,7 @@ class AttractionsTableSeeder extends Seeder
                 $image_url = $a["Picture$i"];
                 $image_desc = $a["Picdescribe$i"];
                 if (empty($image_url)) {
-                    $image_url = '/images' . '/AttractionImg' . '/noImg' . '/noImg.' . 'jpg';
+                    break;
                 };
                 AttractionImage::create([
                     'url' => $image_url,

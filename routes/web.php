@@ -42,8 +42,8 @@ Route::view('/sign-up', 'sign-up')->name('sign-up');
 // 個人頁面
 //as 是name
 Route::group([
-    'prefix' => 'traveler',
-    'as' => 'traveler.'
+    'prefix' => 'travelers',
+    'as' => 'travelers.'
 ], function () {
     Route::get('/', 'AmigoController@create')->name('index');
     Route::get('/profile', 'AmigoController@create')->name('profile');

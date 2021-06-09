@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -11,13 +12,13 @@ class Attraction extends Model
     protected $table = 'attractions';
 
     protected $fillable = [
-        'name', 'website', 'tel', 'description', 'ticket_info', 'traffic_info', 'parking_info','user_id',
+        'name', 'website', 'tel', 'description', 'ticket_info', 'traffic_info', 'parking_info', 'user_id',
     ];
     public function position()
     {
         return $this->hasOne('App\AttractionPosition');
     }
-    public function image()
+    public function images()
     {
         return $this->hasMany('App\AttractionImage');
     }
@@ -27,10 +28,10 @@ class Attraction extends Model
     }
     public function maps()
     {
-        return $this->belongsToMany('App\Map','map_attraction','attraction_id','map_id')->withTimestamps();
+        return $this->belongsToMany('App\Map', 'map_attraction', 'attraction_id', 'map_id')->withTimestamps();
     }
     public function users()
     {
-        return $this->belongsToMany('App\User','user_attraction','attraction_id','user_id')->withTimestamps();
+        return $this->belongsToMany('App\User', 'user_attraction', 'attraction_id', 'user_id')->withTimestamps();
     }
 }
