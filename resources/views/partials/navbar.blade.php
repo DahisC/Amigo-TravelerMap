@@ -25,7 +25,7 @@
     </li>
     @if (Auth::check())
       <li>
-        <a href="{{ route('traveler.index') }}">{{ Auth::user()->name }}</a>
+        <a href="{{ route('travelers.index') }}">{{ Auth::user()->name }}</a>
       </li>
       <li>
         <a href="#" onclick="logout_form.submit();">
