@@ -17,7 +17,7 @@ class AttractionController extends Controller
     public function index(Request $request)
     {
         if ($request->lat && $request->lng) {
-            $attractions = Attraction::queryNearbyAttractions($request->lat, $request->lng, 10)->get();
+            $attractions = Attraction::queryNearbyAttractions($request->lat, $request->lng, 3)->with('position')->get();
         } else {
             $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
         }
