@@ -10,6 +10,22 @@
           {{-- Page 2 地點資訊：country region town address traffic_info parking_info --}}
           {{-- Page 2 聯絡資訊：tel website --}}
           <p class="bg-warning">（Page 1 上半）聯絡資訊：tel website</p>
+
+          {{-- 錯誤訊息 --}}
+          @if (count($errors) > 0)
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
+
+
+
+
+
           <div class="form-outline mb-4">
             <input type="text" class="form-control" name="website"
               value="https://www.facebook.com/85%E5%BA%A6c%E8%88%88%E5%A4%A7%E5%9C%93%E5%BB%B3%E5%BA%97-695997840771603/" />
@@ -31,23 +47,15 @@
             <input type="file" class="form-control" id="attraction-form__image" name="image_url" />
           </div>
           <div class="form-outline mb-4">
-            <input type="text" class="form-control" data-mdb-showcounter="true" maxlength="50" name="name"
+            <input type="text" class="form-control" name="name" data-mdb-showcounter="true" maxlength="50" 
               value="要不要去８５？" />
             <label class="form-label">名稱</label>
             <div class="form-helper"></div>
           </div>
           <div class="form-outline mb-4">
-            <textarea class="form-control" rows="4" name="description" data-mdb-showcounter="true" maxlength="500">
-陟彼北山，言采其杞；偕偕士子，朝夕從事；王事靡盬，憂我父母。
-溥天之下，莫非王土；率土之濱，莫非王臣；大夫不均，我從事獨賢。
-四牡彭彭，王事傍傍；嘉我未老，鮮我方將；旅力方剛，經營四方。
-或燕燕居息，或盡瘁事國；或息偃在床，或不已於行。
-或不知叫號，或慘慘劬（qú）勞；或棲遲偃仰，或王事鞅掌。
-或湛樂飲酒，或慘慘畏咎；或出入風議，或靡事不為。
-                </textarea>
-            <label class="form-label">
-              介紹
-            </label>
+            <input type="text" class="form-control" name="description" data-mdb-showcounter="true" maxlength="500" value="說拜託阿" />
+            <label class="form-label">介紹</label>
+
             <div class="form-helper"></div>
           </div>
           <div class="form-outline mb-4">

@@ -6,6 +6,7 @@ use App\Attraction;
 use App\AttractionImage;
 use App\AttractionOpentime;
 use App\AttractionPosition;
+use App\AttractionTag;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 
@@ -44,6 +45,7 @@ class AttractionsTableSeeder extends Seeder
                 'attraction_id' => $attraction->id
             ]);
 
+
             for ($i = 1; $i <= 3; $i++) {
                 $image_url = $a["Picture$i"];
                 $image_desc = $a["Picdescribe$i"];
@@ -60,6 +62,7 @@ class AttractionsTableSeeder extends Seeder
             if (!empty($a['Keyword'])) {
                 $tags = preg_split("/[、|,|，]+/u", $a['Keyword']);
                 foreach ($tags as $tag) {
+                    $tag = str_replace(' ', '', $tag); // 解決 API 中部份 tag 會有空白的問題
                     $attraction_tag = Tag::firstOrCreate(['name' => $tag], factory(App\Tag::class)->raw(['name' => $tag]));
                     $attraction->tags()->attach($attraction_tag);
                 }
