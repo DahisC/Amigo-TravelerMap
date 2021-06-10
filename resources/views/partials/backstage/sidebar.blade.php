@@ -39,8 +39,8 @@
     <div id="database-users" class="collapse">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">頁面</h6>
-        <a class="collapse-item" href="#">列表 List</a>
-        <a class="collapse-item" href="#">新增 Create</a>
+        <a class="collapse-item" href="{{route('backstage.users.index')}}">列表 List</a>
+        <a class="collapse-item" href="{{route('backstage.users.create')}}">新增 Create</a>
       </div>
     </div>
   </li>
@@ -54,8 +54,8 @@
     <div id="database-maps" class="collapse">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">頁面</h6>
-        <a class="collapse-item" href="#">列表 List</a>
-        <a class="collapse-item" href="#">新增 Create</a>
+        <a class="collapse-item" href="{{route('backstage.maps.index')}}">列表 List</a>
+        <a class="collapse-item" href="{{route('backstage.maps.create')}}">新增 Create</a>
       </div>
     </div>
   </li>
@@ -69,8 +69,8 @@
     <div id="database-attractions" class="collapse">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">頁面</h6>
-        <a class="collapse-item" href="#">列表 List</a>
-        <a class="collapse-item" href="#">新增 Create</a>
+        <a class="collapse-item" href="{{route('backstage.attractions.index')}}">列表 List</a>
+        <a class="collapse-item" href="{{route('backstage.attractions.create')}}">新增 Create</a>
       </div>
     </div>
   </li>
