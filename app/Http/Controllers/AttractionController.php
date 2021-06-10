@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateActivitiesRequest;
+use GuzzleHttp\Client;
 
 class AttractionController extends Controller
 {
@@ -35,10 +36,15 @@ class AttractionController extends Controller
      */
     public function store(CreateActivitiesRequest $request)
     {
-        dd(122222223);
-        // CreateActivities
-        dd($request->session());
-        dd($request->all());
+        $client = new Client();
+        $request = $client->get('https://maps.googleapis.com/maps/api/geocode/json', [
+            'query' => [
+                'address' => '中興大學',
+                'key' => 'AIzaSyDzlrWxUgqiX2s22EHfVBdtRmWCj2c77g4'
+            ],
+        ]);
+        $response = json_decode($request->getBody());
+        dd($response);
     }
 
     /**

@@ -19,8 +19,8 @@ class CreateAttractionPositionsTable extends Migration
             $table->string('region');
             $table->string('town');
             $table->string('address');
-            $table->decimal('px',9,6);
-            $table->decimal('py',8,6);
+            $table->decimal('lat', 8, 6);
+            $table->decimal('lng', 9, 6);
 
             $table->unsignedBigInteger('attraction_id')->index();
             $table->foreign('attraction_id')
