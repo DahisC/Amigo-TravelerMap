@@ -26,7 +26,6 @@ class AttractionController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**

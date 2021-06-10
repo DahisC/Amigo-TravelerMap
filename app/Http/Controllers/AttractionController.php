@@ -35,10 +35,6 @@ class AttractionController extends Controller
      */
     public function store(CreateActivitiesRequest $request)
     {
-        dd(122222223);
-        // CreateActivities
-        dd($request->session());
-        dd($request->all());
     }
 
     /**

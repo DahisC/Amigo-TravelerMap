@@ -67,7 +67,6 @@ Route::group([
     'middleware' => 'auth'
 ], function () {
     Route::view('/', 'backstage.index')->name('index');
-    Route::resource('/maps', 'Backstage\MapController');
     Route::resource('/users','Backstage\UserController');
     Route::resource('/attractions','Backstage\AttractionController');
 });

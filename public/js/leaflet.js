@@ -16895,7 +16895,6 @@ __webpack_require__(/*! leaflet.markercluster */ "./node_modules/leaflet.markerc
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Amigo-TravelerMap\resources\js\leaflet.js */"./resources/js/leaflet.js");
 
 
 /***/ })

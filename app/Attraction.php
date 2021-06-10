@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -33,5 +32,16 @@ class Attraction extends Model
     public function users()
     {
         return $this->belongsToMany('App\User', 'user_attraction', 'attraction_id', 'user_id')->withTimestamps();
+    }
+    public function scopeQueryNearbyAttractions($query, $lat, $lng, $distance = 0.5)
+    {
+        $squarePoints = helpers::getSquarePoint($lat, $lng, $distance);
+        $latFrom = $squarePoints[1]['lat'];
+        $latTo = $squarePoints[0]['lat'];
+        $lngFrom = $squarePoints[0]['lng'];
+        $lngTo = $squarePoints[1]['lng'];
+        return $query->whereHas('position', function ($positionQuery) use ($latFrom, $latTo, $lngFrom, $lngTo) {
+            $positionQuery->whereBetween('lat', [$latFrom, $latTo])->whereBetween('lng', [$lngFrom, $lngTo]);
+        });
     }
 }
