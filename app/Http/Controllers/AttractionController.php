@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Requests\CreateActivitiesRequest;
 use Illuminate\Support\Facades\Storage;
 
-use GuzzleHttp;
+use GuzzleHttp\Client;
 
 
 class AttractionController extends Controller

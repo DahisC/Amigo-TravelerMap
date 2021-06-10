@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Facades\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateActivitiesRequest extends FormRequest
+class AttractionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,18 +21,10 @@ class CreateActivitiesRequest extends FormRequest
      *
      * @return array
      */
-    // public function rules()
-    // {
-
-    //     return [
-    //         //
-    //     ];
-    // }
-
     public function rules()
-{
-    return [
-        //詳細內容
+    {
+        return [
+             //詳細內容
         'name'   => 'required|max:50|min:3',
         'website'=> 'nullable|string|active_url',
         'tel'    => 'nullable|string',
@@ -50,6 +41,6 @@ class CreateActivitiesRequest extends FormRequest
         'address' => 'required|string',
         'url'     => 'nullable|image|size:10240',  //驗證欄位檔案必須為圖片格式（ jpeg、png、bmp、gif、或 svg ）。  測試完改required
         'image_desc'  => 'nullable|string|max:300',
-    ];
-}
+        ];
+    }
 }

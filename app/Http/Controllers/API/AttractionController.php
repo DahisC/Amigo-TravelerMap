@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Attraction;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,9 +14,15 @@ class AttractionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->lat && $request->lng) {
+            $attractions = Attraction::queryNearbyAttractions($request->lat, $request->lng, 3)->with('position')->get();
+        } else {
+            $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
+        }
+        // $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
+        return response(compact('attractions'));
     }
 
     /**

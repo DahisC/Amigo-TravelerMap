@@ -6,9 +6,9 @@
 
 require('./bootstrap'); // Lodash & Axios
 // require('./leaflet'); // Leaflet & Leaflet Marker Cluster
-require('alpinejs');
+// require('alpinejs');
 
-// window.Vue = require('vue');
+window.Vue = require('vue');
 
 /**
  * The following block of code may be used to automatically register your

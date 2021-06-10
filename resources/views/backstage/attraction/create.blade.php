@@ -1,0 +1,1 @@
+@include('traveler.attractions.factory')

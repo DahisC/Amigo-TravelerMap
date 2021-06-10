@@ -40,8 +40,8 @@ class AttractionsTableSeeder extends Seeder
                 'region' => $a['Region'] ?? '',
                 'town' => $a['Town'] ?? '',
                 'address' => $a['Add'] ?? '',
-                'px' => $a['Px'] ?? '',
-                'py' => $a['Py'] ?? '',
+                'lng' => $a['Px'] ?? '',
+                'lat' => $a['Py'] ?? '',
                 'attraction_id' => $attraction->id
             ]);
 
