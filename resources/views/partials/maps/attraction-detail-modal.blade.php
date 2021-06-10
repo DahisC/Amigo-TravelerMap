@@ -2,6 +2,7 @@
 
 
 <!-- Modal -->
+
 <div class="fade modal" id="search-attraction-modal">
   <div class="modal-dialog modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -18,7 +19,7 @@
                 <label for="search-form__input_range" class="form-label">距離</label>
                 <div class="range text-primary">
                   <input type="range" class="form-range" min="1" max="10" step="0.5" value="1"
-                    id="search-form__input_range" onchange="range_displayer.textContent = this.value" name="range">
+                         id="search-form__input_range" onchange="range_displayer.textContent = this.value" name="range">
                 </div>
                 <div class="form-text text-end"><span id="range_displayer" class="me-1">1</span>公里內</div>
               </div>
@@ -28,20 +29,20 @@
               <div class="col-12">
                 <label for="search-form__input_range" class="form-label">標籤</label>
                 {{-- <div class="input-group mb-3">
-                  <button class="btn btn-primary dropdown-toggle" type="button" data-mdb-toggle="dropdown">
-                    標籤
-                  </button>
-                  <ul class="dropdown-menu">
-                    @foreach ($tags->take(10) as $tag)
-                      <li class="p-2"><a class="dropdown-item" href="#"
-                          onclick="input_tag1.value = this.textContent">{{ $tag->name }}</a></li>
-                    @endforeach
-                  </ul>
-                  <input id="input_tag1" type="text" class="form-control text-center" name="tag" />
-                </div> --}}
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-mdb-toggle="dropdown">
+                      標籤
+                    </button>
+                    <ul class="dropdown-menu">
+                      @foreach ($tags->take(10) as $tag)
+                        <li class="p-2"><a class="dropdown-item" href="#"
+                            onclick="input_tag1.value = this.textContent">{{ $tag->name }}</a></li>
+                      @endforeach
+                    </ul>
+                    <input id="input_tag1" type="text" class="form-control text-center" name="tag" />
+                  </div> --}}
                 <div class="input-group mb-3">
                   <button class="btn btn-primary dropdown-toggle" type="button" data-mdb-toggle="dropdown"
-                    aria-expanded="false">
+                          aria-expanded="false">
                     Dropdown
                   </button>
                   <ul class="dropdown-menu">

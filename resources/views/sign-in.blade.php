@@ -41,43 +41,47 @@
   <div class="container">
     <div class="row justify-content-center align-items-center h-100">
       <div class="col-10 col-sm-8 col-md-6 col-lg-5">
-        <div class="card">
-          {{-- <div class="card-body text-center h2 mb-0">
-            <div>
-              <span>Hola!</span>
+        <div class="card p-4">
+          @if (count($errors) > 0)
+            <div class="alert alert-danger" role="alert">
+              <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
             </div>
-          </div> --}}
-          <hr class="my-0" />
-          <div class="card-body p-4">
+            <hr class="my-0" />
+          @endif
+          <div class="card-body px-0">
             <form method="POST" action="{{ route('login') }}">
               @csrf
               {{-- 輸入信箱欄位 --}}
               <div class="form-outline mb-4">
                 <input id="login-form__email" type="email" class="form-control @error('email') is-invalid @enderror"
-                  name="email" value="{{ old('email') }}" required autofocus />
+                       name="email" value="{{ old('email') }}" required autofocus />
                 <label class="form-label" for="login-form__email">
                   <i class="fas fa-fw fa-envelope me-1"></i>
                   Email
                 </label>
-                @error('email')
+                {{-- @error('email')
                   <div class="invalid-feedback" role="alert">
                     <strong><small>{{ $message }}</small></strong>
                   </div>
-                @enderror
+                @enderror --}}
               </div>
               {{-- 輸入密碼欄位 --}}
               <div class="form-outline my-4">
                 <input id="login-form__password" type="password"
-                  class="form-control @error('password') is-invalid @enderror" name="password" required />
+                       class="form-control @error('password') is-invalid @enderror" name="password" required />
                 <label class="form-label" for="login-form__password">
                   <i class="fas fa-fw fa-key me-1"></i>
                   Password
                 </label>
-                @error('password')
+                {{-- @error('password')
                   <div class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                   </div>
-                @enderror
+                @enderror --}}
               </div>
               {{-- 記住我 --}}
               <div class="row mb-4">
@@ -106,7 +110,6 @@
                   </div>
                 </div>
               </div>
-
               <button type="submit" class="btn btn-primary btn-block">登入</button>
             </form>
           </div>

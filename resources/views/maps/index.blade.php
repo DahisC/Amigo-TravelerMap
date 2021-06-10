@@ -189,103 +189,107 @@
 @endsection
 
 @section('content')
-  <div class="test position-fixed d-flex flex-row flex-sm-column justify-content-between align-items-center p-3">
-    <div class="logo rounded-circle bg-dark shadow"></div>
-    <nav class="rounded-pill d-flex flex-row flex-sm-column shadow">
-      <a class="nav-icon" data-bs-toggle="modal" data-bs-target="#search-attraction-modal" href="">
-        <i class="fas fa-feather-alt"></i>
-      </a>
-      <a class="nav-icon" href="">
-        <i class="fas fa-user-plus"></i>
-      </a>
-      <hr class="mx-3" />
-      <a id="btn_locateSelf" class="nav-icon" href="">
-        <i class="fas fa-crosshairs"></i>
-      </a>
-      {{-- <a class="nav-icon d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-        aria-controls="offcanvasRight">
-        <i class="fas fa-search"></i>
-      </a> --}}
-      <a class="nav-icon" href="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-         aria-controls="offcanvasRight">
-        <i class="fas fa-search"></i>
-      </a>
-    </nav>
-  </div>
-
-  <div class="offcanvas offcanvas-custom bg-white" id="offcanvasRight" data-bs-backdrop="false">
-    <div class="offcanvas-header">
-      {{-- <h5 id="offcanvasRightLabel">Offcanvas right</h5> --}}
-      <div class="d-flex align-items-center">
-        {{-- <span class="badge rounded bg-primary me-1">
-          <i class="fas fa-fw fa-search"></i>
-          條件：
-        </span> --}}
-        {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
-            Launch demo modal
-          </button> --}}
-        <a class="nav-icon mx-1" href="#" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
+  <div id="app" class="h-100">
+    <div class="test position-fixed d-flex flex-row flex-sm-column justify-content-between align-items-center p-3">
+      <div class="logo rounded-circle bg-dark shadow"></div>
+      <nav class="rounded-pill d-flex flex-row flex-sm-column shadow">
+        <a class="nav-icon" data-bs-toggle="modal" data-bs-target="#search-attraction-modal" href="">
+          <i class="fas fa-feather-alt"></i>
+        </a>
+        <a class="nav-icon" href="">
+          <i class="fas fa-user-plus"></i>
+        </a>
+        <hr class="mx-3" />
+        <a id="btn_locateSelf" class="nav-icon" href="">
+          <i class="fas fa-crosshairs"></i>
+        </a>
+        {{-- <a class="nav-icon d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight">
+                <i class="fas fa-search"></i>
+              </a> --}}
+        <a class="nav-icon" href="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+           aria-controls="offcanvasRight">
           <i class="fas fa-search"></i>
         </a>
-        <span class="badge rounded-pill bg-primary mx-1">
-          景點
-          <i class="fas fa-fw fa-times"></i>
-        </span>
-        <span class="badge rounded-pill bg-primary mx-1">
-          自然環境
-          <i class="fas fa-fw fa-times"></i>
-        </span>
-        <span class="badge rounded-pill bg-primary mx-1">
-          人為藝術
-          <i class="fas fa-fw fa-times"></i>
-        </span>
-      </div>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </nav>
     </div>
-    <hr class="my-0" />
-    <div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-sm-column">
-      {{--  --}}
-      <div v-for="attraction in attractions" class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 shadow">
-        <div class="attraction-card__top position-relative shadow flex-shrink-0">
-          <div class="position-absolute w-100 h-100">
-            <div>
-              <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
-              <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span>
+
+    <div class="offcanvas offcanvas-custom bg-white" id="offcanvasRight" data-bs-backdrop="false">
+      <div class="offcanvas-header">
+        {{-- <h5 id="offcanvasRightLabel">Offcanvas right</h5> --}}
+        <div class="d-flex align-items-center">
+          {{-- <span class="badge rounded bg-primary me-1">
+                  <i class="fas fa-fw fa-search"></i>
+                  條件：
+                </span> --}}
+          {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
+                    Launch demo modal
+                  </button> --}}
+          <a class="nav-icon mx-1" href="#" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
+            <i class="fas fa-search"></i>
+          </a>
+          <span class="badge rounded-pill bg-primary mx-1">
+            景點
+            <i class="fas fa-fw fa-times"></i>
+          </span>
+          <span class="badge rounded-pill bg-primary mx-1">
+            自然環境
+            <i class="fas fa-fw fa-times"></i>
+          </span>
+          <span class="badge rounded-pill bg-primary mx-1">
+            人為藝術
+            <i class="fas fa-fw fa-times"></i>
+          </span>
+        </div>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <hr class="my-0" />
+      <div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-sm-column">
+        {{--  --}}
+        <div v-for="attraction in attractions" class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 shadow">
+          <div class="attraction-card__top position-relative shadow flex-shrink-0">
+            <div class="position-absolute w-100 h-100">
+              <div>
+                <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
+                <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span>
+              </div>
+              <button type="button" class="btn btn-primary btn-sm position-absolute end-0 bottom-0 m-2"
+                      style="font-size: 0.8rem;">
+                <i class="far fa-star"></i>
+                <span class="d-none d-sm-inline">收藏</span>
+              </button>
             </div>
-            <button type="button" class="btn btn-primary btn-sm position-absolute end-0 bottom-0 m-2"
-                    style="font-size: 0.8rem;">
-              <i class="far fa-star"></i>
-              <span class="d-none d-sm-inline">收藏</span>
-            </button>
+            <img :src="'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg'"
+                 class="h-100 card-img-top img-fluid" />
           </div>
-          <img :src="'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg'"
-               class="h-100 card-img-top img-fluid" />
-        </div>
-        <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-hidden">
-          <h6 class="text-primary">@{{ attraction . name }}</h6>
-          <p class="card-text overflow-hidden" style="font-size: 0.9rem;">@{{ attraction . description }}</p>
-          <div class="d-flex">
-            <button type="button" class="btn btn-primary btn-sm me-2 w-100 guide">
-              <i class="fas fa-fw fa-map-marker-alt"></i>
-              <span class="d-none d-sm-inline">地圖標示</span>
-            </button>
-            <button type="button" class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">
-              <i class="fas fa-fw fa-book-open"></i>
-              <span class="d-none d-sm-inline">詳細資訊</span>
-            </button>
+          <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-hidden">
+            <h6 class="text-primary">@{{ attraction . name }}</h6>
+            <p class="card-text overflow-hidden" style="font-size: 0.9rem;">@{{ attraction . description }}</p>
+            <div class="d-flex">
+              <button type="button" class="btn btn-primary btn-sm me-2 w-100 guide">
+                <i class="fas fa-fw fa-map-marker-alt"></i>
+                <span class="d-none d-sm-inline">地圖標示</span>
+              </button>
+              <button type="button" class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal"
+                      data-bs-target="#exampleModal">
+                <i class="fas fa-fw fa-book-open"></i>
+                <span class="d-none d-sm-inline">詳細資訊</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    @include('partials.maps.attraction-detail-modal')
+    {{-- @include('partials.maps.search-attraction-modal', compact('tags')) --}}
+    {{-- @include('partials.maps.create-map-modal') --}}
+
+    <!-- 地圖 -->
+    <div id="traveler-map"></div>
   </div>
 
-  @include('partials.maps.attraction-detail-modal')
-  @include('partials.maps.search-attraction-modal', compact('tags'))
-  {{-- @include('partials.maps.create-map-modal') --}}
 
-  <!-- 地圖 -->
-  <div id="traveler-map"></div>
+
 @endsection
 
 @section('js')
@@ -389,9 +393,10 @@
 
     /* Vue */
     $vue = new Vue({
-      el: '#test',
+      el: '#app',
       data: {
-        attractions
+        attractions,
+        attractionDetailTarget: {}
       },
       methods: {
         updateAttractions(attractions) {
