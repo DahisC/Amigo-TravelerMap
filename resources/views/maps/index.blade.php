@@ -52,15 +52,10 @@
       margin: 10px;
     }
 
-
-    .test {
-      z-index: 2;
-    }
-
     nav {
       /* background: linear-gradient(40deg, var(--bs-primary), var(--bs-secondary)); */
-      background: url("{{ asset('images/sign-in.png') }}") center center;
-      background-size: cover;
+      /* background: url("{{ asset('images/sign-in.png') }}") center center; */
+      /* background-size: cover; */
       width: fit-content;
       height: fit-content;
     }
@@ -118,15 +113,6 @@
       .logo {
         width: 80px;
         height: 80px;
-      }
-
-      .nav-icon {
-        width: 40px;
-        height: 40px;
-      }
-
-      .nav-icon>i {
-        font-size: 20px;
       }
 
       .offcanvas-custom {
@@ -191,40 +177,31 @@
 @section('content')
   <div id="app" class="h-100">
     <div class="test position-fixed d-flex flex-row flex-sm-column justify-content-between align-items-center p-3">
-      <div class="logo rounded-circle bg-dark shadow"></div>
-      <nav class="rounded-pill d-flex flex-row flex-sm-column shadow">
-        <a class="nav-icon" data-bs-toggle="modal" data-bs-target="#search-attraction-modal" href="">
+      <div class="logo rounded-circle shadow bg-primary"></div>
+      <nav class="rounded-pill d-flex flex-row flex-sm-column shadow p-1">
+        <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="modal"
+                data-bs-target="#search-attraction-modal">
           <i class="fas fa-feather-alt"></i>
-        </a>
-        <a class="nav-icon" href="">
+        </button>
+        <button type="button" class="btn btn-primary btn-floating m-1">
           <i class="fas fa-user-plus"></i>
-        </a>
-        <hr class="mx-3" />
-        <a id="btn_locateSelf" class="nav-icon" href="">
+        </button>
+        <hr class="mx-2" />
+        <button type="button" class="btn btn-primary btn-floating m-1" onclick="locateUser(event)">
           <i class="fas fa-crosshairs"></i>
-        </a>
-        {{-- <a class="nav-icon d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                aria-controls="offcanvasRight">
-                <i class="fas fa-search"></i>
-              </a> --}}
-        <a class="nav-icon" href="" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-           aria-controls="offcanvasRight">
+        </button>
+        <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
           <i class="fas fa-search"></i>
-        </a>
+        </button>
       </nav>
     </div>
 
+    <div id="traveler-map"></div>
+
     <div class="offcanvas offcanvas-custom bg-white" id="offcanvasRight" data-bs-backdrop="false">
       <div class="offcanvas-header">
-        {{-- <h5 id="offcanvasRightLabel">Offcanvas right</h5> --}}
         <div class="d-flex align-items-center">
-          {{-- <span class="badge rounded bg-primary me-1">
-                  <i class="fas fa-fw fa-search"></i>
-                  條件：
-                </span> --}}
-          {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
-                    Launch demo modal
-                  </button> --}}
           <a class="nav-icon mx-1" href="#" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
             <i class="fas fa-search"></i>
           </a>
@@ -245,7 +222,6 @@
       </div>
       <hr class="my-0" />
       <div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-sm-column">
-        {{--  --}}
         <div v-for="attraction in attractions" class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 shadow">
           <div class="attraction-card__top position-relative shadow flex-shrink-0">
             <div class="position-absolute w-100 h-100">
@@ -280,12 +256,9 @@
         </div>
       </div>
     </div>
-    @include('partials.maps.attraction-detail-modal')
+    {{-- @include('partials.maps.attraction-detail-modal') --}}
     {{-- @include('partials.maps.search-attraction-modal', compact('tags')) --}}
     {{-- @include('partials.maps.create-map-modal') --}}
-
-    <!-- 地圖 -->
-    <div id="traveler-map"></div>
   </div>
 
 
@@ -298,6 +271,21 @@
   <script>
     /* 後端變數 */
     const attractions = {!! json_encode($attractions->toArray()) !!};
+
+    /* Vue */
+    $vue = new Vue({
+      el: '#app',
+      data: {
+        attractions,
+        attractionDetailTarget: {}
+      },
+      methods: {
+        updateAttractions(attractions) {
+          this.attractions = attractions;
+        }
+      }
+    });
+
     /* Leaflet 設置 */
     const map = L.map('traveler-map').setView([24.124508620246154, 120.67601680755617], 15);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -330,7 +318,7 @@
 
     /* Leaflet 處理函式 */
     // 定位自己
-    btn_locateSelf.addEventListener('click', locateUser);
+    // btn_locateSelf.addEventListener('click', locateUser);
 
     function locateUser(e) {
       e.preventDefault();
@@ -390,20 +378,6 @@
         }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
       })
     }
-
-    /* Vue */
-    $vue = new Vue({
-      el: '#app',
-      data: {
-        attractions,
-        attractionDetailTarget: {}
-      },
-      methods: {
-        updateAttractions(attractions) {
-          this.attractions = attractions;
-        }
-      }
-    });
 
 
 
