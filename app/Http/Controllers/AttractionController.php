@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use App\Http\Requests\CreateActivitiesRequest;
+use Illuminate\Support\Facades\Storage;
+
+use GuzzleHttp;
+
 
 class AttractionController extends Controller
 {
@@ -35,10 +40,27 @@ class AttractionController extends Controller
      */
     public function store(CreateActivitiesRequest $request)
     {
-        dd(122222223);
-        // CreateActivities
-        dd($request->session());
+        //地點轉Px、Py
+        // $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
+        //     'language' => 'zh-TW',
+        //     'address' => $request->address,
+        //     'key' => 'AIzaSyDzlrWxUgqiX2s22EHfVBdtRmWCj2c77g4',
+        // ]);
+        $client = new \GuzzleHttp\Client();
+        $request = $client->request('GET', 'https://maps.googleapis.com/maps/api/geocode/json', [
+            'language' => 'zh-TW',
+            'address' => '中興大學',
+            'key' => 'AIzaSyDzlrWxUgqiX2s22EHfVBdtRmWCj2c77g4',
+        ]);
+        $response = $request->getBody();
+
+        
+        dd($response);
+        // dd($response.json_encode());
+
         dd($request->all());
+
+        // Storage::
     }
 
     /**

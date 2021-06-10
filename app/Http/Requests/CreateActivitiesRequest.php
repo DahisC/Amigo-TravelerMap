@@ -35,7 +35,7 @@ class CreateActivitiesRequest extends FormRequest
     return [
         //詳細內容
         'name'   => 'required|max:50|min:3',
-        'website'=> ['nullable','string','regex:/^https*:/'],
+        'website'=> 'nullable|string|active_url',
         'tel'    => 'nullable|string',
         'description ' => 'nullable|max:500', //pretend驗證欄位一定要有值，但可為空值。  !!應為required!!
         'ticket_info'  => 'nullable|string|max:300',
