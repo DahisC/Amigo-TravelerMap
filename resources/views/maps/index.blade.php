@@ -226,7 +226,8 @@
               <span class="d-none d-sm-inline">收藏</span>
             </button>
           </div>
-          <img :src="'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg'" class="h-100 card-img-top img-fluid" />
+          <img v-if="attraction.images[0]" :src="attraction.images[0].url" class="h-100 card-img-top img-fluid" />
+          <img v-else :src="'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg'" class="h-100 card-img-top img-fluid" />
         </div>
         <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-hidden">
           <h6 class="text-primary">@{{ attraction . name }}</h6>
@@ -272,6 +273,7 @@
     methods: {
       updateAttractions(attractions) {
         this.attractions = attractions;
+        console.log(this.attractions);
       }
     }
   });
@@ -291,7 +293,8 @@
   map.zoomControl.setPosition("bottomleft");
 
   // 使用者 Marker 外觀
-  const userIcon = L.icon({ iconUrl: "./images/lovelyicon.png", iconSize: [50, 50], });
+  const userIcon = L.icon({ iconUrl: "images/map/050-street-view.png", iconSize: [30, 30], });
+  const viewIcon = L.icon({ iconUrl: "images/map/023-pin-10.png", iconSize: [30, 30], });
 
   // 使用者 Marker 物件
   const userMarker = L.marker([0, 0], {
@@ -305,7 +308,6 @@
 
   /* Leaflet 處理函式 */
   // 定位自己
-  // btn_locateSelf.addEventListener('click', locateUser);
   locateUser();
 
   function locateUser() {
@@ -347,7 +349,7 @@
     const markers = new L.MarkerClusterGroup().addTo(map);
     attractions.forEach(a => {
       markers.addLayer(L.marker([a.position.lat, a.position.lng], {
-        icon: userIcon
+        icon: viewIcon
       }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
     })
   }
