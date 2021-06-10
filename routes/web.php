@@ -68,6 +68,8 @@ Route::group([
 ], function () {
     Route::view('/', 'backstage.index')->name('index');
     Route::resource('/maps', 'Backstage\MapController');
+    Route::resource('/users','Backstage\UserController');
+    Route::resource('/attractions','Backstage\AttractionController');
 });
 
 // 前端測試用路由
