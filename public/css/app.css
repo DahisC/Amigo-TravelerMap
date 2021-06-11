@@ -1,4 +1,25 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap);@charset "UTF-8";
+
+/* 思源黑體 */
+
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap'); */
+
+/* 思源宋體 */
+
+/* @import url('https://fonts.googleapis.com/css?family=Noto+Serif+TC&amp;display=swap'); */
+
+@font-face {
+  font-family: Huninn;
+  src: url(/fonts/jf-openhuninn-1.1.ttf?e9ac35c6bbbe38b480fcce7f72d26c9d);
+}
+
+*:not(i) {
+  font-family: "Huninn", "Noto Sans TC", sans-serif !important;
+}
+
+.range .thumb:after {
+  background: var(--mdb-primary);
+}
 
 :root {
   --mdb-blue: #0d6efd;

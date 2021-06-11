@@ -333,8 +333,7 @@
 
       const locateSuccessHandler = (position) => {
         const { latitude: lat, longitude: lng } = position.coords;
-        console.log(customPosition);
-        if (customPosition) flyToUserPosition({ lat: customPosition.lat, lng: customPosition.lng }) // for Testing
+        if (customPosition.lat && customPosition.lng) flyToUserPosition({ lat: customPosition.lat, lng: customPosition.lng })
         else flyToUserPosition({ lat, lng });
       };
 
@@ -346,7 +345,7 @@
     }
 
     function flyToUserPosition({ lat, lng }) {
-      map.flyTo([lat, lng], 15, { /* animate: true, duration: 2 */ });
+      map.flyTo([lat, lng], 15);
       userMarker.setLatLng([lat, lng]).setOpacity(1).addTo(map);
       onUserMarkerMoved({ lat, lng });
     }
@@ -372,56 +371,5 @@
       }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
     })
   }
-
-
-
-
-  // function getUserPositionQueryString() {
-  //   const url = new URL(window.location.href);
-  //   const params = new URLSearchParams(url.search);
-  //   const px = params.get('px');
-  //   const py = params.get('py');
-  //   if (px && py) flyToUserPosition([py, px], false);
-  // }
-
-  // function updateUserPositionQueryString([px, py]) {
-  //   const url = new URL(window.location.href);
-  //   const params = new URLSearchParams(url.search);
-  //   params.set('px', px);
-  //   params.set('py', py);
-  //   window.location.replace(url.origin + url.pathname + '?' + params);
-  // }
-
-
-
-
-
-
-
-  // var data = [];
-  // for (var i = 0; i < object.length; i++) {
-  //   data.push({
-  //     "Name": object[i].name,
-  //     "Px": object[i].position.px,
-  //     "Py": object[i].position.py,
-  //     "Tel": object[i].tel,
-  //     "Add": object[i].position.address
-  //   })
-  //   markers.addLayer(L.marker([data[i].Py, data[i].Px], {
-  //     icon: customIcon
-  //   }).bindPopup(`<b>${data[i].Name}</b><br>${data[i].Tel}<br>${data[i].Add}`));
-  // }
-
-  // const guideToBtn = document.querySelectorAll('.guide');
-  // guideToBtn.forEach(function(value, index) {
-  //   value.setAttribute('data-index', index);
-  //   value.addEventListener('click', function() {
-  //     var dataindex = this.getAttribute("data-index");
-  //     mymap.flyTo([data[dataindex].Py, data[dataindex].Px], 15, {
-  //       animate: true,
-  //       duration: 2
-  //     });
-  //   })
-  // })
 </script>
 @endsection
