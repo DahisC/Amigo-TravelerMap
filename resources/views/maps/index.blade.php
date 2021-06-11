@@ -218,27 +218,27 @@
         <div class="attraction-card__top position-relative shadow flex-shrink-0">
           <div class="position-absolute w-100 h-100">
             <div>
-              <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
-              <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span>
+              <span v-for="tag in attraction.tags" class="badge d-block m-2" style="width: fit-content;" :style="{ 'background-color': tag.color }">@{{ tag.name }}</span>
+              {{-- <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
+              <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
             </div>
             <button type="button" class="btn btn-primary btn-sm position-absolute end-0 bottom-0 m-2" style="font-size: 0.8rem;">
               <i class="far fa-star"></i>
               <span class="d-none d-sm-inline">收藏</span>
             </button>
           </div>
-          <img v-if="attraction.images[0]" :src="attraction.images[0].url" class="h-100 card-img-top img-fluid" />
+          <img v-if="attraction.images.length !== 0" :src="attraction.images[0].url" class="h-100 card-img-top img-fluid" />
           <img v-else :src="'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg'" class="h-100 card-img-top img-fluid" />
         </div>
         <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-hidden">
           <h6 class="text-primary">@{{ attraction . name }}</h6>
-          <p class="card-text overflow-hidden" style="font-size: 0.9rem;">@{{ attraction . description }}
-          </p>
+          <p class="card-text overflow-hidden" style="font-size: 0.9rem;">@{{ attraction . description }}</p>
           <div class="d-flex">
             <button type="button" class="btn btn-primary btn-sm me-2 w-100 guide">
               <i class="fas fa-fw fa-map-marker-alt"></i>
               <span class="d-none d-sm-inline">地圖標示</span>
             </button>
-            <button type="button" class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#attraction-detail-modal" v-on:click="detailTarget = attraction">
               <i class="fas fa-fw fa-book-open"></i>
               <span class="d-none d-sm-inline">詳細資訊</span>
             </button>
@@ -247,9 +247,27 @@
       </div>
     </div>
   </div>
-  {{-- @include('partials.maps.attraction-detail-modal') --}}
-  {{-- @include('partials.maps.search-attraction-modal', compact('tags')) --}}
-  {{-- @include('partials.maps.create-map-modal') --}}
+  @include('partials.maps.attraction-detail-modal')
+  {{-- <div class="fade modal" id="attraction-detail-modal">
+    <div class="modal-dialog modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">@{{ attraction.name }}</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal2" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+  123
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal2">取消</button>
+  <button type="button" class="btn btn-primary" onclick="search_form.submit();">搜尋</button>
+</div>
+</div>
+</div>
+</div> --}}
+
+{{-- @include('partials.maps.search-attraction-modal', compact('tags')) --}}
+{{-- @include('partials.maps.create-map-modal') --}}
 </div>
 
 
@@ -268,18 +286,17 @@
     el: '#app',
     data: {
       attractions: [],
-      attractionDetailTarget: {}
+      detailTarget: {}
     },
     methods: {
       updateAttractions(attractions) {
         this.attractions = attractions;
-        console.log(this.attractions);
       }
     }
   });
 
   /* Leaflet 設置 */
-  const map = L.map('traveler-map').setView([24.124508620246154, 120.67601680755617], 15);
+  const map = L.map('traveler-map').setView([24.131871399999998, 120.67749420000001], 15);
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -308,15 +325,17 @@
 
   /* Leaflet 處理函式 */
   // 定位自己
-  locateUser();
+  locateUser({ lat: 22.627278, lng: 120.301435 });
 
-  function locateUser() {
+  function locateUser(customPosition) {
     if (navigator.geolocation) {
       const options = { enableHighAccuracy: true };
 
       const locateSuccessHandler = (position) => {
         const { latitude: lat, longitude: lng } = position.coords;
-        flyToUserPosition({ lat, lng });
+        console.log(customPosition);
+        if (customPosition) flyToUserPosition({ lat: customPosition.lat, lng: customPosition.lng }) // for Testing
+        else flyToUserPosition({ lat, lng });
       };
 
       const locateFailedHandler = () => { alert('定位失敗。'); };
@@ -327,7 +346,7 @@
     }
 
     function flyToUserPosition({ lat, lng }) {
-      map.flyTo([lat, lng], 15, { animate: true, /* duration: 2 */ });
+      map.flyTo([lat, lng], 15, { /* animate: true, duration: 2 */ });
       userMarker.setLatLng([lat, lng]).setOpacity(1).addTo(map);
       onUserMarkerMoved({ lat, lng });
     }
@@ -353,8 +372,6 @@
       }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
     })
   }
-
-
 
 
 
