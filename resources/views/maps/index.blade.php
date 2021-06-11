@@ -392,12 +392,6 @@
   //   window.location.replace(url.origin + url.pathname + '?' + params);
   // }
 
-
-
-
-
-
-
   // var data = [];
   // for (var i = 0; i < object.length; i++) {
   //   data.push({
