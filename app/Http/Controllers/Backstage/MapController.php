@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backstage;
 
+use App\Map;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,6 +15,8 @@ class MapController extends Controller
      */
     public function index()
     {
+        $maps = Map::with(['user', 'attractions'])->get();
+        return view('backstage.maps.index', compact('maps'));
     }
 
     /**

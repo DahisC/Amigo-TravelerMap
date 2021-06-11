@@ -37,6 +37,9 @@
         @else
           <option selected value="">選擇</option>
         @endif
+        <template v-if="selectedCityName !== ''"
+                  v-for="area of cityCounty.find(c => c.CityName === selectedCityName).AreaList">
+          <option v-on:click="selectedArea = area">@{{ area . AreaName }}</option>
         </template>
       </select>
     </div>
