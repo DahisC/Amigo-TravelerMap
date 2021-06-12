@@ -24,8 +24,13 @@
         <tr>
           <th>Id</th>
           <th>Name</th>
-          <th>Address</th>
-          <th>ActionButton</th>
+          <th>website</th>
+          <th>tel</th>
+          <th>description</th>
+          <th>ticket_info</th>
+          <th>traffic_info</th>
+          <th>parking_info</th>
+          <th>user_id</th>
         </tr>
       </thead>
       @foreach ($attractions as $attraction)
@@ -34,10 +39,26 @@
           <tr>
             <td>{{$attraction->id}}</td>
             <td>{{$attraction->name}}</td>
-            <td>{{$attraction->position->address}}</td>
+            <td>{{$attraction->website}}</td>
+            <td>{{$attraction->tel}}</td>
+            <td>{{$attraction->description}}</td>
+            <td>{{$attraction->ticket_info}}</td>
+            <td>{{$attraction->traffic_info}}</td>
+            <td>{{$attraction->parking_info}}</td>
+            <td>{{$attraction->user_id}}</td>
             <td>
-              <button type="button">Edit</button>
-              <button type="button">Delete</button>
+              <a href="{{ route('backstage.attractions.edit',[ 'attraction'=>$attraction->id]) }}">
+                <button>編輯</button>
+            </a>
+
+            <button class="btn btn-danger btn-sm delete-btn"
+                            data-id="#delete_{{ $attraction->id }}">刪除</button>
+
+            <form id="delete_{{ $attraction->id }}" action="{{ route('backstage.attractions.destroy',[ 'attraction'=>$attraction->id]) }}" method="POST"
+                class="d-none">
+                @csrf
+                @method('DElETE')
+            </form>
             </td>
           </tr>
         </tbody>
