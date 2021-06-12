@@ -15,8 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users =  User::with(['maps','attractions'])->get();
-        return view('backstage.users.index',compact('users'));
+        $users =  User::get();
+        return view('backstage.users.index', compact('users'));
     }
 
     /**
@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('backstage.users.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create($request->all());
     }
 
     /**
@@ -59,7 +59,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('backstage.users.edit',compact('user'));
     }
 
     /**
@@ -71,7 +72,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->update($request->all());
     }
 
     /**
