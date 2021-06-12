@@ -39,7 +39,7 @@ class AttractionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AttractionRequest $request)
     {
         $attraction = Attraction::create([
             'user_id' => auth()->user()->id,
@@ -105,7 +105,7 @@ class AttractionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AttractionRequest $request, $id)
     {
         $attraction = Attraction::find($id);
         $attraction->update($request->all());
