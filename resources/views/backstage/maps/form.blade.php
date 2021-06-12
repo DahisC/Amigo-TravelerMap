@@ -13,15 +13,3 @@
   @endif
 </div>
 
-<div class="form-group">
-  <label for="">使用者ID</label>
-  <input type="number" name="user_id"
-  value="{{ old('user_id', optional($map ?? null)->user_id) }}"
-    class="form-control{{ $errors->has('user_id') ? '   is-invalid' : '' }}" required>
-
-  @if ($errors->has('user_id'))
-    <span class="invalid-feedback">
-      <strong>{{ $errors->first('user_id') }}</strong>
-    </span>
-  @endif
-</div>

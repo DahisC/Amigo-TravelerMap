@@ -85,6 +85,21 @@
 
   </script>
 
+<script>
+
+  window.onload = () => {
+      document.querySelectorAll('.delete-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+
+              const id = this.getAttribute('data-id');
+              if (confirm('是否刪除')) {
+                  document.querySelector(id).submit();
+              }
+          });
+      })
+  }
+</script>
+
 </body>
 
 </html>

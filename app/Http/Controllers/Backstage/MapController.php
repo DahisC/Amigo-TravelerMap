@@ -38,7 +38,10 @@ class MapController extends Controller
      */
     public function store(MapRequest $request)
     {
-        Map::create($request->all());
+        Map::create([
+            'user_id'=>auth()->user()->id,
+            'name'=>$request->name
+        ]);
         return redirect()->route('backstage.maps.index');
     }
 
@@ -74,7 +77,7 @@ class MapController extends Controller
      */
     public function update(MapRequest $request, $id)
     {
-        Map::find($id)->update($request->all());
+        Map::findOrFail($id)->update($request->all());
         return redirect()->route('backstage.maps.index');
     }
 
@@ -86,7 +89,7 @@ class MapController extends Controller
      */
     public function destroy($id)
     {
-        Map::find($id)->delete();
+        Map::findOrFail($id)->delete();
         return redirect()->route('backstage.maps.index');
     }
 }
