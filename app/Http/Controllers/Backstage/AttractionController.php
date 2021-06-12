@@ -15,7 +15,7 @@ class AttractionController extends Controller
      */
     public function index()
     {
-        $attractions = Attraction::with('tags','position','images')->get();
+        $attractions = Attraction::get()->take(10);
         return view('backstage.attractions.index',compact('attractions'));
     }
 

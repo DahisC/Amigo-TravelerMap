@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backstage;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -35,9 +36,10 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         User::create($request->all());
+        return redirect()->route('backstage.users.index');
     }
 
     /**
@@ -70,10 +72,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $user = User::find($id);
-        $user->update($request->all());
+       User::find($id)->update($request->all());
+       return redirect()->route('backstage.users.index');
     }
 
     /**
@@ -84,6 +86,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+       User::find($id)->delete();
     }
 }
