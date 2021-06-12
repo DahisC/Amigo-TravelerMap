@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backstage;
 use App\Map;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MapRequest;
 
 class MapController extends Controller
 {
@@ -35,9 +36,10 @@ class MapController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MapRequest $request)
     {
         Map::create($request->all());
+        return redirect()->route('backstage.maps.index');
     }
 
     /**
@@ -70,10 +72,10 @@ class MapController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MapRequest $request, $id)
     {
-        $map = Map::find($id);
-        $map->update($request->all());
+        Map::find($id)->update($request->all());
+        return redirect()->route('backstage.maps.index');
     }
 
     /**
@@ -84,6 +86,7 @@ class MapController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Map::find($id)->delete();
+        return redirect()->route('backstage.maps.index');
     }
 }

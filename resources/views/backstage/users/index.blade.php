@@ -29,15 +29,18 @@
         <tr>
           <th>Id</th>
           <th>Name</th>
-          <th>Address</th>
-          <th>ActionButton</th>
+          <th>email</th>
+          <th>role</th>
         </tr>
       </thead>
-      @foreach ($users as $user)
+      @foreach ($users->take(10) as $user)
         {{-- {{dd($attraction->position)}} --}}
         <tbody>
           <tr>
+            <td>{{$user->id}}</td>
             <td>{{$user->name}}</td>
+            <td>{{$user->email}}</td>
+            <td>{{$user->role}}</td>
             <td>
                 <a href="{{ route('backstage.users.edit',[ 'user'=>$user->id]) }}">
                     <button>編輯</button>
