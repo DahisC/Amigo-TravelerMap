@@ -24,20 +24,30 @@
         <tr>
           <th>Id</th>
           <th>Name</th>
-          <th>Address</th>
-          <th>ActionButton</th>
+          <th>user_id</th>
         </tr>
       </thead>
-      @foreach ($attractions as $attraction)
+      @foreach ($maps as $map)
         {{-- {{dd($attraction->position)}} --}}
         <tbody>
           <tr>
-            <td>{{$attraction->id}}</td>
-            <td>{{$attraction->name}}</td>
-            <td>{{$attraction->position->address}}</td>
+            <td>{{$map->id}}</td>
+            <td>{{$map->name}}</td>
+            <td>{{$map->user_id}}</td>
             <td>
-              <button type="button">Edit</button>
-              <button type="button">Delete</button>
+                <a href="{{ route('backstage.maps.edit',[ 'map'=>$map->id]) }}">
+                    <button>編輯</button>
+                </a>
+
+                <button class="btn btn-danger btn-sm delete-btn"
+                                data-id="#delete_{{ $map->id }}">刪除</button>
+
+                <form id="delete_{{ $map->id }}" action="{{ route('backstage.maps.destroy',[ 'map'=>$map->id]) }}" method="POST"
+                    class="d-none">
+                    @csrf
+                    @method('DElETE')
+                </form>
+
             </td>
           </tr>
         </tbody>
@@ -63,7 +73,23 @@
     });
 
   </script>
+     <script>
+
+        window.onload = () => {
+            document.querySelectorAll('.delete-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+
+                    const id = this.getAttribute('data-id');
+                    if (confirm('是否刪除')) {
+                        document.querySelector(id).submit();
+                    }
+                });
+            })
+        }
+    </script>
 
 </body>
 
 </html>
+
+

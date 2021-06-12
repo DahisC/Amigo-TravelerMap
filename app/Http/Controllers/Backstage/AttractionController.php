@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backstage;
 use App\Attraction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AttractionRequest;
 
 class AttractionController extends Controller
 {
@@ -15,8 +16,8 @@ class AttractionController extends Controller
      */
     public function index()
     {
-        $attractions = Attraction::with('tags','position','images')->get();
-        return view('backstage.maps.index',compact('attractions'));
+        $attractions = Attraction::get()->take(10);
+        return view('backstage.attractions.index',compact('attractions'));
     }
 
     /**
@@ -26,7 +27,7 @@ class AttractionController extends Controller
      */
     public function create()
     {
-        return view('backstage.attraction.create');
+        return view('backstage.attractions.create');
     }
 
     /**
@@ -35,9 +36,10 @@ class AttractionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AttractionRequest $request)
     {
-        //
+        Attraction::create($request->all());
+        return redirect()->route('backstage.attractions.index');
     }
 
     /**
@@ -59,7 +61,8 @@ class AttractionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Attraction = Attraction::find($id);
+        return view('',compact('Attraction'));
     }
 
     /**
@@ -71,7 +74,8 @@ class AttractionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Attraction::create($request->all());
+        return redirect()->route('backstage.attractions.index');
     }
 
     /**
