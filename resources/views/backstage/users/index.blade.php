@@ -52,7 +52,7 @@
                 <form id="delete_{{ $user->id }}" action="{{ route('backstage.users.destroy',[ 'user'=>$user->id]) }}" method="POST"
                     class="d-none">
                     @csrf
-                    @method('DElETE')
+                    @method('DELETE')
                 </form>
 
             </td>
