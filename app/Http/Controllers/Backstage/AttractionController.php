@@ -16,7 +16,7 @@ class AttractionController extends Controller
     public function index()
     {
         $attractions = Attraction::with('tags','position','images')->get();
-        return view('backstage.maps.index',compact('attractions'));
+        return view('backstage.attractions.index',compact('attractions'));
     }
 
     /**

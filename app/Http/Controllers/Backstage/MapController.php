@@ -15,7 +15,7 @@ class MapController extends Controller
      */
     public function index()
     {
-        $maps = Map::with(['user', 'attractions'])->get();
+        $maps = Map::get();
         return view('backstage.maps.index', compact('maps'));
     }
 
@@ -26,7 +26,7 @@ class MapController extends Controller
      */
     public function create()
     {
-        //
+        return view('backstage.maps.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class MapController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Map::create($request->all());
     }
 
     /**
@@ -59,7 +59,8 @@ class MapController extends Controller
      */
     public function edit($id)
     {
-        //
+        $map = Map::find($id);
+        return view('backstage.maps.edit',compact('map'));
     }
 
     /**
@@ -71,7 +72,8 @@ class MapController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $map = Map::find($id);
+        $map->update($request->all());
     }
 
     /**
