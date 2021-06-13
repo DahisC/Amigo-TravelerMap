@@ -63,7 +63,7 @@ class MapAttractionController extends Controller
                 ])
             );
         };
-        
+
         return redirect()->route('backstage.attractions.index');
     }
 
@@ -87,9 +87,11 @@ class MapAttractionController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        //delete create
         $map = Map::findOrFail($id);
         $attraction = Attraction::findOrFail($request->id);
-        $map->attractions()->attach($attraction);
+        $map->attractions()->syncWithoutDetaching($attraction);
 
         return ['map' => $map];
     }
@@ -106,6 +108,6 @@ class MapAttractionController extends Controller
         $attraction = Attraction::findOrFail($request->id);
         $map->attractions()->detach($attraction);
 
-        return ['map'=>$map];
+        return ['map' => $map];
     }
 }
