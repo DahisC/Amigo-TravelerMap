@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Traveler;
+namespace App\Http\Controllers\API;
 
+use App\Map;
+use App\Attraction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
 
-
-class AttractionController extends Controller
+class MapAttractionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,16 +20,6 @@ class AttractionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('traveler.attractions.factory');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -38,7 +28,6 @@ class AttractionController extends Controller
     public function store(Request $request)
     {
         //
-
     }
 
     /**
@@ -53,17 +42,6 @@ class AttractionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -72,7 +50,13 @@ class AttractionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        //delete create
+        $map = Map::findOrFail($id);
+        $attraction = Attraction::findOrFail($request->id);
+        $map->attractions()->syncWithoutDetaching($attraction);
+
+        return ['map'=>$map];
     }
 
     /**
@@ -81,8 +65,12 @@ class AttractionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $map = Map::findOrFail($id);
+        $attraction = Attraction::findOrFail($request->id);
+        $map->attractions()->detach($attraction);
+
+        return ['map'=>$map];
     }
 }

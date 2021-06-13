@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ItinerarieController extends Controller
+class UserAttractionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -12,16 +13,6 @@ class ItinerarieController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('favorites.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         //
     }
@@ -34,7 +25,7 @@ class ItinerarieController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->back();
+        //
     }
 
     /**
@@ -44,17 +35,6 @@ class ItinerarieController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

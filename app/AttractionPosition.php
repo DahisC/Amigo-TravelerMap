@@ -9,7 +9,7 @@ class AttractionPosition extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'country', 'region', 'town', 'address', 'px', 'py'
+        'country', 'region', 'town', 'address', 'lat', 'lng' ,'attraction_id',
     ];
     public function Attraction()
     {

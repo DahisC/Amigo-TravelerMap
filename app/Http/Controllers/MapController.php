@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Map;
 use App\Tag;
 use App\Attraction;
-use Illuminate\Http\Request;
+use App\Http\Requests\MapRequest;
 
 class MapController extends Controller
 {
@@ -13,7 +14,7 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(MapRequest $request)
     {
         $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
         $tags = Tag::get();
@@ -27,8 +28,7 @@ class MapController extends Controller
      */
     public function create()
     {
-        $action = 'Create';
-        return view('maps.factory', compact('action'));
+        return view('maps.factory');
     }
 
     /**
@@ -37,9 +37,13 @@ class MapController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MapRequest $request)
     {
-        return redirect()->route('maps.edit', ['map' => 5]);
+        $map = Map::create([
+            'user_id' => auth()->user()->id,
+            'name' => $request->name,
+        ]);
+        return redirect()->route('maps.show', ['map' => $map->id]);
     }
 
     /**
@@ -50,7 +54,7 @@ class MapController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('test2');
     }
 
     /**
@@ -72,9 +76,17 @@ class MapController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MapRequest $request, $id)
     {
-        //
+        if ($request->name) {
+            $map = Map::findOrFail($id);
+            $map->update([
+                'name' => $request->name,
+            ]);
+        };
+
+
+        return redirect()->route('maps.show', ['map' => $map->id]);
     }
 
     /**
@@ -85,6 +97,8 @@ class MapController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $map = Map::find($id);
+        $map->attractions()->sync([]);
+        $map->delete();
     }
 }

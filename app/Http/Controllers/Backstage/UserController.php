@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 
@@ -61,7 +60,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         return view('backstage.users.edit',compact('user'));
     }
 
@@ -74,7 +73,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-       User::find($id)->update($request->all());
+       User::findOrFail($id)->update($request->all());
        return redirect()->route('backstage.users.index');
     }
 
@@ -86,6 +85,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-       User::find($id)->delete();
+       User::findOrFail($id)->delete();
     }
 }
