@@ -3,6 +3,8 @@
 namespace App;
 
 use GuzzleHttp;
+use GuzzleHttp\Client;
+use App\Http\Requests\AttractionRequest;
 
 class helpers
 {
@@ -33,5 +35,20 @@ class helpers
             // ['lat' => $lat - $dlat, 'lng' => $lng - $dlng], // 西南
             ['lat' => $lat - $dlat, 'lng' => $lng + $dlng], // 東南
         ];
+    }
+    //地點轉Px、Py
+    public function store(AttractionRequest $request)
+    {
+        $client = new Client();
+        $request = $client->get('https://maps.googleapis.com/maps/api/geocode/json', [
+            'query' => [
+                'address' => '中興大學',
+                'key' => 'AIzaSyDzlrWxUgqiX2s22EHfVBdtRmWCj2c77g4'
+            ],
+        ]);
+        $response = json_decode($request->getBody());
+        dd($response);
+
+        
     }
 }

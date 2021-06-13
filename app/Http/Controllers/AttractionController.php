@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Attraction;
+use GuzzleHttp\Client;
+use App\AttractionImage;
+use App\AttractionPosition;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use App\Http\Requests\CreateActivitiesRequest;
 use Illuminate\Support\Facades\Storage;
-
-use GuzzleHttp\Client;
+use App\Http\Requests\AttractionRequest;
+use App\Http\Requests\CreateActivitiesRequest;
 
 
 class AttractionController extends Controller
@@ -38,29 +42,41 @@ class AttractionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateActivitiesRequest $request)
+    public function store(AttractionRequest $request)
     {
         //地點轉Px、Py
-        // $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
-        //     'language' => 'zh-TW',
-        //     'address' => $request->address,
-        //     'key' => 'AIzaSyDzlrWxUgqiX2s22EHfVBdtRmWCj2c77g4',
-        // ]);
-        $client = new \GuzzleHttp\Client();
-        $request = $client->request('GET', 'https://maps.googleapis.com/maps/api/geocode/json', [
-            'language' => 'zh-TW',
-            'address' => '中興大學',
-            'key' => 'AIzaSyDzlrWxUgqiX2s22EHfVBdtRmWCj2c77g4',
+        $attraction = Attraction::create([
+            'user_id' => auth()->user()->id,
+            'name' => $request->name,
+            'website' => $request->website,
+            'tel' => $request->tel,
+            'description' => $request->description,
+            'ticket_info' => $request->ticket_info,
+            'traffic_info' => $request->traffic_info,
+            'parking_info' => $request->parking_info,
         ]);
-        $response = $request->getBody();
-
-        
-        dd($response);
-        // dd($response.json_encode());
-
-        dd($request->all());
-
-        // Storage::
+        //position
+        $attraction->position()->save(
+            AttractionPosition::make([
+                'country' => $request->country,
+                'region' => $request->region,
+                'town' => $request->town,
+                'address' => $request->address,
+                'lat' => '25.017525',
+                'lng' => '121.533162',
+            ])
+        );
+        //img
+        if ($request->hasFile('image_url')) {
+            $path = $request->file('image_url')->store('attractions');
+            $attraction->images()->save(
+                AttractionImage::make([
+                    'url' => $path,
+                    // 'image_desc' => '112',
+                ])
+            );
+        };
+        return redirect()->route('backstage.attractions.index');
     }
 
     /**
