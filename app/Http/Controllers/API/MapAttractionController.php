@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Map;
 use App\Attraction;
+use GuzzleHttp\Client;
 use App\AttractionImage;
+use App\AttractionPosition;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AttractionRequest;
@@ -61,6 +63,7 @@ class MapAttractionController extends Controller
                 ])
             );
         };
+        
         return redirect()->route('backstage.attractions.index');
     }
 
