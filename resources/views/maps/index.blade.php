@@ -186,17 +186,19 @@
       <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
         <i class="fas fa-search"></i>
       </button>
+      <button type="button" class="btn btn-primary btn-floating m-1">
+        <i class="fas fa-map"></i>
+      </button>
     </nav>
   </div>
-
   <div id="traveler-map"></div>
 
   <div class="offcanvas offcanvas-custom bg-white" id="offcanvasRight" data-bs-backdrop="false">
-    <div class="offcanvas-header">
+    <div class="offcanvas-header shadow">
       <div class="d-flex align-items-center">
-        <a class="nav-icon mx-1" href="#" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
+        {{-- <button type="button" class="btn btn-outline-primary btn-floating" data-mdb-ripple-color="dark" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
           <i class="fas fa-search"></i>
-        </a>
+        </button> --}}
         <span class="badge rounded-pill bg-primary mx-1">
           景點
           <i class="fas fa-fw fa-times"></i>
@@ -222,9 +224,9 @@
               {{-- <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
               <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
             </div>
-            <button type="button" class="btn btn-primary btn-sm position-absolute end-0 bottom-0 m-2" style="font-size: 0.8rem;">
+            <button type="button" class="btn btn-primary btn-sm btn-floating position-absolute end-0 bottom-0 m-2" style="font-size: 0.8rem;">
               <i class="far fa-star"></i>
-              <span class="d-none d-sm-inline">收藏</span>
+              {{-- <span class="d-none d-sm-inline">收藏</span> --}}
             </button>
           </div>
           <img v-if="attraction.images.length !== 0" :src="attraction.images[0].url" class="h-100 card-img-top img-fluid" />
@@ -234,7 +236,7 @@
           <h6 class="text-primary">@{{ attraction . name }}</h6>
           <p class="card-text overflow-hidden" style="font-size: 0.9rem;">@{{ attraction . description }}</p>
           <div class="d-flex">
-            <button type="button" class="btn btn-primary btn-sm me-2 w-100 guide">
+            <button type="button" class="btn btn-primary btn-sm me-2 w-100 guide" v-on:click="locateOnMap(attraction)">
               <i class="fas fa-fw fa-map-marker-alt"></i>
               <span class="d-none d-sm-inline">地圖標示</span>
             </button>
@@ -248,26 +250,8 @@
     </div>
   </div>
   @include('partials.maps.attraction-detail-modal')
-  {{-- <div class="fade modal" id="attraction-detail-modal">
-    <div class="modal-dialog modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">@{{ attraction.name }}</h5>
-  <button type="button" class="btn-close" data-bs-dismiss="modal2" aria-label="Close"></button>
-</div>
-<div class="modal-body">
-  123
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal2">取消</button>
-  <button type="button" class="btn btn-primary" onclick="search_form.submit();">搜尋</button>
-</div>
-</div>
-</div>
-</div> --}}
-
-{{-- @include('partials.maps.search-attraction-modal', compact('tags')) --}}
-{{-- @include('partials.maps.create-map-modal') --}}
+  @include('partials.maps.search-attraction-modal', compact('tags'))
+  {{-- @include('partials.maps.create-map-modal') --}}
 </div>
 
 
@@ -291,6 +275,13 @@
     methods: {
       updateAttractions(attractions) {
         this.attractions = attractions;
+      },
+      locateOnMap(attraction) {
+        const { lat, lng } = attraction.position;
+        map.flyTo([lat, lng], 17);
+      },
+      async addToFavorite(attractionId) {
+        console.log(1);
       }
     }
   });

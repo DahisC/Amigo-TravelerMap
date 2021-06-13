@@ -1,18 +1,3 @@
-/* 思源黑體 */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap');
-/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap'); */
- /* 思源宋體 */
-/* @import url('https://fonts.googleapis.com/css?family=Noto+Serif+TC&amp;display=swap'); */
-
-@font-face {
-    font-family: Huninn;
-    src: url(public/fonts/jf-openhuninn-1.1.ttf);
-}
-
-*:not(i) {
-    font-family: 'Huninn', 'Noto Sans TC', sans-serif !important;
-}
-
-.range .thumb:after {
-    background: var(--mdb-primary);
+.btn {
+    border-radius: 999px;
 }

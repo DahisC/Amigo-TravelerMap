@@ -39,7 +39,7 @@ class MapController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('maps.edit', ['map' => 5]);
+        // return redirect()->route('maps.edit', ['map' => 5]);
     }
 
     /**
