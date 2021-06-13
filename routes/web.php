@@ -25,7 +25,7 @@ Route::view('/', 'index')->name('homepage');
 Route::resource('maps', 'MapController');
 
 // 地點 -- 基本的CRUD
-Route::resource('attractions', 'AttractionController')->except(['index', 'show']);
+// Route::resource('attractions', 'AttractionController')->except(['index', 'show']);
 
 // 登入
 Route::view('/sign-in', 'sign-in')->name('sign-in');

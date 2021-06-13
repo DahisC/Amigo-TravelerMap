@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Map;
 use App\Tag;
 use App\Attraction;
 use Illuminate\Http\Request;
@@ -38,7 +39,12 @@ class MapController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('maps.edit', ['map' => 5]);
+        dd($request->all());
+        $map = Map::create([
+            'user_id' => auth()->user()->id,
+            'name' => $request->name,
+        ]);
+        return redirect()->route('maps.show', ['map' => $map->id]);
     }
 
     /**
@@ -49,7 +55,7 @@ class MapController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('test2');
     }
 
     /**
@@ -73,7 +79,15 @@ class MapController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $map = Map::find($id);
+        if ($request->name) {
+            $map->update([
+                'name' => $request->name,
+            ]);
+        };
+
+
+        return redirect()->route('maps.show', ['map' => $map->id]);
     }
 
     /**
@@ -84,6 +98,8 @@ class MapController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $map = Map::find($id);
+        $map->attractions()->sync([]);
+        $map->delete;
     }
 }
