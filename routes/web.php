@@ -28,7 +28,7 @@ Route::get('/user/{id?}', function ($id = 2) {
 // 主頁
 Route::view('/', 'index')->name('homepage');
 
-// 地圖
+// 個人地圖
 Route::resource('maps', 'MapController');
 
 // 地點 -- 基本的CRUD
