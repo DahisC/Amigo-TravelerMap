@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@charset "UTF-8";
 
 :root {
   --mdb-blue: #0d6efd;
@@ -19123,5 +19123,9 @@ fieldset:disabled .btn-group-vertical {
   font-weight: 700;
   font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free";
   font-size: 1.7rem;
+}
+
+.btn {
+  border-radius: 999px;
 }
 

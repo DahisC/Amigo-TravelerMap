@@ -75,6 +75,3 @@ Route::view('/allen', 'Allen.test');
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-
-
-
