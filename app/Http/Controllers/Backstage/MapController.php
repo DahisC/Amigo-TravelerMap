@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\Map;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MapRequest;
 
 class MapController extends Controller
 {
@@ -15,7 +15,7 @@ class MapController extends Controller
      */
     public function index()
     {
-        $maps = Map::with(['user', 'attractions'])->get();
+        $maps = Map::get();
         return view('backstage.maps.index', compact('maps'));
     }
 
@@ -26,7 +26,7 @@ class MapController extends Controller
      */
     public function create()
     {
-        //
+        return view('backstage.maps.create');
     }
 
     /**
@@ -35,9 +35,13 @@ class MapController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MapRequest $request)
     {
-        //
+        Map::create([
+            'user_id'=>auth()->user()->id,
+            'name'=>$request->name
+        ]);
+        return redirect()->route('backstage.maps.index');
     }
 
     /**
@@ -59,7 +63,8 @@ class MapController extends Controller
      */
     public function edit($id)
     {
-        //
+        $map = Map::findOrFail($id);
+        return view('backstage.maps.edit',compact('map'));
     }
 
     /**
@@ -69,9 +74,10 @@ class MapController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MapRequest $request, $id)
     {
-        //
+        Map::findOrFail($id)->update($request->all());
+        return redirect()->route('backstage.maps.index');
     }
 
     /**
@@ -82,6 +88,7 @@ class MapController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Map::findOrFail($id)->delete();
+        return redirect()->route('backstage.maps.index');
     }
 }

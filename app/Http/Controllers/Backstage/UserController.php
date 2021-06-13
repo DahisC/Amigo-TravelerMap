@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -15,8 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users =  User::with(['maps','attractions'])->get();
-        return view('backstage.users.index',compact('users'));
+        $users =  User::get();
+        return view('backstage.users.index', compact('users'));
     }
 
     /**
@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('backstage.users.create');
     }
 
     /**
@@ -35,9 +35,10 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        User::create($request->all());
+        return redirect()->route('backstage.users.index');
     }
 
     /**
@@ -59,7 +60,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('backstage.users.edit',compact('user'));
     }
 
     /**
@@ -69,9 +71,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+       User::findOrFail($id)->update($request->all());
+       return redirect()->route('backstage.users.index');
     }
 
     /**
@@ -82,6 +85,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+       User::findOrFail($id)->delete();
     }
 }

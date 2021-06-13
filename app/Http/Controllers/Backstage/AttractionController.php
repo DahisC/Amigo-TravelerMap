@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Backstage;
-
+use App\helpers;
 use App\Attraction;
-use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use App\AttractionImage;
+use App\AttractionPosition;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\AttractionRequest;
 
 class AttractionController extends Controller
 {
@@ -15,8 +19,8 @@ class AttractionController extends Controller
      */
     public function index()
     {
-        $attractions = Attraction::with('tags','position','images')->get();
-        return view('backstage.maps.index',compact('attractions'));
+        $attractions = Attraction::get()->take(10);
+        return view('backstage.attractions.index', compact('attractions'));
     }
 
     /**
@@ -26,7 +30,7 @@ class AttractionController extends Controller
      */
     public function create()
     {
-        return view('backstage.attraction.create');
+        return view('backstage.attractions.create');
     }
 
     /**
@@ -35,9 +39,44 @@ class AttractionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AttractionRequest $request)
     {
-        //
+        // 地點轉Px、Py
+        $response = helpers::getAttrLatLng($request);
+        // dd($response->results[0]->geometry->location->lat);
+        
+        $attraction = Attraction::create([
+            'user_id' => auth()->user()->id,
+            'name' => $request->name,
+            'website' => $request->website,
+            'tel' => $request->tel,
+            'description' => $request->description,
+            'ticket_info' => $request->ticket_info ?? '',
+            'traffic_info' => $request->traffic_info ?? '',
+            'parking_info' => $request->parking_info ?? '',
+        ]);
+        //position
+        $attraction->position()->save(
+            AttractionPosition::make([
+                'country' => $request->country,
+                'region' => $request->region,
+                'town' => $request->town,
+                'address' => $request->address,
+                'lat' =>  $response->results[0]->geometry->location->lat,
+                'lng' => $response->results[0]->geometry->location->lng,
+            ])
+        );
+        //img
+        if ($request->hasFile('image_url')) {
+            $path = $request->file('image_url')->store('attractions');
+            $attraction->images()->save(
+                AttractionImage::make([
+                    'url' => $path,
+                    'image_desc' => $request->image_desc ?? '',
+                ])
+            );
+        };
+        return redirect()->route('backstage.attractions.index');
     }
 
     /**
@@ -59,7 +98,8 @@ class AttractionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $attraction = Attraction::findOrFail($id);
+        return view('backstage.attractions.edit', compact('attraction'));
     }
 
     /**
@@ -69,9 +109,24 @@ class AttractionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AttractionRequest $request, $id)
     {
-        //
+        $attraction = Attraction::findOrFail($id);
+        $attraction->update($request->all());
+        $attraction->position->update($request->all());
+
+        if ($request->hasFile('image_url')) {
+            $path = $request->file('image_url')->store('attractions');
+            AttractionImage::updateOrCreate([
+                'attraction_id' => $attraction->id,
+                'url' => $path,
+            ], [
+                'image_desc' => $request->image_desc ?? '',
+            ]);
+        };
+
+
+        return redirect()->route('backstage.attractions.index');
     }
 
     /**
@@ -82,6 +137,15 @@ class AttractionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $attraction = Attraction::findOrFail($id);
+        $attraction->delete();
+        $attraction->position->delete();
+        //開始刪img model跟圖片
+
+        $attraction->images->each(function ($img) {
+            Storage::delete($img->url);
+            $img->delete();
+        });
+        return redirect()->route('backstage.attractions.index');
     }
 }

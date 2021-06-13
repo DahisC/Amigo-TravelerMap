@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Traveler;
+namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 
-
-class AttractionController extends Controller
+class UserAttractionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,16 +18,6 @@ class AttractionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('traveler.attractions.factory');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -38,7 +26,6 @@ class AttractionController extends Controller
     public function store(Request $request)
     {
         //
-
     }
 
     /**
@@ -48,17 +35,6 @@ class AttractionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

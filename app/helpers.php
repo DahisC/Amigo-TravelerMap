@@ -4,6 +4,9 @@ namespace App;
 
 use GuzzleHttp;
 
+use GuzzleHttp\Client;
+use App\Http\Requests\AttractionRequest;
+
 class helpers
 {
     public function convertAddressIntoLatLng()
@@ -33,5 +36,22 @@ class helpers
             // ['lat' => $lat - $dlat, 'lng' => $lng - $dlng], // 西南
             ['lat' => $lat - $dlat, 'lng' => $lng + $dlng], // 東南
         ];
+    }
+    //地點轉Px、Py
+    static function getAttrLatLng(AttractionRequest $request)
+    {
+        // 將地址轉成經緯度
+        $client = new Client();
+        $data = $client->get('https://maps.googleapis.com/maps/api/geocode/json', [
+            'query' => [
+                'address' => $request->address,
+                'key' => 'AIzaSyDzlrWxUgqiX2s22EHfVBdtRmWCj2c77g4'
+            ],
+        ]);
+        $response = json_decode($data->getBody());
+        // dd($response->results[0]->geometry->location->lat);
+        // dd($response->results[0]->geometry->location->lng);
+
+        return $response;
     }
 }
