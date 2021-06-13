@@ -24,7 +24,7 @@ Route::name('api.')->group(function(){
    // 收藏的地點
    Route::apiResource('/favorites','API\UserAttractionController');
    // 地圖上加入感興趣的地點
-   Route::apiResource('/map','API\MapAttractionController')->only(['update','destroy']);
+   Route::apiResource('/map','API\MapAttractionController')->only(['update', 'destroy']);
 });
 
 
