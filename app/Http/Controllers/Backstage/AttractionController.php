@@ -68,7 +68,7 @@ class AttractionController extends Controller
             $attraction->images()->save(
                 AttractionImage::make([
                     'url' => $path,
-                    'image_desc' => '112',
+                    // 'image_desc' => '112',
                 ])
             );
         };
