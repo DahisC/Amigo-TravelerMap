@@ -50,11 +50,11 @@ Route::group([
     Route::resource('/maps', 'AmigoController@index');
 });
 
-    //商人
-    //index 主要是顯示使用者建立的地點(活動管理)
-    //create . edit 是miro原本有的 用於讓妳們測試表單用 (建立編輯/活動)
-    //這邊跟miro規劃的路徑不一樣，應該是巢狀的我拉出來
-    Route::resource('travelers.attractions', 'AmigoController@index');
+//商人
+//index 主要是顯示使用者建立的地點(活動管理)
+//create . edit 是miro原本有的 用於讓妳們測試表單用 (建立編輯/活動)
+//這邊跟miro規劃的路徑不一樣，應該是巢狀的我拉出來
+Route::resource('travelers.attractions', 'AmigoController@index');
 
 
 // 我關注的地點
@@ -67,9 +67,9 @@ Route::group([
     'middleware' => 'auth'
 ], function () {
     Route::view('/', 'backstage.index')->name('index');
-    Route::resource('/users','Backstage\UserController');
+    Route::resource('/users', 'Backstage\UserController');
     Route::resource('/maps', 'Backstage\MapController');
-    Route::resource('/attractions','Backstage\AttractionController');
+    Route::resource('/attractions', 'Backstage\AttractionController');
 });
 
 // 前端測試用路由
