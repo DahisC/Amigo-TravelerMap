@@ -17,7 +17,7 @@ class CreateAttractionImagesTable extends Migration
             $table->id();
 
             $table->string('url');
-            $table->string('image_desc')->nullable();
+            $table->string('image_desc')->default('');
 
             $table->unsignedBigInteger('attraction_id')->index();
             $table->foreign('attraction_id')

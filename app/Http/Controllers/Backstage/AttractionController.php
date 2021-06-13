@@ -47,9 +47,9 @@ class AttractionController extends Controller
             'website' => $request->website,
             'tel' => $request->tel,
             'description' => $request->description,
-            'ticket_info' => $request->ticket_info,
-            'traffic_info' => $request->traffic_info,
-            'parking_info' => $request->parking_info,
+            'ticket_info' => $request->ticket_info ?? '',
+            'traffic_info' => $request->traffic_info ?? '',
+            'parking_info' => $request->parking_info ?? '',
         ]);
         //position
         $attraction->position()->save(
@@ -58,7 +58,7 @@ class AttractionController extends Controller
                 'region' => $request->region,
                 'town' => $request->town,
                 'address' => $request->address,
-                'lat' => '25.017525',
+                'lat' =>  '25.017525' ,
                 'lng' => '121.533162',
             ])
         );
@@ -68,7 +68,7 @@ class AttractionController extends Controller
             $attraction->images()->save(
                 AttractionImage::make([
                     'url' => $path,
-                    // 'image_desc' => '112',
+                    'image_desc' => $request->image_desc ?? '',
                 ])
             );
         };
