@@ -99,6 +99,6 @@ class MapController extends Controller
     {
         $map = Map::find($id);
         $map->attractions()->sync([]);
-        $map->delete;
+        $map->delete();
     }
 }
