@@ -27,8 +27,7 @@ class MapController extends Controller
      */
     public function create()
     {
-        $action = 'Create';
-        return view('maps.factory', compact('action'));
+        return view('maps.factory');
     }
 
     /**
