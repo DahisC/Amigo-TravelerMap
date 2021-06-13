@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backstage;
 use App\Attraction;
 use App\AttractionImage;
 use App\AttractionPosition;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AttractionRequest;
 use Illuminate\Support\Facades\Storage;
@@ -107,7 +106,7 @@ class AttractionController extends Controller
      */
     public function update(AttractionRequest $request, $id)
     {
-        $attraction = Attraction::find($id);
+        $attraction = Attraction::findOrFail($id);
         $attraction->update($request->all());
         $attraction->position->update($request->all());
 
@@ -133,7 +132,7 @@ class AttractionController extends Controller
      */
     public function destroy($id)
     {
-        $attraction = Attraction::find($id);
+        $attraction = Attraction::findOrFail($id);
         $attraction->delete();
         $attraction->position->delete();
         //開始刪img model跟圖片

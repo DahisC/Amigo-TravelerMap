@@ -1,20 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Map;
 use App\Attraction;
-use GuzzleHttp\Client;
 use App\AttractionImage;
-use App\AttractionPosition;
-
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AttractionRequest;
-use App\Http\Requests\CreateActivitiesRequest;
 
-
-class AttractionController extends Controller
+class MapAttractionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,16 +17,6 @@ class AttractionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
     {
         //
     }
@@ -91,17 +76,6 @@ class AttractionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -110,7 +84,11 @@ class AttractionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $map = Map::findOrFail($id);
+        $attraction = Attraction::findOrFail($request->id);
+        $map->attractions()->attach($attraction);
+
+        return ['map' => $map];
     }
 
     /**
@@ -119,8 +97,12 @@ class AttractionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $map = Map::findOrFail($id);
+        $attraction = Attraction::findOrFail($request->id);
+        $map->attractions()->detach($attraction);
+
+        return ['map'=>$map];
     }
 }

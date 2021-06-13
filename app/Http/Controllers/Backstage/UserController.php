@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 
@@ -86,6 +85,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-       User::find($id)->delete();
+       User::findOrFail($id)->delete();
     }
 }

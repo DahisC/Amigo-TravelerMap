@@ -5,7 +5,7 @@
 use App\Tag;
 use Faker\Generator as Faker;
 
-$name = [
+$nameArray = [
     '自然',
     '人文',
     '景點',
