@@ -47,18 +47,18 @@ Route::group([
 ], function () {
     Route::get('/', 'AmigoController@create')->name('index');
     Route::get('/profile', 'AmigoController@create')->name('profile');
-    Route::get('/maps', 'AmigoController@index')->name('maps');
-    //商人
-    //index 主要是顯示使用者建立的地點
-    //create 用於讓妳們測試表單用
-    Route::resource('/attractions', 'Traveler\AttractionController')->only(['index', 'create']);
+    Route::resource('/maps', 'AmigoController@index');
 });
 
+    //商人
+    //index 主要是顯示使用者建立的地點(活動管理)
+    //create . edit 是miro原本有的 用於讓妳們測試表單用 (建立編輯/活動)
+    //這邊跟miro規劃的路徑不一樣，應該是巢狀的我拉出來
+    Route::resource('travelers.attractions', 'AmigoController@index');
 
 
 // 我關注的地點
-// Route::view('/itineraries', 'itineraries.index')->name('itineraries.index');
-Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']);
+Route::resource('/itineraries', 'AmigoController@index')->only(['index', 'store']);
 
 // 後台
 Route::group([
