@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\Map;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MapRequest;
 
@@ -64,7 +63,7 @@ class MapController extends Controller
      */
     public function edit($id)
     {
-        $map = Map::find($id);
+        $map = Map::findOrFail($id);
         return view('backstage.maps.edit',compact('map'));
     }
 

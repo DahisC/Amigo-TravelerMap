@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Map;
 use App\Tag;
 use App\Attraction;
-use Illuminate\Http\Request;
+use App\Http\Requests\MapRequest;
 
 class MapController extends Controller
 {
@@ -14,7 +14,7 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(MapRequest $request)
     {
         $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
         $tags = Tag::get();
@@ -37,9 +37,8 @@ class MapController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MapRequest $request)
     {
-        dd($request->all());
         $map = Map::create([
             'user_id' => auth()->user()->id,
             'name' => $request->name,
@@ -77,10 +76,10 @@ class MapController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MapRequest $request, $id)
     {
-        $map = Map::find($id);
         if ($request->name) {
+            $map = Map::findOrFail($id);
             $map->update([
                 'name' => $request->name,
             ]);
