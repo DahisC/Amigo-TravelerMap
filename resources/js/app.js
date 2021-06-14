@@ -9,6 +9,14 @@ require('./bootstrap'); // Lodash & Axios
 // require('alpinejs');
 
 window.Vue = require('vue');
+window.TwCitySelector = require('tw-city-selector');
+
+new TwCitySelector({
+  el: '#city-county-selector',
+  elCounty: '#select_city', // 在 el 裡查找 element
+  elDistrict: '#select_area', // 在 el 裡查找 element
+  elZipcode: '#zipcode' // 在 el 裡查找 element
+});
 
 /**
  * The following block of code may be used to automatically register your
