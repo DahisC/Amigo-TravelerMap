@@ -24,7 +24,6 @@ Route::view('/', 'index')->name('homepage');
 // 透過地圖探索附近地點，或顯示自己的位置
 
 Route::resource('maps', 'MapController');
-
 // 地點 -- 基本的CRUD
 // Route::resource('attractions', 'AttractionController')->except(['index', 'show']);
 
