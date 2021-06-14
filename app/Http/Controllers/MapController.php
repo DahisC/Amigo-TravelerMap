@@ -14,7 +14,7 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(MapRequest $request)
+    public function index()
     {
         $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
         $tags = Tag::get();
@@ -52,10 +52,11 @@ class MapController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        return view('test2');
-    }
+    // public function show($id)
+    // {
+    //     dd(123);
+    //     return view('test2');
+    // }
 
     /**
      * Show the form for editing the specified resource.
