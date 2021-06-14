@@ -24,9 +24,9 @@ class AttractionRequest extends FormRequest
     public function rules()
     {
         return [
-             //詳細內容
+        //詳細內容
         'name'   => 'required|max:50|min:3',
-        'website'=> ['nullable','string','url'],//'regex:/^https*:/'
+        'website'=> 'nullable|string|active_url',
         'tel'    => 'nullable|string',
         'description ' => 'max:500',
         'ticket_info'  => 'nullable|string|max:300',

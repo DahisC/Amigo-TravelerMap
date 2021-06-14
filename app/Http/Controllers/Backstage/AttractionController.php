@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Backstage;
-
+use App\helpers;
 use App\Attraction;
+use GuzzleHttp\Client;
 use App\AttractionImage;
 use App\AttractionPosition;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AttractionRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\AttractionRequest;
 
 class AttractionController extends Controller
 {
@@ -40,6 +41,10 @@ class AttractionController extends Controller
      */
     public function store(AttractionRequest $request)
     {
+        // 地點轉Px、Py
+        $response = helpers::getAttrLatLng($request);
+        // dd($response->results[0]->geometry->location->lat);
+        
         $attraction = Attraction::create([
             'user_id' => auth()->user()->id,
             'name' => $request->name,
@@ -57,8 +62,8 @@ class AttractionController extends Controller
                 'region' => $request->region,
                 'town' => $request->town,
                 'address' => $request->address,
-                'lat' =>  '25.017525' ,
-                'lng' => '121.533162',
+                'lat' =>  $response->results[0]->geometry->location->lat,
+                'lng' => $response->results[0]->geometry->location->lng,
             ])
         );
         //img
@@ -137,7 +142,7 @@ class AttractionController extends Controller
         $attraction->position->delete();
         //開始刪img model跟圖片
 
-        $attraction->images->each(function($img){
+        $attraction->images->each(function ($img) {
             Storage::delete($img->url);
             $img->delete();
         });
