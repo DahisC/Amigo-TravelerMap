@@ -23,6 +23,6 @@ Route::name('api.')->group(function () {
     Route::apiResource('/attractions', 'API\AttractionController')->only(['index']);
     // 收藏的地點
     Route::apiResource('/favorites', 'API\UserAttractionController');
-    // 地圖上加入感興趣的地點
-    Route::apiResource('/map', 'API\MapAttractionController')->only(['update', 'destroy']);
+    // 將收藏的地點放進個人地圖中
+    Route::apiResource('/maps', 'API\MapAttractionController')->only(['update', 'destroy']);
 });
