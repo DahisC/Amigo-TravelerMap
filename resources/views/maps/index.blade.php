@@ -186,6 +186,9 @@
       <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
         <i class="fas fa-search"></i>
       </button>
+      <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
+        <i class="fas fa-search"></i>
+      </button>
       <button type="button" class="btn btn-primary btn-floating m-1">
         <i class="fas fa-map"></i>
       </button>

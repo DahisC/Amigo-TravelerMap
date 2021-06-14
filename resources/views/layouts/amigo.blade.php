@@ -12,9 +12,9 @@
   @yield('css')
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#list-example" data-offset="0" class="position-relative">
   @section('nav')
-    @include('partials.navbar')
+  @include('partials.navbar')
   @show
   @yield('content')
   <script src="{{ asset('js/app.js') }}"></script>

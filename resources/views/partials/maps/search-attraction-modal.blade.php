@@ -21,45 +21,29 @@
                 </div>
                 <div class="form-text text-end"><span id="range_displayer" class="me-1">1</span>公里內</div>
               </div>
-              @include('partials.form.select-city-county', ['defaultCity' => '', 'defaultArea' => ''])
+              @include('partials.form.select-city-county')
               <div class="col-12">
                 <label for="search-form__input_range" class="form-label">標籤</label>
-                {{-- <div class="input-group mb-3">
+                <div class="input-group mb-3">
                   <button class="btn btn-primary dropdown-toggle" type="button" data-mdb-toggle="dropdown">
                     標籤
                   </button>
                   <ul class="dropdown-menu">
                     @foreach ($tags->take(10) as $tag)
-                      <li class="p-2"><a class="dropdown-item" href="#"
-                          onclick="input_tag1.value = this.textContent">{{ $tag->name }}</a></li>
-                @endforeach
-                </ul>
-                <input id="input_tag1" type="text" class="form-control text-center" name="tag" />
-              </div> --}}
-              <div class="input-group mb-3">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-mdb-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  <li>
-                    <hr class="dropdown-divider" />
-                  </li>
-                  <li><a class="dropdown-item" href="#">Separated link</a></li>
-                </ul>
-                <input type="text" class="form-control" aria-label="Text input with dropdown button" />
+                    <li class="p-2"><a class="dropdown-item" href="#" onclick="input_tag1.value = this.textContent">{{ $tag->name }}</a></li>
+                    @endforeach
+                  </ul>
+                  <input id="input_tag1" type="text" class="form-control text-center" name="tag" />
+                </div>
               </div>
             </div>
           </div>
+        </form>
       </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal2">取消</button>
-      <button type="button" class="btn btn-primary" onclick="search_form.submit();">搜尋</button>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal2">取消</button>
+        <button type="button" class="btn btn-primary" onclick="search_form.submit();">搜尋</button>
+      </div>
     </div>
   </div>
-</div>
 </div>

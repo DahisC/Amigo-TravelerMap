@@ -39766,8 +39766,10 @@ new TwCitySelector({
   // 在 el 裡查找 element
   elDistrict: '#select_area',
   // 在 el 裡查找 element
-  elZipcode: '#zipcode' // 在 el 裡查找 element
-
+  elZipcode: '#zipcode',
+  // 在 el 裡查找 element
+  countyFieldName: 'region',
+  districtFieldName: 'town'
 });
 /**
  * The following block of code may be used to automatically register your
@@ -39866,9 +39868,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Coding\Amigo-TravelerMap\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\Coding\Amigo-TravelerMap\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! D:\Coding\Amigo-TravelerMap\resources\sass\leaflet.scss */"./resources/sass/leaflet.scss");
+__webpack_require__(/*! D:\Coding\amigo-travelermap\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\Coding\amigo-travelermap\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\Coding\amigo-travelermap\resources\sass\leaflet.scss */"./resources/sass/leaflet.scss");
 
 
 /***/ })
