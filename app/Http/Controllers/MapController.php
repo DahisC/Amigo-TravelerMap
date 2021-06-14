@@ -14,7 +14,7 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(MapRequest $request)
+    public function index()
     {
         $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
         $tags = Tag::get();
