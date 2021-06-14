@@ -43,8 +43,8 @@ class AttractionController extends Controller
     {
         // 地點轉Px、Py
         $response = helpers::getAttrLatLng($request);
-        // dd($response->results[0]->geometry->location->lat);
-        
+
+
         $attraction = Attraction::create([
             'user_id' => auth()->user()->id,
             'name' => $request->name,
