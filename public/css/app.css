@@ -19129,3 +19129,11 @@ fieldset:disabled .btn-group-vertical {
   border-radius: 999px;
 }
 
+.banner > div > div {
+  flex-grow: 1;
+}
+
+.banner > div > div:nth-of-child(2) {
+  max-height: 34%;
+}
+
