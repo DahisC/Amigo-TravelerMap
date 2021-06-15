@@ -2,5 +2,6 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/leaflet.css": "/css/leaflet.css",
-    "/js/leaflet.js": "/js/leaflet.js"
+    "/js/leaflet.js": "/js/leaflet.js",
+    "/js/twCitySelector.js": "/js/twCitySelector.js"
 }
