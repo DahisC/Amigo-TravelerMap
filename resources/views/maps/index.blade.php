@@ -265,6 +265,18 @@
 <script src="{{ asset('js/leaflet.js') }}"></script>
 
 <script>
+  new TwCitySelector({
+    el: '#city-county-selector',
+    elCounty: '#select_city', // 在 el 裡查找 element
+    elDistrict: '#select_area', // 在 el 裡查找 element
+    elZipcode: '#zipcode', // 在 el 裡查找 element
+    countyFieldName: 'region',
+    districtFieldName: 'town'
+  });
+</script>
+
+
+<script>
   /* 後端變數 */
   //   const attractions = json_encode($attractions - > toArray())
 

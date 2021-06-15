@@ -19,6 +19,7 @@
   @yield('content')
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('js/twCitySelector.js') }}"></script>
   @yield('js')
 </body>
 
