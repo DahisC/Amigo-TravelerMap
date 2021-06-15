@@ -21,11 +21,10 @@ class MapController extends Controller
 
         try {
 
-            $tag = $request->tag ?? '';
-            $region = $request->region ?? '';
-            $town = $request->town ?? '';
-            $area = $request->area ?? '';
-
+            $tag = $request->tag ;
+            $region = $request->region ;
+            $town = $request->town ;
+            $area = $request->area ;
             if ($request->area) {
                 return view('maps.index', [
                     'tags' => Tag::get(),
