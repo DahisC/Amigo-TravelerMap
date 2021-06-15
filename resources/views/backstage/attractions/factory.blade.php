@@ -84,7 +84,7 @@
         <select class="form-control" id="select_city"></select>
       </div>
       <div class="col">
-        <label for="select_area" class="form-label">城市 Town</label>
+        <label for="select_area" class="form-label">區域 Town</label>
         <select class="form-control" id="select_area"></select>
       </div>
       <div class="col-12">

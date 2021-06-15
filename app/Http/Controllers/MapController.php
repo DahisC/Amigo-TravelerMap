@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Map;
 use App\Tag;
-use App\Attraction;
-use App\Http\Requests\MapRequest;
-use Illuminate\Http\Request;
 use Exception;
+use App\helpers;
+use App\Attraction;
+use Illuminate\Http\Request;
+use App\Http\Requests\MapRequest;
+use Illuminate\Support\Facades\DB;
 
 class MapController extends Controller
 {
@@ -18,31 +20,24 @@ class MapController extends Controller
      */
     public function index(Request $request)
     {
-
-
-
-        $tag = $request->tag;
-        $region = $request->region;
-        $town = $request->town;
-        $area = $request->area;
-
-
-        if ($request->area) {
-            $attractions = Attraction::where('name', $area)->with(['tags', 'position', 'images'])->get();
-        } else if ($request->tag) {
-            $attractions = Attraction::QueryTags($tag)->with(['tags', 'position', 'images'])->get();
-        } else if ($request->region) {
-            $attractions = Attraction::QueryRegion($region)->with(['tags', 'position', 'images'])->get();
-        } else if ($request->town) {
-            $attractions = Attraction::QueryTown($town)->with(['tags', 'position', 'images'])->get();
-        } else if ($request->region && $request->town) {
-            $attractions = Attraction::QueryTown($town)->QueryRegion($region)->with(['tags', 'position', 'images'])->get();
-        } else if ($request->tag && $request->region && $request->town) {
-            $attractions = Attraction::QueryTags($tag)->QueryTown($town)->QueryRegion($region)->with(['tags', 'position', 'images'])->get();
-        } else {
-            $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
-        }
         $tags = Tag::get();
+
+        $query = Attraction::query()->with('tags', 'position', 'images');
+        switch ($request->searchBy) {
+            case 'area':
+                $addressLatLng = helpers::getAddressLatLng($request->q);
+                $query->queryNearbyAttractions($addressLatLng['lat'], $addressLatLng['lng'], $request->range);
+                break;
+            case 'address':
+                if ($request->region) $query->QueryRegion($request->region);
+                if ($request->town) $query->QueryTown($request->town);
+                break;
+            default:
+                break;
+        }
+        if ($request->tag) $query->QueryTags($request->tag);
+        $attractions = $query->get();
+        // $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get(); // for test
         return view('maps.index', compact('attractions', 'tags'));
     }
 
