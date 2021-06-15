@@ -96,19 +96,19 @@
   </div>
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="/">
+    <a class="nav-link collapsed" href="{{ route('homepage') }}">
       <i class="fas fa-fw fa-star"></i>
       <span>Amigo 官方網站</span>
     </a>
-    <a class="nav-link collapsed" href="/">
+    <a class="nav-link collapsed" href="{{ route('sign-up') }}">
       <i class="fas fa-fw fa-user-plus"></i>
       <span>註冊頁面</span>
     </a>
-    <a class="nav-link collapsed" href="/">
+    <a class="nav-link collapsed" href="{{ route('sign-in') }}">
       <i class="fas fa-fw fa-feather-alt"></i>
       <span>登入頁面</span>
     </a>
-    <a class="nav-link collapsed" href="/">
+    <a class="nav-link collapsed" href="{{ route('maps.index') }}">
       <i class="fas fa-fw fa-map"></i>
       <span>地圖頁面</span>
     </a>
