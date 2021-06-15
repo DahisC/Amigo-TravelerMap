@@ -6,6 +6,8 @@ use App\Map;
 use App\Tag;
 use App\Attraction;
 use App\Http\Requests\MapRequest;
+use Illuminate\Http\Request;
+use Exception;
 
 class MapController extends Controller
 {
@@ -14,10 +16,19 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
-        $tags = Tag::get();
+        try {
+            $tag = $request->tag;
+            $region = $request->region;
+            $town = $request->town;
+
+            $attractions = Attraction::QueryTags($tag)->QueryPosition($region, $town)->with(['tags', 'position'])->get();
+            $tags = Tag::get();
+        } catch (Exception $e) {
+            $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
+            $tags = Tag::get();
+        };
         return view('maps.index', compact('attractions', 'tags'));
     }
 
