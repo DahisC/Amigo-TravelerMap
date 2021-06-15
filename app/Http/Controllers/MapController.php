@@ -19,26 +19,36 @@ class MapController extends Controller
     public function index(Request $request)
     {
 
-        try {
 
-            $tag = $request->tag ;
-            $region = $request->region ;
-            $town = $request->town ;
-            $area = $request->area ;
-            if ($request->area) {
-                return view('maps.index', [
-                    'tags' => Tag::get(),
-                    'attractions' => Attraction::where('name', $area)->with(['tags', 'position', 'images'])->get()
-                ]);
-            };
 
-            $attractions = Attraction::QueryTags($tag)->QueryPosition($region, $town)->with(['tags', 'position', 'images'])->get();
-            $tags = Tag::get();
+        $tag = $request->tag;
+        $region = $request->region;
+        $town = $request->town;
+        $area = $request->area;
+
+
+        if ($request->area) {
+            $attractions = Attraction::where('name', $area)->with(['tags', 'position', 'images'])->get();
+        } else if ($request->tag) {
+            $attractions = Attraction::QueryTags($tag)->with(['tags', 'position', 'images'])->get();
             dd($attractions);
-        } catch (Exception $e) {
+        } else if ($request->region) {
+            $attractions = Attraction::QueryRegion($region)->with(['tags', 'position', 'images'])->get();
+            dd($attractions);
+        } else if ($request->town) {
+            // dd(1);
+            $attractions = Attraction::QueryTown($town)->with(['tags', 'position', 'images'])->get();
+            dd($attractions);
+        } else if ($request->region && $request->town) {
+            $attractions = Attraction::QueryTown($town)->QueryRegion($region)->with(['tags', 'position', 'images'])->get();
+            dd($attractions);
+        } else if ($request->tag && $request->region && $request->town) {
+            $attractions = Attraction::QueryTags($tag)->QueryTown($town)->QueryRegion($region)->with(['tags', 'position', 'images'])->get();
+            dd($attractions);
+        } else {
             $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
-            $tags = Tag::get();
-        };
+        }
+        $tags = Tag::get();
         return view('maps.index', compact('attractions', 'tags'));
     }
 
