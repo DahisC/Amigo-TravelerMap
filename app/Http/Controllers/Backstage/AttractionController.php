@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backstage;
 
+use App\Tag;
 use App\helpers;
 use App\Attraction;
 use GuzzleHttp\Client;
@@ -100,7 +101,8 @@ class AttractionController extends Controller
     public function edit(Attraction $attraction)
     {
         // $attraction = Attraction::findOrFail($id);
-        return view('backstage.attractions.factory', compact('attraction'));
+        $tags = Tag::get();
+        return view('backstage.attractions.factory', compact('attraction', 'tags'));
     }
 
     /**
