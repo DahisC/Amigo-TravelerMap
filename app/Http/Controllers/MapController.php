@@ -18,13 +18,24 @@ class MapController extends Controller
      */
     public function index(Request $request)
     {
+
         try {
+
             $tag = $request->tag;
             $region = $request->region;
             $town = $request->town;
+            $area = $request->area;
 
-            $attractions = Attraction::QueryTags($tag)->QueryPosition($region, $town)->with(['tags', 'position'])->get();
+            if ($request->area) {
+                return view('maps.index', [
+                    'tags' => Tag::get(),
+                    'attractions' => Attraction::where('name', $area)->with(['tags', 'position', 'images'])->get()
+                ]);
+            };
+
+            $attractions = Attraction::QueryTags($tag)->QueryPosition($region, $town)->with(['tags', 'position', 'images'])->get();
             $tags = Tag::get();
+            dd($attractions,$tags);
         } catch (Exception $e) {
             $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
             $tags = Tag::get();
