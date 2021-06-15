@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Map;
 use App\Tag;
+use App\helpers;
 use App\Attraction;
-use App\Http\Requests\MapRequest;
 use Illuminate\Http\Request;
-use Exception;
+use App\Http\Requests\MapRequest;
 
 class MapController extends Controller
 {
@@ -28,7 +28,12 @@ class MapController extends Controller
 
 
         if ($request->area) {
-            $attractions = Attraction::where('name', $area)->with(['tags', 'position', 'images'])->get();
+            $area = helpers::getAttrLatLng($area);
+            $areaLat = $area->results[0]->geometry->location->lat;
+            $areaLng = $area->results[0]->geometry->location->lng;
+            $attractions = Attraction::queryNearbyAttractions($areaLat, $areaLng)->with('position', 'images', 'tags')->get();
+            dd($attractions);
+            //when
         } else if ($request->tag) {
             $attractions = Attraction::QueryTags($tag)->with(['tags', 'position', 'images'])->get();
         } else if ($request->region) {

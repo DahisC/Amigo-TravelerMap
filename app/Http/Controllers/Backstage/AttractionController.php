@@ -43,7 +43,8 @@ class AttractionController extends Controller
     public function store(AttractionRequest $request)
     {
         // 地點轉Px、Py
-        $response = helpers::getAttrLatLng($request);
+        $address = $request->address;
+        $response = helpers::getAttrLatLng($address);
 
 
         $attraction = Attraction::create([
