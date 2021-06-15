@@ -21,10 +21,10 @@ class MapController extends Controller
 
         try {
 
-            $tag = $request->tag;
-            $region = $request->region;
-            $town = $request->town;
-            $area = $request->area;
+            $tag = $request->tag ?? '';
+            $region = $request->region ?? '';
+            $town = $request->town ?? '';
+            $area = $request->area ?? '';
 
             if ($request->area) {
                 return view('maps.index', [
@@ -35,7 +35,7 @@ class MapController extends Controller
 
             $attractions = Attraction::QueryTags($tag)->QueryPosition($region, $town)->with(['tags', 'position', 'images'])->get();
             $tags = Tag::get();
-            dd($attractions,$tags);
+            dd($attractions);
         } catch (Exception $e) {
             $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
             $tags = Tag::get();

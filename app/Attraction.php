@@ -48,13 +48,13 @@ class Attraction extends Model
     public function scopeQueryTags($query, $tag)
     {
         return $query->whereHas('tags', function ($tagQuery) use ($tag) {
-            return  $tagQuery->where('name', '=', $tag);
+              $tagQuery->where('name', '=', $tag);
         });
     }
     public function scopeQueryPosition($query, $region, $town)
     {
         return $query->whereHas('position', function ($positionQuery) use ($region, $town) {
-            return  $positionQuery->where('region', '=', $region)->where('town', '=', $town);
+              $positionQuery->where('region', '=', $region)->where('town', '=', $town);
         });
     }
 }
