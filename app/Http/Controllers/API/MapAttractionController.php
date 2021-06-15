@@ -31,40 +31,7 @@ class MapAttractionController extends Controller
      */
     public function store(AttractionRequest $request)
     {
-        //地點轉Px、Py
-        $attraction = Attraction::create([
-            'user_id' => auth()->user()->id,
-            'name' => $request->name,
-            'website' => $request->website,
-            'tel' => $request->tel,
-            'description' => $request->description,
-            'ticket_info' => $request->ticket_info,
-            'traffic_info' => $request->traffic_info,
-            'parking_info' => $request->parking_info,
-        ]);
-        //position
-        $attraction->position()->save(
-            AttractionPosition::make([
-                'country' => $request->country,
-                'region' => $request->region,
-                'town' => $request->town,
-                'address' => $request->address,
-                'lat' => '25.017525',
-                'lng' => '121.533162',
-            ])
-        );
-        //img
-        if ($request->hasFile('image_url')) {
-            $path = $request->file('image_url')->store('attractions');
-            $attraction->images()->save(
-                AttractionImage::make([
-                    'url' => $path,
-                    // 'image_desc' => '112',
-                ])
-            );
-        };
-        
-        return redirect()->route('backstage.attractions.index');
+            //
     }
 
     /**

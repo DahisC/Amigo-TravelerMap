@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Attraction;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,7 +20,6 @@ class AttractionController extends Controller
         } else {
             $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
         }
-        // $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
         return response(compact('attractions'));
     }
 
@@ -33,8 +31,11 @@ class AttractionController extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
+
+
+
 
     /**
      * Display the specified resource.
