@@ -30,7 +30,7 @@ class MapController extends Controller
                 break;
             case 'address':
                 if ($request->region) $query->QueryRegion($request->region);
-                if ($request->town) $query->QueryRegion($request->town);
+                if ($request->town) $query->QueryTown($request->town);
                 break;
             default:
                 break;
