@@ -6,6 +6,8 @@ use App\Map;
 use App\Tag;
 use App\Attraction;
 use App\Http\Requests\MapRequest;
+use Illuminate\Http\Request;
+use Exception;
 
 class MapController extends Controller
 {
@@ -14,9 +16,32 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
+
+
+
+        $tag = $request->tag;
+        $region = $request->region;
+        $town = $request->town;
+        $area = $request->area;
+
+
+        if ($request->area) {
+            $attractions = Attraction::where('name', $area)->with(['tags', 'position', 'images'])->get();
+        } else if ($request->tag) {
+            $attractions = Attraction::QueryTags($tag)->with(['tags', 'position', 'images'])->get();
+        } else if ($request->region) {
+            $attractions = Attraction::QueryRegion($region)->with(['tags', 'position', 'images'])->get();
+        } else if ($request->town) {
+            $attractions = Attraction::QueryTown($town)->with(['tags', 'position', 'images'])->get();
+        } else if ($request->region && $request->town) {
+            $attractions = Attraction::QueryTown($town)->QueryRegion($region)->with(['tags', 'position', 'images'])->get();
+        } else if ($request->tag && $request->region && $request->town) {
+            $attractions = Attraction::QueryTags($tag)->QueryTown($town)->QueryRegion($region)->with(['tags', 'position', 'images'])->get();
+        } else {
+            $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
+        }
         $tags = Tag::get();
         return view('maps.index', compact('attractions', 'tags'));
     }
