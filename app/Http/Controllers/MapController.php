@@ -31,20 +31,14 @@ class MapController extends Controller
             $attractions = Attraction::where('name', $area)->with(['tags', 'position', 'images'])->get();
         } else if ($request->tag) {
             $attractions = Attraction::QueryTags($tag)->with(['tags', 'position', 'images'])->get();
-            dd($attractions);
         } else if ($request->region) {
             $attractions = Attraction::QueryRegion($region)->with(['tags', 'position', 'images'])->get();
-            dd($attractions);
         } else if ($request->town) {
-            // dd(1);
             $attractions = Attraction::QueryTown($town)->with(['tags', 'position', 'images'])->get();
-            dd($attractions);
         } else if ($request->region && $request->town) {
             $attractions = Attraction::QueryTown($town)->QueryRegion($region)->with(['tags', 'position', 'images'])->get();
-            dd($attractions);
         } else if ($request->tag && $request->region && $request->town) {
             $attractions = Attraction::QueryTags($tag)->QueryTown($town)->QueryRegion($region)->with(['tags', 'position', 'images'])->get();
-            dd($attractions);
         } else {
             $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
         }
