@@ -54,7 +54,7 @@ class Attraction extends Model
     public function scopeQueryPosition($query, $region, $town)
     {
         return $query->whereHas('position', function ($positionQuery) use ($region, $town) {
-            return  $positionQuery->where('region', 'like', $region)->where('town', '=', $town);
+            return  $positionQuery->where('region', '=', $region)->where('town', '=', $town);
         });
     }
 }
