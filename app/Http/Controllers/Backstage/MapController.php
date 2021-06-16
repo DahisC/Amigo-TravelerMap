@@ -76,6 +76,7 @@ class MapController extends Controller
      */
     public function update(MapRequest $request, $id)
     {
+
         Map::findOrFail($id)->update($request->all());
         return redirect()->route('backstage.maps.index');
     }

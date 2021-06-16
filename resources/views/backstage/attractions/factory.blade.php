@@ -13,7 +13,7 @@
       <h6 class="m-0 font-weight-bold text-primary">地點 | 編輯</h6>
     </div>
     <div class="card-body">
-      <form action="{{ route('attractions.update', ['attraction' => $attraction->id]) }}" method="POST" enctype="multipart/form-data">
+      <form action="{{ route('attractions.update', ['attraction' => $attraction->id ?? '']) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         {{-- --}}

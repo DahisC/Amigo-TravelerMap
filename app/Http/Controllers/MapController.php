@@ -21,7 +21,7 @@ class MapController extends Controller
     public function index(Request $request)
     {
         $tags = Tag::get();
-        dd($request->query()['name'][0]);
+
         $query = Attraction::query()->with('tags', 'position', 'images');
         switch ($request->searchBy) {
             case 'area':
