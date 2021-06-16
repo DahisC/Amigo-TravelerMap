@@ -38,8 +38,8 @@ class MapController extends Controller
     public function store(MapRequest $request)
     {
         Map::create([
-            'user_id'=>auth()->user()->id,
-            'name'=>$request->name
+            'user_id' => auth()->user()->id,
+            'name' => $request->name
         ]);
         return redirect()->route('backstage.maps.index');
     }
@@ -69,8 +69,7 @@ class MapController extends Controller
     // }
     public function edit(Map $map)
     {
-        $tags = Map::get();
-        
+        $tags = Map::get();   
         return view('backstage.maps.edit',compact('map'));
     }
 
