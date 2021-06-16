@@ -1,6 +1,5 @@
 <!-- Button trigger modal -->
 
-
 <!-- Modal -->
 <div class="fade modal" id="search-attraction-modal">
   <div class="modal-dialog modal-dialog modal-dialog-centered">
@@ -15,9 +14,9 @@
             <div class="row">
               <!-- 關鍵字 -->
               <div class="form-check mb-3">
-                <input class="form-check-input" type="radio" name="searchBy" id="search-form__byArea" value="area" />
-                <label class="form-check-label mb-2" for="search-form__byArea">根據區域搜尋</label>
-                <div class="card p-3 border border-primary mb-4">
+                <input class="form-check-input" type="radio" name="searchBy" id="search-form__byArea" value="area" checked />
+                <label class="form-check-label mb-3" for="search-form__byArea">根據區域搜尋</label>
+                <div class="card p-3 mb-4">
                   <div class="col-12 mb-3">
                     <div class="form-outline">
                       <input id="search-form__area" type="text" class="form-control" name="q" />
@@ -39,8 +38,8 @@
               </div>
               <div class="form-check mb-3">
                 <input class="form-check-input" type="radio" name="searchBy" id="search-form__byAddress" value="address" />
-                <label class="form-check-label" for="search-form__byAddress">根據地址搜尋</label>
-                <div class="card p-3 border border-primary">
+                <label class="form-check-label mb-3" for="search-form__byAddress">根據地址搜尋</label>
+                <div class="card p-3">
                   @include('partials.form.select-city-county')
                 </div>
               </div>
