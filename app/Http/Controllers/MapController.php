@@ -38,7 +38,7 @@ class MapController extends Controller
         if ($request->tag) $query->QueryTags($request->tag);
         $attractions = $query->get();
         // $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get(); // for test
-        return view('maps.index', compact('attractions', 'tags'));
+        return view('maps.index', compact('attractions', 'tags', 'addressLatLng'));
     }
 
     /**

@@ -64,8 +64,8 @@ class AttractionController extends Controller
                 'region' => $request->region,
                 'town' => $request->town,
                 'address' => $request->address,
-                'lat' =>  $response->results[0]->geometry->location->lat,
-                'lng' => $response->results[0]->geometry->location->lng,
+                'lat' =>  $response['lat'],
+                'lng' => $response['lng'],
             ])
         );
         //img
