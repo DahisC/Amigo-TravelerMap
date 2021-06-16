@@ -125,7 +125,7 @@
 </script>
 <script>
   let uplodedImageCounter = 0;
-  const attraction = @json($attraction ? $attraction : null);
+  const attraction = @json(isset($attraction) ? $attraction : null);
 
   if (attraction) {
     attraction.images.forEach(image => {
