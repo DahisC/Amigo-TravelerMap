@@ -6,7 +6,6 @@ use App\helpers;
 use App\Attraction;
 use App\AttractionImage;
 use App\AttractionPosition;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\AttractionRequest;
 
@@ -16,7 +15,6 @@ class AttractionController extends Controller
     {
         // 地點轉Px、Py
         $response = helpers::getAddressLatLng($request->address);
-
 
         $attraction = Attraction::create([
             'user_id' => auth()->user()->id,
@@ -52,14 +50,8 @@ class AttractionController extends Controller
         return redirect()->route('backstage.attractions.index');
     }
 
-    public function show($id)
+    public function update(AttractionRequest $request,Attraction $attraction)
     {
-        //
-    }
-
-    public function update(AttractionRequest $request, $id)
-    {
-        $attraction = Attraction::findOrFail($id);
         $attraction->update($request->all());
         $attraction->position->update($request->all());
 
@@ -77,9 +69,8 @@ class AttractionController extends Controller
         return redirect()->route('backstage.attractions.index');
     }
 
-    public function destroy($id)
+    public function destroy(Attraction $attraction)
     {
-        $attraction = Attraction::findOrFail($id);
         $attraction->delete();
         $attraction->position->delete();
         //開始刪img model跟圖片
