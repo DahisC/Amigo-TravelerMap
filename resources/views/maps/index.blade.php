@@ -235,7 +235,7 @@
               {{-- <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
               <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
             </div>
-            <button type="button" class="btn btn-primary btn-sm btn-floating position-absolute end-0 bottom-0 m-2" style="font-size: 0.8rem;">
+            <button type="button" class="btn btn-primary btn-sm btn-floating position-absolute end-0 bottom-0 m-2" style="font-size: 0.8rem;" v-on:click="addToFavorite(attraction.id)">
               <i class="far fa-star"></i>
               {{-- <span class="d-none d-sm-inline">收藏</span> --}}
             </button>
@@ -308,7 +308,8 @@
         map.flyTo([lat, lng], 17);
       },
       async addToFavorite(attractionId) {
-        console.log(1);
+        console.log(attractionId);
+        const result = axios.post
       }
     }
   });

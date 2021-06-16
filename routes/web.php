@@ -22,8 +22,8 @@ use App\Http\Controllers\ItinerarieController;
 Route::view('/', 'index')->name('homepage');
 
 // 透過地圖探索附近地點，或顯示自己的位置
-Route::resource('maps', 'MapController')->except(['create', 'edit']);
-Route::resource('attractions', 'AttractionController')->except(['create', 'edit']);
+Route::resource('maps', 'MapController');
+Route::resource('attractions', 'AttractionController')->only(['store','update','destroy']);
 // 地點 -- 基本的CRUD
 // Route::resource('attractions', 'AttractionController')->except(['index', 'show']);
 
@@ -40,9 +40,9 @@ Route::group([
 ], function () {
     //收藏頁面
     Route::view('/', 'backstage.index')->name('index');
-    Route::resource('/users', 'Backstage\UserController')->only(['index', 'create', 'edit']);
-    Route::resource('/maps', 'Backstage\MapController');
-    Route::resource('/attractions', 'Backstage\AttractionController')->only(['index', 'create', 'edit','show']);
+    Route::resource('/users', 'Backstage\UserController')->except('show');
+    Route::resource('/maps', 'Backstage\MapController')->except('show');
+    Route::resource('/attractions', 'Backstage\AttractionController')->except(['store','update','show','destroy']);
 });
 
 // 前端測試用路由

@@ -4,11 +4,7 @@ namespace App\Http\Controllers\Backstage;
 
 use App\User;
 use App\Tag;
-use App\helpers;
 use App\Attraction;
-use GuzzleHttp\Client;
-use App\AttractionImage;
-use App\AttractionPosition;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -16,152 +12,22 @@ use App\Http\Requests\AttractionRequest;
 
 class AttractionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $attractions = Attraction::get();
         return view('backstage.attractions.index', compact('attractions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        // $user = User::findOrFail($id);
-        
-        // if (Gate::denies('show-map', $user)) {
-        //     abort(403);
-        // }
-        // dd($id,$user);
-        // dd(123);
-        return view('backstage.attractions.factory');
+        $tags = Tag::get();
+        return view('backstage.attractions.factory', compact('tags'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(AttractionRequest $request)
+    public function edit($id)
     {
-        // 地點轉Px、Py
-        $response = helpers::getAddressLatLng($request->address);
-
-
-        $attraction = Attraction::create([
-            'user_id' => auth()->user()->id,
-            'name' => $request->name,
-            'website' => $request->website,
-            'tel' => $request->tel,
-            'description' => $request->description,
-            'ticket_info' => $request->ticket_info ?? '',
-            'traffic_info' => $request->traffic_info ?? '',
-            'parking_info' => $request->parking_info ?? '',
-        ]);
-        //position
-        $attraction->position()->save(
-            AttractionPosition::make([
-                'country' => $request->country,
-                'region' => $request->region,
-                'town' => $request->town,
-                'address' => $request->address,
-                'lat' =>  $response['lat'],
-                'lng' => $response['lng'],
-            ])
-        );
-        //img
-        if ($request->hasFile('image_url')) {
-            $path = $request->file('image_url')->store('attractions');
-            $attraction->images()->save(
-                AttractionImage::make([
-                    'url' => $path,
-                    'image_desc' => $request->image_desc ?? '',
-                ])
-            );
-        };
-        return redirect()->route('backstage.attractions.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        
-        dd($id);
-
-        // return '1212';
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Attraction $attraction)
-    {
-        // $attraction = Attraction::findOrFail($id);
-        dd(321321);
+        $attraction = Attraction::with('tags', 'images', 'position')->find($id);
         $tags = Tag::get();
         return view('backstage.attractions.factory', compact('attraction', 'tags'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(AttractionRequest $request, $id)
-    {
-        $attraction = Attraction::findOrFail($id);
-        $attraction->update($request->all());
-        $attraction->position->update($request->all());
-
-        if ($request->hasFile('image_url')) {
-            $path = $request->file('image_url')->store('attractions');
-            AttractionImage::updateOrCreate([
-                'attraction_id' => $attraction->id,
-                'url' => $path,
-            ], [
-                'image_desc' => $request->image_desc ?? '',
-            ]);
-        };
-
-
-        return redirect()->route('backstage.attractions.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $attraction = Attraction::findOrFail($id);
-        $attraction->delete();
-        $attraction->position->delete();
-        //開始刪img model跟圖片
-
-        $attraction->images->each(function ($img) {
-            Storage::delete($img->url);
-            $img->delete();
-        });
-        return redirect()->route('backstage.attractions.index');
     }
 }
