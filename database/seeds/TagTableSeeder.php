@@ -31,9 +31,9 @@ class TagTableSeeder extends Seeder
                 ['name' => $name_random],
                 factory(App\Tag::class)->raw(['name' => $name_random])
             );
+            $attractions->each(function($attraction) use($tags){
+                $attraction->tags()->random()->attach($tags);
+            });
         };
-        $attractions->each(function($attraction) use($tags){
-            $attraction->tags()->attach($tags);
-        });
     }
 }
