@@ -21,6 +21,6 @@ class AttractionController extends Controller
 
     public function favorite($id)
     {
-        dd($id, auth('api')->user(), auth()->guard('api')->user());
+        dd($id, auth()->user(), auth()->guard('api')->user());
     }
 }
