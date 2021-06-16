@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backstage;
 
+use App\User;
 use App\Tag;
 use App\helpers;
 use App\Attraction;
@@ -9,6 +10,7 @@ use GuzzleHttp\Client;
 use App\AttractionImage;
 use App\AttractionPosition;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\AttractionRequest;
 
@@ -32,6 +34,13 @@ class AttractionController extends Controller
      */
     public function create()
     {
+        // $user = User::findOrFail($id);
+        
+        // if (Gate::denies('show-map', $user)) {
+        //     abort(403);
+        // }
+        // dd($id,$user);
+        // dd(123);
         return view('backstage.attractions.factory');
     }
 
@@ -89,7 +98,10 @@ class AttractionController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        dd($id);
+
+        // return '1212';
     }
 
     /**
@@ -101,6 +113,7 @@ class AttractionController extends Controller
     public function edit(Attraction $attraction)
     {
         // $attraction = Attraction::findOrFail($id);
+        dd(321321);
         $tags = Tag::get();
         return view('backstage.attractions.factory', compact('attraction', 'tags'));
     }
