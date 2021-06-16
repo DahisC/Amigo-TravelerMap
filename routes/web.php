@@ -36,13 +36,13 @@ Route::view('/sign-up', 'sign-up')->name('sign-up');
 Route::group([
     'prefix' => 'backstage',
     'as' => 'backstage.',
-    // 'middleware' => 'auth'
+    'middleware' => 'auth'
 ], function () {
     //收藏頁面
     Route::view('/', 'backstage.index')->name('index');
-    Route::resource('/users', 'Backstage\UserController');
-    Route::resource('/maps', 'Backstage\MapController');
-    Route::resource('/attractions', 'Backstage\AttractionController');
+    Route::resource('/users', 'Backstage\UserController')->except('show');
+    Route::resource('/maps', 'Backstage\MapController')->except('show');
+    Route::resource('/attractions', 'Backstage\AttractionController')->except(['store','update','show','destroy']);
 });
 
 // 前端測試用路由

@@ -8,83 +8,38 @@ use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $users =  User::get();
         return view('backstage.users.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('backstage.users.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(UserRequest $request)
     {
         User::create($request->all());
         return redirect()->route('backstage.users.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function edit(User $user)
     {
-        //
+        return view('backstage.users.edit', compact('user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(UserRequest $request, User $user)
     {
-        $user = User::findOrFail($id);
-        return view('backstage.users.edit',compact('user'));
+        $user->update($request->all());
+        return redirect()->route('backstage.users.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UserRequest $request, $id)
+    public function destroy(User $user)
     {
-       User::findOrFail($id)->update($request->all());
-       return redirect()->route('backstage.users.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-       User::findOrFail($id)->delete();
+        $user->attractions()->detach();
+        $user->delete();
+        return redirect()->route('backstage.users.index');
     }
 }

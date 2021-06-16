@@ -39,7 +39,7 @@ class AttractionRequest extends FormRequest
         'town'    => 'required|string',
         'address' => 'required|string',
         'url'     => 'nullable|image|file|size:1024',
-        'image_desc'  => 'nullable|string|max:300',
+        'image_desc'  => 'nullable|max:300',
         ];
     }
 }
