@@ -88,7 +88,8 @@ class MapController extends Controller
      */
     public function destroy($id)
     {
-        Map::findOrFail($id)->delete();
+        $map = Map::findOrFail($id);
+        $map->attractions()->sync([]);
         return redirect()->route('backstage.maps.index');
     }
 }

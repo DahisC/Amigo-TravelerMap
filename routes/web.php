@@ -40,9 +40,9 @@ Route::group([
 ], function () {
     //收藏頁面
     Route::view('/', 'backstage.index')->name('index');
-    Route::resource('/users', 'Backstage\UserController')->only(['index', 'create', 'edit']);
-    Route::resource('/maps', 'Backstage\MapController')->only(['index', 'create', 'edit']);
-    Route::resource('/attractions', 'Backstage\AttractionController')->only(['index', 'create', 'edit']);
+    Route::resource('/users', 'Backstage\UserController');
+    Route::resource('/maps', 'Backstage\MapController');
+    Route::resource('/attractions', 'Backstage\AttractionController');
 });
 
 // 前端測試用路由

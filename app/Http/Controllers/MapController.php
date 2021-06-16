@@ -21,7 +21,7 @@ class MapController extends Controller
     public function index(Request $request)
     {
         $tags = Tag::get();
-
+        dd($request->query()['name'][0]);
         $query = Attraction::query()->with('tags', 'position', 'images');
         switch ($request->searchBy) {
             case 'area':
@@ -37,7 +37,7 @@ class MapController extends Controller
         }
         if ($request->tag) $query->QueryTags($request->tag);
         $attractions = $query->get();
-        // $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get(); // for test
+        $addressLatLng = '';
         return view('maps.index', compact('attractions', 'tags', 'addressLatLng'));
     }
 
@@ -117,7 +117,7 @@ class MapController extends Controller
      */
     public function destroy($id)
     {
-        $map = Map::find($id);
+        $map = Map::findOrFail($id);
         $map->attractions()->sync([]);
         $map->delete();
     }
