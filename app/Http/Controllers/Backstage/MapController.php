@@ -69,7 +69,6 @@ class MapController extends Controller
     // }
     public function edit(Map $map)
     {
-        $tags = Map::get();   
         return view('backstage.maps.edit',compact('map'));
     }
 
