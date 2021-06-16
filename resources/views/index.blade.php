@@ -1,8 +1,8 @@
 @extends('layouts.amigo')
 
-{{-- @section('nav')
+@section('nav')
 
-@endsection --}}
+@endsection
 
 @section('title')
 Buen Camino
@@ -13,6 +13,10 @@ Buen Camino
   html {
     font-size: 18px;
     color: white;
+  }
+
+  p {
+    margin-bottom: 0.5rem;
   }
 
   .a-fs-1 {
@@ -38,6 +42,12 @@ Buen Camino
     justify-content: center;
     align-items: center;
   }
+
+  .a-background {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
 </style>
 @endsection
 
@@ -61,15 +71,15 @@ Buen Camino
   <!-- ¿Quién soy yo? / Who am I? -->
   <section id="list-item-2">
     <div class="h-100 d-flex flex-column">
-      <div class="flex-grow-1"></div>
-      <div class="flex-grow-1 text-white" style="max-height: 34%; background-color: rgba(0, 0, 0, 80%);">
+      <div class="flex-grow-1 a-background" style="background-color:#333333; background-image: url({{ asset('images/banner/who-am-i.png') }});"></div>
+      <div class=" flex-grow-1 text-white position-sticky bottom-0" style="max-height: 25%; background-color: #333333;">
         <div class="h-100 container">
           <div class="h-100 row">
-            <div class="h-100 col text-center">
-              <h1 class="a-fs-3 h-50 d-flex justify-content-center align-items-center"><b>¿Quién soy yo?</b></h1>
+            <div class="col text-center d-flex flex-column justify-content-evenly">
+              <h1 class="a-fs-3"><b>¿Quién soy yo?</b></h1>
               <h2 class="a-fs-2">Who am I?</h2>
             </div>
-            <div class="col d-flex flex-column justify-content-end">
+            <div class="col d-flex flex-column justify-content-center text-end">
               <p><b>阿米狗是每個人的旅人地圖，記錄著那些短暫出現卻又精彩萬分的事物</b></p>
               <p>源自於西班牙文中「朋友」的 Amigo 一詞，我們就像那位最凱瑞你的朋友！</p>
               <p>在你的旅途中提供指引，將有趣的地點、活動介紹給你就是我們的使命。</p>
@@ -77,7 +87,7 @@ Buen Camino
           </div>
         </div>
       </div>
-      <div class="flex-grow-1"></div>
+      {{-- <div class="flex-grow-1"></div> --}}
     </div>
   </section>
   <!-- Explore -->
@@ -165,15 +175,15 @@ Buen Camino
   </section>
   <section id="list-item-4">
     <div class="h-100 d-flex flex-column">
-      <div class="flex-grow-1"></div>
-      <div class="flex-grow-1 text-white" style="max-height: 34%; background-color: rgba(0, 0, 0, 80%);">
+      <div class="flex-grow-1 a-background" style="background-color:#333333; background-image: url({{ asset('images/banner/who-am-i.png') }});"></div>
+      <div class="flex-grow-1 text-white position-sticky bottom-0" style="max-height: 25%; background-color: #333333;">
         <div class="h-100 container">
           <div class="h-100 row flex-row-reverse">
-            <div class="h-100 col text-center">
-              <h1 class="a-fs-3 h-50 d-flex justify-content-center align-items-center"><b>¿Quién eres?</b></h1>
+            <div class="h-100 col text-center d-flex flex-column justify-content-evenly">
+              <h1 class="a-fs-3"><b>¿Quién eres?</b></h1>
               <h2 class="a-fs-2">Who are YOU?</h2>
             </div>
-            <div class="col d-flex flex-column justify-content-end">
+            <div class="col d-flex flex-column justify-content-center">
               <p><b>在旅途中，我們都可能會彼此交會</b></p>
               <p>作為旅人，在一段旅程中有可能會是一個追尋者，也可能會是引導者。</p>
               <p>在接下來的旅途中，你想當哪一個？</p>
@@ -181,7 +191,7 @@ Buen Camino
           </div>
         </div>
       </div>
-      <div class="flex-grow-1"></div>
+      {{-- <div class="flex-grow-1"></div> --}}
     </div>
   </section>
   <section>
@@ -228,11 +238,11 @@ Buen Camino
   </section>
   <section>
     <div class="h-100 d-flex flex-column">
-      <div class="flex-grow-1"></div>
-      <div class="flex-grow-1 text-white" style="max-height: 34%; background-color: rgba(0, 0, 0, 80%);">
+      <div class="flex-grow-1 a-background" style="background-color: #333333; background-image: url({{ asset('images/banner/buen-camino.png') }});"></div>
+      <div class="flex-grow-1 text-white position-sticky bottom-0" style="max-height: 25%; background-color: #333333;">
         <div class="h-100 container">
           <div class="h-100 row flex-row-reverse">
-            <div class="h-100 col text-center d-flex flex-column justify-content-between">
+            <div class="h-100 text-center d-flex flex-column justify-content-between py-3">
               <h1 class="a-fs-3">Buen Camino</h1>
               <h2 class="a-fs-2">一路順風</h2>
               <div>
@@ -243,7 +253,7 @@ Buen Camino
           </div>
         </div>
       </div>
-      <div class="flex-grow-1"></div>
+      {{-- <div class="flex-grow-1"></div> --}}
     </div>
   </section>
 </div>

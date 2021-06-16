@@ -1,17 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Map;
-use App\Attraction;
-use GuzzleHttp\Client;
-use App\AttractionImage;
-use App\AttractionPosition;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\AttractionRequest;
 
-class MapAttractionController extends Controller
+class AttractionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,14 +17,24 @@ class MapAttractionController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AttractionRequest $request)
+    public function store(Request $request)
     {
-            //
+        //
     }
 
     /**
@@ -46,6 +49,17 @@ class MapAttractionController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -54,13 +68,7 @@ class MapAttractionController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        //delete create
-        $map = Map::findOrFail($id);
-        $attraction = Attraction::findOrFail($request->id);
-        $map->attractions()->syncWithoutDetaching($attraction);
-
-        return ['map'=>$map];
+        dd($request->all());
     }
 
     /**
@@ -69,12 +77,8 @@ class MapAttractionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        $map = Map::findOrFail($id);
-        $attraction = Attraction::findOrFail($request->id);
-        $map->attractions()->detach($attraction);
-
-        return ['map'=>$map];
+        //
     }
 }

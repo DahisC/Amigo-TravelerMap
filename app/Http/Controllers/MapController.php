@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Map;
 use App\Tag;
+use Exception;
+use App\helpers;
 use App\Attraction;
+use Illuminate\Http\Request;
 use App\Http\Requests\MapRequest;
+use Illuminate\Support\Facades\DB;
 
 class MapController extends Controller
 {
@@ -14,11 +18,27 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
         $tags = Tag::get();
-        return view('maps.index', compact('attractions', 'tags'));
+
+        $query = Attraction::query()->with('tags', 'position', 'images');
+        switch ($request->searchBy) {
+            case 'area':
+                $addressLatLng = helpers::getAddressLatLng($request->q);
+                $query->queryNearbyAttractions($addressLatLng['lat'], $addressLatLng['lng'], $request->range);
+                break;
+            case 'address':
+                if ($request->region) $query->QueryRegion($request->region);
+                if ($request->town) $query->QueryTown($request->town);
+                break;
+            default:
+                break;
+        }
+        if ($request->tag) $query->QueryTags($request->tag);
+        $attractions = $query->get();
+        // $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get(); // for test
+        return view('maps.index', compact('attractions', 'tags', 'addressLatLng'));
     }
 
     /**
