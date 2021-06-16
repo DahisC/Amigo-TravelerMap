@@ -37,7 +37,7 @@ class MapController extends Controller
         }
         if ($request->tag) $query->QueryTags($request->tag);
         $attractions = $query->get();
-        // $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get(); // for test
+        $addressLatLng = '';
         return view('maps.index', compact('attractions', 'tags', 'addressLatLng'));
     }
 
@@ -117,8 +117,8 @@ class MapController extends Controller
      */
     public function destroy($id)
     {
-        $map = Map::find($id);
-        $map->attractions()->sync([]);
+        $map = Map::findOrFail($id);
+        $map->attractions()->detach();
         $map->delete();
     }
 }
