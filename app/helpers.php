@@ -53,7 +53,7 @@ class helpers
 
         // dd($response->results[0]->geometry->location->lat);
         // dd($response->results[0]->geometry->location->lng);
-
+ 
         return [
             'lat' => $response->results[0]->geometry->location->lat,
             'lng' => $response->results[0]->geometry->location->lng

@@ -46,7 +46,7 @@ class LoginController extends Controller
             case 'Trader':
                 return redirect()->route('backstage.index');
             default:
-                return redirect()->route('index');
+                return redirect()->route('backstage.index');
         }
     }
 }
