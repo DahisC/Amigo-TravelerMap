@@ -200,6 +200,9 @@
       <button type="button" class="btn btn-primary btn-floating m-1">
         <i class="fas fa-map"></i>
       </button>
+      @if (Auth::check())
+      <p>{{ Auth::user()->name }}</p>
+      @endif
     </nav>
   </div>
   <div id="traveler-map"></div>
@@ -259,6 +262,7 @@
         </div>
       </div>
     </div>
+
   </div>
   @include('partials.maps.attraction-detail-modal')
   @include('partials.maps.search-attraction-modal', compact('tags'))
@@ -288,7 +292,7 @@
   /* 後端變數 */
   const addressLatLng = @json($addressLatLng);
   const attractions = @json($attractions);
-  console.log(attractions, addressLatLng);
+
   if (addressLatLng) locateUser(addressLatLng)
   else locateUser({ lat: 22.627278, lng: 120.301435 });
 
@@ -309,7 +313,8 @@
       },
       async addToFavorite(attractionId) {
         console.log(attractionId);
-        const result = axios.post
+        const result = await axios.patch(`/api/attractions/${attractionId}/favorite`);
+        console.log(result);
       }
     }
   });

@@ -20,16 +20,19 @@ class MapController extends Controller
             case 'area':
                 $addressLatLng = helpers::getAddressLatLng($request->q);
                 $query->queryNearbyAttractions($addressLatLng['lat'], $addressLatLng['lng'], $request->range);
+                $attractions = $query->get();
                 break;
             case 'address':
                 if ($request->region) $query->QueryRegion($request->region);
                 if ($request->town) $query->QueryTown($request->town);
+                $attractions = $query->get();
                 break;
             default:
+                $addressLatLng = null;
+                $attractions = [];
                 break;
         }
         if ($request->tag) $query->QueryTags($request->tag);
-        $attractions = [];
         return view('maps.index', compact('attractions', 'tags', 'addressLatLng'));
     }
 
