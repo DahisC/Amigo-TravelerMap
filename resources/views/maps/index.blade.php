@@ -200,6 +200,9 @@
       <button type="button" class="btn btn-primary btn-floating m-1">
         <i class="fas fa-map"></i>
       </button>
+      @if (Auth::check())
+      <p>{{ Auth::user()->name }}</p>
+      @endif
     </nav>
   </div>
   <div id="traveler-map"></div>
