@@ -1,95 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.backstage')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-  <style>
-      tr td{
-          border-bottom: 1px solid black;
-          text-align: center;
-      }
-  </style>
-</head>
+@section('css')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+@endsection
+@section('page-content')
+<div class="container-fluid">
 
-<body>
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+  <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+    For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
 
-  <div class="container">
-
-    <table id="myDataTalbe" class="display">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>user_id</th>
-        </tr>
-      </thead>
-      @foreach ($maps as $map)
-        {{-- {{dd($attraction->position)}} --}}
-        <tbody>
-          <tr>
-            <td>{{$map->id}}</td>
-            <td>{{$map->name}}</td>
-            <td>{{$map->user_id}}</td>
-            <td>
-                <a href="{{ route('backstage.maps.edit',[ 'map'=>$map->id]) }}">
-                    <button>編輯</button>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">地圖 Maps</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>user_id</th>
+              <th>名稱</th>
+              <th>動作</th>
+              <th>最後編輯時間</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>ID</th>
+              <th>user_id</th>
+              <th>名稱</th>
+              <th>動作</th>
+              <th>最後編輯時間</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            @foreach ($maps as $a)
+            <tr>
+              <td>{{ $a->id }}</td>
+              <td>{{ $a->user_id }}</td>
+              <td>{{ $a->name }}</td>
+              <td>
+                <a href="{{ route('maps.show', ['map' => $a->id]) }}" target="_blank" class="btn btn-info btn-circle btn-sm">
+                  <i class="fas fa-external-link-alt"></i>
                 </a>
-
-                <button class="btn btn-danger btn-sm delete-btn"
-                                data-id="#delete_{{ $map->id }}">刪除</button>
-
-                <form id="delete_{{ $map->id }}" action="{{ route('backstage.maps.destroy',[ 'map'=>$map->id]) }}" method="POST"
-                    class="d-none">
-                    @csrf
-                    @method('DElETE')
-                </form>
-
-            </td>
-          </tr>
-        </tbody>
-      @endforeach
-    </table>
+                <a href="{{ route('backstage.maps.edit', ['map' => $a->id]) }}" class="btn btn-warning btn-circle btn-sm">
+                  <i class="fas fa-pen"></i>
+                </a>
+                <a href="{{ route('maps.destroy', ['map' => $a->id]) }}" class="btn btn-danger btn-circle btn-sm">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+              <td>{{ $a->updated_at }}</td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
-  <!--引用jQuery-->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-  <!--引用dataTables.js-->
-  <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+</div>
+@endsection
 
-  <script type="text/javascript">
-    $(function() {
+@section('js')
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+  //   $(function() {
 
-      $("#myDataTalbe").DataTable({
-        searching: false, //關閉filter功能
-        columnDefs: [{
-          targets: [3],
-          orderable: false,
-        }]
-      });
-    });
+  //     $("#myDataTalbe").DataTable({
+  //       searching: false, //關閉filter功能
+  //       columnDefs: [{
+  //         targets: [3],
+  //         orderable: false,
+  //       }]
+  //     });
+  //   });
 
-  </script>
-     <script>
+  //   $(document).ready(function() {
+  //     $('#dataTable').DataTable();
+  //   });
+</script>
+<script>
+  //   window.onload = () => {
+  //     document.querySelectorAll('.delete-btn').forEach(function(btn) {
+  //       btn.addEventListener('click', function() {
 
-        window.onload = () => {
-            document.querySelectorAll('.delete-btn').forEach(function(btn) {
-                btn.addEventListener('click', function() {
-
-                    const id = this.getAttribute('data-id');
-                    if (confirm('是否刪除')) {
-                        document.querySelector(id).submit();
-                    }
-                });
-            })
-        }
-    </script>
-
-</body>
-
-</html>
+  //         const id = this.getAttribute('data-id');
+  //         if (confirm('是否刪除')) {
+  //           document.querySelector(id).submit();
+  //         }
+  //       });
+  //     })
+  //   }
+</script>
+@endsection
 
 
