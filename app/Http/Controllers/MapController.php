@@ -14,7 +14,7 @@ class MapController extends Controller
     public function index(Request $request)
     {
         $tags = Tag::get();
-
+        $addressLatLng = null;
         $query = Attraction::query()->with('tags', 'position', 'images');
         switch ($request->searchBy) {
             case 'area':
@@ -29,8 +29,7 @@ class MapController extends Controller
                 break;
         }
         if ($request->tag) $query->QueryTags($request->tag);
-        $attractions = $query->get();
-        $addressLatLng = '';
+        $attractions = [];
         return view('maps.index', compact('attractions', 'tags', 'addressLatLng'));
     }
 

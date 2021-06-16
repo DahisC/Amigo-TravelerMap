@@ -47,45 +47,11 @@ class MapController extends Controller
 
     public function edit(Map $map)
     {
-        //
+
+        return view('backstage.maps.factory', compact('map'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-    // public function edit($id) 
-    // {
-    //     $map = Map::findOrFail($id);
-    //     return view('backstage.maps.edit',compact('map'));
-    // }
-
-
-    
-    // public function edit(Map $map)
-    // {
-    //     return view('backstage.maps.edit',compact('map'));
-    // }
-
-
-    public function edit(Map $map)
-    {
-
-        return view('backstage.maps.factory',compact('map'));
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(MapRequest $request, $id)
+    public function update(MapRequest $request,Map $map)
     {
 
         $map->update($request->all());
