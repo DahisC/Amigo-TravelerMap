@@ -42,7 +42,7 @@ Route::group([
     Route::view('/', 'backstage.index')->name('index');
     Route::resource('/users', 'Backstage\UserController')->only(['index', 'create', 'edit']);
     Route::resource('/maps', 'Backstage\MapController');
-    
+   
     Route::resource('/attractions', 'Backstage\AttractionController')->only(['index', 'create', 'edit']);
 });
 

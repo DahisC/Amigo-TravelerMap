@@ -24,10 +24,16 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // public function create()
+    // {
+    //     return view('backstage.maps.create');
+    // }
     public function create()
     {
-        return view('backstage.maps.create');
+        return view('backstage.maps.factory');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -62,14 +68,24 @@ class MapController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    // public function edit($id)
+    // public function edit($id) 
     // {
     //     $map = Map::findOrFail($id);
     //     return view('backstage.maps.edit',compact('map'));
     // }
+
+
+    
+    // public function edit(Map $map)
+    // {
+    //     return view('backstage.maps.edit',compact('map'));
+    // }
+
+
     public function edit(Map $map)
     {
-        return view('backstage.maps.edit',compact('map'));
+
+        return view('backstage.maps.factory',compact('map'));
     }
 
 

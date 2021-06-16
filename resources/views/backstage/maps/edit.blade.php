@@ -1,4 +1,4 @@
-@extends('layouts.backstage')
+{{-- @extends('layouts.backstage')
 
 @section('page-content')
   <div class="container-fluid">
@@ -10,8 +10,8 @@
       <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">收藏地點 | 編輯</h6>
       </div>
-      <div class="card-body">
-        <form action="{{ route('backstage.maps.update', ['map' => $map->id]) }}" method="POST" enctype="multipart/form-data">
+      
+        <form action="{{ route('backstage.maps.update', ['map' => $map->id]) }}" method="POST">
           @csrf
           @method('PUT')
           <p class="text-primary">資訊 Info</p>
@@ -21,11 +21,11 @@
           </div>
           <button class="btn btn-outline-primary btn-block">完成</button>
         </form>
-      </div>
+      
     </div>
   </div>
 @endsection
-
+ --}}
 
 
 
