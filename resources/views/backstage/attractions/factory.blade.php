@@ -10,7 +10,18 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3">
       {{-- <h6 class="m-0 font-weight-bold text-primary">Method -> UPDATE | Action -> {{ route('attractions.update', ['attraction' => $attraction->id]) }}</h6> --}}
-      <h6 class="m-0 font-weight-bold text-primary">地點 | 編輯</h6>
+      <h6 class="m-0 font-weight-bold text-primary mb-3">地點 | 編輯</h6>
+      <div>
+        @if (count($errors) > 0)
+        <div class="alert alert-danger" role="alert">
+          <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+        @endif
+      </div>
     </div>
     <div class="card-body">
       <form action="{{ isset($attraction) ? route('attractions.update', ['attraction' => $attraction->id]) : route('attractions.store') }}" method="POST" enctype="multipart/form-data">
@@ -47,51 +58,56 @@
     <p class="text-primary">資訊 Info</p>
     <div class="mb-3">
       <label for="name" class="form-label">名稱 Name</label>
-      <input type="text" class="form-control" id="name" value="{{ $attraction->name ?? '' }}" />
+      <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ $attraction->name ?? '' }}" />
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">簡介 Description</label>
-      <textarea class="form-control" id="description" rows="3">{{ $attraction->description ?? '' }}</textarea>
+      <textarea class="form-control @error('description') is-invalid @enderror" id="description" rows="3">{{ $attraction->description ?? '' }}</textarea>
     </div>
     <div class="row mb-3">
       <div class="col">
         <label for="website" class="form-label">官方網站 Website</label>
-        <input type="text" class="form-control" id="website" value="{{ $attraction->website ?? '' }}" />
+        <input type="text" class="form-control @error('website') is-invalid @enderror" id="website" value="{{ $attraction->website ?? '' }}" />
       </div>
       <div class="col">
         <label for="tel" class="form-label">聯絡電話 Tel</label>
-        <input type="text" class="form-control" id="tel" value="{{ $attraction->tel ?? '' }}" />
+        <input type="text" class="form-control @error('tel') is-invalid @enderror" id="tel" value="{{ $attraction->tel ?? '' }}" />
       </div>
     </div>
     <div class="row mb-3">
       <div class="col">
-        <label for="name" class="form-label">售票資訊 Ticket Info</label>
-        <input type="text" class="form-control" id="name" value="{{ $attraction->ticket_info ?? '' }}" />
+        <label for="ticket_info" class="form-label">售票資訊 Ticket Info</label>
+        <input type="text" class="form-control @error('ticket_info') is-invalid @enderror" id="ticket_info" value="{{ $attraction->ticket_info ?? '' }}" />
       </div>
       <div class="col">
-        <label for="name" class="form-label">交通資訊 Traffic Info</label>
-        <input type="text" class="form-control" id="name" value="{{ $attraction->traffic_info ?? '' }}" />
+        <label for="traffic_info" class="form-label">交通資訊 Traffic Info</label>
+        <input type="text" class="form-control @error('traffic_info') is-invalid @enderror" id="traffic_info" value="{{ $attraction->traffic_info ?? '' }}" />
       </div>
       <div class="col">
-        <label for="name" class="form-label">停車資訊 Parking Info</label>
-        <input type="text" class="form-control" id="name" value="{{ $attraction->parking_info ?? '' }}" />
+        <label for="parking_info" class="form-label">停車資訊 Parking Info</label>
+        <input type="text" class="form-control @error('parking_info') is-invalid @enderror" id="parking_info" value="{{ $attraction->parking_info ?? '' }}" />
       </div>
     </div>
     <hr />
     {{-- --}}
     <p class="text-primary">位置 Position</p>
     <div id="city-county-selector" class="row mb-3">
+      <div class="col d-none">
+        <select name="country" hidden>
+          <option value="台灣" selected>台灣</option>
+        </select>
+      </div>
       <div class="col">
         <label for="select_city" class="form-label">縣市 Region</label>
-        <select class="form-control" id="select_city"></select>
+        <select class="form-control @error('region') is-invalid @enderror" id="select_city"></select>
       </div>
       <div class="col">
         <label for="select_area" class="form-label">區域 Town</label>
-        <select class="form-control" id="select_area"></select>
+        <select class="form-control @error('town') is-invalid @enderror" id="select_area"></select>
       </div>
       <div class="col-12">
         <label for="address" class="form-label">地址 Address</label>
-        <input class="form-control" id="address" />
+        <input class="form-control @error('address') is-invalid @enderror" id="address" />
       </div>
     </div>
     <hr />
@@ -109,11 +125,13 @@
 </script>
 <script>
   let uplodedImageCounter = 0;
-  const attraction = @json($attraction);
+  const attraction = @json($attraction ? $attraction : null);
 
-  attraction.images.forEach(image => {
-    createImageBlock(image);
-  });
+  if (attraction) {
+    attraction.images.forEach(image => {
+      createImageBlock(image);
+    });
+  }
 
   btn_upload_image.addEventListener('click', () => {
     event.preventDefault();
