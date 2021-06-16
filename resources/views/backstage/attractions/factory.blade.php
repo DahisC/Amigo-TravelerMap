@@ -109,11 +109,13 @@
 </script>
 <script>
   let uplodedImageCounter = 0;
-  const attraction = @json($attraction);
+  const attraction = @json($attraction ?? null);
 
-  attraction.images.forEach(image => {
-    createImageBlock(image);
-  });
+  if (attraction) {
+    attraction.images.forEach(image => {
+      createImageBlock(image);
+    });
+  }
 
   btn_upload_image.addEventListener('click', () => {
     event.preventDefault();
