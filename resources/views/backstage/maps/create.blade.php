@@ -1,7 +1,7 @@
 @extends('layouts.backstage')
 
 @section('page-content')
-<form method="POST" action="{{ route('backstage.maps.store') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('backstage.maps.store') }}">
     @csrf
     <label for="name" class="form-label" >名稱 Name</label>
     <input type="text" class="form-control" id="name" name="name" />
