@@ -22,8 +22,8 @@ use App\Http\Controllers\ItinerarieController;
 Route::view('/', 'index')->name('homepage');
 
 // 透過地圖探索附近地點，或顯示自己的位置
-Route::resource('maps', 'MapController')->except(['create', 'edit']);
-Route::resource('attractions', 'AttractionController')->except(['create', 'edit']);
+Route::resource('maps', 'MapController');
+Route::resource('attractions', 'AttractionController');
 // 地點 -- 基本的CRUD
 // Route::resource('attractions', 'AttractionController')->except(['index', 'show']);
 
@@ -36,13 +36,13 @@ Route::view('/sign-up', 'sign-up')->name('sign-up');
 Route::group([
     'prefix' => 'backstage',
     'as' => 'backstage.',
-    'middleware' => 'auth'
+    // 'middleware' => 'auth'
 ], function () {
     //收藏頁面
     Route::view('/', 'backstage.index')->name('index');
-    Route::resource('/users', 'Backstage\UserController')->only(['index', 'create', 'edit']);
-    Route::resource('/maps', 'Backstage\MapController')->only(['index', 'create', 'edit']);
-    Route::resource('/attractions', 'Backstage\AttractionController')->only(['index', 'create', 'edit']);
+    Route::resource('/users', 'Backstage\UserController');
+    Route::resource('/maps', 'Backstage\MapController');
+    Route::resource('/attractions', 'Backstage\AttractionController');
 });
 
 // 前端測試用路由
