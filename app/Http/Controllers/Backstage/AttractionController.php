@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backstage;
 
+use App\Tag;
 use App\helpers;
 use App\Attraction;
 use GuzzleHttp\Client;
@@ -31,7 +32,7 @@ class AttractionController extends Controller
      */
     public function create()
     {
-        return view('backstage.attractions.create');
+        return view('backstage.attractions.factory');
     }
 
     /**
@@ -43,8 +44,7 @@ class AttractionController extends Controller
     public function store(AttractionRequest $request)
     {
         // 地點轉Px、Py
-        $address = $request->address;
-        $response = helpers::getAttrLatLng($address);
+        $response = helpers::getAddressLatLng($request->address);
 
 
         $attraction = Attraction::create([
@@ -64,8 +64,8 @@ class AttractionController extends Controller
                 'region' => $request->region,
                 'town' => $request->town,
                 'address' => $request->address,
-                'lat' =>  $response->results[0]->geometry->location->lat,
-                'lng' => $response->results[0]->geometry->location->lng,
+                'lat' =>  $response['lat'],
+                'lng' => $response['lng'],
             ])
         );
         //img
@@ -98,10 +98,11 @@ class AttractionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Attraction $attraction)
     {
-        $attraction = Attraction::findOrFail($id);
-        return view('backstage.attractions.edit', compact('attraction'));
+        // $attraction = Attraction::findOrFail($id);
+        $tags = Tag::get();
+        return view('backstage.attractions.factory', compact('attraction', 'tags'));
     }
 
     /**

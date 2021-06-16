@@ -38,18 +38,25 @@ class helpers
         ];
     }
     //地點轉Px、Py
-    static function getAttrLatLng($address)
+    static function getAddressLatLng($address)
     {
         // 將地址轉成經緯度
         $client = new Client();
         $data = $client->get('https://maps.googleapis.com/maps/api/geocode/json', [
             'query' => [
                 'address' => $address,
-                'key' => 'AIzaSyDzlrWxUgqiX2s22EHfVBdtRmWCj2c77g4'
+                'key' => 'AIzaSyDzlrWxUgqiX2s22EHfVBdtRmWCj2c77g4',
+                'language' => 'zh-TW'
             ],
         ]);
         $response = json_decode($data->getBody());
 
-        return $response;
+        // dd($response->results[0]->geometry->location->lat);
+        // dd($response->results[0]->geometry->location->lng);
+
+        return [
+            'lat' => $response->results[0]->geometry->location->lat,
+            'lng' => $response->results[0]->geometry->location->lng
+        ];
     }
 }

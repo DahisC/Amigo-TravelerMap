@@ -11,7 +11,15 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"> --}}
 
 <style>
-  /*  */
+  .form-check-input~.card {
+    border: 2px solid rgba(0, 0, 0, 0);
+  }
+
+  .form-check-input:checked~.card {
+    border: 2px solid var(--mdb-primary);
+  }
+
+  /* */
 
   body {
     height: 100vh;
@@ -265,14 +273,30 @@
 <script src="{{ asset('js/leaflet.js') }}"></script>
 
 <script>
+  new TwCitySelector({
+    el: '#city-county-selector',
+    elCounty: '#select_city', // 在 el 裡查找 element
+    elDistrict: '#select_area', // 在 el 裡查找 element
+    elZipcode: '#zipcode', // 在 el 裡查找 element
+    countyFieldName: 'region',
+    districtFieldName: 'town'
+  });
+</script>
+
+
+<script>
   /* 後端變數 */
-  //   const attractions = json_encode($attractions - > toArray())
+  const addressLatLng = @json($addressLatLng);
+  const attractions = @json($attractions);
+  console.log(attractions, addressLatLng);
+  if (addressLatLng) locateUser(addressLatLng)
+  else locateUser({ lat: 22.627278, lng: 120.301435 });
 
   /* Vue */
   $vue = new Vue({
     el: '#app',
     data: {
-      attractions: [],
+      attractions: attractions || [],
       detailTarget: {}
     },
     methods: {
@@ -319,7 +343,6 @@
 
   /* Leaflet 處理函式 */
   // 定位自己
-  locateUser({ lat: 22.627278, lng: 120.301435 });
 
   function locateUser(customPosition) {
     if (navigator.geolocation) {
