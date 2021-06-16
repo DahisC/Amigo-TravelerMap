@@ -98,6 +98,7 @@ class MapController extends Controller
      */
     public function update(MapRequest $request, $id)
     {
+
         Map::findOrFail($id)->update($request->all());
         return redirect()->route('backstage.maps.index');
     }
@@ -110,7 +111,8 @@ class MapController extends Controller
      */
     public function destroy($id)
     {
-        Map::findOrFail($id)->delete();
+        $map = Map::findOrFail($id);
+        $map->attractions()->detach();
         return redirect()->route('backstage.maps.index');
     }
 }
