@@ -19,7 +19,7 @@
                 <div class="card p-3 mb-4">
                   <div class="col-12 mb-3">
                     <div class="form-outline">
-                      <input id="search-form__area" type="text" class="form-control" name="q" />
+                      <input id="search-form__area" type="text" class="form-control" name="q" required />
                       <label class="form-label" for="search-form__area">
                         <i class="fas fa-fw fa-map-marker me-1"></i>
                         搜尋某個區域
