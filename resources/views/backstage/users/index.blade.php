@@ -41,6 +41,9 @@
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
             <td>{{$user->role}}</td>
+           
+            @can('admin-map', $post)
+              
             <td>
                 <a href="{{ route('backstage.users.edit',[ 'user'=>$user->id]) }}">
                     <button>編輯</button>
@@ -56,6 +59,8 @@
                 </form>
 
             </td>
+            @endcan
+
           </tr>
         </tbody>
       @endforeach

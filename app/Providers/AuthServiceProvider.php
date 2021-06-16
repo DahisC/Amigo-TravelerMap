@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Providers;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
+use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,11 +26,18 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         $this->registerPolicies($gate);
-
+        
+        
         // 註冊類別的方法
-        $gate->define('show-map', function ($user, $users) {
-            dd($user->id,$users->role);
-            return $user->id === $user->user_id;
+        $gate->define('Admin', function ($user) {
+            return $user->role === "Admin";
         });
+        $gate->define('Guider', function ($user) {
+            return $user->role === "Guider";
+        });
+        $gate->define('Traveler', function ($user) {
+            return $user->role === "Traveler";
+        });
+
     }
 }
