@@ -47,7 +47,7 @@ Route::group([
 
 // 前端測試用路由
 Route::view('/snow', 'Snow.test');
-Route::view('/allen', 'Allen.test');
+Route::view('/allen', 'allenTest');
 
 // 會員模組
 Auth::routes();
