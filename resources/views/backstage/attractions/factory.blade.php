@@ -9,11 +9,25 @@
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      {{-- <h6 class="m-0 font-weight-bold text-primary">Method -> UPDATE | Action -> {{ route('attractions.update', ['attraction' => $attraction->id]) }}</h6> --}}
+      {{-- <h6 class="m-0 font-weight-bold text-primary">Method -> UPDATE | Action -> {{ route('attractions.update', ['attraction' => $attraction->id]) }}
+      </h6> --}}
       <h6 class="m-0 font-weight-bold text-primary">地點 | 編輯</h6>
     </div>
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
+
     <div class="card-body">
-      <form action="{{ isset($attraction) ? route('attractions.update', ['attraction' => $attraction->id]) : route('attractions.store') }}" method="POST" enctype="multipart/form-data">
+      <form
+        action="{{ isset($attraction) ? route('attractions.update', ['attraction' => $attraction->id]) : route('attractions.store') }}"
+        method="POST" enctype="multipart/form-data">
         @csrf
         @if (isset($attraction))
         @method('PUT')

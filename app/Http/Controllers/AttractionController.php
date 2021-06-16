@@ -8,6 +8,7 @@ use App\AttractionImage;
 use App\AttractionPosition;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\AttractionRequest;
+use Illuminate\Http\Request;
 
 class AttractionController extends Controller
 {
@@ -52,6 +53,7 @@ class AttractionController extends Controller
 
     public function update(AttractionRequest $request,Attraction $attraction)
     {
+        dd($request->all());
         $attraction->update($request->all());
         $attraction->position->update($request->all());
 
