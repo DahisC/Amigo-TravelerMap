@@ -239,7 +239,8 @@
               <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
             </div>
             <button type="button" class="btn btn-primary btn-sm btn-floating position-absolute end-0 bottom-0 m-2" style="font-size: 0.8rem;" v-on:click="addToFavorite(attraction.id)">
-              <i class="far fa-star"></i>
+              <i v-if="isFavorited(attraction.id)" class="far fa-star"></i>
+              <i v-else class="fas fa-star"></i>
               {{-- <span class="d-none d-sm-inline">收藏</span> --}}
             </button>
           </div>
@@ -292,6 +293,8 @@
   /* 後端變數 */
   const addressLatLng = @json($addressLatLng);
   const attractions = @json($attractions);
+  const userFavorites = @json($userFavorites);
+  console.log(userFavorites);
 
   if (addressLatLng) locateUser(addressLatLng)
   else locateUser({ lat: 22.627278, lng: 120.301435 });
@@ -301,22 +304,34 @@
     el: '#app',
     data: {
       attractions: attractions || [],
-      detailTarget: {}
+      detailTarget: {},
+      userFavorites: userFavorites || [],
     },
     methods: {
-      updateAttractions(attractions) {
+      updateAttractions({ attractions, userFavorites }) {
         this.attractions = attractions;
+        this.userFavorites = userFavorites;
       },
       locateOnMap(attraction) {
         const { lat, lng } = attraction.position;
         map.flyTo([lat, lng], 17);
       },
       async addToFavorite(attractionId) {
+        const { data } = await axios.patch(`/attractions/${attractionId}/favorite`);
+        const { userFavorites } = data;
+        this.userFavorites = userFavorites;
+      },
+      isFavorited(attractionId) {
         console.log(attractionId);
-        const result = await axios.patch(`/api/attractions/${attractionId}/favorite`);
-        console.log(result);
+        return this.userFavorites.includes(attractionId);
       }
-    }
+    },
+    // computed: {
+    //   isFavorited: function(attractionId) {
+    //     console.log(attractionId);
+    //     return this.userFavorites.includes(attractionId);
+    //   }
+    // }
   });
 
   /* Leaflet 設置 */
@@ -381,7 +396,7 @@
     if (event) params = { lat, lng } = this.getLatLng();
     else params = { lat, lng }
     const response = await axios.get('/api/attractions', { params });
-    $vue.updateAttractions(response.data.attractions);
+    $vue.updateAttractions(response.data);
     renderMarkersOnMap(response.data.attractions);
   }
 

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\helpers;
 use App\Attraction;
 use App\AttractionImage;
 use App\AttractionPosition;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\AttractionRequest;
-use Illuminate\Http\Request;
 
 class AttractionController extends Controller
 {
@@ -41,7 +42,7 @@ class AttractionController extends Controller
         );
         //img
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $key=>$image) {
+            foreach ($request->file('images') as $key => $image) {
                 $path = $image->store('attractions');
                 $attraction->images()->save(
                     AttractionImage::make([
@@ -70,7 +71,7 @@ class AttractionController extends Controller
         ]);
 
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $key=>$image) {
+            foreach ($request->file('images') as $key => $image) {
                 $path = $image->store('attractions');
                 AttractionImage::updateOrCreate([
                     'attraction_id' => $attraction->id,
@@ -97,5 +98,29 @@ class AttractionController extends Controller
             $img->delete();
         });
         return redirect()->route('backstage.attractions.index');
+    }
+    public function favorite($id)
+    {
+        $attraction = Attraction::find($id);
+        $isFavorited = Attraction::where('id', $id)->whereHas('users', function ($q) {
+            $q->where('user_id', auth()->user()->id);
+        })->get()->count();
+
+        if (!$isFavorited) $attraction->users()->attach(auth()->user()->id);
+        else $attraction->users()->detach(auth()->user()->id);
+        $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+
+
+        return ['userFavorites' => $userFavorites];
+    }
+    public function getAttractions(Request $request)
+    {
+        $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+        if ($request->lat && $request->lng) {
+            $attractions = Attraction::queryNearbyAttractions($request->lat, $request->lng, 3)->with('position', 'images', 'tags')->get();
+        } else {
+            $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
+        }
+        return response(compact('attractions', 'userFavorites'));
     }
 }
