@@ -18,12 +18,17 @@ use App\Http\Controllers\ItinerarieController;
 |
 */
 
+Route::prefix('/api')->group(function () {
+    Route::get('attractions', 'AttractionController@getAttractions')->name('attractions.get');
+});
+
 // 主頁
 Route::view('/', 'index')->name('homepage');
 
 // 透過地圖探索附近地點，或顯示自己的位置
 Route::resource('maps', 'MapController');
 Route::resource('attractions', 'AttractionController')->except('create', 'edit');
+Route::patch('/attractions/{attraction}/favorite', 'AttractionController@favorite')->name('attractions.favorite');
 // 地點 -- 基本的CRUD
 // Route::resource('attractions', 'AttractionController')->except(['index', 'show']);
 
@@ -42,7 +47,7 @@ Route::group([
     Route::view('/', 'backstage.index')->name('index');
     Route::resource('/users', 'Backstage\UserController')->except('show');
     Route::resource('/maps', 'Backstage\MapController')->except('show');
-    Route::resource('/attractions', 'Backstage\AttractionController')->except(['store','update','show','destroy']);
+    Route::resource('/attractions', 'Backstage\AttractionController')->except(['store', 'update', 'show', 'destroy']);
 });
 
 // 前端測試用路由
