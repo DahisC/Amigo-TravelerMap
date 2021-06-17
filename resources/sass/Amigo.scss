@@ -1,14 +1,46 @@
+// Bootstrap 樣式覆蓋
+
 .btn {
     border-radius: 999px;
 }
 
-.banner {
-    > div {
-        > div {
-            flex-grow: 1;
-            &:nth-of-child(2) {
-                max-height: 34%;
-            }
-        }
-    }
+// 通用
+
+html {
+    font-size: 18px;
+    color: white;
 }
+
+p {
+margin-bottom: 0.5rem;
+}
+
+.a-fs-1 {
+font-size: 1.33rem;
+}
+
+.a-fs-2 {
+font-size: 1.66rem;
+}
+
+.a-fs-3 {
+font-size: 2rem;
+}
+
+.a-fs-4 {
+font-size: 4rem;
+}
+
+
+
+
+// .banner {
+//     > div {
+//         > div {
+//             flex-grow: 1;
+//             &:nth-of-child(2) {
+//                 max-height: 34%;
+//             }
+//         }
+//     }
+// }

@@ -10,27 +10,6 @@ Buen Camino
 
 @section('css')
 <style>
-  html {
-    font-size: 18px;
-    color: white;
-  }
-
-  p {
-    margin-bottom: 0.5rem;
-  }
-
-  .a-fs-1 {
-    font-size: 1.25rem;
-  }
-
-  .a-fs-2 {
-    font-size: 1.5rem;
-  }
-
-  .a-fs-3 {
-    font-size: 3rem;
-  }
-
   section {
     height: 100vh;
   }
