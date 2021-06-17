@@ -50,7 +50,7 @@ $factory->define(User::class, function (Faker $faker) {
 //         'password' => bcrypt('a')
 //     ];
 // });
-foreach (['Admin', 'Trader', 'Traveler'] as $role) {
+foreach (['Admin', 'Guider', 'Traveler'] as $role) {
     $factory->state(User::class, $role, function () use ($role) {
         return [
             'name' => $role,

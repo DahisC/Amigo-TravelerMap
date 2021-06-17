@@ -13,8 +13,8 @@ class UsersTableSeeder extends Seeder
     {
         // Admin
         factory(App\User::class)->states('Admin')->create();
-        // Trader
-        factory(App\User::class)->states('Trader')->create();
+        // Guider
+        factory(App\User::class)->states('Guider')->create();
         // Traveler
         factory(App\User::class)->states('Traveler')->create();
         // Fake users
