@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Map;
 use App\Tag;
+use App\User;
 use App\helpers;
 use App\Attraction;
 use Illuminate\Http\Request;
@@ -13,6 +14,13 @@ class MapController extends Controller
 {
     public function index(Request $request)
     {
+        // $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions;
+        // $x = collect();
+        // foreach ($user->attractions as $f) {
+        //     $x->put($f->id, true);
+        // }
+        //
+        $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
         $tags = Tag::get();
         $addressLatLng = null;
         $query = Attraction::query()->with('tags', 'position', 'images');
@@ -33,7 +41,7 @@ class MapController extends Controller
                 break;
         }
         if ($request->tag) $query->QueryTags($request->tag);
-        return view('maps.index', compact('attractions', 'tags', 'addressLatLng'));
+        return view('maps.index', compact('attractions', 'tags', 'addressLatLng', 'userFavorites'));
     }
 
     public function create()
@@ -61,7 +69,7 @@ class MapController extends Controller
         return view('maps.factory', compact('action'));
     }
 
-    public function update(MapRequest $request,Map $map)
+    public function update(MapRequest $request, Map $map)
     {
         if ($request->name) {
             $map->update([
