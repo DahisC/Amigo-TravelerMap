@@ -18,6 +18,10 @@ class Attraction extends Model
     {
         return $this->hasOne('App\AttractionPosition');
     }
+    public function time()
+    {
+        return $this->hasOne('App\AttractionTime');
+    }
     public function images()
     {
         return $this->hasMany('App\AttractionImage');
@@ -34,6 +38,7 @@ class Attraction extends Model
     {
         return $this->belongsToMany('App\User', 'user_attraction', 'attraction_id', 'user_id')->withTimestamps();
     }
+
     public function scopeQueryNearbyAttractions($query, $lat, $lng, $distance = 0.5)
     {
         $squarePoints = helpers::getSquarePoint($lat, $lng, $distance);
