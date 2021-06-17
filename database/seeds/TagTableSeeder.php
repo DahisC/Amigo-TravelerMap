@@ -24,16 +24,11 @@ class TagTableSeeder extends Seeder
             '秘境',
             '彩蛋',
         ];
-        $attractions = App\Attraction::all();
         foreach($nameArray as $array){
-            // $name_random = $array;
-            $tags = Tag::firstOrCreate(
+            Tag::firstOrCreate(
                 ['name' => $array],
                 factory(App\Tag::class)->raw(['name' => $array])
             );
-            $attractions->each(function($attraction) use($tags){
-                $attraction->tags()->attach($tags);
-            });
         };
     }
 }
