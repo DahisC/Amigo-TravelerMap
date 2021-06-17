@@ -20,6 +20,7 @@ class AttractionsTableSeeder extends Seeder
     public function run()
     {
         $tags = App\Tag::get();
+
         $jsonFile = file_get_contents(public_path('TaiwanAttractions.json'));
         $json = json_decode($jsonFile, true);
         $attractions = $json['XML_Head']['Infos']['Info'];
@@ -59,7 +60,8 @@ class AttractionsTableSeeder extends Seeder
                 ]);
             }
             //tags關聯
-            $attraction->tags()->attach($tags);
+            $attraction->tags()->attach($tags->random(2));
+
 
             // if (!empty($a['Keyword'])) {
             //     $tags = preg_split("/[、|,|，]+/u", $a['Keyword']);

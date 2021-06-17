@@ -32,6 +32,7 @@ class MapController extends Controller
                 $attractions = [];
                 break;
         }
+
         if ($request->tag) $query->QueryTags($request->tag);
         return view('maps.index', compact('attractions', 'tags', 'addressLatLng'));
     }
