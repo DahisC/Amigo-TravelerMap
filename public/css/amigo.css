@@ -1,0 +1,8 @@
+@font-face {
+  font-family: Huninn;
+  src: url(../fonts/jf-openhuninn-1.1.ttf);
+}
+
+*:not(i) {
+  font-family: 'Huninn', 'Noto Sans TC', sans-serif !important;
+}

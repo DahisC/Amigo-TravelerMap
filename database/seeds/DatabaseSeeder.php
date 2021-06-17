@@ -1,5 +1,7 @@
 <?php
 
+use App\Map;
+use App\Tag;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call([
+            UsersTableSeeder::class,
+            MapTableSeeder::class,
+            TagTableSeeder::class,
+            AttractionsTableSeeder::class,
+            MapAttractionTableSeeder::class,
+            UserAttractionTableSeeder::class,
+        ]);
     }
 }
