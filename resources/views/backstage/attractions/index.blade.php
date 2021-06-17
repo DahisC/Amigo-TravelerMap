@@ -11,7 +11,8 @@
   <!-- Page Heading -->
   <h1 class="h3 mb-2 text-gray-800">Tables</h1>
   <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-    For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+    For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official
+      DataTables documentation</a>.</p>
 
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
@@ -38,20 +39,30 @@
             </tr>
           </tfoot>
           <tbody>
-            @foreach ($attractions as $a)
+            @foreach ($attractions->take(10) as $a)
             <tr>
               <td>{{ $a->id }}</td>
               <td>{{ $a->name }}</td>
               <td>
-                <a href="{{ route('attractions.show', ['attraction' => $a->id]) }}" target="_blank" class="btn btn-info btn-circle btn-sm">
+                <a href="{{ route('attractions.show', ['attraction' => $a->id]) }}" target="_blank"
+                  class="btn btn-info btn-circle btn-sm">
                   <i class="fas fa-external-link-alt"></i>
                 </a>
-                <a href="{{ route('backstage.attractions.edit', ['attraction' => $a->id]) }}" class="btn btn-warning btn-circle btn-sm">
+                <a href="{{ route('backstage.attractions.edit', ['attraction' => $a->id]) }}"
+                  class="btn btn-warning btn-circle btn-sm">
                   <i class="fas fa-pen"></i>
                 </a>
-                <a href="{{ route('attractions.destroy', ['attraction' => $a->id]) }}" class="btn btn-danger btn-circle btn-sm">
-                  <i class="fas fa-trash"></i>
+
+                <a class="btn btn-danger btn-circle btn-sm" href="#" onclick="event.preventDefault();
+                  document.getElementById('destroy_form_{{ $a->id }}').submit();">
+                  <i class="fas fa-pen"></i>
                 </a>
+
+                <form id="destroy_form_{{ $a->id }}" action="{{ route('attractions.destroy', ['attraction' => $a->id]) }}"
+                  method="POST" class="d-none">
+                  @csrf
+                  @method('DELETE')
+                </form>
               </td>
               <td>{{ $a->updated_at }}</td>
             </tr>
@@ -85,16 +96,16 @@
   //   });
 </script>
 <script>
-  //   window.onload = () => {
-  //     document.querySelectorAll('.delete-btn').forEach(function(btn) {
-  //       btn.addEventListener('click', function() {
+  // window.onload = () => {
+    //   document.querySelectorAll('.delete-btn').forEach(function(btn) {
+    //     btn.addEventListener('click', function() {
 
-  //         const id = this.getAttribute('data-id');
-  //         if (confirm('是否刪除')) {
-  //           document.querySelector(id).submit();
-  //         }
-  //       });
-  //     })
-  //   }
+    //       const id = this.getAttribute('data-id');
+    //       if (confirm('是否刪除')) {
+    //         document.querySelector(id).submit();
+    //       }
+    //     });
+    //   })
+    // }
 </script>
 @endsection

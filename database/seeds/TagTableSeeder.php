@@ -26,14 +26,14 @@ class TagTableSeeder extends Seeder
         ];
         $attractions = App\Attraction::all();
         foreach($nameArray as $array){
-            $name_random = $array;
+            // $name_random = $array;
             $tags = Tag::firstOrCreate(
-                ['name' => $name_random],
-                factory(App\Tag::class)->raw(['name' => $name_random])
+                ['name' => $array],
+                factory(App\Tag::class)->raw(['name' => $array])
             );
+            $attractions->each(function($attraction) use($tags){
+                $attraction->tags()->attach($tags);
+            });
         };
-        $attractions->each(function($attraction) use($tags){
-            $attraction->tags()->attach($tags);
-        });
     }
 }

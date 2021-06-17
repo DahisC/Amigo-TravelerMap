@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\Map;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MapRequest;
+use App\Http\Controllers\Controller;
+use App\User;
+use Illuminate\Support\Facades\Gate;
 
 class MapController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        
+
         $maps = Map::get();
         return view('backstage.maps.index', compact('maps'));
     }
@@ -50,69 +49,23 @@ class MapController extends Controller
         return redirect()->route('backstage.maps.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-    // public function edit($id) 
-    // {
-    //     $map = Map::findOrFail($id);
-    //     return view('backstage.maps.edit',compact('map'));
-    // }
-
-
-    
-    // public function edit(Map $map)
-    // {
-    //     return view('backstage.maps.edit',compact('map'));
-    // }
-
-
     public function edit(Map $map)
     {
 
-        return view('backstage.maps.factory',compact('map'));
+        return view('backstage.maps.factory', compact('map'));
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(MapRequest $request, $id)
+    public function update(MapRequest $request,Map $map)
     {
 
-        Map::findOrFail($id)->update($request->all());
+        $map->update($request->all());
         return redirect()->route('backstage.maps.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Map $map)
     {
-        $map = Map::findOrFail($id);
         $map->attractions()->detach();
+        $map->delete();
         return redirect()->route('backstage.maps.index');
     }
 }

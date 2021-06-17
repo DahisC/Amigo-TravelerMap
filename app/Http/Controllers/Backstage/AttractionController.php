@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Backstage;
 
+use App\User;
 use App\Tag;
 use App\Attraction;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\AttractionRequest;
 
 class AttractionController extends Controller
 {
