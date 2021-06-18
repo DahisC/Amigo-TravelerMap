@@ -12,14 +12,14 @@ class MapAttractionController extends Controller
     public function update(Request $request, $id)
     {
         //delete create
-        $map = Map::findOrFail($id);
+        //第一個大雷  
         $attraction = Attraction::findOrFail($request->attraction_id);
-        //重點 用數量去判斷
-        //我猜測關聯表的主key 不是id 所以會不知道找去哪
-        $has = Map::where('id',$id)->whereHas('attractions', function ($query) use ($attraction) {
+        $has = Map::where('id', $id)->whereHas('attractions', function ($query) use ($attraction) {
             $query->where('attraction_id', $attraction->id);
         })->get()->count();
-        // dd($has);
+
+        //第二不能在上面宣告 會被 $map->whereHas改變
+        $map = Map::find($id);
         if (!$has) $map->attractions()->attach($attraction);
         else $map->attractions()->detach($attraction);
 
