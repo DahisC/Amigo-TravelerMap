@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\Map;
+use App\User;
+use Illuminate\Http\Request;
+
 use App\Http\Requests\MapRequest;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class MapController extends Controller
 {
@@ -25,9 +29,13 @@ class MapController extends Controller
     // {
     //     return view('backstage.maps.create');
     // }
-    public function create()
+    public function create(Request $request)
     {
-        return view('backstage.maps.factory');
+        if($request->user()->can('viewAny',map::class)){
+            return view('backstage.maps.factory');
+        }
+        return redirect()->route('backstage.maps.index');
+
     }
 
 
@@ -39,21 +47,35 @@ class MapController extends Controller
      */
     public function store(MapRequest $request)
     {
-        Map::create([
-            'user_id' => auth()->user()->id,
-            'name' => $request->name
-        ]);
-        return redirect()->route('backstage.maps.index');
+        if($request->user()->can('viewAny',map::class)){
+            Map::create([
+                'user_id' => auth()->user()->id,
+                'name' => $request->name
+            ]);
+        }
+        return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
 
-    public function edit(Map $map)
+    public function edit(Request $request,Map $map)
     {
-
-        return view('backstage.maps.factory', compact('map'));
+        $user = $request->user();
+        dd($user,$map);
+        // $user_id = $request->user_id;
+        if($user->can('edit',map::class)){
+        return view('backstage.maps.factory', compact('request'));
+        }
+        return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
 
-    public function update(MapRequest $request,Map $map)
+    public function update(MapRequest $request,Map $map,User $user)
     {
+        dd(123,$user, Auth::user());
+        Auth::user();
+
+        if($request->can('update',map::class)){
+          dd('true');
+          }
+        dd('fail');
 
         $map->update($request->all());
         return redirect()->route('backstage.maps.index');

@@ -15,7 +15,10 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        // 註冊 POLICY
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        Map::class => MapPolicy::class,
+        Attraction::class => AttractionPolicy::class,
     ];
 
     /**
@@ -27,8 +30,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
         
-        
-        // 註冊類別的方法
+        // 註冊任何認證或授權的服務
         $gate->define('Admin', function ($user) {
             return $user->role === "Admin";
         });
@@ -37,6 +39,10 @@ class AuthServiceProvider extends ServiceProvider
         });
         $gate->define('Traveler', function ($user) {
             return $user->role === "Traveler";
+        });
+
+        $gate->define('Auth', function ($user) {
+            return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
         });
 
     }
