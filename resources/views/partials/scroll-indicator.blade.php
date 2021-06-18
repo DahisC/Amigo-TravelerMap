@@ -26,6 +26,19 @@
   .scroll-indicator__anchor {
     display: block;
     border: 1px solid #7D88BC;
+    position: relative;
+  }
+
+  .scroll-indicator__anchor::after {
+    content: attr(data-text);
+    position: absolute;
+    top: -5px;
+    left: 15px;
+    white-space: nowrap;
+    line-height: 10px;
+    font-size: 0.5rem;
+    color: #7D88BC;
+    font-weight: bold;
   }
 </style>
 
@@ -43,20 +56,20 @@
 
     const anchors = [
       { id: 'header', text: 'Greetings' },
-      { id: 'banner-about-me', text: 'Who am I?' },
-      { id: 'features', text: 'Explore' },
-      { id: 'banner-about-you', text: 'Who are you?' },
-      { id: 'roles', text: 'Intro' },
+      { id: 'banner-about-me', text: 'Me' },
+      { id: 'features', text: '' },
+      { id: 'banner-about-you', text: 'You' },
+      { id: 'roles', text: '' },
       { id: 'banner-the-end', text: 'Farewell' }
     ]
 
-    anchors.forEach(anchor => {
+    anchors.forEach((anchor, index) => {
       const el = document.getElementById(anchor.id);
       const elToTopDistance = window.pageYOffset + el.getBoundingClientRect().top;
       const elHeight = el.offsetHeight;
       console.log(elHeight / document.documentElement.scrollHeight * 100, elHeight, bodyHeight, document.documentElement.scrollHeight);
       //   console.log(elToTopDistance, bodyHeight);
-      sIAnchorWarpper.innerHTML += `<a class="scroll-indicator__anchor" href="#${anchor.id}" style="height: ${elHeight / document.documentElement.scrollHeight * 100}%;"></a>`
+      sIAnchorWarpper.innerHTML += `<a class="scroll-indicator__anchor" href="#${anchor.id}" style="height: ${elHeight / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100}%;" data-text="${anchor.text}"></a>`
     })
   }
 
@@ -64,10 +77,9 @@
 
   function myFunction() {
     const sIProgressionBar = document.getElementById('scroll-indicator__progression-bar');
-    const scrolledPx = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = ((document.documentElement.scrollTop + document.documentElement.clientHeight) / document.documentElement.scrollHeight) * 100;
-    console.log(document.documentElement.scrollTop + document.documentElement.clientHeight)
+    const scrolledPx = document.documentElement.scrollTop;
+    // const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (scrolledPx / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100;
     sIProgressionBar.style.height = scrolled + "%";
   }
 </script>
