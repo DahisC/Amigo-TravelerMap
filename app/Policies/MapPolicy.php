@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Map;
 use App\Post;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MapPolicy
@@ -19,7 +20,7 @@ class MapPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
     }
 
     /**
@@ -42,12 +43,7 @@ class MapPolicy
      */
     public function create(User $user)
     {
-        return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
-    }
-
-    public function store(User $user)
-    {
-        return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
+        // return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
     }
 
     /**
@@ -57,6 +53,12 @@ class MapPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
+    public function edit(User $user, Map $map)
+    {
+        Auth::user();
+        dd('MapPolicy',$user->id,$map);
+        return $user->id === $map->user_id | $user->id === 1;
+    }
     public function update(User $user, Map $maps)
     {
         dd('MapPolicy');

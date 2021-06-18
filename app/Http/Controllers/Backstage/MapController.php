@@ -31,11 +31,9 @@ class MapController extends Controller
     // }
     public function create(Request $request)
     {
-        if($request->user()->can('create',map::class)){
+        if($request->user()->can('viewAny',map::class)){
             return view('backstage.maps.factory');
         }
-        dd('true');
-        dd('fail');
         return redirect()->route('backstage.maps.index');
 
     }
@@ -49,21 +47,24 @@ class MapController extends Controller
      */
     public function store(MapRequest $request)
     {
-        if($request->user()->can('store',map::class)){
+        if($request->user()->can('viewAny',map::class)){
             Map::create([
                 'user_id' => auth()->user()->id,
                 'name' => $request->name
             ]);
         }
-
-        return redirect()->route('backstage.maps.index');
+        return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
 
-    public function edit(Map $map)
+    public function edit(Request $request,Map $map)
     {
-        // dd($map);
-
-        return view('backstage.maps.factory', compact('map'));
+        $user = $request->user();
+        dd($user,$map);
+        // $user_id = $request->user_id;
+        if($user->can('edit',map::class)){
+        return view('backstage.maps.factory', compact('request'));
+        }
+        return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
 
     public function update(MapRequest $request,Map $map,User $user)
