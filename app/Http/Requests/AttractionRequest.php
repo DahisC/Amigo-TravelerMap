@@ -28,7 +28,7 @@ class AttractionRequest extends FormRequest
         'name'   => 'required|max:50|min:3',
         'website'=> 'nullable|string|active_url',
         'tel'    => 'nullable|string',
-        'description ' => 'max:500',
+        'description ' => 'max:500|required',
         'ticket_info'  => 'nullable|string|max:300',
         'traffic_info' => 'nullable|string|max:300',
         'parking_info' => 'nullable|string|max:300',
@@ -39,7 +39,7 @@ class AttractionRequest extends FormRequest
         'town'    => 'required|string',
         'address' => 'required|string',
         'url'     => 'nullable|image|file|size:1024',
-        'image_desc'  => 'nullable|string|max:300',
+        'image_desc'  => 'nullable|max:300',
         ];
     }
 }

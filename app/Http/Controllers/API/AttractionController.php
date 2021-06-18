@@ -2,72 +2,36 @@
 
 namespace App\Http\Controllers\API;
 
+use App\User;
 use App\Attraction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 
 class AttractionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only(['favorite']); // 使用者在請求 favorite 時需要驗證身分
+    }
     public function index(Request $request)
     {
-        if ($request->lat && $request->lng) {
-            $attractions = Attraction::queryNearbyAttractions($request->lat, $request->lng, 3)->with('position', 'images', 'tags')->get();
-        } else {
-            $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
-        }
-        return response(compact('attractions'));
+        // $userFavorites = User::with('attractions')->find('id', auth()->user()->id)->attractions;
+        // dd($userFavorites);
+        // if ($request->lat && $request->lng) {
+        //     $attractions = Attraction::queryNearbyAttractions($request->lat, $request->lng, 3)->with('position', 'images', 'tags')->get();
+        // } else {
+        //     $attractions = Attraction::with('tags', 'position', 'images')->inRandomOrder()->take(100)->get();
+        // }
+        // return response(compact('attractions', 'userFavorites'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function favorite($id)
     {
-        //
-    }
-
-
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        dd($id, auth()->user());
+        // dd(Session::all());
+        // dd($id, auth()->user()->name, auth('api')->user());
     }
 }
