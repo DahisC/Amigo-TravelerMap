@@ -1,12 +1,12 @@
 <?php
 
 use App\Attraction;
+use App\AttractionTime;
 use App\AttractionImage;
 use App\AttractionPosition;
-use App\AttractionTime;
 use Illuminate\Database\Seeder;
 
-class AttractionsExhibitionTableSeeder extends Seeder
+class AttractionsConcertTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +15,9 @@ class AttractionsExhibitionTableSeeder extends Seeder
      */
     public function run()
     {
-        $tag_one =App\Tag::where('name','藝術')->get()->first();
-        $tag_two =App\Tag::where('name','人文')->get()->first();
-        $jsonFile = file_get_contents(public_path('exhibition.json'));
+        $tag_one =App\Tag::where('name','音樂')->get()->first();
+        $tag_two =App\Tag::where('name','藝術')->get()->first();
+        $jsonFile = file_get_contents(public_path('concert.json'));
         $attractions = json_decode($jsonFile, true);
         foreach ($attractions as $a) {
 
