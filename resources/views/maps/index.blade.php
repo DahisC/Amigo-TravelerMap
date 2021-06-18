@@ -181,7 +181,7 @@
   <div class="position-fixed d-flex flex-row flex-sm-column justify-content-between align-items-center p-3" style="z-index: 2;">
     <div class="logo rounded-circle shadow bg-primary"></div>
     <nav class="rounded-pill d-flex flex-row flex-sm-column shadow p-1">
-      @can('Auth')
+      @can('view-auth')
         {{-- 會員後台的按鈕，記得更新 --}}
         <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
           <i class="fas fa-feather-alt"></i>

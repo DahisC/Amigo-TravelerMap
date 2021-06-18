@@ -2,52 +2,43 @@
 
 namespace App\Http\Controllers\Backstage;
 
-
 use App\Tag;
+use App\User;
 use App\Attraction;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 
 class AttractionController extends Controller
 {
-    // static function ifTraveler()
-    // {
-    //     dump(111);
-        
-    //     if (Gate::allows('Traveler')) {
-    //         dump(222);
-    //         dd(redirect());
-    //         // return redirect()->route('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
-    //         dump(223);
-    //     }
-    //     dump(333);
-    // }
-    
     public function index()
     {
-        if (Gate::allows('Traveler')) {
-            return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
+        if (Gate::allows('view',Attraction::class)) {
+            // dd('view');
+            $attractions = Attraction::get();
+            return view('backstage.attractions.index', compact('attractions'));
         }
-        $attractions = Attraction::get();
-        return view('backstage.attractions.index', compact('attractions'));
+        return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
     public function create()
     {
-        if (Gate::allows('Traveler')) {
-            return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
+        if (Gate::allows('view',Attraction::class)) {
+            $tags = Tag::get();
+            return view('backstage.attractions.factory', compact('tags'));
         }
-        $tags = Tag::get();
-        return view('backstage.attractions.factory', compact('tags'));
+        return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
-    public function edit($id)
+    public function edit(Request $request, Attraction $attraction)
     {
-        if (Gate::allows('Traveler')) {
-            return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
+        dd($request,$attraction);
+        if (Gate::allows('update',Attraction::class)) {
+            $attraction = Attraction::with('tags', 'images', 'position')->find($id);
+            $tags = Tag::get();
+            return view('backstage.attractions.factory', compact('attraction', 'tags'));
         }
-        $attraction = Attraction::with('tags', 'images', 'position')->find($id);
-        $tags = Tag::get();
-        return view('backstage.attractions.factory', compact('attraction', 'tags'));
+        return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 }
