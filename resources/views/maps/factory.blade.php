@@ -1,6 +1,6 @@
 @extends('layouts.amigo')
 
-@section('content')
+{{-- @section('content')
   <div class="container">
     <div class="row">
       <div class="col">
@@ -35,4 +35,42 @@
       </div>
     </div>
   </div>
+@endsection --}}
+
+@section('css')
+  <style>
+    #mapid {
+      height: 300px;
+    }
+
+  </style>
+@endsection
+
+@section('content')
+  <div id="mapid"></div>
+@endsection
+
+@section('js')
+  <script src="{{ asset('vendor/leaflet/leaflet.js') }}"></script>
+  <script>
+    var map = L.map('mapid').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // L.marker([51.5, -0.09]).addTo(map)
+    //   .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    //   .openPopup();
+
+    // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    //   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    //   maxZoom: 18,
+    //   id: 'mapbox/streets-v11',
+    //   tileSize: 512,
+    //   zoomOffset: -1,
+    //   accessToken: 'pk.eyJ1IjoiYWN0aXZpdGExNTkiLCJhIjoiY2tvcGRiZWlzMGJ1ODJ2a2hoamd0MGsxbyJ9.Kpk1ux9XXckK6NPE-qPhlw'
+    // }).addTo(map);
+
+  </script>
 @endsection

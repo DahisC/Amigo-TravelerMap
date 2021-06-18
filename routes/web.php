@@ -18,55 +18,31 @@ use App\Http\Controllers\ItinerarieController;
 |
 */
 
-
-//用來測試 Route::pattern('id', '[0-9]+')
-//都確認完就可以刪除了
-Route::get('/user/{id?}', function ($id = 2) {
-    return 'hey' . $id;
-})->name('user.show');
-
-//主頁
+// 主頁
 Route::view('/', 'index')->name('homepage');
 
-// 地圖
-Route::resource('/maps', 'MapController');
+// 透過地圖探索附近地點，或顯示自己的位置
+Route::resource('maps', 'MapController')->except(['create', 'edit']);
+Route::resource('attractions', 'AttractionController')->except(['create', 'edit']);
+// 地點 -- 基本的CRUD
+// Route::resource('attractions', 'AttractionController')->except(['index', 'show']);
 
 // 登入
 Route::view('/sign-in', 'sign-in')->name('sign-in');
-//註冊
+// 註冊
 Route::view('/sign-up', 'sign-up')->name('sign-up');
 
-// 個人頁面
-//as 是name
+// 後台商人旅人共用
 Route::group([
-    'prefix' => 'travelers',
-    'as' => 'traveler.'
+    'prefix' => 'backstage',
+    'as' => 'backstage.',
+    'middleware' => 'auth'
 ], function () {
-    Route::get('/', 'AmigoController@create')->name('index');
-    Route::get('/profile', 'AmigoController@create')->name('profile');
-    Route::get('/maps', 'AmigoController@index')->name('maps');
-    //商人
-    Route::resource('/attractions', 'AttractionController')->except('show');
-    //middleware ??
-    // Route::group([
-    //     'prefix' => 'user',
-    //     'as' => 'user',
-    //     'middleware' => 'auth.user'
-    // ], function () {
-    //     Route::get('/', 'AmigoController@traveler');
-    // });
-});
-
-
-
-// 我關注的地點
-// Route::view('/itineraries', 'itineraries.index')->name('itineraries.index');
-Route::resource('/itineraries', 'ItinerarieController')->only(['index', 'store']);
-
-// 後台
-Route::prefix('backstage')->middleware('auth')->group(function () {
-    Route::view('/', 'backstage.index')->name('backstage');
-    Route::resource('/maps', 'Backstage\MapController');
+    //收藏頁面
+    Route::view('/', 'backstage.index')->name('index');
+    Route::resource('/users', 'Backstage\UserController')->only(['index', 'create', 'edit']);
+    Route::resource('/maps', 'Backstage\MapController')->only(['index', 'create', 'edit']);
+    Route::resource('/attractions', 'Backstage\AttractionController')->only(['index', 'create', 'edit']);
 });
 
 // 前端測試用路由

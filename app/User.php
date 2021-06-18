@@ -37,12 +37,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function map()
+    public function maps()
     {
         return $this->hasMany('App\Map');
     }
     public function attractions()
     {
-        return $this->belongsToMany('App\Attraction','user_attraction','user_id','attraction_id')->withTimestamps();
+        return $this->belongsToMany('App\Attraction', 'user_attraction', 'user_id', 'attraction_id')->withTimestamps();
     }
 }

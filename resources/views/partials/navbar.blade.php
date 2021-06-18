@@ -21,11 +21,11 @@
       <a href="{{ route('maps.index') }}">附近有什麼好玩的？</a>
     </li>
     <li>
-      <a href="{{ route('itineraries.index') }}">我關注的地點</a>
+      <a href="#">我關注的地點</a>
     </li>
     @if (Auth::check())
       <li>
-        <a href="{{ route('traveler.index') }}">{{ Auth::user()->name }}</a>
+        <a href="#">{{ Auth::user()->name }}</a>
       </li>
       <li>
         <a href="#" onclick="logout_form.submit();">

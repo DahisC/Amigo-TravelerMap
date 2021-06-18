@@ -1,18 +1,8 @@
-/* @import url('/fonts/NotoSansTC-Regular.otf'); */
-/* 思源黑體 */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap');
-/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap'); */
- /* 思源宋體 */
-/* @import url('https://fonts.googleapis.com/css?family=Noto+Serif+TC&amp;display=swap'); */
-
-/* * {
-    font-family: "Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif !important;
-} */
-
-*:not(i) {
-    font-family: 'Noto Sans TC', sans-serif !important;
+@font-face {
+  font-family: Huninn;
+  src: url(../fonts/jf-openhuninn-1.1.ttf);
 }
 
-/* * {
-    font-family: 'Noto Serif TC', serif !important;
-} */
+*:not(i) {
+  font-family: 'Huninn', 'Noto Sans TC', sans-serif !important;
+}

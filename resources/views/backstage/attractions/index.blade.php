@@ -1,0 +1,100 @@
+@extends('layouts.backstage')
+
+@section('css')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+@endsection
+
+
+@section('page-content')
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+  <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+    For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">地點 Attractions</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>名稱</th>
+              <th>動作</th>
+              <th>最後編輯時間</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>ID</th>
+              <th>名稱</th>
+              <th>動作</th>
+              <th>最後編輯時間</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            @foreach ($attractions as $a)
+            <tr>
+              <td>{{ $a->id }}</td>
+              <td>{{ $a->name }}</td>
+              <td>
+                <a href="{{ route('attractions.show', ['attraction' => $a->id]) }}" target="_blank" class="btn btn-info btn-circle btn-sm">
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+                <a href="{{ route('backstage.attractions.edit', ['attraction' => $a->id]) }}" class="btn btn-warning btn-circle btn-sm">
+                  <i class="fas fa-pen"></i>
+                </a>
+                <a href="{{ route('attractions.destroy', ['attraction' => $a->id]) }}" class="btn btn-danger btn-circle btn-sm">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+              <td>{{ $a->updated_at }}</td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+@endsection
+
+
+@section('js')
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+  //   $(function() {
+
+  //     $("#myDataTalbe").DataTable({
+  //       searching: false, //關閉filter功能
+  //       columnDefs: [{
+  //         targets: [3],
+  //         orderable: false,
+  //       }]
+  //     });
+  //   });
+
+  //   $(document).ready(function() {
+  //     $('#dataTable').DataTable();
+  //   });
+</script>
+<script>
+  //   window.onload = () => {
+  //     document.querySelectorAll('.delete-btn').forEach(function(btn) {
+  //       btn.addEventListener('click', function() {
+
+  //         const id = this.getAttribute('data-id');
+  //         if (confirm('是否刪除')) {
+  //           document.querySelector(id).submit();
+  //         }
+  //       });
+  //     })
+  //   }
+</script>
+@endsection

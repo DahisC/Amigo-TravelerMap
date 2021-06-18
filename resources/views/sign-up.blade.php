@@ -106,7 +106,7 @@
                 style="background: url(https://www.deachsword.com/db/sinoalice/images/character/134) top center no-repeat; background-size: cover;">
               </div>
               <hr />
-              <small class="text-danger">※你將無法在網站中建立自己的活動</small>
+              <small class="text-danger">※無法在網站中建立自己的活動</small>
             </div>
 
             <div class="role-card d-flex flex-column ms-sm-3 py-2 px-sm-3 px-md-5 py-md-3 rounded">
@@ -122,7 +122,7 @@
                 style="background: url(https://www.deachsword.com/db/sinoalice/images/character/278) top center no-repeat; background-size: cover;">
               </div>
               <hr />
-              <small class="text-success">※你將可以在網站中建立自己的活動</small>
+              <small class="text-success">※可以在網站中建立自己的活動</small>
             </div>
 
           </div>
@@ -140,72 +140,75 @@
                   <hr class="my-0" />
                   <div class="card-body p-4">
                     <div class="form__user-info">
-                      <div class="mb-3">
+                      <div class="form-outline mb-4">
+                        <input id="register-form__name" type="text"
+                          class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"
+                          required />
                         <label for="register-form__name" class="form-label">
                           <i class="fas fa-fw fa-user me-1"></i>
                           暱稱
                         </label>
-                        <input id="register-form__name" type="text"
-                          class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"
-                          required autocomplete="name" placeholder="暱稱">
                         @error('name')
-                          <span class="invalid-feedback" role="alert">
+                          <div class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
-                          </span>
+                          </div>
                         @enderror
                       </div>
 
                       <!-- 輸入信箱欄位 -->
-                      <div class="mb-3">
+                      <div class="form-outline mb-4">
+                        <input id="register-form__email" type="email"
+                          class="form-control @error('email') is-invalid @enderror" name="email"
+                          value="{{ old('email') }}" required />
                         <label for="register-form__email" class="form-label">
                           <i class="fas fa-fw fa-envelope me-1"></i>
                           Email
                         </label>
-                        <input id="register-form__email" type="email"
-                          class="form-control @error('email') is-invalid @enderror" name="email"
-                          value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
                         @error('email')
                           <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                           </span>
                         @enderror
                       </div>
-                      <div class="row g-2 mb-3">
+                      <div class="row g-2 mb-4">
                         <!-- 輸入密碼欄位 -->
                         <div class="col">
-                          <label for="register-form__password" class="form-label">
-                            <i class="fas fa-fw fa-key me-1"></i>
-                            密碼
-                          </label>
-                          <input id="register-form__password" type="password"
-                            class="form-control @error('password') is-invalid @enderror" name="password" required
-                            autocomplete="new-password" placeholder="密碼">
-                          @error('password')
-                            <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                            </span>
-                          @enderror
+                          <div class="form-outline">
+                            <input id="register-form__password" type="password"
+                              class="form-control @error('password') is-invalid @enderror" name="password" required />
+                            <label for="register-form__password" class="form-label">
+                              <i class="fas fa-fw fa-key me-1"></i>
+                              密碼
+                            </label>
+                            @error('password')
+                              <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                              </span>
+                            @enderror
+                          </div>
                         </div>
                         <!-- 輸入密碼欄位 -->
-                        <div class="col">
-                          <label for="register-form__password-confirm" class="form-label">
-                            確認密碼
-                          </label>
-                          <input id="register-form__password-confirm" type="password" class="form-control"
-                            name="password_confirmation" required autocomplete="new-password" placeholder="確認密碼">
-                          @error('password')
-                            <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                            </span>
-                          @enderror
+                        <div class="col mb-4">
+                          <div class="form-outline">
+                            <input id="register-form__password-confirm" type="password" class="form-control"
+                              name="password_confirmation" required />
+                            <label for="register-form__password-confirm" class="form-label">
+                              確認密碼
+                            </label>
+                            @error('password')
+                              <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                              </span>
+                            @enderror
+                          </div>
+                        </div>
+                        <div class="col-12 text-end mt-0">
+                          <a href="{{ route('sign-in') }}">
+                            <small>登入頁面在哪兒？</small>
+                          </a>
                         </div>
                       </div>
                       <!-- 按鈕 -->
-                      <div class="mb-3 py-1 text-end">
-                        <a href="{{ route('sign-in') }}">
-                          <small>登入頁面在哪兒？</small>
-                        </a>
-                      </div>
                       <button type="submit" class="btn btn-primary w-100">註冊</button>
                     </div>
                   </div>

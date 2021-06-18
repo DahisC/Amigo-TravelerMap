@@ -13,10 +13,10 @@ class Map extends Model
     ];
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User')->withDefault();
     }
     public function attractions()
     {
-        return $this->belongsToMany('App\Attraction','map_attraction','map_id','attraction_id')->withTimestamps();
+        return $this->belongsToMany('App\Attraction', 'map_attraction', 'map_id', 'attraction_id')->withTimestamps();
     }
 }

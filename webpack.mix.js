@@ -12,4 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+  .sass('resources/sass/app.scss', 'public/css');
+
+mix.js('resources/js/leaflet.js', 'public/js')
+  .sass('resources/sass/leaflet.scss', 'public/css');
+
+mix.js('resources/js/twCitySelector.js', 'public/js');

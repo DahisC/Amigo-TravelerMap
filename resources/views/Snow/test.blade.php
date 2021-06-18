@@ -25,8 +25,6 @@
 
     .carousel-item img {
       width: 100%;
-      background-position: center;
-      background-size: cover;
     }
 
     .logo {
@@ -67,9 +65,58 @@
       border: 2px solid rgb(0, 183, 255);
     }
 
+    .story {
+      margin-top: 50px;
+      background-color: #9ad3bc;
+      width: 100%;
+    }
+
+    .story .container {
+      margin-top: 50px;
+    }
+
     .story .col img {
-      width: 100px;
+      width: 150px;
       height: 200px;
+      background-size: cover;
+      background-position: center;
+      margin: 0 auto;
+    }
+
+    .use {
+      margin-top: 50px;
+      background-color: #9ad3bc;
+      width: 100%;
+    }
+
+    .use h3 {
+      margin-left: 45%;
+    }
+
+    .star-icon {
+      width: 150px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 45%;
+    }
+
+    .star-icon .line {
+      width: 50px;
+      height: 1px;
+      background-color: black;
+
+    }
+
+    .footer {
+      margin-top: 50px;
+      background-color: #9ad3bc;
+      width: 100%;
+    }
+
+    .footer .col {
+
+      padding: 20px 0;
     }
 
   </style>
@@ -94,16 +141,43 @@
       </div>
     </div>
   </div>
-  <div class="container story">
-    <div class="row">
-      <div class="col">
-        <img src="{{ asset('./image/luggage.jpg') }}" alt="">
-      </div>
-      <div class="col">
-        地圖文案
+  <div class="story">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <img src="{{ asset('./image/luggage.jpg') }}" alt="">
+        </div>
+        <div class="col">
+          地圖文案設定. Google 定位設定; 隱私權政策; 服務條款; 區域設定. 20210602_0. 在應用程式中繼續操作. 在Google 地圖應用程式中使用即時導航及更多功能. 停留在網頁版
+        </div>
       </div>
     </div>
   </div>
+  <div class="use">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h3>地圖使用方式</h3>
+          <div class="star-icon">
+            <div class="line"></div>
+            <div class="star"> ★</div>
+            <div class="line"></div>
+          </div>
+          <p>進入珍藏景點頁面後，可以點選景點卡片上的”加入至地圖列表”按鈕，將景點加入地圖列表中。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          © Copyright-旅人地圖 | 網頁設計
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
     integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
   </script>
