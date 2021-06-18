@@ -22,11 +22,11 @@ class CreateAttractionTimesTable extends Migration
                     ->on('attractions')
                     ->onDelete('cascade');
 
-            $table->string('startDate');
+            $table->date('startDate');
             $table->integer('start_year');
             $table->integer('start_month');
             $table->integer('start_day');
-            $table->string('endDate');
+            $table->date('endDate');
             $table->integer('end_year');
             $table->integer('end_month');
             $table->integer('end_day');

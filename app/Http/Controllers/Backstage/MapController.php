@@ -5,15 +5,12 @@ namespace App\Http\Controllers\Backstage;
 use App\Map;
 use App\Http\Requests\MapRequest;
 use App\Http\Controllers\Controller;
-use App\User;
-use Illuminate\Support\Facades\Gate;
+
 
 class MapController extends Controller
 {
     public function index()
     {
-        
-
         $maps = Map::get();
         return view('backstage.maps.index', compact('maps'));
     }

@@ -15,8 +15,8 @@ class AttractionsFestivalTableSeeder extends Seeder
      */
     public function run()
     {
-        $tag_one =App\Tag::where('name','祭典')->get()->first();
-        $tag_two =App\Tag::where('name','人文')->get()->first();
+        $tag_One =App\Tag::where('name','祭典')->get()->first();
+        $tag_Two =App\Tag::where('name','人文')->get()->first();
         $jsonFile = file_get_contents(public_path('Festival.json'));
         $attractions = json_decode($jsonFile, true);
         foreach ($attractions as $a) {
@@ -66,8 +66,8 @@ class AttractionsFestivalTableSeeder extends Seeder
                 'attraction_id' => $attraction->id
             ]);
             //tags關聯
-            $attraction->tags()->attach($tag_one);
-            $attraction->tags()->attach($tag_two);
+            $attraction->tags()->attach($tag_One);
+            $attraction->tags()->attach($tag_Two);
         };
     }
 }
