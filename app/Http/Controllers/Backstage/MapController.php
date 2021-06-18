@@ -64,7 +64,6 @@ class MapController extends Controller
 
     public function update(Request $request,Map $map)
     {
-        dd($request);
         if($this->authorize('update', $map)){
             $map->update($request->all());
             return redirect()->route('backstage.maps.index');
