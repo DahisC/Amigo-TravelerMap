@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\Map;
+use App\User;
 use App\Http\Requests\MapRequest;
 use App\Http\Controllers\Controller;
-use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class MapController extends Controller
 {
     public function index()
     {
-        
-
-        $maps = Map::get();
+        $map = Map::get();
         return view('backstage.maps.index', compact('maps'));
     }
 
@@ -28,8 +27,15 @@ class MapController extends Controller
     // {
     //     return view('backstage.maps.create');
     // }
-    public function create()
+    public function create(User $user)
     {
+        dd($user);
+
+        if($user->can('create',map::class)){
+          dd('true');
+          }
+        dd('fail');
+
         return view('backstage.maps.factory');
     }
 

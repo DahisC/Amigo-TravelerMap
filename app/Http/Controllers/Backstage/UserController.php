@@ -18,7 +18,10 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('backstage.users.create');
+        if (Gate::allows('Admin')) {
+            return view('backstage.users.create');
+        }
+        return view('backstage.index');    //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
     public function store(UserRequest $request)
