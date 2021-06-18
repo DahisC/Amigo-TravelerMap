@@ -7,7 +7,7 @@ use App\User;
 use App\Attraction;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class AttractionsPolicy
+class AttractionPolicy
 {
     use HandlesAuthorization;
 
@@ -19,7 +19,7 @@ class AttractionsPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        // return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
     }
 
     /**
@@ -29,9 +29,9 @@ class AttractionsPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function view(User $user, Attraction $attraction)
+    public function view(User $user)
     {
-        //
+        return $user->role === "Admin" | $user->role === "Guider";
     }
 
     /**
@@ -42,8 +42,7 @@ class AttractionsPolicy
      */
     public function create(User $user)
     {
-        // dd('AttractionsPolicy');
-        return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
+        return $user->role === "Admin" | $user->role === "Guider";
     }
 
     /**
@@ -55,8 +54,7 @@ class AttractionsPolicy
      */
     public function update(User $user, Attraction $attraction)
     {
-        // dd('AttractionsPolicy');
-        return $user->id === $attraction->user_id | $user->id === 1;
+        return $user->role === "Admin" | $user->id === $attraction->user_id;
     }
 
     /**
@@ -68,7 +66,7 @@ class AttractionsPolicy
      */
     public function delete(User $user, Attraction $attraction)
     {
-        //
+        return $user->role === "Admin" | $user->id === $attraction->user_id;
     }
 
     /**

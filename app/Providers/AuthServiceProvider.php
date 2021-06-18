@@ -31,19 +31,20 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies($gate);
         
         // 註冊任何認證或授權的服務
-        $gate->define('Admin', function ($user) {
+        Gate::resource('map', 'MapPolicy');
+        Gate::resource('attraction', 'AttractionPolicy');
+
+        $gate->define('view-admin', function ($user) {
             return $user->role === "Admin";
         });
-        $gate->define('Guider', function ($user) {
+        $gate->define('view-guider', function ($user) {
             return $user->role === "Guider";
         });
-        $gate->define('Traveler', function ($user) {
+        $gate->define('view-traveler', function ($user) {
             return $user->role === "Traveler";
         });
-
-        $gate->define('Auth', function ($user) {
+        $gate->define('view-auth', function ($user) {
             return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
         });
-
     }
 }
