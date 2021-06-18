@@ -305,10 +305,9 @@
   const addressLatLng = @json($addressLatLng);
   const attractions = @json($attractions);
   const userFavorites = @json($userFavorites);
-  console.log(userFavorites);
 
   if (addressLatLng) locateUser(addressLatLng)
-  else locateUser({ lat: 22.627278, lng: 120.301435 });
+  else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
 
   /* Vue */
   $vue = new Vue({
@@ -333,16 +332,9 @@
         this.userFavorites = userFavorites;
       },
       isFavorited(attractionId) {
-        console.log(attractionId);
         return this.userFavorites.includes(attractionId);
       }
     },
-    // computed: {
-    //   isFavorited: function(attractionId) {
-    //     console.log(attractionId);
-    //     return this.userFavorites.includes(attractionId);
-    //   }
-    // }
   });
 
   /* Leaflet 設置 */

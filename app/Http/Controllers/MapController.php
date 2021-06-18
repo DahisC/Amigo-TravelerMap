@@ -14,13 +14,7 @@ class MapController extends Controller
 {
     public function index(Request $request)
     {
-        // $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions;
-        // $x = collect();
-        // foreach ($user->attractions as $f) {
-        //     $x->put($f->id, true);
-        // }
-        //
-        $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+        $userFavorites = User::favorites();
         $tags = Tag::get();
         $addressLatLng = null;
         $query = Attraction::query()->with('tags', 'position', 'images');

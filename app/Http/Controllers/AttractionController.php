@@ -110,12 +110,12 @@ class AttractionController extends Controller
         else $attraction->users()->detach(auth()->user()->id);
         $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
 
-
         return ['userFavorites' => $userFavorites];
     }
     public function getAttractions(Request $request)
     {
-        $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+        // $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+        $userFavorites = User::favorites();
         if ($request->lat && $request->lng) {
             $attractions = Attraction::queryNearbyAttractions($request->lat, $request->lng, 3)->with('position', 'images', 'tags')->get();
         } else {
