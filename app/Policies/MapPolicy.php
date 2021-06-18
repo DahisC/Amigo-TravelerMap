@@ -42,7 +42,11 @@ class MapPolicy
      */
     public function create(User $user)
     {
-        // dd('MapPolicy');
+        return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
+    }
+
+    public function store(User $user)
+    {
         return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
     }
 
@@ -81,7 +85,7 @@ class MapPolicy
      */
     public function restore(User $user, Map $maps)
     {
-        // dd('MapPolicy');
+        dd('MapPolicy');
     }
 
     /**
