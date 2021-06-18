@@ -20,6 +20,7 @@
     background-size: cover;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     /* border-radius: 20px; */
   }
 
@@ -69,7 +70,7 @@
       const elHeight = el.offsetHeight;
       console.log(elHeight / document.documentElement.scrollHeight * 100, elHeight, bodyHeight, document.documentElement.scrollHeight);
       //   console.log(elToTopDistance, bodyHeight);
-      sIAnchorWarpper.innerHTML += `<a class="scroll-indicator__anchor" href="#${anchor.id}" style="height: ${elHeight / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100}%;" data-text="${anchor.text}"></a>`
+      sIAnchorWarpper.innerHTML += `<a class="scroll-indicator__anchor" href="#${anchor.id}" style="height: ${index === anchors.length - 1 ? 0 : elHeight / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100}%;" data-text="${anchor.text}"></a>`
     })
   }
 
