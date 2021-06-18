@@ -45,4 +45,22 @@ class Attraction extends Model
             $positionQuery->whereBetween('lat', [$latFrom, $latTo])->whereBetween('lng', [$lngFrom, $lngTo]);
         });
     }
+    public function scopeQueryTags($query, $tag)
+    {
+        return $query->whereHas('tags', function ($tagQuery) use ($tag) {
+            $tagQuery->where('name', '=', $tag);
+        });
+    }
+    public function scopeQueryRegion($query, $region)
+    {
+        return $query->whereHas('position', function ($positionQuery) use ($region) {
+            $positionQuery->where('region', '=', $region);
+        });
+    }
+    public function scopeQueryTown($query, $town)
+    {
+        return $query->whereHas('position', function ($positionQuery) use ($town) {
+            $positionQuery->where('town', '=', $town);
+        });
+    }
 }

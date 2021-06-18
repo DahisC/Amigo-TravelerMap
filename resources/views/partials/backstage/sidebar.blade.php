@@ -17,7 +17,7 @@
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item active">
-    <a class="nav-link" href="index.html">
+    <a class="nav-link" href="{{ route('backstage.index') }}">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>儀表板</span></a>
   </li>
@@ -27,22 +27,14 @@
 
   <!-- Heading -->
   <div class="sidebar-heading">
-    資料庫
+    一般會員
   </div>
 
-  <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#database-users">
-      <i class="fas fa-fw fa-user"></i>
-      <span>用戶 Users</span>
+    <a class="nav-link collapsed" href="#">
+      <i class="fas fa-fw fa-id-badge"></i>
+      <span>檔案 Profile</span>
     </a>
-    <div id="database-users" class="collapse">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">頁面</h6>
-        <a class="collapse-item" href="{{route('backstage.users.index')}}">列表 List</a>
-        <a class="collapse-item" href="{{route('backstage.users.create')}}">新增 Create</a>
-      </div>
-    </div>
   </li>
 
   <!-- Nav Item - Pages Collapse Menu -->
@@ -60,6 +52,7 @@
     </div>
   </li>
 
+@cannot('Traveler')
   <!-- Nav Item - Utilities Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#database-attractions">
@@ -70,22 +63,59 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">頁面</h6>
         <a class="collapse-item" href="{{route('backstage.attractions.index')}}">列表 List</a>
+          
         <a class="collapse-item" href="{{route('backstage.attractions.create')}}">新增 Create</a>
       </div>
     </div>
   </li>
 
+  <hr class="sidebar-divider">
+@endcannot
+
+
+@can('Admin')
+  <div class="sidebar-heading">
+    管理員
+  </div>
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#database-users">
+      <i class="fas fa-fw fa-users"></i>
+      <span>用戶 Users</span>
+    </a>
+    <div id="database-users" class="collapse">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">頁面</h6>
+        <a class="collapse-item" href="{{route('backstage.users.index')}}">列表 List</a>
+        <a class="collapse-item" href="{{route('backstage.users.create')}}">新增 Create</a>
+      </div>
+    </div>
+  </li>
   <!-- Divider -->
   <hr class="sidebar-divider">
+@endcan
 
   <div class="sidebar-heading">
-    頁面
+    快速連結
   </div>
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="/">
-      <i class="fas fa-map-marked"></i>
+    <a class="nav-link collapsed" href="{{ route('homepage') }}">
+      <i class="fas fa-fw fa-star"></i>
       <span>Amigo 官方網站</span>
+    </a>
+    <a class="nav-link collapsed" href="{{ route('sign-up') }}">
+      <i class="fas fa-fw fa-user-plus"></i>
+      <span>註冊頁面</span>
+    </a>
+    <a class="nav-link collapsed" href="{{ route('sign-in') }}">
+      <i class="fas fa-fw fa-feather-alt"></i>
+      <span>登入頁面</span>
+    </a>
+    <a class="nav-link collapsed" href="{{ route('maps.index') }}">
+      <i class="fas fa-fw fa-map"></i>
+      <span>地圖頁面</span>
     </a>
   </li>
 

@@ -41,6 +41,9 @@
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
             <td>{{$user->role}}</td>
+           
+            @can('Admin', $user)
+              
             <td>
                 <a href="{{ route('backstage.users.edit',[ 'user'=>$user->id]) }}">
                     <button>編輯</button>
@@ -56,11 +59,15 @@
                 </form>
 
             </td>
+            @endcan
+
           </tr>
         </tbody>
       @endforeach
     </table>
   </div>
+ 
+
 
   <!--引用jQuery-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
