@@ -239,4 +239,7 @@ Buen Camino
     </div>
   </section>
 </div>
+<footer style="height: 100vh">
+  Footer
+</footer>
 @endsection
