@@ -20,6 +20,7 @@
     background-size: cover;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     /* border-radius: 20px; */
   }
 
@@ -52,7 +53,9 @@
     const sI = document.getElementById('scroll-indicator');
     const sIProgressionBar = document.getElementById('scroll-indicator__progression-bar');
     const sIAnchorWarpper = document.getElementById('scroll-indicator__anchor-wrapper');
+    const mainEl = document.querySelector('main');
     const bodyHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const clientScreenHeight = document.documentElement.clientHeight;
 
     const anchors = [
       { id: 'header', text: 'Greetings' },
@@ -67,19 +70,18 @@
       const el = document.getElementById(anchor.id);
       const elToTopDistance = window.pageYOffset + el.getBoundingClientRect().top;
       const elHeight = el.offsetHeight;
-      console.log(elHeight / document.documentElement.scrollHeight * 100, elHeight, bodyHeight, document.documentElement.scrollHeight);
-      //   console.log(elToTopDistance, bodyHeight);
-      sIAnchorWarpper.innerHTML += `<a class="scroll-indicator__anchor" href="#${anchor.id}" style="height: ${elHeight / (document.documentElement.scrollHeight - document.documentElement.clientHeight) * 100}%;" data-text="${anchor.text}"></a>`
-    })
-  }
+      sIAnchorWarpper.innerHTML += `<a class="scroll-indicator__anchor" href="#${anchor.id}" style="height: ${index === anchors.length - 1 ? 0 : elHeight / (mainEl.scrollHeight - clientScreenHeight) * 100}%;" data-text="${anchor.text}"></a>`
+    });
 
-  window.onscroll = function() { myFunction() };
+    window.onscroll = function() { scrollIndicator() };
 
-  function myFunction() {
-    const sIProgressionBar = document.getElementById('scroll-indicator__progression-bar');
-    const scrolledPx = document.documentElement.scrollTop;
-    // const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (scrolledPx / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100;
-    sIProgressionBar.style.height = scrolled + "%";
+    function scrollIndicator() {
+      const mainEl = document.querySelector('main');
+      const scrolledPx = document.documentElement.scrollTop;
+      const height = mainEl.scrollHeight - clientScreenHeight;
+      let scrolled = (scrolledPx / height) * 100;
+      scrolled = scrolled <= 100 ? scrolled : 100;
+      sIProgressionBar.style.height = scrolled + "%";
+    }
   }
 </script>

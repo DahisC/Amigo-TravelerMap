@@ -40,7 +40,7 @@ Buen Camino
   <a class="list-group-item list-group-item-action" href="#list-item-3">Item 3</a>
   <a class="list-group-item list-group-item-action" href="#list-item-4">Item 4</a>
 </div> --}}
-<div>
+<main>
   <section id="header">
     <div class="h-100 container">
       <div class="h-100 row">
@@ -238,8 +238,8 @@ Buen Camino
       {{-- <div class="flex-grow-1"></div> --}}
     </div>
   </section>
-</div>
-<footer style="height: 100vh">
+</main>
+<footer style="height: 50vh">
   Footer
 </footer>
 @endsection
