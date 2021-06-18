@@ -26,8 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         $this->registerPolicies($gate);
-        
-        
+
+
         // 註冊類別的方法
         $gate->define('Admin', function ($user) {
             return $user->role === "Admin";

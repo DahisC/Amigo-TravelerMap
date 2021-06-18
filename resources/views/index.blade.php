@@ -28,17 +28,20 @@ Buen Camino
     background-position: center center;
   }
 </style>
+
 @endsection
 
+
 @section('content')
-<div id="list-example" class="list-group position-fixed">
+@include('partials.scroll-indicator')
+{{-- <div id="list-example" class="list-group position-fixed">
   <a class="list-group-item list-group-item-action" href="#list-item-1">Item 1</a>
   <a class="list-group-item list-group-item-action" href="#list-item-2">Item2</a>
   <a class="list-group-item list-group-item-action" href="#list-item-3">Item 3</a>
   <a class="list-group-item list-group-item-action" href="#list-item-4">Item 4</a>
-</div>
+</div> --}}
 <div>
-  <section id="list-item-1">
+  <section id="header">
     <div class="h-100 container">
       <div class="h-100 row">
         <div class="h-100 col d-flex justify-content-center align-items-center">
@@ -48,7 +51,7 @@ Buen Camino
     </div>
   </section>
   <!-- ¿Quién soy yo? / Who am I? -->
-  <section id="list-item-2">
+  <section id="banner-about-me">
     <div class="h-100 d-flex flex-column">
       <div class="flex-grow-1 a-background" style="background-color:#333333; background-image: url({{ asset('images/banner/who-am-i.png') }});"></div>
       <div class=" flex-grow-1 text-white position-sticky bottom-0" style="max-height: 25%; background-color: #333333;">
@@ -70,7 +73,7 @@ Buen Camino
     </div>
   </section>
   <!-- Explore -->
-  <section id="list-item-3" style="height: 200vh;">
+  <section id="features" style="height: 200vh;">
     <div class="h-100 container">
       <div class="h-100 row">
         <div class="h-100 col d-flex flex-column justify-content-evenly">
@@ -101,7 +104,7 @@ Buen Camino
           <!-- Maps -->
           <div class="row h-25 flex-row-reverse">
             <div class="col-2 a-vertical-title a-fs-3" style="transform: rotate(0deg);">
-              <b>M</b>aps
+              <b>M</b>ap
             </div>
             <div class="col-3 d-flex justify-content-center align-items-center">
               <div class="w-75 ratio ratio-1x1 rounded-circle border border-5"></div>
@@ -152,7 +155,7 @@ Buen Camino
       </div>
     </div>
   </section>
-  <section id="list-item-4">
+  <section id="banner-about-you">
     <div class="h-100 d-flex flex-column">
       <div class="flex-grow-1 a-background" style="background-color:#333333; background-image: url({{ asset('images/banner/who-am-i.png') }});"></div>
       <div class="flex-grow-1 text-white position-sticky bottom-0" style="max-height: 25%; background-color: #333333;">
@@ -173,7 +176,7 @@ Buen Camino
       {{-- <div class="flex-grow-1"></div> --}}
     </div>
   </section>
-  <section>
+  <section id="roles">
     <div class="h-100 container">
       <div class="h-100 row">
         <div class="h-100 col text-center d-flex flex-column justify-content-evenly">
@@ -215,7 +218,7 @@ Buen Camino
       </div>
     </div>
   </section>
-  <section>
+  <section id="banner-the-end">
     <div class="h-100 d-flex flex-column">
       <div class="flex-grow-1 a-background" style="background-color: #333333; background-image: url({{ asset('images/banner/buen-camino.png') }});"></div>
       <div class="flex-grow-1 text-white position-sticky bottom-0" style="max-height: 25%; background-color: #333333;">
