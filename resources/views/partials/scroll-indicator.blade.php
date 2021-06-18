@@ -54,7 +54,7 @@
       const el = document.getElementById(anchor.id);
       const elToTopDistance = window.pageYOffset + el.getBoundingClientRect().top;
       const elHeight = el.offsetHeight;
-      console.log(elHeight / bodyHeight * 100, elHeight, bodyHeight, document.documentElement.scrollHeight);
+      console.log(elHeight / document.documentElement.scrollHeight * 100, elHeight, bodyHeight, document.documentElement.scrollHeight);
       //   console.log(elToTopDistance, bodyHeight);
       sIAnchorWarpper.innerHTML += `<a class="scroll-indicator__anchor" href="#${anchor.id}" style="height: ${elHeight / document.documentElement.scrollHeight * 100}%;"></a>`
     })
@@ -66,7 +66,8 @@
     const sIProgressionBar = document.getElementById('scroll-indicator__progression-bar');
     const scrolledPx = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (scrolledPx / height) * 100;
+    const scrolled = ((document.documentElement.scrollTop + document.documentElement.clientHeight) / document.documentElement.scrollHeight) * 100;
+    console.log(document.documentElement.scrollTop + document.documentElement.clientHeight)
     sIProgressionBar.style.height = scrolled + "%";
   }
 </script>
