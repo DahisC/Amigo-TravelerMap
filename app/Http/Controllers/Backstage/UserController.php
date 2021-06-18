@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Backstage;
 use App\User;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
+
 
 class UserController extends Controller
 {
