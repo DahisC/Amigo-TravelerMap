@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
             MapTableSeeder::class,
             TagTableSeeder::class,
             AttractionsTableSeeder::class,
-            AttractionsExhibitionTableSeeder::class,
-            AttractionsConcertTableSeeder::class,
-            AttractionsFestivalTableSeeder::class,
+            AttractionsConcertSeeder::class,
+            AttractionsExhibitionSeeder::class,
+            AttractionsFestivalSeeder::class,
             MapAttractionTableSeeder::class,
             UserAttractionTableSeeder::class,
         ]);
