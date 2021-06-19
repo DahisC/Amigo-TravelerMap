@@ -12,7 +12,7 @@
   @yield('css')
 </head>
 
-<body data-spy="scroll" data-target="#list-example" data-offset="0" class="position-relative">
+<body>
   @section('nav')
   @include('partials.navbar')
   @show
