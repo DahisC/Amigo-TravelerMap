@@ -10,6 +10,11 @@
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('css/amigo.css') }}">
   @yield('css')
+  <style>
+    body {
+      padding-top: 55px;
+    }
+  </style>
 </head>
 
 <body>
@@ -19,7 +24,6 @@
   @yield('content')
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('js/twCitySelector.js') }}"></script>
   @yield('js')
 </body>
 

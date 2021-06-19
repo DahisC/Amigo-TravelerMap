@@ -3,6 +3,7 @@
     width: 100%;
     z-index: 99999;
     height: 55px;
+    top: 0;
   }
 </style>
 
@@ -18,7 +19,7 @@
     <!-- Collapsible wrapper -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Navbar brand -->
-      <a class="navbar-brand mt-2 mt-lg-0" href="#">
+      <a class="navbar-brand mt-2 mt-lg-0" href="{{ route('homepage') }}">
         <img src="{{ asset('images/Logo.svg') }}" height="30" alt="Logo" loading="lazy" />
       </a>
       <!-- Left links -->
@@ -28,15 +29,6 @@
             地圖
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="fas fa-star"></i>
-            收藏
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Projects</a>
-        </li>
       </ul>
       <!-- Left links -->
     </div>
@@ -45,13 +37,28 @@
     <!-- Right elements -->
     <div class="d-flex align-items-center">
       <!-- Icon -->
-      <button type="button" class="btn btn-outline-success me-3" data-mdb-ripple-color="success">
+      <button type="button" class="btn btn-outline-success me-3 d-none d-md-block" data-mdb-ripple-color="success">
         　有什麼好玩的？
       </button>
 
-      <a class="text-reset me-3 hidden-arrow" href="#" role="button">
+      @if (!Auth::check())
+      <a class="text-reset me-3" href="{{ route('sign-in') }}" role="button">
         登入
       </a>
+      <a class="text-reset me-3" href="{{ route('sign-up') }}" role="button">
+        註冊
+      </a>
+      @else
+      <a class="nav-link" href="{{ route('backstage.maps.index') }}">
+        <i class="fas fa-map"></i>
+        <span class="d-none d-md-inline">我的地圖</span>
+      </a>
+      <a class="nav-link" href="{{ route('favorites.index') }}">
+        <i class="fas fa-star"></i>
+        <span class="d-none d-md-inline">我的收藏</span>
+      </a>
+      <a class="nav-link" href="#">{{ Auth::user()->name }}</a>
+      @endif
 
       <!-- Notifications -->
       {{-- <a class="text-reset me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
