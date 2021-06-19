@@ -32,12 +32,12 @@ class amigo_map extends Mailable
     public function build()
     {
         $user =$this->user_to;
-        $pdf =  $pdf = PDF::loadView('emails.users.test',['user'=>$user])->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4');
+        $pdf =  $pdf = PDF::loadView('emails.users.PDF',['user'=>$user])->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4');
 
         return $this
             ->to($this->user_to->email)
             ->from('example@example.com')
             ->attachData($pdf->output(), 'schedule.pdf')
-            ->view('emails.users.show',compact('user'));
+            ->view('emails.users.show',['user'=>$user]);
     }
 }
