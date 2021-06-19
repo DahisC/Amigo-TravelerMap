@@ -23,7 +23,7 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>user_id</th>
+              <th>建立者</th>
               <th>名稱</th>
               <th>動作</th>
               <th>最後編輯時間</th>
@@ -45,26 +45,20 @@
               <td>{{ $a->user_id }}</td>
               <td>{{ $a->name }}</td>
               <td>
-                <a href="{{ route('maps.show', ['map' => $a->id]) }}" target="_blank"
-                  class="btn btn-info btn-circle btn-sm">
+                <a href="{{ route('maps.show', ['map' => $a->id]) }}" target="_blank" class="btn btn-info btn-circle btn-sm">
                   <i class="fas fa-external-link-alt"></i>
                 </a>
-
-                <a href="{{ route('backstage.maps.edit', ['map' => $a->id]) }}"
-                  class="btn btn-warning btn-circle btn-sm">
+                <a href="{{ route('backstage.maps.edit', ['map' => $a->id]) }}" class="btn btn-warning btn-circle btn-sm">
                   <i class="fas fa-pen"></i>
                 </a>
-
-                <a class="btn btn-danger btn-circle btn-sm"  onclick="event.preventDefault();
+                <a class="btn btn-danger btn-circle btn-sm" onclick="event.preventDefault();
                 document.getElementById('delete_form_{{ $a->id }}').submit();">
-                <i class="fas fa-trash"></i>
+                  <i class="fas fa-trash"></i>
                 </a>
-
                 <form id="delete_form_{{ $a->id }}" action="{{ route('backstage.maps.destroy', ['map' => $a->id]) }}" method="POST" class="d-none">
                   @csrf
                   @method('DELETE')
                 </form>
-
               </td>
               <td>{{ $a->updated_at }}</td>
             </tr>
