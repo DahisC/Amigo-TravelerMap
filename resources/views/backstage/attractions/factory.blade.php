@@ -35,9 +35,7 @@
     @endif
 
     <div class="card-body">
-      <form
-        action="{{ isset($attraction) ? route('attractions.update', ['attraction' => $attraction->id]) : route('attractions.store') }}"
-        method="POST" enctype="multipart/form-data">
+      <form action="{{ isset($attraction) ? route('attractions.update', ['attraction' => $attraction->id]) : route('attractions.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if (isset($attraction))
         @method('PUT')
