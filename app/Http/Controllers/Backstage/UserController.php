@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Backstage;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Controllers\Controller;
+use App\Mail\amigo_map;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
 
 
@@ -62,5 +65,16 @@ class UserController extends Controller
             return redirect()->route('backstage.users.index');
         }
         return view('backstage.index');    //很抱歉，您的權限不足，發送火箭享尊榮服務
+    }
+    public function watch()
+    {
+        $pdf = PDF::loadView('welcome')->setOptions(['defaultFont' => 'sans-serif']);
+        return $pdf->stream();
+        // return $pdf->download('amigo.pdf');
+    }
+    public function pdfOutput()
+    {
+        $user = auth()->user();
+        Mail::send(new amigo_map($user));
     }
 }
