@@ -52,7 +52,7 @@
     </div>
   </li>
 
-@cannot('Traveler')
+@cannot('view-traveler')
   <!-- Nav Item - Utilities Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#database-attractions">
@@ -63,7 +63,7 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">頁面</h6>
         <a class="collapse-item" href="{{route('backstage.attractions.index')}}">列表 List</a>
-          
+
         <a class="collapse-item" href="{{route('backstage.attractions.create')}}">新增 Create</a>
       </div>
     </div>
@@ -73,7 +73,7 @@
 @endcannot
 
 
-@can('Admin')
+@can('view-admin')
   <div class="sidebar-heading">
     管理員
   </div>

@@ -15,7 +15,10 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        // 註冊 POLICY
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        Map::class => MapPolicy::class,
+        Attraction::class => AttractionPolicy::class,
     ];
 
     /**
@@ -27,17 +30,21 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
         
-        
-        // 註冊類別的方法
-        $gate->define('Admin', function ($user) {
+        // 註冊任何認證或授權的服務
+        Gate::resource('map', 'MapPolicy');
+        Gate::resource('attraction', 'AttractionPolicy');
+
+        $gate->define('view-admin', function ($user) {
             return $user->role === "Admin";
         });
-        $gate->define('Guider', function ($user) {
+        $gate->define('view-guider', function ($user) {
             return $user->role === "Guider";
         });
-        $gate->define('Traveler', function ($user) {
+        $gate->define('view-traveler', function ($user) {
             return $user->role === "Traveler";
         });
-
+        $gate->define('view-auth', function ($user) {
+            return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
+        });
     }
 }
