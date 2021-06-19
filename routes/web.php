@@ -50,6 +50,15 @@ Route::group([
     Route::resource('/attractions', 'Backstage\AttractionController')->except(['store', 'update', 'show', 'destroy']);
 });
 
+//PDF
+Route::group([
+    'prefix'=>'pdf',
+    'as'=>'pdf',
+],function(){
+    Route::get('watch','Backstage\UserController@watch');
+    Route::get('output','Backstage\UserController@pdfOutput');
+});
+
 // 前端測試用路由
 Route::view('/snow', 'Snow.test');
 Route::view('/allen', 'Allen.test');

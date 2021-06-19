@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Backstage;
 
 use App\User;
 use App\Http\Requests\UserRequest;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Controllers\Controller;
+use App\Mail\amigo_map;
+use Illuminate\Support\Facades\Mail;
 
 
 class UserController extends Controller
@@ -42,5 +45,16 @@ class UserController extends Controller
         $user->attractions()->detach();
         $user->delete();
         return redirect()->route('backstage.users.index');
+    }
+    public function watch()
+    {
+        $pdf = PDF::loadView('welcome')->setOptions(['defaultFont' => 'sans-serif']);
+        return $pdf->stream();
+        // return $pdf->download('amigo.pdf');
+    }
+    public function pdfOutput()
+    {
+        $user = auth()->user();
+        Mail::send(new amigo_map($user));
     }
 }
