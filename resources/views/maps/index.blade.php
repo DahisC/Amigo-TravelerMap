@@ -181,12 +181,23 @@
   <div class="position-fixed d-flex flex-row flex-sm-column justify-content-between align-items-center p-3" style="z-index: 2;">
     <div class="logo rounded-circle shadow bg-primary"></div>
     <nav class="rounded-pill d-flex flex-row flex-sm-column shadow p-1">
-      <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
-        <i class="fas fa-feather-alt"></i>
-      </a>
-      <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
-        <i class="fas fa-user-plus"></i>
-      </a>
+      @can('view-auth')
+        {{-- 會員後台的按鈕，記得更新 --}}
+        <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
+          <i class="fas fa-feather-alt"></i>
+        </a>
+        <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
+          <i class="fas fa-user-plus"></i>
+        </a>
+      @else
+        {{-- 遊客看見的按鈕 --}}
+        <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
+          <i class="fas fa-feather-alt"></i>
+        </a>
+        <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
+          <i class="fas fa-user-plus"></i>
+        </a>
+      @endcan
       <hr class="mx-2" />
       <button type="button" class="btn btn-primary btn-floating m-1" onclick="locateUser(event)">
         <i class="fas fa-crosshairs"></i>
@@ -294,10 +305,9 @@
   const addressLatLng = @json($addressLatLng);
   const attractions = @json($attractions);
   const userFavorites = @json($userFavorites);
-  console.log(userFavorites);
 
   if (addressLatLng) locateUser(addressLatLng)
-  else locateUser({ lat: 22.627278, lng: 120.301435 });
+  else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
 
   /* Vue */
   $vue = new Vue({
@@ -322,16 +332,9 @@
         this.userFavorites = userFavorites;
       },
       isFavorited(attractionId) {
-        console.log(attractionId);
         return this.userFavorites.includes(attractionId);
       }
     },
-    // computed: {
-    //   isFavorited: function(attractionId) {
-    //     console.log(attractionId);
-    //     return this.userFavorites.includes(attractionId);
-    //   }
-    // }
   });
 
   /* Leaflet 設置 */

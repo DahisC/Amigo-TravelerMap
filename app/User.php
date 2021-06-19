@@ -45,4 +45,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Attraction', 'user_attraction', 'user_id', 'attraction_id')->withTimestamps();
     }
+    static function favorites()
+    {
+        if (auth()->check()) {
+            return User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+        } else {
+            return [];
+        }
+    }
 }
