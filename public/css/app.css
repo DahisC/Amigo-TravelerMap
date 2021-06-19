@@ -19125,12 +19125,8 @@ fieldset:disabled .btn-group-vertical {
   font-size: 1.7rem;
 }
 
-.btn {
-  border-radius: 999px;
-}
-
 html {
-  font-size: 18px;
+  font-size: 16px;
   color: white;
 }
 

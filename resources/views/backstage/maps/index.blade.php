@@ -49,6 +49,7 @@
                   class="btn btn-info btn-circle btn-sm">
                   <i class="fas fa-external-link-alt"></i>
                 </a>
+
                 <a href="{{ route('backstage.maps.edit', ['map' => $a->id]) }}"
                   class="btn btn-warning btn-circle btn-sm">
                   <i class="fas fa-pen"></i>

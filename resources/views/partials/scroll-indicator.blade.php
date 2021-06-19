@@ -1,7 +1,7 @@
 <style>
   #scroll-indicator {
     height: 30vh;
-    width: 15px;
+    width: 10px;
     top: 50%;
     transform: translateY(-50%);
     left: 5px;

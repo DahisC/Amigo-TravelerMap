@@ -1,8 +1,8 @@
 @extends('layouts.amigo')
 
-@section('nav')
+{{-- @section('nav')
 
-@endsection
+@endsection --}}
 
 @section('title')
 Buen Camino
@@ -11,15 +11,47 @@ Buen Camino
 @section('css')
 <style>
   section {
+    min-height: 100vh;
+  }
+
+  #header,
+  .index-banner {
     height: 100vh;
   }
 
+  .index-banner {
+    background-color: #333333;
+  }
+
+  .index-banner__description {
+    height: 40%;
+  }
+
+  @media (min-width: 768px) {
+    .index-banner__description {
+      height: 25%;
+    }
+  }
+
+  section:not(:first-of-type) {
+    padding: 55px 0;
+  }
+
+  /* section:not(:last-of-type) {
+    margin-bottom: 55px;
+  } */
+
   .a-vertical-title {
-    writing-mode: vertical-lr;
-    transform: rotate(180deg);
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .a-vertical-title {
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
+    }
   }
 
   .a-background {
@@ -33,7 +65,7 @@ Buen Camino
 
 
 @section('content')
-@include('partials.scroll-indicator')
+{{-- @include('partials.scroll-indicator') --}}
 {{-- <div id="list-example" class="list-group position-fixed">
   <a class="list-group-item list-group-item-action" href="#list-item-1">Item 1</a>
   <a class="list-group-item list-group-item-action" href="#list-item-2">Item2</a>
@@ -51,17 +83,17 @@ Buen Camino
     </div>
   </section>
   <!-- ¿Quién soy yo? / Who am I? -->
-  <section id="banner-about-me">
+  <section id="banner-about-me" class="index-banner">
     <div class="h-100 d-flex flex-column">
       <div class="flex-grow-1 a-background" style="background-color:#333333; background-image: url({{ asset('images/banner/who-am-i.png') }});"></div>
-      <div class=" flex-grow-1 text-white position-sticky bottom-0" style="max-height: 25%; background-color: #333333;">
+      <div class="index-banner__description text-white position-sticky bottom-0" style="background-color: #333333;">
         <div class="h-100 container">
           <div class="h-100 row">
-            <div class="col text-center d-flex flex-column justify-content-evenly">
+            <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-evenly">
               <h1 class="a-fs-3"><b>¿Quién soy yo?</b></h1>
               <h2 class="a-fs-2">Who am I?</h2>
             </div>
-            <div class="col d-flex flex-column justify-content-center text-end">
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center text-end">
               <p><b>阿米狗是每個人的旅人地圖，記錄著那些短暫出現卻又精彩萬分的事物</b></p>
               <p>源自於西班牙文中「朋友」的 Amigo 一詞，我們就像那位最凱瑞你的朋友！</p>
               <p>在你的旅途中提供指引，將有趣的地點、活動介紹給你就是我們的使命。</p>
@@ -73,22 +105,22 @@ Buen Camino
     </div>
   </section>
   <!-- Explore -->
-  <section id="features" style="height: 200vh;">
+  <section id="features">
+    {{-- <section id="features" style="height: 200vh;"> --}}
     <div class="h-100 container">
-      <div class="h-100 row">
-        <div class="h-100 col d-flex flex-column justify-content-evenly">
+      <div class="h-100 row text-center text-md-start">
+        <div class="h-100 col d-flex flex-column">
           <!-- Attractions -->
-          <div class="row h-25">
-            <div class="col-2 a-vertical-title a-fs-3">
+          <div class="row h-25 mb-9">
+            <div class="col-12 col-md-2 a-vertical-title a-fs-3 mb-3 mb-md-0">
               <b>A</b>ttractions
             </div>
-            <div class="col-3 d-flex justify-content-center align-items-center">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-5"></div>
+            <div class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-5 mb-md-0">
+              <div class="w-50 ratio ratio-1x1 rounded-circle border border-5"></div>
             </div>
-            <div class="col-1"></div>
-            <div class="col-5 d-flex flex-column justify-content-evenly py-5">
-              <p class="a-fs-1">「附近有什麼好玩的？」</p>
-              <div>
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly">
+              <p class="a-fs-1 mb-4 mb-md-0">「附近有什麼好玩的？」</p>
+              <div class="mb-3 mb-md-0">
                 <p>當這句話脫口而出的那一刻，阿米狗便應運而生。</p>
                 <p>阿米狗蒐集了世界上各處的有趣地點與活動，也替你留意了那些在你匆忙的步伐中隨時可能擦身而過的事物。</p>
                 <p> 想一個人坐在附近的街上靜靜地聽著街頭藝人的低吟淺唱？</p>
@@ -99,25 +131,26 @@ Buen Camino
                 <button class="btn btn-outline-primary">所以有什麼好玩的？</button>
               </div>
             </div>
-            <div class="col-1"></div>
           </div>
           <!-- Maps -->
-          <div class="row h-25 flex-row-reverse">
-            <div class="col-2 a-vertical-title a-fs-3" style="transform: rotate(0deg);">
+          <div class="row h-25 mb-9 row-v">
+            <div class="col-12 col-md-2 a-vertical-title a-fs-3 mb-3 mb-md-0">
               <b>M</b>ap
             </div>
-            <div class="col-3 d-flex justify-content-center align-items-center">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-5"></div>
+            <div class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-5 mb-md-0">
+              <div class="w-50 ratio ratio-1x1 rounded-circle border border-5"></div>
             </div>
-            <div class="col-1"></div>
-            <div class="col-5 d-flex flex-column justify-content-evenly py-5">
-              <p class="a-fs-1">透過地圖探索世界</p>
-              <div>
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly">
+              <p class="a-fs-1 mb-4 mb-md-0">透過地圖旅行</p>
+              <div class="mb-3 mb-md-0">
                 <p>
                   遇到喜歡的骨頭就要收藏起來細細品嘗，<br />
                   就像看到錢包裡亮晶晶的50元硬幣都捨不得花掉！
                 </p>
-                <p>阿米狗替你在地圖上標示出了有趣的地點，讓你可以簡單地透過地圖看看附近有什麼有趣的事情！</p>
+                <p>
+                  阿米狗替你在地圖上標示出了有趣的地點<br />
+                  讓你可以簡單地透過地圖看看附近有什麼有趣的事情！
+                </p>
                 <p>
                   隨手為喜歡的地點按顆星，<br />
                   晚點就可以集滿周末的行程了！
@@ -127,38 +160,38 @@ Buen Camino
                 <button class="btn btn-outline-primary">看看阿米狗的行程！</button>
               </div>
             </div>
-            <div class="col-1"></div>
           </div>
           <!-- Itineraries -->
           <div class="row h-25">
-            <div class="col-2 a-vertical-title a-fs-3">
+            <div class="col-12 col-md-2 a-vertical-title a-fs-3 mb-3 mb-md-0">
               <b>I</b>tineraries
             </div>
-            <div class="col-3 d-flex justify-content-center align-items-center">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-5"></div>
+            <div class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-5 mb-md-0">
+              <div class="w-50 ratio ratio-1x1 rounded-circle border border-5"></div>
             </div>
-            <div class="col-1"></div>
-            <div class="col-5 d-flex flex-column justify-content-evenly py-5">
-              <p class="a-fs-1">那個行程有夠讚！</p>
-              <div>
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly">
+              <p class="a-fs-1 mb-4 mb-md-0">那個行程有夠讚！</p>
+              <div class="mb-3 mb-md-0">
                 <p>收藏起來的地點好想分享給家人朋友們知道！</p>
                 <p>阿米狗已經把分享鍵放在收藏頁裡啦！</p>
-                <p>整理控可以將收藏的地點分門別類放進自己的專屬地圖，快揪團出門踏踏吧！</p>
+                <p>
+                  整理控可以將收藏的地點分門別類放進自己的專屬地圖<br />
+                  快揪團出門踏踏吧！
+                </p>
               </div>
               <div>
                 <button class="btn btn-outline-primary">看看行程！</button>
               </div>
             </div>
-            <div class="col-1"></div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <section id="banner-about-you">
+  <section id="banner-about-you" class="index-banner">
     <div class="h-100 d-flex flex-column">
       <div class="flex-grow-1 a-background" style="background-color:#333333; background-image: url({{ asset('images/banner/who-am-i.png') }});"></div>
-      <div class="flex-grow-1 text-white position-sticky bottom-0" style="max-height: 25%; background-color: #333333;">
+      <div class="index-banner__description text-white position-sticky bottom-0" style="background-color: #333333;">
         <div class="h-100 container">
           <div class="h-100 row flex-row-reverse">
             <div class="h-100 col text-center d-flex flex-column justify-content-evenly">
@@ -177,14 +210,15 @@ Buen Camino
     </div>
   </section>
   <section id="roles">
+    {{-- https://stackoverflow.com/questions/8468066/child-inside-parent-with-min-height-100-not-inheriting-height --}}
     <div class="h-100 container">
       <div class="h-100 row">
-        <div class="h-100 col text-center d-flex flex-column justify-content-evenly">
-          <h3>
+        <div class="h-100 col-12 col-md-6 text-center mb-9 mb-md-0 d-flex flex-column justify-content-center">
+          <h3 class="mb-3">
             Traveler<br />
             旅人
           </h3>
-          <div class="w-50 ratio ratio-1x1 rounded-circle border border-5 mx-auto"></div>
+          <div class="w-50 ratio ratio-1x1 rounded-circle border border-5 mx-auto mb-5"></div>
           <div>
             <p>旅人，同時也是追尋者。</p>
             <p>
@@ -197,12 +231,12 @@ Buen Camino
             </p>
           </div>
         </div>
-        <div class="h-100 col text-center d-flex flex-column justify-content-evenly">
-          <h3>
+        <div class="h-100 col-12 col-md-6 text-center d-flex flex-column justify-content-center">
+          <h3 class="mb-3">
             Guider<br />
             嚮導
           </h3>
-          <div class="w-50 ratio ratio-1x1 rounded-circle border border-5 mx-auto"></div>
+          <div class="w-50 ratio ratio-1x1 rounded-circle border border-5 mx-auto mb-5"></div>
           <div>
             <p>嚮導，同時也是引導者。</p>
             <p>
@@ -218,16 +252,16 @@ Buen Camino
       </div>
     </div>
   </section>
-  <section id="banner-the-end">
+  <section id="banner-the-end" class="index-banner">
     <div class="h-100 d-flex flex-column">
       <div class="flex-grow-1 a-background" style="background-color: #333333; background-image: url({{ asset('images/banner/buen-camino.png') }});"></div>
-      <div class="flex-grow-1 text-white position-sticky bottom-0" style="max-height: 25%; background-color: #333333;">
+      <div class="index-banner__description text-white position-sticky bottom-0" style="background-color: #333333;">
         <div class="h-100 container">
           <div class="h-100 row flex-row-reverse">
             <div class="h-100 text-center d-flex flex-column justify-content-between py-3">
               <h1 class="a-fs-3">Buen Camino</h1>
               <h2 class="a-fs-2">一路順風</h2>
-              <div>
+              <div class="col d-flex flex-column justify-content-center">
                 <p>在西班牙文中，「Camino」指的是道路；但如今也被代稱為歐洲古老的道路：Camino de Santiago－－意即聖地牙哥朝聖之路。</p>
                 <p>朝聖之路是旅人一路從歐洲前往西班牙聖地牙哥大教堂的路線，途中的旅人會以「Buen Camino」祝福那些同在這條路上風雨同行的彼此。</p>
               </div>
@@ -239,7 +273,7 @@ Buen Camino
     </div>
   </section>
 </main>
-<footer style="height: 50vh">
+{{-- <footer style="height: 50vh">
   Footer
-</footer>
+</footer> --}}
 @endsection
