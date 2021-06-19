@@ -1,6 +1,5 @@
 <?php
 
-use App\Attraction;
 use Illuminate\Database\Seeder;
 
 class MapAttractionTableSeeder extends Seeder
@@ -12,9 +11,10 @@ class MapAttractionTableSeeder extends Seeder
      */
     public function run()
     {
+        $attraction = App\Attraction::all();
         $maps = App\Map::all();
-        foreach ($maps as $map) {
-            $map->attractions()->attach(Attraction::inRandomOrder()->limit(3)->get());
+        for ($i=0; $i <$attraction->count(); $i++) {
+            $maps->random()->attractions()->attach($attraction->random());
         }
     }
 }
