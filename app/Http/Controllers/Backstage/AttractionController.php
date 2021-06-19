@@ -14,7 +14,7 @@ class AttractionController extends Controller
 {
     public function index()
     {
-        if (Gate::allows('view',Attraction::class)) {
+        if (Gate::allows('view', Attraction::class)) {
             // dd('view');
             $attractions = Attraction::get();
             return view('backstage.attractions.index', compact('attractions'));
@@ -24,17 +24,21 @@ class AttractionController extends Controller
 
     public function create()
     {
-        if (Gate::allows('view',Attraction::class)) {
+        if (Gate::allows('view', Attraction::class)) {
             $tags = Tag::get();
             return view('backstage.attractions.factory', compact('tags'));
         }
         return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
-    public function edit(Attraction $attraction)
+    public function edit(Request $request, Attraction $attraction)
     {
-        $tags = Tag::get();
-        return view('backstage.attractions.factory', compact('attraction', 'tags'));
-        // return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
+        // dd($request,$attraction);
+        if ($this->authorize('update', $attraction)) {
+            $attraction = Attraction::with('tags', 'images', 'position')->find($attraction->id);
+            $tags = Tag::get();
+            return view('backstage.attractions.factory', compact('attraction', 'tags'));
+        }
+        return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 }
