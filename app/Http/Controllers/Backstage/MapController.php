@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\Map;
+use App\User;
+use Illuminate\Http\Request;
+
 use App\Http\Requests\MapRequest;
 use App\Http\Controllers\Controller;
-use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class MapController extends Controller
 {
     public function index()
     {
-        
-
         $maps = Map::get();
         return view('backstage.maps.index', compact('maps'));
     }
@@ -30,9 +31,11 @@ class MapController extends Controller
     // }
     public function create()
     {
-        return view('backstage.maps.factory');
+        if($this->authorize('viewAny',map::class)){
+            return view('backstage.maps.factory');
+        }
+        return redirect()->route('backstage.maps.index');
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -42,30 +45,40 @@ class MapController extends Controller
      */
     public function store(MapRequest $request)
     {
-        Map::create([
-            'user_id' => auth()->user()->id,
-            'name' => $request->name
-        ]);
-        return redirect()->route('backstage.maps.index');
+        if($this->authorize('viewAny',map::class)){
+            Map::create([
+                'user_id' => auth()->user()->id,
+                'name' => $request->name
+            ]);
+        }
+        return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
 
-    public function edit(Map $map)
+    public function edit(Request $request,Map $map)
     {
-
-        return view('backstage.maps.factory', compact('map'));
+        if($this->authorize('update', $map)){
+        return view('backstage.maps.factory', compact('request'));
+        }
+        return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
 
-    public function update(MapRequest $request,Map $map)
+    public function update(Request $request,Map $map)
     {
-
-        $map->update($request->all());
-        return redirect()->route('backstage.maps.index');
+        if($this->authorize('update', $map)){
+            $map->update($request->all());
+            return redirect()->route('backstage.maps.index');
+        }
+        return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
 
     public function destroy(Map $map)
     {
-        $map->attractions()->detach();
-        $map->delete();
-        return redirect()->route('backstage.maps.index');
+        if($this->authorize('update', $map)){
+            $map->attractions()->detach();
+            $map->delete();
+            return redirect()->route('backstage.maps.index');
+        }
+        return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
+        
 }

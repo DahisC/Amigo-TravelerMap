@@ -2,32 +2,43 @@
 
 namespace App\Http\Controllers\Backstage;
 
-use App\User;
 use App\Tag;
+use App\User;
 use App\Attraction;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\AttractionRequest;
+
 
 class AttractionController extends Controller
 {
     public function index()
     {
-        $attractions = Attraction::get();
-        return view('backstage.attractions.index', compact('attractions'));
+        if (Gate::allows('view',Attraction::class)) {
+            // dd('view');
+            $attractions = Attraction::get();
+            return view('backstage.attractions.index', compact('attractions'));
+        }
+        return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
     public function create()
     {
-        $tags = Tag::get();
-        return view('backstage.attractions.factory', compact('tags'));
+        if (Gate::allows('view',Attraction::class)) {
+            $tags = Tag::get();
+            return view('backstage.attractions.factory', compact('tags'));
+        }
+        return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
-    public function edit($id)
+    public function edit(Request $request, Attraction $attractions)
     {
-        $attraction = Attraction::with('tags', 'images', 'position')->find($id);
-        $tags = Tag::get();
-        return view('backstage.attractions.factory', compact('attraction', 'tags'));
+        // dd($request,$attraction);
+        if ($this->authorize('update',$attractions)) {
+            $attraction = Attraction::with('tags', 'images', 'position')->find($attractions->id);
+            $tags = Tag::get();
+            return view('backstage.attractions.factory', compact('attraction', 'tags'));
+        }
+        return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 }
