@@ -28,14 +28,14 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
+        // 定義授權規則 -- 在這裡呼叫Auth靜態介面的方法
         $this->registerPolicies($gate);
         
-        // 註冊任何認證或授權的服務
         Gate::resource('map', 'MapPolicy');
         Gate::resource('attraction', 'AttractionPolicy');
 
         $gate->define('view-admin', function ($user) {
-            return $user->role === "Admin";
+            return $user->role === "Admin" ;
         });
         $gate->define('view-guider', function ($user) {
             return $user->role === "Guider";

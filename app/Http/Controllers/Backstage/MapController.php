@@ -57,7 +57,7 @@ class MapController extends Controller
     public function edit(Request $request,Map $map)
     {
         if($this->authorize('update', $map)){
-        return view('backstage.maps.factory', compact('request'));
+            return view('backstage.maps.factory', compact('map'));
         }
         return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
@@ -80,5 +80,4 @@ class MapController extends Controller
         }
         return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
-        
 }

@@ -31,10 +31,11 @@ class AttractionController extends Controller
         return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
-    public function edit(Request $request, Attraction $attractions)
+    public function edit(Attraction $attractions)
     {
-        // dd($request,$attraction);
+        // dd($request,$attractions);
         if ($this->authorize('update',$attractions)) {
+            // dd('ddd');
             $attraction = Attraction::with('tags', 'images', 'position')->find($attractions->id);
             $tags = Tag::get();
             return view('backstage.attractions.factory', compact('attraction', 'tags'));

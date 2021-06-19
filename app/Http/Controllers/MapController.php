@@ -71,8 +71,6 @@ class MapController extends Controller
                 'name' => $request->name,
             ]);
         };
-
-
         return redirect()->route('maps.show', ['map' => $map->id]);
     }
 

@@ -42,6 +42,7 @@ class AttractionPolicy
      */
     public function create(User $user)
     {
+        // dd('123');
         return $user->role === "Admin" | $user->role === "Guider";
     }
 
@@ -54,6 +55,7 @@ class AttractionPolicy
      */
     public function update(User $user, Attraction $attraction)
     {
+        // dd('123123');
         return $user->role === "Admin" | $user->id === $attraction->user_id;
     }
 
