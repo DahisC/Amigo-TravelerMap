@@ -22,5 +22,3 @@
     <input id="zipcode" type="text" hidden />
   </div>
 </div>
-
-<script src="{{ asset('js/twCitySelector.js') }}"></script>
