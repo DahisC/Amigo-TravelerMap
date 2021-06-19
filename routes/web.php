@@ -66,4 +66,8 @@ Route::view('/allen', 'Allen.test');
 // 會員模組
 Auth::routes();
 
+//faceBook
+Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
+Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
+
 // Route::get('/home', 'HomeController@index')->name('home');
