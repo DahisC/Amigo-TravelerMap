@@ -40,7 +40,7 @@ class UserController extends Controller
         return view('backstage.index');    //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
-    public function edit(Request $request,User $user)
+    public function edit(User $user)
     {
         if (Gate::allows('view-admin',$user)) {
             return view('backstage.users.edit', compact('user'));
@@ -74,7 +74,14 @@ class UserController extends Controller
     }
     public function pdfOutput()
     {
-        $user = auth()->user();
-        Mail::send(new amigo_map($user));
+        $userFavorites = User::with([
+            'attractions',
+            'attractions.images',
+            'attractions.position',
+            'attractions.time',
+            'attractions.tags'
+            ])->findOrFail(auth()->user()->id);
+        // dd($userFavorites);
+        Mail::send(new amigo_map($userFavorites));
     }
 }

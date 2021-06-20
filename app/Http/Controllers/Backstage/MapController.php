@@ -28,16 +28,6 @@ class MapController extends Controller
         return view('backstage.index', compact('maps'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    // public function create()
-    // {
-    //     return view('backstage.maps.create');
-    // }
     public function create()
     {
         if(Gate::allows('viewAny',map::class)){
@@ -46,12 +36,6 @@ class MapController extends Controller
         return redirect()->route('backstage.maps.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(MapRequest $request)
     {
         if(Gate::allows('viewAny',map::class)){
@@ -63,7 +47,7 @@ class MapController extends Controller
         return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
 
-    public function edit(Request $request,Map $map)
+    public function edit(Map $map)
     {
         if(Gate::allows('update', $map)){
             return view('backstage.maps.factory', compact('map'));
@@ -71,7 +55,7 @@ class MapController extends Controller
         return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
     }
 
-    public function update(Request $request,Map $map)
+    public function update(Request $request, Map $map)
     {
         if(Gate::allows('update', $map)){
             $map->update($request->all());

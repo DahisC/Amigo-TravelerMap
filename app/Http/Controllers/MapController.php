@@ -36,7 +36,7 @@ class MapController extends Controller
         }
 
         if ($request->tag) $query->QueryTags($request->tag);
-        return view('maps.index', compact('attractions', 'tags', 'addressLatLng', 'userFavorites'));
+        return view('maps.index', compact('attractions', 'addressLatLng', 'userFavorites'));
     }
 
     public function create()
@@ -53,8 +53,9 @@ class MapController extends Controller
         return redirect()->route('maps.show', ['map' => $map->id]);
     }
 
-    public function show($id)
+    public function show(Map $map)
     {
+        dd($map->with('attractions')->first());
         return view('test2');
     }
 
