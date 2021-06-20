@@ -16,7 +16,7 @@ class FavoriteController extends Controller
                 'attractions.position',
                 'attractions.time',
                 'attractions.tags'
-                ])->findOrFail(auth()->user()->id)->attractions;
+                ])->findOrFail(auth()->user()->id)->attractions->paginate(10);
             return view('favorites.index', compact('userFavorites'));
         } else{
             return redirect()->route('sign-in');

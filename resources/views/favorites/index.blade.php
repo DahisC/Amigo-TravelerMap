@@ -11,6 +11,9 @@
     -webkit-box-orient: vertical;
 
   }
+  .pagination{
+    justify-content: center;
+  }
 </style>
 @endsection
 
@@ -99,7 +102,8 @@
   <hr />
   <div class="row">
     <div class="col">
-      <nav aria-label="...">
+      {{ $userFavorites->links() }}
+      {{-- <nav aria-label="...">
         <ul class="pagination pagination-circle justify-content-end">
           <li class="page-item">
             <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一頁</a>
@@ -113,7 +117,7 @@
             <a class="page-link" href="#">下一頁</a>
           </li>
         </ul>
-      </nav>
+      </nav> --}}
     </div>
   </div>
 </div>
