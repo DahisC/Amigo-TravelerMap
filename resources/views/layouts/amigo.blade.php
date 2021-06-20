@@ -10,11 +10,11 @@
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('css/amigo.css') }}">
   @yield('css')
-  <style>
+  {{-- <style>
     body {
       padding-top: 55px;
     }
-  </style>
+  </style> --}}
 </head>
 
 <body>
