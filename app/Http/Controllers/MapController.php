@@ -14,13 +14,7 @@ class MapController extends Controller
 {
     public function index(Request $request)
     {
-        // $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions;
-        // $x = collect();
-        // foreach ($user->attractions as $f) {
-        //     $x->put($f->id, true);
-        // }
-        //
-        $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+        $userFavorites = User::favorites();
         $tags = Tag::get();
         $addressLatLng = null;
         $query = Attraction::query()->with('tags', 'position', 'images');
@@ -42,7 +36,7 @@ class MapController extends Controller
         }
 
         if ($request->tag) $query->QueryTags($request->tag);
-        return view('maps.index', compact('attractions', 'tags', 'addressLatLng', 'userFavorites'));
+        return view('maps.index', compact('attractions', 'addressLatLng', 'userFavorites'));
     }
 
     public function create()
@@ -59,8 +53,9 @@ class MapController extends Controller
         return redirect()->route('maps.show', ['map' => $map->id]);
     }
 
-    public function show($id)
+    public function show(Map $map)
     {
+        dd($map->with('attractions')->first());
         return view('test2');
     }
 

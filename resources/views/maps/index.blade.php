@@ -181,12 +181,23 @@
   <div class="position-fixed d-flex flex-row flex-sm-column justify-content-between align-items-center p-3" style="z-index: 2;">
     <div class="logo rounded-circle shadow bg-primary"></div>
     <nav class="rounded-pill d-flex flex-row flex-sm-column shadow p-1">
+      @can('view-auth')
+      {{-- 會員後台的按鈕，記得更新 --}}
       <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
         <i class="fas fa-feather-alt"></i>
       </a>
       <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
         <i class="fas fa-user-plus"></i>
       </a>
+      @else
+      {{-- 遊客看見的按鈕 --}}
+      <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
+        <i class="fas fa-feather-alt"></i>
+      </a>
+      <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
+        <i class="fas fa-user-plus"></i>
+      </a>
+      @endcan
       <hr class="mx-2" />
       <button type="button" class="btn btn-primary btn-floating m-1" onclick="locateUser(event)">
         <i class="fas fa-crosshairs"></i>
@@ -266,7 +277,7 @@
 
   </div>
   @include('partials.maps.attraction-detail-modal')
-  @include('partials.maps.search-attraction-modal', compact('tags'))
+  @include('partials.maps.search-attraction-modal')
   {{-- @include('partials.maps.create-map-modal') --}}
 </div>
 
@@ -294,10 +305,9 @@
   const addressLatLng = @json($addressLatLng);
   const attractions = @json($attractions);
   const userFavorites = @json($userFavorites);
-  console.log(userFavorites);
 
   if (addressLatLng) locateUser(addressLatLng)
-  else locateUser({ lat: 22.627278, lng: 120.301435 });
+  else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
 
   /* Vue */
   $vue = new Vue({
@@ -322,16 +332,9 @@
         this.userFavorites = userFavorites;
       },
       isFavorited(attractionId) {
-        console.log(attractionId);
         return this.userFavorites.includes(attractionId);
       }
     },
-    // computed: {
-    //   isFavorited: function(attractionId) {
-    //     console.log(attractionId);
-    //     return this.userFavorites.includes(attractionId);
-    //   }
-    // }
   });
 
   /* Leaflet 設置 */
@@ -349,8 +352,8 @@
   map.zoomControl.setPosition("bottomleft");
 
   // 使用者 Marker 外觀
-  const userIcon = L.icon({ iconUrl: "images/map/050-street-view.png", iconSize: [30, 30], });
-  const viewIcon = L.icon({ iconUrl: "images/map/023-pin-10.png", iconSize: [30, 30], });
+  const userIcon = L.icon({ iconUrl: "/images/map/050-street-view.png", iconSize: [30, 30], });
+  const viewIcon = L.icon({ iconUrl: "/images/map/023-pin-10.png", iconSize: [30, 30], });
 
   // 使用者 Marker 物件
   const userMarker = L.marker([0, 0], {

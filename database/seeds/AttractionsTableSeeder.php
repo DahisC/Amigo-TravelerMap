@@ -19,8 +19,6 @@ class AttractionsTableSeeder extends Seeder
      */
     public function run()
     {
-        $tags = App\Tag::get();
-
         $jsonFile = file_get_contents(public_path('TaiwanAttractions.json'));
         $json = json_decode($jsonFile, true);
         $attractions = $json['XML_Head']['Infos']['Info'];
