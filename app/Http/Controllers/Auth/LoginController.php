@@ -82,6 +82,8 @@ class LoginController extends Controller
             $user->name = $userSocialite->name;
             $user->email = $userSocialite->email;
             $user->password = uniqid();
+            $user->facebook_id = $userSocialite->id;
+            $user->avatar =$userSocialite->avatar;
             $user->save();
 
             Auth::login($user);
