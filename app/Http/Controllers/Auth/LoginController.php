@@ -53,13 +53,52 @@ class LoginController extends Controller
         }
     }
     /**
-     * Redirect the user to the GitHub authentication page.
+     * Redirect the user to the facebook authentication page.
      *
      * @return \Illuminate\Http\Response
      */
-    public function redirectToProvider()
+    public function facebook()
     {
         return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from facebook.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function facebookCallback()
+    {
+        $userSocialite = Socialite::driver('facebook')->stateless()->user();
+
+        $ckeck = User::where('email', $userSocialite->email)->first();
+
+        if ($ckeck) {
+            Auth::login($ckeck);
+            return redirect()->route('backstage.index');
+
+        } else {
+            $user = new User;
+            $user->name = $userSocialite->name;
+            $user->email = $userSocialite->email;
+            $user->password = uniqid();
+            $user->facebook_id = $userSocialite->id;
+            $user->avatar =$userSocialite->avatar;
+            $user->save();
+
+            Auth::login($user);
+            return redirect()->route('backstage.index');
+        };
+    }
+
+    /**
+     * Redirect the user to the github authentication page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function github()
+    {
+        return Socialite::driver('github')->redirect();
     }
 
     /**
@@ -67,9 +106,9 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback()
+    public function githubCallback()
     {
-        $userSocialite = Socialite::driver('facebook')->stateless()->user();
+        $userSocialite = Socialite::driver('github')->stateless()->user();
 
         $ckeck = User::where('email', $userSocialite->email)->first();
 
