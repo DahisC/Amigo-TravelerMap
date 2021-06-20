@@ -30,8 +30,8 @@ class MapController extends Controller
 
     public function create()
     {
-        if(Gate::allows('viewAny',map::class)){
-            return view('backstage.maps.factory');
+        if(Gate::allows('create',Map::class)){
+        return view('backstage.maps.factory');
         }
         return redirect()->route('backstage.maps.index');
     }
@@ -66,7 +66,7 @@ class MapController extends Controller
 
     public function destroy(Map $map)
     {
-        if(Gate::allows('update', $map)){
+        if(Gate::allows('delete', $map)){
             $map->attractions()->detach();
             $map->delete();
             return redirect()->route('backstage.maps.index');

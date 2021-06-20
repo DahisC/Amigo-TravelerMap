@@ -32,7 +32,6 @@ class AttractionPolicy
      */
     public function view(User $user, Attraction  $attraction)
     {
-        dd('i m here,view');
         return $user->role === "Guider" || $user->role === "Traveler"  && $user->id === $attraction->user_id;
     }
 
@@ -44,10 +43,6 @@ class AttractionPolicy
      */
     public function create(User $user)
     {
-
-        // dd('123');
-        // dd('i m here！！！');
-
         return $user->role === "Guider";
     }
 
