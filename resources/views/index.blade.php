@@ -10,6 +10,10 @@ Buen Camino
 
 @section('css')
 <style>
+  body {
+    padding-top: 0 !important;
+  }
+
   section {
     min-height: 100vh;
   }
@@ -20,10 +24,12 @@ Buen Camino
   }
 
   .index-banner {
-    background-color: #333333;
+    background-color: var(--mdb-primary);
   }
 
   .index-banner__description {
+    background-color: var(--mdb-primary);
+    color: var(--mdb-dark);
     height: 40%;
   }
 
@@ -34,7 +40,7 @@ Buen Camino
   }
 
   section:not(:first-of-type) {
-    padding: 55px 0;
+    padding-top: 55px 0;
   }
 
   /* section:not(:last-of-type) {
@@ -85,15 +91,15 @@ Buen Camino
   <!-- ¿Quién soy yo? / Who am I? -->
   <section id="banner-about-me" class="index-banner">
     <div class="h-100 d-flex flex-column">
-      <div class="flex-grow-1 a-background" style="background-color:#333333; background-image: url({{ asset('images/banner/who-am-i.png') }});"></div>
-      <div class="index-banner__description text-white position-sticky bottom-0" style="background-color: #333333;">
+      <div class="flex-grow-1 a-background" style="background-image: url({{ asset('images/banner/who-am-i.png') }});"></div>
+      <div class="index-banner__description position-sticky bottom-0">
         <div class="h-100 container">
           <div class="h-100 row">
-            <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-evenly">
+            <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center">
               <h1 class="a-fs-3"><b>¿Quién soy yo?</b></h1>
-              <h2 class="a-fs-2">Who am I?</h2>
+              <h2 class="a-fs-1 text-muted">Who am I?</h2>
             </div>
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-center text-end">
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center text-center">
               <p><b>阿米狗是每個人的旅人地圖，記錄著那些短暫出現卻又精彩萬分的事物</b></p>
               <p>源自於西班牙文中「朋友」的 Amigo 一詞，我們就像那位最凱瑞你的朋友！</p>
               <p>在你的旅途中提供指引，將有趣的地點、活動介紹給你就是我們的使命。</p>
@@ -190,15 +196,15 @@ Buen Camino
   </section>
   <section id="banner-about-you" class="index-banner">
     <div class="h-100 d-flex flex-column">
-      <div class="flex-grow-1 a-background" style="background-color:#333333; background-image: url({{ asset('images/banner/who-am-i.png') }});"></div>
-      <div class="index-banner__description text-white position-sticky bottom-0" style="background-color: #333333;">
+      <div class="flex-grow-1 a-background" style="background-image: url({{ asset('images/banner/who-am-i.png') }});"></div>
+      <div class="index-banner__description position-sticky bottom-0">
         <div class="h-100 container">
           <div class="h-100 row flex-row-reverse">
-            <div class="h-100 col text-center d-flex flex-column justify-content-evenly">
+            <div class="h-100 col text-center d-flex flex-column justify-content-center">
               <h1 class="a-fs-3"><b>¿Quién eres?</b></h1>
-              <h2 class="a-fs-2">Who are YOU?</h2>
+              <h2 class="a-fs-1 text-muted">Who are YOU?</h2>
             </div>
-            <div class="col d-flex flex-column justify-content-center">
+            <div class="col d-flex flex-column justify-content-center text-center">
               <p><b>在旅途中，我們都可能會彼此交會</b></p>
               <p>作為旅人，在一段旅程中有可能會是一個追尋者，也可能會是引導者。</p>
               <p>在接下來的旅途中，你想當哪一個？</p>
@@ -254,8 +260,8 @@ Buen Camino
   </section>
   <section id="banner-the-end" class="index-banner">
     <div class="h-100 d-flex flex-column">
-      <div class="flex-grow-1 a-background" style="background-color: #333333; background-image: url({{ asset('images/banner/buen-camino.png') }});"></div>
-      <div class="index-banner__description text-white position-sticky bottom-0" style="background-color: #333333;">
+      <div class="flex-grow-1 a-background" style="background-image: url({{ asset('images/banner/buen-camino.png') }});"></div>
+      <div class="index-banner__description position-sticky bottom-0">
         <div class="h-100 container">
           <div class="h-100 row flex-row-reverse">
             <div class="h-100 text-center d-flex flex-column justify-content-between py-3">

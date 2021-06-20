@@ -53,10 +53,20 @@ class MapController extends Controller
         return redirect()->route('maps.show', ['map' => $map->id]);
     }
 
-    public function show(Map $map)
+    public function show($id)
     {
-        dd($map->with('attractions')->first(),'我是前台mapsController');
-        return view('test2');
+        $map = Map::find($id)->with('user');
+        $mapAttractions = Attraction::with('tags', 'position', 'images')->whereHas('maps', function ($q) use ($id) {
+            $q->where('map_id', $id);
+        })->get();
+        $userFavorites = User::favorites();
+        $addressLatLng = null;
+        return view('maps.index', [
+            'map' => $map,
+            'attractions' => $mapAttractions,
+            'userFavorites' => $userFavorites,
+            'addressLatLng' => $addressLatLng,
+        ]);
     }
 
     public function edit($id)

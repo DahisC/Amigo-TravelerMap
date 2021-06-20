@@ -15,7 +15,7 @@ class UserAttractionTableSeeder extends Seeder
     {
         $users = User::all();
         foreach ($users as $user) {
-            $user->attractions()->attach(Attraction::inRandomOrder()->limit(3)->get());
+            $user->attractions()->attach(Attraction::inRandomOrder()->limit($user->id === 1 ? 100 : 3)->get());
         }
     }
 }
