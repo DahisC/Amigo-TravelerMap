@@ -31,7 +31,7 @@ class AttractionController extends Controller
         return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
-    public function edit(Request $request, Attraction $attraction)
+    public function edit(Attraction $attraction)
     {
         // dd($request,$attraction);
         if ($this->authorize('update', $attraction)) {

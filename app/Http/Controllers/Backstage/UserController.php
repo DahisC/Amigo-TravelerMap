@@ -40,7 +40,7 @@ class UserController extends Controller
         return view('backstage.index');    //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
-    public function edit(Request $request,User $user)
+    public function edit(User $user)
     {
         if (Gate::allows('view-admin',$user)) {
             return view('backstage.users.edit', compact('user'));
