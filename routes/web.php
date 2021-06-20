@@ -46,7 +46,7 @@ Route::group([
 // 前端測試用路由
 Route::view('/snow', 'Snow.test');
 Route::view('/allen', 'Allen.test');
-Route::view('test','emails.users.show');
+Route::view('test','emails.show');
 
 //PDF
 Route::group([
