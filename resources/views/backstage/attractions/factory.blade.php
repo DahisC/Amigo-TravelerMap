@@ -10,7 +10,7 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3">
       {{-- <h6 class="m-0 font-weight-bold text-primary">Method -> UPDATE | Action -> {{ route('attractions.update', ['attraction' => $attraction->id]) }}</h6> --}}
-      <h6 class="m-0 font-weight-bold text-primary mb-3">地點 | 編輯</h6>
+      <h6 class="m-0 font-weight-bold text-primary mb-3">地點 |{{ isset($attraction) ? '編輯' : '建立'  }}</h6>
       <div>
         @if (count($errors) > 0)
         <div class="alert alert-danger" role="alert">
@@ -63,7 +63,7 @@
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">簡介 Description</label>
-      <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="3">{{ $attraction->description ?? old('description') }}</textarea>
+      <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="3" >{{ $attraction->description ?? old('description') }}</textarea>
     </div>
     <div class=" row mb-3">
       <div class="col">
@@ -113,7 +113,7 @@
     </div>
     <hr />
     {{-- --}}
-    <button class="btn btn-outline-primary btn-block">建立活動</button>
+    <button class="btn btn-outline-primary btn-block">{{ isset($attraction) ? '編輯' : '建立'  }}活動</button>
     </form>
   </div>
 </div>

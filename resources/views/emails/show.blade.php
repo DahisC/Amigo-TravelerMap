@@ -253,11 +253,11 @@
         <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><v:rect style="width:600px;" xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false"><v:fill origin="0.5, 0" position="0.5, 0" src="http://191n.mj.am/img/191n/3s/xm6.jpg" color="#ffffff" type="tile" /><v:textbox style="mso-fit-shape-to-text:true" inset="0,0,0,0"><![endif]-->
 
         <div
-            style="background:#ffffff url(http://191n.mj.am/img/191n/3s/xm6.jpg) center top / auto repeat;background-position:center top;background-repeat:repeat;background-size:auto;margin:0px auto;max-width:600px;">
+            style="background-image: url({{ asset('images/banner/who-am-i.png') }}); center top / auto repeat;background-position:center top;background-repeat:repeat;background-size:auto;margin:0px auto;max-width:600px;">
             <div style="line-height:0;font-size:0;">
-                <table align="center" background="http://191n.mj.am/img/191n/3s/xm6.jpg" border="0" cellpadding="0"
+                <table align="center" background="{{ asset('images/banner/who-am-i.png') }}" border="0" cellpadding="0"
                     cellspacing="0" role="presentation"
-                    style="background:#ffffff url(http://191n.mj.am/img/191n/3s/xm6.jpg) center top / auto repeat;background-position:center top;background-repeat:repeat;background-size:auto;width:100%;">
+                    style="background:#ffffff url({{ asset('images/banner/who-am-i.png') }}) center top / auto repeat;background-position:center top;background-repeat:repeat;background-size:auto;width:100%;">
                     <tbody>
                         <tr>
                             <td
@@ -328,10 +328,10 @@
                                                             <td align="center" bgcolor="#414141" role="presentation"
                                                                 style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#414141;"
                                                                 valign="middle">
-                                                                <a href="https://mjml.io"
+                                                                <a href="http://127.0.0.1:8000/"
                                                                     style="display:inline-block;background:#414141;color:#FFFFFF;font-family:Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:15px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;"
                                                                     target="_blank">
-                                                                    CHECK OUT OUR PROMOTIONS !
+                                                                    前往秘密基地
                                                                 </a>
                                                             </td>
                                                         </tr>
@@ -395,7 +395,7 @@
                                                     style="font-family:Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:center;color:#000000;">
                                                     <p><span style="color: rgb(106, 138, 162);"><span
                                                                 style="font-weight: bold;"><span
-                                                                    style="font-size: 16px;">WHY SAILING WITH US
+                                                                    style="font-size: 16px;">Amigo
                                                                     ?</span></span>
                                                         </span>
                                                     </p>
@@ -408,22 +408,10 @@
                                             <td align="justify"
                                                 style="font-size:0px;padding:10px 25px;padding-top:0;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
 
-                                                <div
-                                                    style="font-family:Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:justify;color:#000000;">
-                                                    <p><span style="color: rgb(57, 63, 76);">Lorem ipsum dolor sit amet,
-                                                            consectetur adipiscing elit. Proin rutrum enim eget
-                                                        </span><span style="font-weight: bold;"><span
-                                                                style="color: rgb(57, 63, 76);">magna
-                                                                efficitur</span></span><span
-                                                            style="color: rgb(57, 63, 76);">, eu semper augue semper.
-                                                            Aliquam erat volutpat. Cras id dui lectus. Vestibulum sed
-                                                            finibus lectus, sit amet </span>
-                                                        <span style="font-weight: bold;"><span
-                                                                style="color: rgb(57, 63, 76);">suscipit
-                                                                nibh</span></span><span
-                                                            style="color: rgb(57, 63, 76);">. Proin nec commodo purus.
-                                                            Sed eget nulla elit. Nulla aliquet mollis faucibus.</span>
-                                                    </p>
+                                                <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:justify;color:#000000;">
+                                                    <p class="style="color: rgb(57, 63, 76)"><b>阿米狗是每個人的旅人地圖，記錄著那些短暫出現卻又精彩萬分的事物</b></p>
+                                                <p class="style="font-weight: bold;"color: rgb(57, 63, 76);">源自於西班牙文中「朋友」的 Amigo 一詞，我們就像那位最凱瑞你的朋友！</p>
+                                                <p>在你的旅途中提供指引，將有趣的地點、活動介紹給你就是我們的使命。</p>
                                                 </div>
 
                                             </td>
@@ -509,15 +497,14 @@
                                                         <tr>
                                                             <td style="width:250px;">
 
-                                                                <a href="https://mjml.io" target="_blank">
+                                                                {{-- <a href="https://mjml.io" target="_blank">
 
-                                                                    <img alt="Step 1 - Choose a destination"
+                                                                    <img alt="Step 1 - Attractions"
                                                                         height="auto"
                                                                         src="http://191n.mj.am/img/191n/3s/xx9.png"
                                                                         style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
                                                                         width="250" />
-
-                                                                </a>
+                                                                </a> --}}
 
                                                             </td>
                                                         </tr>
@@ -537,15 +524,15 @@
                                                         <tr>
                                                             <td style="width:250px;">
 
-                                                                <a href="https://mjml.io" target="_blank">
+                                                                {{-- <a href="https://mjml.io" target="_blank">
 
-                                                                    <img alt="Step 2 - Select a type of boat"
+                                                                    <img alt="Step 2 - Map"
                                                                         height="auto"
                                                                         src="http://191n.mj.am/img/191n/3s/x0w.png"
                                                                         style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
                                                                         width="250" />
 
-                                                                </a>
+                                                                </a> --}}
 
                                                             </td>
                                                         </tr>
@@ -565,15 +552,15 @@
                                                         <tr>
                                                             <td style="width:250px;">
 
-                                                                <a href="https://mjml.io" target="_blank">
+                                                                {{-- <a href="https://mjml.io" target="_blank">
 
-                                                                    <img alt="Step 3 - Book and enjoy your trip"
+                                                                    <img alt="Step 3 - Itineraries"
                                                                         height="auto"
                                                                         src="http://191n.mj.am/img/191n/3s/x0x.png"
                                                                         style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
                                                                         width="250" />
 
-                                                                </a>
+                                                                </a> --}}
 
                                                             </td>
                                                         </tr>

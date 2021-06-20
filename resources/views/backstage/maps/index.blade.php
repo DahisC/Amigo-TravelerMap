@@ -14,8 +14,10 @@
 
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
-    <div class="card-header py-3">
+    {{-- 這邊我加d-flex justify-content-between --}}
+    <div class="card-header py-3 d-flex justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">地圖 Maps</h6>
+      <h6 class="m-0 font-weight-bold text-primary">數量{{ $maps->count() }}</h6>
     </div>
     <div class="card-body">
       <div class="table-responsive">
