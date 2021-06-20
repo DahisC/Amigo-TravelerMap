@@ -42,7 +42,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        if (Gate::allows('view-admin',$user)) {
+        if (Gate::allows('view-admin', $user)) {
             return view('backstage.users.edit', compact('user'));
         }
         return view('backstage.index');    //很抱歉，您的權限不足，發送火箭享尊榮服務
@@ -50,7 +50,7 @@ class UserController extends Controller
 
     public function update(UserRequest $request, User $user)
     {
-        if (Gate::allows('view-admin',$user)) {
+        if (Gate::allows('view-admin', $user)) {
             $user->update($request->all());
             return redirect()->route('backstage.users.index');
         }
@@ -59,7 +59,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        if (Gate::allows('view-admin',$user)) {
+        if (Gate::allows('view-admin', $user)) {
             $user->attractions()->detach();
             $user->delete();
             return redirect()->route('backstage.users.index');
@@ -74,14 +74,14 @@ class UserController extends Controller
     }
     public function pdfOutput()
     {
-        $userFavorites = User::with([
-            'attractions',
-            'attractions.images',
-            'attractions.position',
-            'attractions.time',
-            'attractions.tags'
+        if (auth()->check()) {
+            $userFavorites = User::with([
+                'attractions',
+                'attractions.position',
             ])->findOrFail(auth()->user()->id);
-        // dd($userFavorites);
-        Mail::send(new amigo_map($userFavorites));
+            Mail::send(new amigo_map($userFavorites));
+        } else {
+            return redirect()->route('sign-in');
+        }
     }
 }
