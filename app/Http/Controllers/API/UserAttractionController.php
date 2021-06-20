@@ -9,7 +9,7 @@ class UserAttractionController extends Controller
 {
     public function index($id)
     {
-        dd($id, Auth::user());
+        dd($id, Auth::user(),'UserAttractionController');
         return response(compact('attractions'));
     }
 

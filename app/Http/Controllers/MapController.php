@@ -55,7 +55,7 @@ class MapController extends Controller
 
     public function show(Map $map)
     {
-        dd($map->with('attractions')->first());
+        dd($map->with('attractions')->first(),'我是前台mapsController');
         return view('test2');
     }
 
@@ -72,8 +72,6 @@ class MapController extends Controller
                 'name' => $request->name,
             ]);
         };
-
-
         return redirect()->route('maps.show', ['map' => $map->id]);
     }
 
