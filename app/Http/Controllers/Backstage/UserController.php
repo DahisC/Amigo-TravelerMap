@@ -74,7 +74,14 @@ class UserController extends Controller
     }
     public function pdfOutput()
     {
-        $user = auth()->user();
-        Mail::send(new amigo_map($user));
+        $userFavorites = User::with([
+            'attractions',
+            'attractions.images',
+            'attractions.position',
+            'attractions.time',
+            'attractions.tags'
+            ])->findOrFail(auth()->user()->id);
+        // dd($userFavorites);
+        Mail::send(new amigo_map($userFavorites));
     }
 }

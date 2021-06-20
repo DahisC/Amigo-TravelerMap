@@ -42,6 +42,12 @@ Route::group([
     Route::resource('/attractions', 'Backstage\AttractionController')->except(['store', 'update', 'show', 'destroy']); // 後台 - 地點管理
 });
 
+
+// 前端測試用路由
+Route::view('/snow', 'Snow.test');
+Route::view('/allen', 'Allen.test');
+Route::view('test','emails.users.show');
+
 //PDF
 Route::group([
     'prefix'=>'pdf',
@@ -51,9 +57,6 @@ Route::group([
     Route::get('output','Backstage\UserController@pdfOutput');
 });
 
-// 前端測試用路由
-Route::view('/snow', 'Snow.test');
-Route::view('/allen', 'Allen.test');
 
 // 會員模組
 Auth::routes();
@@ -61,5 +64,10 @@ Auth::routes();
 //faceBook
 Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
+
+//github
+Route::get('login/github', 'Auth\LoginController@github');
+Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
+
 
 // Route::get('/home', 'HomeController@index')->name('home');

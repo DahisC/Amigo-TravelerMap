@@ -15,8 +15,17 @@ class MapController extends Controller
 {
     public function index()
     {
-        $maps = Map::get();
-        return view('backstage.maps.index', compact('maps'));
+        $user = Auth::user();
+        if(Gate::allows('viewAny',Map::class)){
+            if($user->role == "Admin"){
+                $maps = Map::get();
+                return view('backstage.maps.index',compact('maps'));
+            }else{
+                $maps = Map::where('user_id',$user->id)->get();
+                return view('backstage.maps.index',compact('maps'));
+            }
+        }
+        return view('backstage.index', compact('maps'));
     }
 
     public function create()
