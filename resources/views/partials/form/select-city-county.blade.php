@@ -23,4 +23,6 @@
   </div>
 </div>
 
+@prepend('stack-js')
 <script src="{{ asset('js/twCitySelector.js') }}"></script>
+@endprepend
