@@ -10,8 +10,16 @@ class FavoriteController extends Controller
     public function index()
     {
         if (auth()->check()) {
-            $userFavorites = User::with('attractions')->findOrFail(auth()->user()->id)->attractions;
+            $userFavorites = User::with([
+                'attractions',
+                'attractions.images',
+                'attractions.position',
+                'attractions.time',
+                'attractions.tags'
+                ])->findOrFail(auth()->user()->id)->attractions;
             return view('favorites.index', compact('userFavorites'));
+        } else{
+            return redirect()->route('sign-in');
         }
     }
 }
