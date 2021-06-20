@@ -1,6 +1,7 @@
 <?php
 
 // use view;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -46,7 +47,14 @@ Route::group([
 // 前端測試用路由
 Route::view('/snow', 'Snow.test');
 Route::view('/allen', 'Allen.test');
-Route::view('test','emails.show');
+Route::get('test',function(){
+    $userFavorites = User::with([
+        'attractions',
+        'attractions.position',
+    ])->findOrFail(auth()->user()->id)->attractions;
+    // dd($userFavorites);
+    return view('emails.show',['attractions'=> $userFavorites]);
+});
 
 //PDF
 Route::group([
@@ -62,8 +70,8 @@ Route::group([
 Auth::routes();
 
 //faceBook
-Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
-Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('login/facebook', 'Auth\LoginController@facebook');
+Route::get('login/facebook/callback', 'Auth\LoginController@facebookCallback');
 
 //github
 Route::get('login/github', 'Auth\LoginController@github');
