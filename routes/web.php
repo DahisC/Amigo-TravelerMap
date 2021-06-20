@@ -62,8 +62,8 @@ Route::group([
 Auth::routes();
 
 //faceBook
-Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
-Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('login/facebook', 'Auth\LoginController@facebook');
+Route::get('login/facebook/callback', 'Auth\LoginController@facebookCallback');
 
 //github
 Route::get('login/github', 'Auth\LoginController@github');
