@@ -24,16 +24,6 @@
       </div>
     </div>
 
-    @if ($errors->any())
-    <div class="alert alert-danger">
-      <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-    @endif
-
     <div class="card-body">
       <form
         action="{{ isset($attraction) ? route('attractions.update', ['attraction' => $attraction->id]) : route('attractions.store') }}"
@@ -112,20 +102,20 @@
       </div>
       <div class="col">
         <label for="select_city" class="form-label">縣市 Region</label>
-        <select class="form-control @error('region') is-invalid @enderror" id="select_city"></select>
+        <select class="form-control @error('region') is-invalid @enderror" id="select_city" value="{{ $attraction->region ?? '' }}"></select>
       </div>
       <div class="col">
         <label for="select_area" class="form-label">區域 Town</label>
-        <select class="form-control @error('town') is-invalid @enderror" id="select_area"></select>
+        <select class="form-control @error('town') is-invalid @enderror" id="select_area" value="{{ $attraction->town ?? '' }}"></select>
       </div>
       <div class="col-12">
         <label for="address" class="form-label">地址 Address</label>
-        <input class="form-control @error('address') is-invalid @enderror" id="address" name="address" />
+        <input class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ $attraction->address ?? '' }}" />
       </div>
     </div>
     <hr />
     {{-- --}}
-    <button class="btn btn-outline-primary btn-block">建立活動</button>
+    <button class="btn btn-outline-primary btn-block">編輯活動</button>
     </form>
   </div>
 </div>
