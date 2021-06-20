@@ -19,7 +19,8 @@ class MapPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
+        // dd('i m viewAny,MapPolicy');
+        return $user->role === "Guider" | $user->role === "Traveler";
     }
 
     /**

@@ -15,8 +15,17 @@ class MapController extends Controller
 {
     public function index()
     {
-        $maps = Map::get();
-        return view('backstage.maps.index', compact('maps'));
+        $user = Auth::user();
+        if(Gate::allows('viewAny',Map::class)){
+            if($user->role == "Admin"){
+                $maps = Map::get();
+                return view('backstage.maps.index',compact('maps'));
+            }else{
+                $maps = Map::where('user_id',$user->id)->get();
+                return view('backstage.maps.index',compact('maps'));
+            }
+        }
+        return view('backstage.index', compact('maps'));
     }
 
     /**
@@ -31,7 +40,7 @@ class MapController extends Controller
     // }
     public function create()
     {
-        if($this->authorize('viewAny',map::class)){
+        if(Gate::allows('viewAny',map::class)){
             return view('backstage.maps.factory');
         }
         return redirect()->route('backstage.maps.index');
@@ -45,7 +54,7 @@ class MapController extends Controller
      */
     public function store(MapRequest $request)
     {
-        if($this->authorize('viewAny',map::class)){
+        if(Gate::allows('viewAny',map::class)){
             Map::create([
                 'user_id' => auth()->user()->id,
                 'name' => $request->name
@@ -56,7 +65,7 @@ class MapController extends Controller
 
     public function edit(Request $request,Map $map)
     {
-        if($this->authorize('update', $map)){
+        if(Gate::allows('update', $map)){
             return view('backstage.maps.factory', compact('map'));
         }
         return redirect()->route('backstage.maps.index');   // 發送火箭以加入新的地圖！一起來冒險吧！
@@ -64,7 +73,7 @@ class MapController extends Controller
 
     public function update(Request $request,Map $map)
     {
-        if($this->authorize('update', $map)){
+        if(Gate::allows('update', $map)){
             $map->update($request->all());
             return redirect()->route('backstage.maps.index');
         }
@@ -73,7 +82,7 @@ class MapController extends Controller
 
     public function destroy(Map $map)
     {
-        if($this->authorize('update', $map)){
+        if(Gate::allows('update', $map)){
             $map->attractions()->detach();
             $map->delete();
             return redirect()->route('backstage.maps.index');

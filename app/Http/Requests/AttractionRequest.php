@@ -28,7 +28,7 @@ class AttractionRequest extends FormRequest
         'name'   => 'required|max:50|min:3',
         'website'=> 'nullable|string|active_url',
         'tel'    => 'nullable|string',
-        'description ' => 'max:500|required',
+        'description ' => 'max:500',   //required 標準抓不準
         'ticket_info'  => 'nullable|string|max:300',
         'traffic_info' => 'nullable|string|max:300',
         'parking_info' => 'nullable|string|max:300',

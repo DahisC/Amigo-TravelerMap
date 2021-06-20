@@ -19,19 +19,21 @@ class AttractionPolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
+        // dd('i m here！！！viewAny');
+        return $user->role === "Guider";
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Post  $post
+     * @param  \App\Attraction  $attraction
      * @return mixed
      */
-    public function view(User $user)
+    public function view(User $user, Attraction  $attraction)
     {
-        return $user->role === "Admin" | $user->role === "Guider";
+        dd('i m here,view');
+        return $user->role === "Guider" || $user->role === "Traveler"  && $user->id === $attraction->user_id;
     }
 
     /**
@@ -42,7 +44,10 @@ class AttractionPolicy
      */
     public function create(User $user)
     {
+
         // dd('123');
+        dd('i m here！！！');
+
         return $user->role === "Admin" | $user->role === "Guider";
     }
 
@@ -55,8 +60,8 @@ class AttractionPolicy
      */
     public function update(User $user, Attraction $attraction)
     {
-        // dd('123123');
-        return $user->role === "Admin" | $user->id === $attraction->user_id;
+        // dd('i m here','update');
+        return ($user->role === "Guider" || $user->role === "Traveler")  && $user->id === $attraction->user_id;
     }
 
     /**
@@ -68,6 +73,7 @@ class AttractionPolicy
      */
     public function delete(User $user, Attraction $attraction)
     {
+        dd('i m here！！！');
         return $user->role === "Admin" | $user->id === $attraction->user_id;
     }
 
