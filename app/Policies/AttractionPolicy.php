@@ -46,9 +46,9 @@ class AttractionPolicy
     {
 
         // dd('123');
-        dd('i m here！！！');
+        // dd('i m here！！！');
 
-        return $user->role === "Admin" | $user->role === "Guider";
+        return $user->role === "Guider";
     }
 
     /**
@@ -73,8 +73,8 @@ class AttractionPolicy
      */
     public function delete(User $user, Attraction $attraction)
     {
-        dd('i m here！！！');
-        return $user->role === "Admin" | $user->id === $attraction->user_id;
+        dd('i m here！！！,delete');
+        return $user->id === $attraction->user_id;
     }
 
     /**

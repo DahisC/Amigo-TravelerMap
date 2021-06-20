@@ -19,13 +19,10 @@ class AttractionController extends Controller
     public function store(AttractionRequest $request)
     {
         $user = Auth::user();
-        if (Gate::allows('viewAny', $request)) {
+        if (Gate::allows('viewAny',Attraction::class)) {
             if ($user->role == "Admin") {
-
-                // 地點轉Px、Py
-                //這邊要防亂傳地址
+                // 地點轉Px、Py、防止亂傳地址
                 $response = helpers::getAddressLatLng($request->address);
-
                 $attraction = Attraction::create([
                     'user_id' => auth()->user()->id,
                     'name' => $request->name,
@@ -61,7 +58,7 @@ class AttractionController extends Controller
                 };
                 return redirect()->route('backstage.attractions.index');
             }
-            if (Gate::allows('update', $request)) {
+            if (Gate::allows('create', Attraction::class)) {
                 // 地點轉Px、Py
                 //這邊要防亂傳地址
                 $response = helpers::getAddressLatLng($request->address);
@@ -102,7 +99,7 @@ class AttractionController extends Controller
                 return redirect()->route('backstage.attractions.index');
             }
         }
-        return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
+        return view('backstage.index');  //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
 
@@ -199,10 +196,13 @@ class AttractionController extends Controller
                     Storage::delete($img->url);
                     $img->delete();
                 });
+                // dd('update');
                 return redirect()->route('backstage.attractions.index');
             }
         }
+
         return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
+        // return redirect()->back()->with('message', 'IT WORKS!');
     }
 
 
