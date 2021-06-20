@@ -17,7 +17,7 @@ class MapController extends Controller
     {
         $user = Auth::user();
         if(Gate::allows('viewAny',Map::class)){
-            if($user->role == "Admin"){
+            if($user->role === "Admin"){
                 $maps = Map::get();
                 return view('backstage.maps.index',compact('maps'));
             }else{
