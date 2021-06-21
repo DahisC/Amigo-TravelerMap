@@ -103,7 +103,7 @@ class AttractionController extends Controller
     }
 
 
-    public function update(Request $request, Attraction $attraction)
+    public function update(AttractionRequest $request, Attraction $attraction)
     {
         $user = Auth::user();
         // $tags = Tag::get();

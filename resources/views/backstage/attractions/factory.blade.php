@@ -58,11 +58,11 @@
     {{-- --}}
     <p class="text-primary">資訊 Info</p>
     <div class="mb-3">
-      <label for="name" class="form-label">名稱 Name</label>
+      <label for="name" class="form-label">名稱 Name *</label>
       <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ $attraction->name ?? old('name') }}" />
     </div>
     <div class="mb-3">
-      <label for="description" class="form-label">簡介 Description</label>
+      <label for="description" class="form-label">簡介 Description *</label>
       <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="3" >{{ $attraction->description ?? old('description') }}</textarea>
     </div>
     <div class=" row mb-3">

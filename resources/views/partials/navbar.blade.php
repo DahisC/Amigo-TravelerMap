@@ -58,16 +58,20 @@
         <span class="d-none d-md-inline">我的收藏</span>
       </a>
       <div class="dropdown">
-        <a class="nav-link d-flex align-items-center" role="button" href="#" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+        <a class="nav-link d-flex align-items-center" role="button" href="#" id="dropUser" data-mdb-toggle="dropdown" aria-expanded="false">
           <div class="ratio ratio-1x1 bg-primary me-1 rounded-circle" style="height: 2rem; width: 2rem;">
             <div></div>
           </div>
           {{ Auth::user()->name }}
         </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropUser">
+          <li><a class="dropdown-item" href="{{route('backstage.index')}}">個人後台</a></li>
+          <li><a class="dropdown-item" href="#" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">登出</a></li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+            </form>
+          </div>
         </ul>
       </div>
       @endif
