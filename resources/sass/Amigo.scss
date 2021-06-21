@@ -31,6 +31,22 @@ font-size: 2rem;
 font-size: 4rem;
 }
 
+// 分隔線，使用 data-text 可以自動將文字置中於分隔線上
+
+.a-hr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.a-hr::after {
+position: absolute;
+content: attr(data-text);
+background-color: white;
+padding: 0 10px;
+font-size: 0.8rem;
+}
+
 
 
 

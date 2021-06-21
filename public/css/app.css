@@ -19150,3 +19150,17 @@ p {
   font-size: 4rem;
 }
 
+.a-hr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.a-hr::after {
+  position: absolute;
+  content: attr(data-text);
+  background-color: white;
+  padding: 0 10px;
+  font-size: 0.8rem;
+}
+
