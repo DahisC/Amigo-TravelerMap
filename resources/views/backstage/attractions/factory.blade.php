@@ -44,7 +44,7 @@
         {{-- --}}
         <p class="text-primary">標籤 Tags</p>
         <div class="row">
-          @for ($i = 0; $i < 3; $i++) <div class="col">
+          @for ($i = 1; $i <= 1; $i++) <div class="col">
             <select class="form-control" name="tags[{{ $i }}]">
               <option selected value="">未選擇</option>
               @foreach ($tags as $tag)
@@ -63,7 +63,7 @@
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">簡介 Description</label>
-      <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="3" >{{ $attraction->description ?? old('description') }}</textarea>
+      <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="3">{{ $attraction->description ?? old('description') }}</textarea>
     </div>
     <div class=" row mb-3">
       <div class="col">

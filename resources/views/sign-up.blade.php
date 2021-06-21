@@ -133,6 +133,16 @@
         <div class="container" style="height: 90%;">
           <div class="row justify-content-center align-items-center h-100">
             <div class="col-10 col-sm-8 col-md-6 col-lg-5">
+              @if (count($errors) > 0)
+              <div class="alert alert-danger" role="alert">
+                <ul class="mb-0">
+                  @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                  @endforeach
+                </ul>
+              </div>
+              <hr class="my-0" />
+              @endif
               <div class="card">
                 <hr class="my-0" />
                 <div class="card-body p-4">
@@ -143,84 +153,84 @@
                         <i class="fas fa-fw fa-user me-1"></i>
                         暱稱
                       </label>
-                      @error('name')
+                      {{-- @error('name')
                       <div class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
-                      </div>
-                      @enderror
                     </div>
+                    @enderror --}}
+                  </div>
 
-                    <!-- 輸入信箱欄位 -->
-                    <div class="form-outline mb-4">
-                      <input id="register-form__email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required />
-                      <label for="register-form__email" class="form-label">
-                        <i class="fas fa-fw fa-envelope me-1"></i>
-                        Email
-                      </label>
-                      @error('email')
+                  <!-- 輸入信箱欄位 -->
+                  <div class="form-outline mb-4">
+                    <input id="register-form__email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required />
+                    <label for="register-form__email" class="form-label">
+                      <i class="fas fa-fw fa-envelope me-1"></i>
+                      Email
+                    </label>
+                    {{-- @error('email')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
-                      </span>
-                      @enderror
-                    </div>
-                    <div class="row g-2 mb-4">
-                      <!-- 輸入密碼欄位 -->
-                      <div class="col">
-                        <div class="form-outline">
-                          <input id="register-form__password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required />
-                          <label for="register-form__password" class="form-label">
-                            <i class="fas fa-fw fa-key me-1"></i>
-                            密碼
-                          </label>
-                          @error('password')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
-                        </div>
-                      </div>
-                      <!-- 輸入密碼欄位 -->
-                      <div class="col mb-4">
-                        <div class="form-outline">
-                          <input id="register-form__password-confirm" type="password" class="form-control" name="password_confirmation" required />
-                          <label for="register-form__password-confirm" class="form-label">
-                            確認密碼
-                          </label>
-                          @error('password')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
-                        </div>
-                      </div>
-                      <div class="col-12 text-end mt-0">
-                        <a href="{{ route('sign-in') }}">
-                          <small>登入頁面在哪兒？</small>
-                        </a>
-                      </div>
-                    </div>
-                    <!-- 按鈕 -->
-                    <button type="submit" class="btn btn-primary w-100">註冊</button>
-                    <hr class="a-hr mt-5" data-text="或透過社群網站登入" />
-                    <div class="d-flex">
-                      <a class="btn btn-primary w-100 me-2" style="background-color: #3b5998;" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
-                      <a class="btn btn-primary w-100" style="background-color: #dd4b39;" href="#!" role="button"><i class="fab fa-google"></i></a>
-                    </div>
-
+                    </span>
+                    @enderror --}}
                   </div>
+                  <div class="row g-2 mb-4">
+                    <!-- 輸入密碼欄位 -->
+                    <div class="col">
+                      <div class="form-outline">
+                        <input id="register-form__password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required />
+                        <label for="register-form__password" class="form-label">
+                          <i class="fas fa-fw fa-key me-1"></i>
+                          密碼
+                        </label>
+                        {{-- @error('password')
+                          <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror --}}
+                      </div>
+                    </div>
+                    <!-- 輸入密碼欄位 -->
+                    <div class="col mb-4">
+                      <div class="form-outline">
+                        <input id="register-form__password-confirm" type="password" class="form-control" name="password_confirmation" required />
+                        <label for="register-form__password-confirm" class="form-label">
+                          確認密碼
+                        </label>
+                        {{-- @error('password')
+                          <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror --}}
+                      </div>
+                    </div>
+                    <div class="col-12 text-end mt-0">
+                      <a href="{{ route('sign-in') }}">
+                        <small>登入頁面在哪兒？</small>
+                      </a>
+                    </div>
+                  </div>
+                  <!-- 按鈕 -->
+                  <button type="submit" class="btn btn-primary w-100">註冊</button>
+                  <hr class="a-hr mt-5" data-text="或透過社群網站登入" />
+                  <div class="d-flex">
+                    <a class="btn btn-primary w-100 me-2" style="background-color: #3b5998;" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-primary w-100" style="background-color: #dd4b39;" href="#!" role="button"><i class="fab fa-google"></i></a>
+                  </div>
+
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="d-flex flex-column justify-content-center align-items-center" style="height: 10%;">
-          <button id="btn_selectRole" class="btn btn-primary d-block" type="button">
-            重新選擇角色
-          </button>
-        </div>
+      </div>
+      <div class="d-flex flex-column justify-content-center align-items-center" style="height: 10%;">
+        <button id="btn_selectRole" class="btn btn-primary d-block" type="button">
+          重新選擇角色
+        </button>
       </div>
     </div>
-  </form>
+</div>
+</form>
 </div>
 
 @endsection
