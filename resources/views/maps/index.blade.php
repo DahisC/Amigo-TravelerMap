@@ -189,7 +189,7 @@
 <div id="app" class="h-100">
   <div class="h-100 w-100 position-absolute p-2 p-md-3 d-flex flex-column flex-md-row justify-content-start justify-content-md-between" style="z-index: 2; pointer-events: none;">
     <div class="nav-wrapper d-flex flex-row flex-md-column align-items-center justify-content-center" style="pointer-events: auto;">
-      <div class="logo rounded-circle shadow bg-primary"></div>
+      <div class="logo rounded-circle shadow bg-primary @if (isset($map)) mb-auto @endif"></div>
       @if (!isset($map))
       <nav class="rounded-pill d-flex flex-row flex-md-column p-1 my-md-auto ms-auto ms-md-0 shadow">
         @can('view-auth')
@@ -222,9 +222,11 @@
       </nav>
       @endif
     </div>
+    @if (isset($map))
     <div class="shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-event: auto;">
       {{ $map->name }}｜<i class="fas fa-user"></i> {{ $map->user->name }}
     </div>
+    @endif
     <div class="shadow mt-auto mt-md-0 mx-auto mx-md-0" style="height: fit-content; width: fit-content;">
       <button type="button" class="btn btn-primary top-0 end-0" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="pointer-events: auto;">
         <i class="fas fa-bars me-1"></i>
