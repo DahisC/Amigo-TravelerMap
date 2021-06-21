@@ -19,8 +19,8 @@
 <script>
   const hasToast = "{{ Session::has('toast-test') }}";
   if (hasToast) {
-    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
-    var toastList = toastElList.map(function(toastEl) {
+    const toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    const toastList = toastElList.map(function(toastEl) {
       return new bootstrap.Toast(toastEl)
     });
     toastList[0].show();
