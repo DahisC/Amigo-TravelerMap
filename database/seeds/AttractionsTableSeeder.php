@@ -58,8 +58,9 @@ class AttractionsTableSeeder extends Seeder
                 ]);
             }
 
-            $randomTags = Tag::get()->random(2);
-            $attraction->tags()->attach($randomTags);
+            // $randomTags = Tag::get()->random(2);
+            $tag = App\Tag::where('name', '景點')->get()->first();
+            $attraction->tags()->attach($tag);
         }
     }
 }
