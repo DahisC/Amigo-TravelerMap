@@ -41,10 +41,10 @@
     background-color: rgba(255, 255, 255, 0.5);
   }
 
-  .role-card:hover {
-    background-color: #333;
-    transition: all 0.5s linear;
-  }
+  /* .role-card:hover {
+    background-color: rgba(255, 197, 95, 0.75);
+    transition: all .3s linear;
+  } */
 
   @media (min-width: 576px) {
     .role-card {
@@ -101,7 +101,7 @@
             </div>
             <small>你是旅人，有著熱愛冒險的靈魂</small>
             <hr />
-            <div class="flex-grow-1" style="background: url(https://www.deachsword.com/db/sinoalice/images/character/134) top center no-repeat; background-size: cover;">
+            <div class="flex-grow-1" style="background: url({{ asset('images/page/sign-up/role_traveler.png') }}) top center no-repeat; background-size: cover;">
             </div>
             <hr />
             <small class="text-danger">※無法在網站中建立自己的活動</small>
@@ -116,7 +116,7 @@
             </div>
             <small>比起冒險，你更希望能感動人心</small>
             <hr />
-            <div class="flex-grow-1" style="background: url(https://www.deachsword.com/db/sinoalice/images/character/278) top center no-repeat; background-size: cover;">
+            <div class="flex-grow-1" style="background: url({{ asset('images/page/sign-up/role_guider.png') }}) top center no-repeat; background-size: cover;">
             </div>
             <hr />
             <small class="text-success">※可以在網站中建立自己的活動</small>
@@ -199,14 +199,14 @@
                         </a>
                       </div>
                     </div>
-                    <hr />
+                    <!-- 按鈕 -->
+                    <button type="submit" class="btn btn-primary w-100">註冊</button>
+                    <hr class="a-hr mt-5" data-text="或透過社群網站登入" />
                     <div class="d-flex">
                       <a class="btn btn-primary w-100 me-2" style="background-color: #3b5998;" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
                       <a class="btn btn-primary w-100" style="background-color: #dd4b39;" href="#!" role="button"><i class="fab fa-google"></i></a>
                     </div>
-                    <hr />
-                    <!-- 按鈕 -->
-                    <button type="submit" class="btn btn-primary w-100">註冊</button>
+
                   </div>
                 </div>
               </div>
