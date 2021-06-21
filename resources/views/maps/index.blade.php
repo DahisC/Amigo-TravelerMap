@@ -274,7 +274,6 @@
         </div>
       </div>
     </div>
-
   </div>
   @include('partials.maps.attraction-detail-modal')
   @include('partials.maps.search-attraction-modal')
@@ -286,6 +285,7 @@
 @endsection
 
 @section('js')
+@stack('stack-js')
 <script src="{{ asset('js/leaflet.js') }}"></script>
 
 <script>
@@ -306,50 +306,8 @@
   const attractions = @json($attractions);
   const userFavorites = @json($userFavorites);
 
-  if (addressLatLng) locateUser(addressLatLng)
-  else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
-
-  /* Vue */
-  $vue = new Vue({
-    el: '#app',
-    data: {
-      attractions: attractions || [],
-      detailTarget: {},
-      userFavorites: userFavorites || [],
-    },
-    methods: {
-      updateAttractions({ attractions, userFavorites }) {
-        this.attractions = attractions;
-        this.userFavorites = userFavorites;
-      },
-      locateOnMap(attraction) {
-        const { lat, lng } = attraction.position;
-        map.flyTo([lat, lng], 17);
-      },
-      async addToFavorite(attractionId) {
-        const { data } = await axios.patch(`/attractions/${attractionId}/favorite`);
-        const { userFavorites } = data;
-        this.userFavorites = userFavorites;
-      },
-      isFavorited(attractionId) {
-        return this.userFavorites.includes(attractionId);
-      }
-    },
-  });
-
-  /* Leaflet 設置 */
-  const map = L.map('traveler-map').setView([24.131871399999998, 120.67749420000001], 15);
-  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoiZGFoaXNjIiwiYSI6ImNrOTVmZ24xNzBiM2wzZXAycnNxYTJoemgifQ.y51LxBKtrU9iu_Z8O8sSEQ'
-  }).addTo(map);
-
-  // 地圖縮放工具列位置
-  map.zoomControl.setPosition("bottomleft");
+  //   if (addressLatLng) locateUser(addressLatLng)
+  //   else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
 
   // 使用者 Marker 外觀
   const userIcon = L.icon({ iconUrl: "/images/map/050-street-view.png", iconSize: [30, 30], });
@@ -365,52 +323,116 @@
     autoPanSpeed: 25,
   });
 
-  /* Leaflet 處理函式 */
-  // 定位自己
 
-  function locateUser(customPosition) {
-    if (navigator.geolocation) {
-      const options = { enableHighAccuracy: true };
+  /* Vue */
+  $vue = new Vue({
+    el: '#app',
+    data: {
+      map: null,
+      attractions: attractions || [],
+      detailTarget: {},
+      userFavorites: userFavorites || [],
+    },
+    mounted() {
+      this.$refs.userMarker = userMarker;
+      this.$refs.userMarker.addEventListener('moveend', this.onUserMarkerMoved)
+      //   userMarker.addEventListener('moveend', this.onUserMarkerMoved);
+      console.log(userMarker);
+      this.initLeaflet();
+      this.updateAttractions({ attractions, userFavorites })
 
-      const locateSuccessHandler = (position) => {
-        const { latitude: lat, longitude: lng } = position.coords;
-        if (customPosition.lat && customPosition.lng) flyToUserPosition({ lat: customPosition.lat, lng: customPosition.lng })
-        else flyToUserPosition({ lat, lng });
-      };
+      if (addressLatLng) this.locateUser(addressLatLng)
+      //   if (addressLatLng) locateUser(addressLatLng)
+      //   else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
+    },
+    methods: {
+      initLeaflet() {
+        /* Leaflet 設置 */
+        this.map = L.map('traveler-map').setView([24.131871399999998, 120.67749420000001], 15);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'pk.eyJ1IjoiZGFoaXNjIiwiYSI6ImNrOTVmZ24xNzBiM2wzZXAycnNxYTJoemgifQ.y51LxBKtrU9iu_Z8O8sSEQ'
+        }).addTo(this.map);
 
-      const locateFailedHandler = () => { alert('定位失敗。'); };
+        // 地圖縮放工具列位置
+        this.map.zoomControl.setPosition("bottomleft");
+      },
+      updateAttractions({ attractions, userFavorites }) {
+        this.attractions = attractions;
+        this.userFavorites = userFavorites;
+        this.renderMarkersOnMap(attractions);
+      },
+      locateOnMap(attraction) {
+        const { lat, lng } = attraction.position;
+        this.map.flyTo([lat, lng], 17);
+      },
+      async addToFavorite(attractionId) {
+        const { data } = await axios.patch(`/attractions/${attractionId}/favorite`);
+        const { userFavorites } = data;
+        this.userFavorites = userFavorites;
+      },
+      isFavorited(attractionId) {
+        return this.userFavorites.includes(attractionId);
+      },
+      // 將 Markers 算繪至地圖上
+      renderMarkersOnMap(attractions) {
+        const markers = new L.MarkerClusterGroup().addTo(this.map);
+        attractions.forEach(a => {
+          markers.addLayer(L.marker([a.position.lat, a.position.lng], {
+            icon: viewIcon
+          }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
+        })
+      },
+      /* Leaflet 處理函式 */
+      // 定位自己
+      locateUser(customPosition) {
+        const vue = this;
+        console.log(this.onUserMarkerMoved);
+        if (navigator.geolocation) {
+          const options = { enableHighAccuracy: true };
 
-      navigator.geolocation.getCurrentPosition(locateSuccessHandler, locateFailedHandler, options);
-    } else {
-      alert("抱歉！瀏覽器不支援 Geolocation");
-    }
+          const locateSuccessHandler = (position) => {
+            const { latitude: lat, longitude: lng } = position.coords;
+            if (customPosition.lat && customPosition.lng) flyToUserPosition({ lat: customPosition.lat, lng: customPosition.lng })
+            else flyToUserPosition({ lat, lng });
+          };
 
-    function flyToUserPosition({ lat, lng }) {
-      map.flyTo([lat, lng], 15);
-      userMarker.setLatLng([lat, lng]).setOpacity(1).addTo(map);
-      onUserMarkerMoved({ lat, lng });
-    }
-  }
+          const locateFailedHandler = () => { alert('定位失敗。'); };
+
+          navigator.geolocation.getCurrentPosition(locateSuccessHandler, locateFailedHandler, options);
+        } else {
+          alert("抱歉！瀏覽器不支援 Geolocation");
+        }
+
+        function flyToUserPosition({ lat, lng }) {
+          vue.map.flyTo([lat, lng], 15);
+          userMarker.setLatLng([lat, lng]).setOpacity(1).addTo(vue.map);
+          vue.onUserMarkerMoved({ lat, lng });
+        }
+      },
+      async onUserMarkerMoved({ lat, lng }) {
+        if (event) params = { lat, lng } = this.$refs.userMarker.getLatLng();
+        else params = { lat, lng }
+        const response = await axios.get('/api/attractions', { params });
+        this.updateAttractions(response.data);
+      }
+    },
+
+  });
+
 
   // 當使用者移動定位標籤後
-  userMarker.addEventListener('moveend', onUserMarkerMoved);
-  async function onUserMarkerMoved({ lat, lng }) {
-    let params;
-    if (event) params = { lat, lng } = this.getLatLng();
-    else params = { lat, lng }
-    const response = await axios.get('/api/attractions', { params });
-    $vue.updateAttractions(response.data);
-    renderMarkersOnMap(response.data.attractions);
-  }
-
-  // 將 Markers 算繪至地圖上
-  function renderMarkersOnMap(attractions) {
-    const markers = new L.MarkerClusterGroup().addTo(map);
-    attractions.forEach(a => {
-      markers.addLayer(L.marker([a.position.lat, a.position.lng], {
-        icon: viewIcon
-      }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
-    })
-  }
+  //   async function onUserMarkerMoved({ lat, lng }) {
+  //     let params;
+  //     if (event) params = { lat, lng } = this.getLatLng();
+  //     else params = { lat, lng }
+  //     const response = await axios.get('/api/attractions', { params });
+  //     $vue.updateAttractions(response.data);
+  //     // renderMarkersOnMap(response.data.attractions);
+  //   }
 </script>
 @endsection

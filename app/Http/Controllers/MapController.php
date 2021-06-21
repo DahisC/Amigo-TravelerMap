@@ -34,7 +34,6 @@ class MapController extends Controller
                 $attractions = [];
                 break;
         }
-        dd($query->get()[5192]);
         if ($request->tag) $query->QueryTags($request->tag);
         return view('maps.index', compact('attractions', 'addressLatLng', 'userFavorites'));
     }
@@ -53,10 +52,20 @@ class MapController extends Controller
         return redirect()->route('maps.show', ['map' => $map->id]);
     }
 
-    public function show(Map $map)
+    public function show($id)
     {
-        dd($map->with(['attractions', 'attractions.time'])->first());
-        return view('test2');
+        $map = Map::find($id)->with('user');
+        $mapAttractions = Attraction::with('tags', 'position', 'images')->whereHas('maps', function ($q) use ($id) {
+            $q->where('map_id', $id);
+        })->get();
+        $userFavorites = User::favorites();
+        $addressLatLng = null;
+        return view('maps.index', [
+            'map' => $map,
+            'attractions' => $mapAttractions,
+            'userFavorites' => $userFavorites,
+            'addressLatLng' => $addressLatLng,
+        ]);
     }
 
     public function edit($id)
@@ -72,8 +81,6 @@ class MapController extends Controller
                 'name' => $request->name,
             ]);
         };
-
-
         return redirect()->route('maps.show', ['map' => $map->id]);
     }
 

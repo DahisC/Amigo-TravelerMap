@@ -100,11 +100,11 @@
       </div>
       <div class="col">
         <label for="select_city" class="form-label">縣市 Region</label>
-        <select class="form-control @error('region') is-invalid @enderror" id="select_city"></select>
+        <select class="form-control @error('region') is-invalid @enderror" id="select_city" value="{{ $attraction->region ?? '' }}"></select>
       </div>
       <div class="col">
         <label for="select_area" class="form-label">區域 Town</label>
-        <select class="form-control @error('town') is-invalid @enderror" id="select_area"></select>
+        <select class="form-control @error('town') is-invalid @enderror" id="select_area" value="{{ $attraction->town ?? '' }}"></select>
       </div>
       <div class="col-12">
         <label for="address" class="form-label">地址 Address</label>

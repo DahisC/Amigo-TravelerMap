@@ -1,6 +1,11 @@
 @extends('layouts.backstage')
 
 @section('page-content')
+  {{-- @if(session()->has('message'))
+      <div class="alert alert-success">
+          {{ session()->get('message') }}
+      </div>
+  @endif --}}
   <!-- Begin Page Content -->
   <div class="container-fluid">
     <!-- Page Heading -->
