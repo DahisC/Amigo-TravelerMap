@@ -11,7 +11,8 @@
     -webkit-box-orient: vertical;
 
   }
-  .pagination{
+
+  .pagination {
     justify-content: center;
   }
 </style>
@@ -54,7 +55,7 @@
       <div class="row">
         @foreach ($userFavorites as $f)
         <div class="col-12">
-          <div class="card mb-3 bg-primary text-dark">
+          <div class="card mb-3 text-dark">
             <div class="row g-0">
               <div class="col-md-4">
                 <div class=" ratio ratio-1x1">
@@ -64,7 +65,7 @@
               <div class="col-md-8">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h5 class="card-title mb-0">
+                    <h5 class="card-title mb-0 text-primary">
                       {{ $f->name }}
                     </h5>
                     <div>
