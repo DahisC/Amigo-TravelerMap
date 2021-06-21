@@ -25,4 +25,14 @@
 
 @prepend('stack-js')
 <script src="{{ asset('js/twCitySelector.js') }}"></script>
+<script>
+  new TwCitySelector({
+    el: '#city-county-selector',
+    elCounty: '#select_city', // 在 el 裡查找 element
+    elDistrict: '#select_area', // 在 el 裡查找 element
+    elZipcode: '#zipcode', // 在 el 裡查找 element
+    countyFieldName: 'region',
+    districtFieldName: 'town'
+  });
+</script>
 @endprepend
