@@ -1,6 +1,7 @@
 <?php
 
 // use view;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,19 @@ Route::group([
     Route::resource('/attractions', 'Backstage\AttractionController')->except(['store', 'update', 'show', 'destroy']); // 後台 - 地點管理
 });
 
+
+// 前端測試用路由
+Route::view('/snow', 'Snow.test');
+Route::view('/allen', 'Allen.test');
+Route::get('test',function(){
+    $userFavorites = User::with([
+        'attractions',
+        'attractions.position',
+    ])->findOrFail(auth()->user()->id)->attractions;
+    // dd($userFavorites);
+    return view('emails.show',['attractions'=> $userFavorites]);
+});
+
 //PDF
 Route::group([
     'prefix'=>'pdf',
@@ -51,15 +65,17 @@ Route::group([
     Route::get('output','Backstage\UserController@pdfOutput');
 });
 
-// 前端測試用路由
-Route::view('/snow', 'Snow.test');
-Route::view('/allen', 'Allen.test');
 
 // 會員模組
 Auth::routes();
 
 //faceBook
-Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
-Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('login/facebook', 'Auth\LoginController@facebook');
+Route::get('login/facebook/callback', 'Auth\LoginController@facebookCallback');
+
+//github
+Route::get('login/github', 'Auth\LoginController@github');
+Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
+
 
 // Route::get('/home', 'HomeController@index')->name('home');

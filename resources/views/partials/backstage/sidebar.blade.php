@@ -52,7 +52,7 @@
     </div>
   </li>
 
-@cannot('view-traveler')
+@can('view-guider')
   <!-- Nav Item - Utilities Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#database-attractions">
@@ -70,8 +70,7 @@
   </li>
 
   <hr class="sidebar-divider">
-@endcannot
-
+@endcan
 
 @can('view-admin')
   <div class="sidebar-heading">

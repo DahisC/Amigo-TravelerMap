@@ -7,6 +7,7 @@ use App\User;
 use App\Attraction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 
@@ -14,17 +15,24 @@ class AttractionController extends Controller
 {
     public function index()
     {
-        if (Gate::allows('view', Attraction::class)) {
-            // dd('view');
-            $attractions = Attraction::get();
-            return view('backstage.attractions.index', compact('attractions'));
+        $user = Auth::user();
+        if (Gate::allows('viewAny',Attraction::class)) {
+            if($user->role == "Admin"){
+                $attractions = Attraction::get();
+                return view('backstage.attractions.index',compact('attractions'));
+            }else{
+                $attractions = Attraction::where('user_id',$user->id)->get();
+                return view('backstage.attractions.index',compact('attractions'));
+            }
         }
         return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
+   
+
     public function create()
     {
-        if (Gate::allows('view', Attraction::class)) {
+        if (Gate::allows('view-guider',Attraction::class)) {
             $tags = Tag::get();
             return view('backstage.attractions.factory', compact('tags'));
         }
@@ -33,11 +41,16 @@ class AttractionController extends Controller
 
     public function edit(Attraction $attraction)
     {
-        // dd($request,$attraction);
-        if ($this->authorize('update', $attraction)) {
-            $attraction = Attraction::with('tags', 'images', 'position')->find($attraction->id);
-            $tags = Tag::get();
-            return view('backstage.attractions.factory', compact('attraction', 'tags'));
+        $user = Auth::user();
+        $tags = Tag::get();
+        if(Gate::allows('viewAny',$attraction)){
+            if($user->role == "Admin"){
+                // dd($attractions);
+                return view('backstage.attractions.factory', compact('attraction', 'tags'));
+            }
+            if(Gate::allows('update',$attraction)){
+                return view('backstage.attractions.factory', compact('attraction', 'tags'));
+            }
         }
         return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }

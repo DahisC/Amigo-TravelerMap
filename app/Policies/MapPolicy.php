@@ -19,7 +19,7 @@ class MapPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
+        return $user->role === "Guider" || $user->role === "Traveler";
     }
 
     /**
@@ -42,7 +42,7 @@ class MapPolicy
      */
     public function create(User $user)
     {
-        // return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
+        return $user->role === "Guider" || $user->role === "Traveler";
     }
 
     /**
@@ -54,7 +54,7 @@ class MapPolicy
      */
     public function update(User $user, Map $map)
     {
-        return $user->id === $map->user_id | $user->role === "Admin";
+        return $user->id === $map->user_id;
     }
 
     /**
@@ -64,9 +64,9 @@ class MapPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function delete(User $user, Map $maps)
+    public function delete(User $user, Map $map)
     {
-        // dd('MapPolicy');
+        return $user->role === "Guider" || $user->role === "Traveler" && $user->id === $map->user_id ;
     }
 
     /**
@@ -76,9 +76,9 @@ class MapPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function restore(User $user, Map $maps)
+    public function restore(User $user, Map $map)
     {
-        dd('MapPolicy');
+        // dd('MapPolicy','restore');
     }
 
     /**
