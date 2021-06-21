@@ -54,7 +54,7 @@ class MapController extends Controller
 
     public function show($id)
     {
-        $map = Map::find($id)->with('user');
+        $map = Map::with('user')->find($id);
         $mapAttractions = Attraction::with('tags', 'position', 'images')->whereHas('maps', function ($q) use ($id) {
             $q->where('map_id', $id);
         })->get();

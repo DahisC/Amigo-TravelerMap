@@ -59,6 +59,7 @@
     /* background: linear-gradient(40deg, var(--bs-primary), var(--bs-secondary)); */
     /* background: url("{{ asset('images/sign-in.png') }}") center center; */
     /* background-size: cover; */
+    background-color: rgba(254, 250, 238, 0.5);
     width: fit-content;
     height: fit-content;
   }
@@ -112,11 +113,15 @@
 
 
   /* Custom offCanvas */
-  @media (min-width: 576px) {
+  @media (min-width: 768px) {
     .logo {
       width: 80px;
       height: 80px;
     }
+
+    /* .nav-wrapper {
+      height: 100%;
+    } */
 
     .offcanvas-custom {
       top: 0;
@@ -140,11 +145,15 @@
     }
   }
 
-  @media (max-width: 575px) {
+  @media (max-width: 767px) {
     .logo {
       width: 60px;
       height: 60px;
     }
+
+    /* .nav-wrapper {
+      width: 100%;
+    } */
 
     .nav-icon {
       width: 30px;
@@ -178,52 +187,58 @@
 
 @section('content')
 <div id="app" class="h-100">
-  <div class="position-fixed d-flex flex-row flex-sm-column justify-content-between align-items-center p-3" style="z-index: 2;">
-    <div class="logo rounded-circle shadow bg-primary"></div>
-    <nav class="rounded-pill d-flex flex-row flex-sm-column shadow p-1">
-      @can('view-auth')
-      {{-- 會員後台的按鈕，記得更新 --}}
-      <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
-        <i class="fas fa-feather-alt"></i>
-      </a>
-      <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
-        <i class="fas fa-user-plus"></i>
-      </a>
-      @else
-      {{-- 遊客看見的按鈕 --}}
-      <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
-        <i class="fas fa-feather-alt"></i>
-      </a>
-      <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
-        <i class="fas fa-user-plus"></i>
-      </a>
-      @endcan
-      <hr class="mx-2" />
-      <button type="button" class="btn btn-primary btn-floating m-1" onclick="locateUser(event)">
-        <i class="fas fa-crosshairs"></i>
-      </button>
-      <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-        <i class="fas fa-search"></i>
-      </button>
-      <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
-        <i class="fas fa-search"></i>
-      </button>
-      <button type="button" class="btn btn-primary btn-floating m-1">
-        <i class="fas fa-map"></i>
-      </button>
-      @if (Auth::check())
-      <p>{{ Auth::user()->name }}</p>
+  <div class="h-100 w-100 position-absolute p-2 p-md-3 d-flex flex-column flex-md-row justify-content-start justify-content-md-between" style="z-index: 2; pointer-events: none;">
+    <div class="nav-wrapper d-flex flex-row flex-md-column align-items-center justify-content-center" style="pointer-events: auto;">
+      <div class="logo rounded-circle shadow bg-primary"></div>
+      @if (!isset($map))
+      <nav class="rounded-pill d-flex flex-row flex-md-column p-1 my-md-auto ms-auto ms-md-0 shadow">
+        @can('view-auth')
+        {{-- 會員後台的按鈕，記得更新 --}}
+        <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
+          <i class="fas fa-feather-alt"></i>
+        </a>
+        @else
+        {{-- 遊客看見的按鈕 --}}
+        <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
+          <i class="fas fa-feather-alt"></i>
+        </a>
+        <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
+          <i class="fas fa-user-plus"></i>
+        </a>
+        @endcan
+        <hr class="mx-2" />
+        <button type="button" class="btn btn-primary btn-floating m-1" onclick="locateUser(event)">
+          <i class="fas fa-crosshairs"></i>
+        </button>
+        {{-- <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+            <i class="fas fa-search"></i>
+          </button> --}}
+        <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
+          <i class="fas fa-search"></i>
+        </button>
+        <button type="button" class="btn btn-primary btn-floating m-1">
+          <i class="fas fa-map"></i>
+        </button>
+      </nav>
       @endif
-    </nav>
+    </div>
+    <div class="shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-event: auto;">
+      {{ $map->name }}｜<i class="fas fa-user"></i> {{ $map->user->name }}
+    </div>
+    <div class="shadow mt-auto mt-md-0 mx-auto mx-md-0" style="height: fit-content; width: fit-content;">
+      <button type="button" class="btn btn-primary top-0 end-0" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="pointer-events: auto;">
+        <i class="fas fa-bars me-1"></i>
+        <span class="text-dark">@{{ attractions.length }} 個地點</span>
+      </button>
+    </div>
   </div>
   <div id="traveler-map"></div>
-
   <div class="offcanvas offcanvas-custom bg-white" id="offcanvasRight" data-bs-backdrop="false">
     <div class="offcanvas-header shadow">
       <div class="d-flex align-items-center">
         {{-- <button type="button" class="btn btn-outline-primary btn-floating" data-mdb-ripple-color="dark" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
-          <i class="fas fa-search"></i>
-        </button> --}}
+            <i class="fas fa-search"></i>
+          </button> --}}
         <span class="badge rounded-pill bg-primary mx-1">
           景點
           <i class="fas fa-fw fa-times"></i>
@@ -241,13 +256,13 @@
     </div>
     <hr class="my-0" />
     <div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-sm-column">
-      <div v-for="attraction in attractions" class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 shadow">
+      <div v-for="attraction in attractions" class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 shadow flex-shrink-0">
         <div class="attraction-card__top position-relative shadow flex-shrink-0">
           <div class="position-absolute w-100 h-100">
             <div>
               <span v-for="tag in attraction.tags" class="badge d-block m-2" style="width: fit-content;" :style="{ 'background-color': tag.color }">@{{ tag.name }}</span>
               {{-- <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
-              <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
+                <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
             </div>
             <button type="button" class="btn btn-primary btn-sm btn-floating position-absolute end-0 bottom-0 m-2" style="font-size: 0.8rem;" v-on:click="addToFavorite(attraction.id)">
               <i v-if="isFavorited(attraction.id)" class="far fa-star"></i>
@@ -289,18 +304,6 @@
 <script src="{{ asset('js/leaflet.js') }}"></script>
 
 <script>
-  new TwCitySelector({
-    el: '#city-county-selector',
-    elCounty: '#select_city', // 在 el 裡查找 element
-    elDistrict: '#select_area', // 在 el 裡查找 element
-    elZipcode: '#zipcode', // 在 el 裡查找 element
-    countyFieldName: 'region',
-    districtFieldName: 'town'
-  });
-</script>
-
-
-<script>
   /* 後端變數 */
   const addressLatLng = @json($addressLatLng);
   const attractions = @json($attractions);
@@ -312,6 +315,9 @@
   // 使用者 Marker 外觀
   const userIcon = L.icon({ iconUrl: "/images/map/050-street-view.png", iconSize: [30, 30], });
   const viewIcon = L.icon({ iconUrl: "/images/map/023-pin-10.png", iconSize: [30, 30], });
+  const festivalIcon = L.icon({ iconUrl: "/images/map/022-pin-9.png", iconSize: [30, 30], });
+  const artIcon = L.icon({ iconUrl: "/images/map/010-pin-3.png", iconSize: [30, 30], });
+
 
   // 使用者 Marker 物件
   const userMarker = L.marker([0, 0], {
@@ -348,9 +354,9 @@
     methods: {
       initLeaflet() {
         /* Leaflet 設置 */
-        this.map = L.map('traveler-map').setView([24.131871399999998, 120.67749420000001], 15);
+        this.map = L.map('traveler-map', { zoomControl: false }).setView([24.131871399999998, 120.67749420000001], 15);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          //   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           maxZoom: 18,
           id: 'mapbox/streets-v11',
           tileSize: 512,
@@ -359,7 +365,7 @@
         }).addTo(this.map);
 
         // 地圖縮放工具列位置
-        this.map.zoomControl.setPosition("bottomleft");
+        // this.map.zoomControl.setPosition("bottomleft");
       },
       updateAttractions({ attractions, userFavorites }) {
         this.attractions = attractions;
@@ -383,15 +389,27 @@
         const markers = new L.MarkerClusterGroup().addTo(this.map);
         attractions.forEach(a => {
           markers.addLayer(L.marker([a.position.lat, a.position.lng], {
-            icon: viewIcon
+            icon: defineMarkerIcon(a.tags[0])
           }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
-        })
+        });
+
+        function defineMarkerIcon(attractionTag) {
+          switch (attractionTag.name) {
+            case '景點':
+              return viewIcon;
+            case '節慶':
+              return festivalIcon;
+            case '藝術':
+              return artIcon;
+            default:
+              return viewIcon;
+          }
+        }
       },
       /* Leaflet 處理函式 */
       // 定位自己
       locateUser(customPosition) {
         const vue = this;
-        console.log(this.onUserMarkerMoved);
         if (navigator.geolocation) {
           const options = { enableHighAccuracy: true };
 
