@@ -12,3 +12,4 @@ $factory->define(AttractionImage::class, function (Faker $faker) {
         'image_desc'=>$faker->sentence(6,true),
     ];
 });
+

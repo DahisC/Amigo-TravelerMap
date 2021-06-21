@@ -25,7 +25,7 @@ class MapController extends Controller
                 return view('backstage.maps.index',compact('maps'));
             }
         }
-        return view('backstage.index', compact('maps'));
+        // return view('backstage.index', compact('maps'));
     }
 
     public function create()
