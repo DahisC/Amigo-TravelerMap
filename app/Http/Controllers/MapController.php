@@ -17,7 +17,7 @@ class MapController extends Controller
         $userFavorites = User::favorites();
         $tags = Tag::get();
         $addressLatLng = null;
-        $query = Attraction::query()->with('tags', 'position', 'images');
+        $query = Attraction::query()->with('tags', 'position', 'images', 'time');
         switch ($request->searchBy) {
             case 'area':
                 $addressLatLng = helpers::getAddressLatLng($request->q);
@@ -34,7 +34,7 @@ class MapController extends Controller
                 $attractions = [];
                 break;
         }
-
+        dd($query->get()[5192]);
         if ($request->tag) $query->QueryTags($request->tag);
         return view('maps.index', compact('attractions', 'addressLatLng', 'userFavorites'));
     }
@@ -55,7 +55,7 @@ class MapController extends Controller
 
     public function show(Map $map)
     {
-        dd($map->with('attractions')->first());
+        dd($map->with(['attractions', 'attractions.time'])->first());
         return view('test2');
     }
 
