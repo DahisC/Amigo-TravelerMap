@@ -57,7 +57,19 @@
         <i class="fas fa-star"></i>
         <span class="d-none d-md-inline">我的收藏</span>
       </a>
-      <a class="nav-link" href="#">{{ Auth::user()->name }}</a>
+      <div class="dropdown">
+        <a class="nav-link d-flex align-items-center" role="button" href="#" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
+          <div class="ratio ratio-1x1 bg-primary me-1 rounded-circle" style="height: 2rem; width: 2rem;">
+            <div></div>
+          </div>
+          {{ Auth::user()->name }}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
       @endif
 
       <!-- Notifications -->
