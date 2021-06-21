@@ -41,10 +41,10 @@
     background-color: rgba(255, 255, 255, 0.5);
   }
 
-  .role-card:hover {
-    background-color: #333;
-    transition: all 0.5s linear;
-  }
+  /* .role-card:hover {
+    background-color: rgba(255, 197, 95, 0.75);
+    transition: all .3s linear;
+  } */
 
   @media (min-width: 576px) {
     .role-card {
@@ -101,7 +101,7 @@
             </div>
             <small>你是旅人，有著熱愛冒險的靈魂</small>
             <hr />
-            <div class="flex-grow-1" style="background: url(https://www.deachsword.com/db/sinoalice/images/character/134) top center no-repeat; background-size: cover;">
+            <div class="flex-grow-1" style="background: url({{ asset('images/page/sign-up/role_traveler.png') }}) top center no-repeat; background-size: cover;">
             </div>
             <hr />
             <small class="text-danger">※無法在網站中建立自己的活動</small>
@@ -116,7 +116,7 @@
             </div>
             <small>比起冒險，你更希望能感動人心</small>
             <hr />
-            <div class="flex-grow-1" style="background: url(https://www.deachsword.com/db/sinoalice/images/character/278) top center no-repeat; background-size: cover;">
+            <div class="flex-grow-1" style="background: url({{ asset('images/page/sign-up/role_guider.png') }}) top center no-repeat; background-size: cover;">
             </div>
             <hr />
             <small class="text-success">※可以在網站中建立自己的活動</small>
