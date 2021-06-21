@@ -4,31 +4,25 @@ namespace App\Http\Controllers\API;
 
 use App\Map;
 use App\Attraction;
-use GuzzleHttp\Client;
-use App\AttractionImage;
-use App\AttractionPosition;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AttractionRequest;
 
 class MapAttractionController extends Controller
 {
     public function update(Request $request, $id)
     {
         //delete create
-        $map = Map::findOrFail($id);
-        $attraction = Attraction::findOrFail($request->id);
-        $map->attractions()->syncWithoutDetaching($attraction);
+        //第一個大雷  
+        $attraction = Attraction::findOrFail($request->attraction_id);
+        $has = Map::where('id', $id)->whereHas('attractions', function ($query) use ($attraction) {
+            $query->where('attraction_id', $attraction->id);
+        })->get()->count();
 
-        return ['map'=>$map];
-    }
+        //第二不能在上面宣告 會被 $map->whereHas改變
+        $map = Map::find($id);
+        if (!$has) $map->attractions()->attach($attraction);
+        else $map->attractions()->detach($attraction);
 
-    public function destroy(Request $request, $id)
-    {
-        $map = Map::findOrFail($id);
-        $attraction = Attraction::findOrFail($request->id);
-        $map->attractions()->detach($attraction);
-
-        return ['map'=>$map];
+        return ['map' => $map];
     }
 }

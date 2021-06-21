@@ -42,7 +42,7 @@
             <td>{{$user->email}}</td>
             <td>{{$user->role}}</td>
            
-            @can('admin-map', $post)
+            @can('view-admin')
               
             <td>
                 <a href="{{ route('backstage.users.edit',[ 'user'=>$user->id]) }}">

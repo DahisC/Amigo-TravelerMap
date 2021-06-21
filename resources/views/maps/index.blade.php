@@ -181,12 +181,23 @@
   <div class="position-fixed d-flex flex-row flex-sm-column justify-content-between align-items-center p-3" style="z-index: 2;">
     <div class="logo rounded-circle shadow bg-primary"></div>
     <nav class="rounded-pill d-flex flex-row flex-sm-column shadow p-1">
+      @can('view-auth')
+      {{-- 會員後台的按鈕，記得更新 --}}
       <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
         <i class="fas fa-feather-alt"></i>
       </a>
       <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
         <i class="fas fa-user-plus"></i>
       </a>
+      @else
+      {{-- 遊客看見的按鈕 --}}
+      <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
+        <i class="fas fa-feather-alt"></i>
+      </a>
+      <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
+        <i class="fas fa-user-plus"></i>
+      </a>
+      @endcan
       <hr class="mx-2" />
       <button type="button" class="btn btn-primary btn-floating m-1" onclick="locateUser(event)">
         <i class="fas fa-crosshairs"></i>
@@ -239,7 +250,8 @@
               <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
             </div>
             <button type="button" class="btn btn-primary btn-sm btn-floating position-absolute end-0 bottom-0 m-2" style="font-size: 0.8rem;" v-on:click="addToFavorite(attraction.id)">
-              <i class="far fa-star"></i>
+              <i v-if="isFavorited(attraction.id)" class="far fa-star"></i>
+              <i v-else class="fas fa-star"></i>
               {{-- <span class="d-none d-sm-inline">收藏</span> --}}
             </button>
           </div>
@@ -262,10 +274,9 @@
         </div>
       </div>
     </div>
-
   </div>
   @include('partials.maps.attraction-detail-modal')
-  @include('partials.maps.search-attraction-modal', compact('tags'))
+  @include('partials.maps.search-attraction-modal')
   {{-- @include('partials.maps.create-map-modal') --}}
 </div>
 
@@ -274,6 +285,7 @@
 @endsection
 
 @section('js')
+@stack('stack-js')
 <script src="{{ asset('js/leaflet.js') }}"></script>
 
 <script>
@@ -292,50 +304,14 @@
   /* 後端變數 */
   const addressLatLng = @json($addressLatLng);
   const attractions = @json($attractions);
+  const userFavorites = @json($userFavorites);
 
-  if (addressLatLng) locateUser(addressLatLng)
-  else locateUser({ lat: 22.627278, lng: 120.301435 });
-
-  /* Vue */
-  $vue = new Vue({
-    el: '#app',
-    data: {
-      attractions: attractions || [],
-      detailTarget: {}
-    },
-    methods: {
-      updateAttractions(attractions) {
-        this.attractions = attractions;
-      },
-      locateOnMap(attraction) {
-        const { lat, lng } = attraction.position;
-        map.flyTo([lat, lng], 17);
-      },
-      async addToFavorite(attractionId) {
-        console.log(attractionId);
-        const result = await axios.patch(`/api/attractions/${attractionId}/favorite`);
-        console.log(result);
-      }
-    }
-  });
-
-  /* Leaflet 設置 */
-  const map = L.map('traveler-map').setView([24.131871399999998, 120.67749420000001], 15);
-  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoiZGFoaXNjIiwiYSI6ImNrOTVmZ24xNzBiM2wzZXAycnNxYTJoemgifQ.y51LxBKtrU9iu_Z8O8sSEQ'
-  }).addTo(map);
-
-  // 地圖縮放工具列位置
-  map.zoomControl.setPosition("bottomleft");
+  //   if (addressLatLng) locateUser(addressLatLng)
+  //   else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
 
   // 使用者 Marker 外觀
-  const userIcon = L.icon({ iconUrl: "images/map/050-street-view.png", iconSize: [30, 30], });
-  const viewIcon = L.icon({ iconUrl: "images/map/023-pin-10.png", iconSize: [30, 30], });
+  const userIcon = L.icon({ iconUrl: "/images/map/050-street-view.png", iconSize: [30, 30], });
+  const viewIcon = L.icon({ iconUrl: "/images/map/023-pin-10.png", iconSize: [30, 30], });
 
   // 使用者 Marker 物件
   const userMarker = L.marker([0, 0], {
@@ -347,52 +323,116 @@
     autoPanSpeed: 25,
   });
 
-  /* Leaflet 處理函式 */
-  // 定位自己
 
-  function locateUser(customPosition) {
-    if (navigator.geolocation) {
-      const options = { enableHighAccuracy: true };
+  /* Vue */
+  $vue = new Vue({
+    el: '#app',
+    data: {
+      map: null,
+      attractions: attractions || [],
+      detailTarget: {},
+      userFavorites: userFavorites || [],
+    },
+    mounted() {
+      this.$refs.userMarker = userMarker;
+      this.$refs.userMarker.addEventListener('moveend', this.onUserMarkerMoved)
+      //   userMarker.addEventListener('moveend', this.onUserMarkerMoved);
+      console.log(userMarker);
+      this.initLeaflet();
+      this.updateAttractions({ attractions, userFavorites })
 
-      const locateSuccessHandler = (position) => {
-        const { latitude: lat, longitude: lng } = position.coords;
-        if (customPosition.lat && customPosition.lng) flyToUserPosition({ lat: customPosition.lat, lng: customPosition.lng })
-        else flyToUserPosition({ lat, lng });
-      };
+      if (addressLatLng) this.locateUser(addressLatLng)
+      //   if (addressLatLng) locateUser(addressLatLng)
+      //   else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
+    },
+    methods: {
+      initLeaflet() {
+        /* Leaflet 設置 */
+        this.map = L.map('traveler-map').setView([24.131871399999998, 120.67749420000001], 15);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'pk.eyJ1IjoiZGFoaXNjIiwiYSI6ImNrOTVmZ24xNzBiM2wzZXAycnNxYTJoemgifQ.y51LxBKtrU9iu_Z8O8sSEQ'
+        }).addTo(this.map);
 
-      const locateFailedHandler = () => { alert('定位失敗。'); };
+        // 地圖縮放工具列位置
+        this.map.zoomControl.setPosition("bottomleft");
+      },
+      updateAttractions({ attractions, userFavorites }) {
+        this.attractions = attractions;
+        this.userFavorites = userFavorites;
+        this.renderMarkersOnMap(attractions);
+      },
+      locateOnMap(attraction) {
+        const { lat, lng } = attraction.position;
+        this.map.flyTo([lat, lng], 17);
+      },
+      async addToFavorite(attractionId) {
+        const { data } = await axios.patch(`/attractions/${attractionId}/favorite`);
+        const { userFavorites } = data;
+        this.userFavorites = userFavorites;
+      },
+      isFavorited(attractionId) {
+        return this.userFavorites.includes(attractionId);
+      },
+      // 將 Markers 算繪至地圖上
+      renderMarkersOnMap(attractions) {
+        const markers = new L.MarkerClusterGroup().addTo(this.map);
+        attractions.forEach(a => {
+          markers.addLayer(L.marker([a.position.lat, a.position.lng], {
+            icon: viewIcon
+          }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
+        })
+      },
+      /* Leaflet 處理函式 */
+      // 定位自己
+      locateUser(customPosition) {
+        const vue = this;
+        console.log(this.onUserMarkerMoved);
+        if (navigator.geolocation) {
+          const options = { enableHighAccuracy: true };
 
-      navigator.geolocation.getCurrentPosition(locateSuccessHandler, locateFailedHandler, options);
-    } else {
-      alert("抱歉！瀏覽器不支援 Geolocation");
-    }
+          const locateSuccessHandler = (position) => {
+            const { latitude: lat, longitude: lng } = position.coords;
+            if (customPosition.lat && customPosition.lng) flyToUserPosition({ lat: customPosition.lat, lng: customPosition.lng })
+            else flyToUserPosition({ lat, lng });
+          };
 
-    function flyToUserPosition({ lat, lng }) {
-      map.flyTo([lat, lng], 15);
-      userMarker.setLatLng([lat, lng]).setOpacity(1).addTo(map);
-      onUserMarkerMoved({ lat, lng });
-    }
-  }
+          const locateFailedHandler = () => { alert('定位失敗。'); };
+
+          navigator.geolocation.getCurrentPosition(locateSuccessHandler, locateFailedHandler, options);
+        } else {
+          alert("抱歉！瀏覽器不支援 Geolocation");
+        }
+
+        function flyToUserPosition({ lat, lng }) {
+          vue.map.flyTo([lat, lng], 15);
+          userMarker.setLatLng([lat, lng]).setOpacity(1).addTo(vue.map);
+          vue.onUserMarkerMoved({ lat, lng });
+        }
+      },
+      async onUserMarkerMoved({ lat, lng }) {
+        if (event) params = { lat, lng } = this.$refs.userMarker.getLatLng();
+        else params = { lat, lng }
+        const response = await axios.get('/api/attractions', { params });
+        this.updateAttractions(response.data);
+      }
+    },
+
+  });
+
 
   // 當使用者移動定位標籤後
-  userMarker.addEventListener('moveend', onUserMarkerMoved);
-  async function onUserMarkerMoved({ lat, lng }) {
-    let params;
-    if (event) params = { lat, lng } = this.getLatLng();
-    else params = { lat, lng }
-    const response = await axios.get('/api/attractions', { params });
-    $vue.updateAttractions(response.data.attractions);
-    renderMarkersOnMap(response.data.attractions);
-  }
-
-  // 將 Markers 算繪至地圖上
-  function renderMarkersOnMap(attractions) {
-    const markers = new L.MarkerClusterGroup().addTo(map);
-    attractions.forEach(a => {
-      markers.addLayer(L.marker([a.position.lat, a.position.lng], {
-        icon: viewIcon
-      }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
-    })
-  }
+  //   async function onUserMarkerMoved({ lat, lng }) {
+  //     let params;
+  //     if (event) params = { lat, lng } = this.getLatLng();
+  //     else params = { lat, lng }
+  //     const response = await axios.get('/api/attractions', { params });
+  //     $vue.updateAttractions(response.data);
+  //     // renderMarkersOnMap(response.data.attractions);
+  //   }
 </script>
 @endsection

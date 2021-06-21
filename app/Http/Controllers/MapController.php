@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Map;
 use App\Tag;
+use App\User;
 use App\helpers;
 use App\Attraction;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ class MapController extends Controller
 {
     public function index(Request $request)
     {
+        $userFavorites = User::favorites();
         $tags = Tag::get();
         $addressLatLng = null;
         $query = Attraction::query()->with('tags', 'position', 'images');
@@ -32,8 +34,9 @@ class MapController extends Controller
                 $attractions = [];
                 break;
         }
+
         if ($request->tag) $query->QueryTags($request->tag);
-        return view('maps.index', compact('attractions', 'tags', 'addressLatLng'));
+        return view('maps.index', compact('attractions', 'addressLatLng', 'userFavorites'));
     }
 
     public function create()
@@ -52,7 +55,18 @@ class MapController extends Controller
 
     public function show($id)
     {
-        return view('test2');
+        $map = Map::find($id)->with('user');
+        $mapAttractions = Attraction::with('tags', 'position', 'images')->whereHas('maps', function ($q) use ($id) {
+            $q->where('map_id', $id);
+        })->get();
+        $userFavorites = User::favorites();
+        $addressLatLng = null;
+        return view('maps.index', [
+            'map' => $map,
+            'attractions' => $mapAttractions,
+            'userFavorites' => $userFavorites,
+            'addressLatLng' => $addressLatLng,
+        ]);
     }
 
     public function edit($id)
@@ -61,15 +75,13 @@ class MapController extends Controller
         return view('maps.factory', compact('action'));
     }
 
-    public function update(MapRequest $request,Map $map)
+    public function update(MapRequest $request, Map $map)
     {
         if ($request->name) {
             $map->update([
                 'name' => $request->name,
             ]);
         };
-
-
         return redirect()->route('maps.show', ['map' => $map->id]);
     }
 

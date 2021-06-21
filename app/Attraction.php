@@ -18,6 +18,10 @@ class Attraction extends Model
     {
         return $this->hasOne('App\AttractionPosition');
     }
+    public function time()
+    {
+        return $this->hasOne('App\AttractionTime');
+    }
     public function images()
     {
         return $this->hasMany('App\AttractionImage');
@@ -34,6 +38,7 @@ class Attraction extends Model
     {
         return $this->belongsToMany('App\User', 'user_attraction', 'attraction_id', 'user_id')->withTimestamps();
     }
+
     public function scopeQueryNearbyAttractions($query, $lat, $lng, $distance = 0.5)
     {
         $squarePoints = helpers::getSquarePoint($lat, $lng, $distance);
@@ -48,19 +53,19 @@ class Attraction extends Model
     public function scopeQueryTags($query, $tag)
     {
         return $query->whereHas('tags', function ($tagQuery) use ($tag) {
-              $tagQuery->where('name', '=', $tag);
+            $tagQuery->where('name', $tag);
         });
     }
     public function scopeQueryRegion($query, $region)
     {
         return $query->whereHas('position', function ($positionQuery) use ($region) {
-              $positionQuery->where('region', '=', $region);
+            $positionQuery->where('region', $region);
         });
     }
     public function scopeQueryTown($query, $town)
     {
         return $query->whereHas('position', function ($positionQuery) use ($town) {
-            $positionQuery->where('town', '=', $town);
-      });
+            $positionQuery->where('town', $town);
+        });
     }
 }
