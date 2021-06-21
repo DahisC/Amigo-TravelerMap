@@ -6,7 +6,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">發現有趣的地點</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal2" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="search_form" method="GET" action="{{ route('maps.index') }}">
@@ -64,7 +64,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal2">取消</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
         <button type="button" class="btn btn-primary" onclick="search_form.submit();">搜尋</button>
       </div>
     </div>
