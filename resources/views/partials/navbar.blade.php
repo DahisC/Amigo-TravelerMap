@@ -45,10 +45,10 @@
       @guest
       <ul class="navbar-nav align-items-center">
         <li class="nav-item custom-nav-link">
-          <a class="nav-link" href="{{ route('sign-up') }}">加入冒險</a>
+          <a class="nav-link custom-nav-link" href="{{ route('sign-up') }}">加入冒險</a>
         </li>
         <li class="nav-item custom-nav-link">
-          <a class="nav-link" href="{{ route('sign-in') }}">旅人簽到</a>
+          <a class="nav-link custom-nav-link" href="{{ route('sign-in') }}">旅人簽到</a>
         </li>
       </ul>
       @endguest
