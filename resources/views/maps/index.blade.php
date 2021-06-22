@@ -352,7 +352,7 @@
       },
       locateOnMap(attraction) {
         const { lat, lng } = attraction.position;
-        this.map.flyTo([lat, lng], 17);
+        this.map.flyTo([lat, lng], 17, { animate: true, duration: 1.5 });
       },
       async addToFavorite(attractionId) {
         const { data } = await axios.patch(`/attractions/${attractionId}/favorite`);
