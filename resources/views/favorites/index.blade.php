@@ -122,3 +122,25 @@
   </div>
 </div>
 @endsection
+@section('js')
+<script>
+  document.querySelectorAll('.add_map').forEach(function(map){
+    map.addEventListener('click', function(){
+      const attractionId = this.dataset.id;
+      
+      const formData = new FormData();
+      formData.append('attraction_id',attractionId);
+      formData.append('_token','{{ csrf_token() }}');
+
+
+      const mapID =1;
+      fetch(`maps/${mapID}/pin`,{
+        method:'POST',
+        body:formData
+      })
+      .then(res=>console.log(res))
+    })
+  })
+ 
+</script>
+@endsection

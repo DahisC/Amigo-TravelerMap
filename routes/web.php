@@ -18,14 +18,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/api')->group(function () {
     Route::get('attractions', 'AttractionController@getAttractions')->name('attractions.get');
+    // Route::Resource('/maps', 'API\MapAttractionController')->only(['update', 'destroy']);
 });
 
 
 Route::view('/', 'index')->name('homepage'); // 首頁
 
 Route::resource('maps', 'MapController'); // 地圖
+Route::post('/maps/{map}/pin','MapController@pin')->name('maps.pin');
 Route::resource('attractions', 'AttractionController')->except('create', 'edit'); // 地點
-Route::get('favorites', 'FavoriteController@index')->name('favorites.index');
+Route::get('/favorites', 'FavoriteController@index')->name('favorites.index');
 Route::patch('/attractions/{attraction}/favorite', 'AttractionController@favorite')->name('attractions.favorite'); // 收藏地點
 
 Route::view('/sign-in', 'sign-in')->name('sign-in'); // 登入
