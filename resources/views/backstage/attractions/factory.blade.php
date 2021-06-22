@@ -58,7 +58,7 @@
     {{-- --}}
     <p class="text-primary">資訊 Info</p>
     <div class="mb-3">
-      <label for="name" class="form-label">名稱 Name</label>
+      <label for="name" class="form-label">名稱 Name *</label>
       <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ $attraction->name ?? old('name') }}" />
     </div>
     <div class="mb-3">
