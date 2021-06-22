@@ -18,6 +18,12 @@ Buen Camino
     min-height: 100vh;
   }
 
+  /* 修正子元素無法從父元素繼承 height: 100% 高度的問題 */
+  section:not(.index-banner)>.container,
+  section:not(.index-banner)>.container>.row {
+    min-height: inherit;
+  }
+
   #header {
     height: 100vh;
   }
@@ -81,8 +87,9 @@ Buen Camino
   <section id="header">
     <div class="h-100 container">
       <div class="h-100 row">
-        <div class="h-100 col d-flex justify-content-center align-items-center">
-          <h1>突然不知道要去哪裡？</h1>
+        <div class="h-100 col d-flex flex-column justify-content-center align-items-center">
+          <h1 class="mb-4">突然不知道要去哪裡？</h1>
+          <a class="btn btn-primary" href="{{ route('maps.index') }}">帶我去玩！</a>
         </div>
       </div>
     </div>
@@ -109,20 +116,20 @@ Buen Camino
   <!-- Explore -->
   <section id="features" class="py-5">
     {{-- <section id="features" style="height: 200vh;"> --}}
-    <div class="h-100 container py-5">
-      <div class="h-100 row text-center text-md-start py-5">
+    <div class="h-100 container py-0 py-md-5">
+      <div class="h-100 row text-center text-md-start py-0 py-md-5">
         <div class="h-100 col d-flex flex-column">
           <!-- Attractions -->
-          <div class="row h-25 mb-11">
+          <div class="row mb-9 mb-md-11">
             <div class="col-12 col-md-2 a-vertical-title a-fs-4 mb-3 mb-md-0">
-              <b>A</b>ttractions
+              <b class="text-primary">A</b><span class="text-dark">ttractions</span>
             </div>
-            <div class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-5 mb-md-0">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-5 a-background" style="background-image: url({{ asset('images/page/index/Attractions.png') }})"></div>
+            <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-5 mb-md-0">
+              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-primary" style="background-image: url({{ asset('images/page/index/Attractions.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly">
-              <p class="a-fs-1 mb-4 mb-md-0">「附近有什麼好玩的？」</p>
-              <div class="mb-3 mb-md-0">
+              <p class="a-fs-1 mb-4 mb-md-0 text-primary">「附近有什麼好玩的？」</p>
+              <div class="mb-3 mb-md-0 text-dark">
                 <p>當這句話脫口而出的那一刻，阿米狗便應運而生。</p>
                 <p>阿米狗蒐集了世界上各處的有趣地點與活動，也替你留意了那些在你匆忙的步伐中隨時可能擦身而過的事物。</p>
                 <p>想一個人坐在附近的街上靜靜地聽著街頭藝人的低吟淺唱？</p>
@@ -131,21 +138,21 @@ Buen Camino
                 <p>心動不如……</p>
               </div>
               <div>
-                <button class="btn btn-outline-primary">馬上行動！</button>
+                <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="#">馬上行動！</a>
               </div>
             </div>
           </div>
           <!-- Maps -->
-          <div class="row flex-row-reverse h-25 mb-11 row-v">
+          <div class="row flex-row-reverse mb-9 mb-md-11">
             <div class="col-12 col-md-2 a-vertical-title a-fs-4 mb-3 mb-md-0" style="transform: rotate(0deg);">
-              <b>M</b>ap
+              <b class="text-primary">M</b><span class="text-dark">ap</span>
             </div>
-            <div class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-5 mb-md-0">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-5 a-background" style="background-image: url({{ asset('images/page/index/Map.png') }})"></div>
+            <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end align-items-center mb-5 mb-md-0">
+              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-primary" style="background-image: url({{ asset('images/page/index/Map.png') }})"></div>
             </div>
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly">
-              <p class="a-fs-1 mb-4 mb-md-0">透過地圖旅行</p>
-              <div class="mb-3 mb-md-0">
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly text-center text-md-end">
+              <p class="a-fs-1 mb-4 mb-md-0 text-primary">透過地圖旅行</p>
+              <div class="mb-3 mb-md-0 text-dark">
                 <p>
                   遇到喜歡的骨頭就要收藏起來細細品嘗，<br />
                   就像看到錢包裡亮晶晶的50元硬幣都捨不得花掉！
@@ -160,21 +167,21 @@ Buen Camino
                 </p>
               </div>
               <div>
-                <button class="btn btn-outline-primary">看看阿米狗的行程！</button>
+                <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="#">看看阿米狗的行程！</a>
               </div>
             </div>
           </div>
           <!-- Itineraries -->
-          <div class="row h-25">
-            <div class="col-12 col-md-2 a-vertical-title a-fs-3 mb-3 mb-md-0">
-              <b>I</b>tineraries
+          <div class="row">
+            <div class="col-12 col-md-2 a-vertical-title a-fs-4 mb-3 mb-md-0">
+              <b class="text-primary">I</b><span class="text-dark">tineraries</span>
             </div>
-            <div class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-5 mb-md-0">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-5 a-background" style="background-image: url({{ asset('images/page/index/Itineraries.png') }})"></div>
+            <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-5 mb-md-0">
+              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-primary" style="background-image: url({{ asset('images/page/index/Itineraries.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly">
-              <p class="a-fs-1 mb-4 mb-md-0">獨特的行程表</p>
-              <div class="mb-3 mb-md-0">
+              <p class="a-fs-1 mb-4 mb-md-0 text-primary">獨特的行程表</p>
+              <div class="mb-3 mb-md-0 text-dark">
                 <p>
                   收藏起來的地點好想分享給家人朋友們知道？<br />
                   阿米狗已經把分享鍵放在收藏頁裡啦！
@@ -188,7 +195,7 @@ Buen Camino
                 </p>
               </div>
               <div>
-                <button class="btn btn-outline-primary">看看行程！</button>
+                <button class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="#">看看行程！</button>
               </div>
             </div>
           </div>
@@ -213,10 +220,10 @@ Buen Camino
       </div>
     </div>
   </section>
-  <section id="roles" class="py-5">
+  <section id="roles" class="py-5 py-md-0">
     {{-- https://stackoverflow.com/questions/8468066/child-inside-parent-with-min-height-100-not-inheriting-height --}}
-    <div class="h-100 container py-5">
-      <div class="h-100 row py-5">
+    <div class="h-100 container">
+      <div class="h-100 row align-items-center">
         <div class="h-100 col-12 col-md-6 text-center mb-9 mb-md-0 d-flex flex-column justify-content-center">
           <h3 class="mb-3">
             Traveler<br />
