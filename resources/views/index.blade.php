@@ -79,28 +79,38 @@ Buen Camino
       <div class="h-100 row">
         <div class="h-100 col d-flex flex-column justify-content-center align-items-center">
           <h1 class="mb-5 a-fs-4">突然不知道要去哪裡？</h1>
-          <a class="btn btn-primary btn-lg" href="{{ route('maps.index') }}">帶我去玩！</a>
+          <a class="btn btn-secondary btn-lg" href="{{ route('maps.index') }}">帶我去玩！</a>
         </div>
       </div>
     </div>
   </section>
   <!-- ¿Quién soy yo? / Who am I? -->
-  <section id="banner-about-me" class="index-banner py-5">
+  <section id="banner-about-me" class="index-banner py-4">
     <div class="index-banner__description position-sticky bottom-0">
-      <div class="h-100 container py-5">
+      <div class="h-100 container py-4">
         <div class="h-100 row">
-          <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center">
+          <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center mb-4 mb-md-0">
             <h1 class="a-fs-3"><b>¿Quién soy yo?</b></h1>
-            <h2 class="a-fs-1 text-muted">Who am I?</h2>
+            <h2 class="a-fs-2 text-muted">Who am I?</h2>
           </div>
           <div class="col-12 col-md-6 d-flex flex-column justify-content-center text-center">
-            <p><b>阿米狗是每個人的旅人地圖，記錄著那些短暫出現卻又精彩萬分的事物</b></p>
-            <p>源自於西班牙文中「朋友」的 Amigo 一詞，我們就像那位最凱瑞你的朋友！</p>
-            <p>在你的旅途中提供指引，將有趣的地點、活動介紹給你就是我們的使命。</p>
+            <h3 class="a-fs-0 my-4">
+              <b>
+                阿米狗是每個人的旅人地圖，<br />
+                記錄著那些短暫出現卻又精彩萬分的事物
+              </b>
+            </h3>
+            <p>
+              源自於西班牙文中「朋友」的 Amigo 一詞，<br />
+              我們就像那位最凱瑞你的朋友！
+            </p>
+            <p>
+              在你的旅途中提供指引，<br />
+              將有趣的地點、活動介紹給你就是我們的使命。
+            </p>
           </div>
         </div>
       </div>
-    </div>
     </div>
   </section>
   <!-- Explore -->
@@ -115,7 +125,7 @@ Buen Camino
               <h1 class="a-fs-4"><b class="text-primary">A</b><span class="text-dark">ttractions</span></h1>
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-5 mb-md-0">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-primary" style="background-image: url({{ asset('images/page/index/Attractions.png') }})"></div>
+              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/Attractions.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
               <h2 class="a-fs-1 mb-4 text-primary text-center text-md-start">「附近有什麼好玩的？」</h2>
@@ -143,7 +153,7 @@ Buen Camino
               <h1 class="a-fs-4"><b class="text-primary">M</b><span class="text-dark">ap</span></h1>
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end align-items-center mb-5 mb-md-0">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-primary" style="background-image: url({{ asset('images/page/index/Map.png') }})"></div>
+              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/Map.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
               <p class="a-fs-1 mb-4 text-primary text-center text-md-start">透過地圖旅行</p>
@@ -178,7 +188,7 @@ Buen Camino
               <h1 class="a-fs-4"><b class="text-primary">I</b><span class="text-dark">tineraries</span></h1>
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-5 mb-md-0">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-primary" style="background-image: url({{ asset('images/page/index/Itineraries.png') }})"></div>
+              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/Itineraries.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
               <p class="a-fs-1 mb-4 text-primary text-center text-md-start">獨特的行程表</p>
@@ -212,18 +222,28 @@ Buen Camino
       </div>
     </div>
   </section>
-  <section id="banner-about-you" class="index-banner py-5">
+  <section id="banner-about-you" class="index-banner py-4">
     <div class="index-banner__description position-sticky bottom-0">
-      <div class="h-100 container py-5">
-        <div class="h-100 row flex-row-reverse align-items-center">
-          <div class="h-100 col text-center d-flex flex-column justify-content-center">
+      <div class="h-100 container py-4">
+        <div class="h-100 row">
+          <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center mb-4 mb-md-0">
             <h1 class="a-fs-3"><b>¿Quién eres?</b></h1>
-            <h2 class="a-fs-1 text-muted mb-0">Who are YOU?</h2>
+            <h2 class="a-fs-2 text-muted">Who are YOU?</h2>
           </div>
-          <div class="col d-flex flex-column justify-content-center text-center">
-            <p><b>在旅途中，我們都可能會彼此交會</b></p>
-            <p>作為旅人，在一段旅程中有可能會是一個追尋者，也可能會是引導者。</p>
-            <p class="mb-0">在接下來的旅途中，你想當哪一個？</p>
+          <div class="col-12 col-md-6 d-flex flex-column justify-content-center text-center">
+            <h3 class="a-fs-0 my-4">
+              <b>
+                在旅途中，我們都可能會彼此交會
+              </b>
+            </h3>
+            <p>
+              作為旅人，<br />
+              在一段旅程中有可能會是一個追尋者，<br />
+              也可能會是引導者。
+            </p>
+            <p>
+              在接下來的旅途中，你想當哪一個？
+            </p>
           </div>
         </div>
       </div>
@@ -234,12 +254,12 @@ Buen Camino
     <div class="h-100 container">
       <div class="h-100 row align-items-center">
         <div class="h-100 col-12 col-md-6 text-center mb-9 mb-md-0 d-flex flex-column justify-content-center">
-          <h3 class="mb-3">
+          <h3 class="mb-4 text-primary">
             Traveler<br />
             旅人
           </h3>
-          <div class="w-50 ratio ratio-1x1 rounded-circle border border-5 mx-auto mb-5"></div>
-          <div>
+          <div class="w-50 ratio ratio-1x1 rounded-circle border border-3 mx-auto mb-5 border-secondary a-background" style="background-image: url({{ asset('images/page/index/role_Traveler.png') }})"></div>
+          <div class="text-dark">
             <p>旅人，同時也是追尋者。</p>
             <p>
               追尋著那些我們不曾踏足過的境地、<br />
@@ -252,12 +272,12 @@ Buen Camino
           </div>
         </div>
         <div class="h-100 col-12 col-md-6 text-center d-flex flex-column justify-content-center">
-          <h3 class="mb-3">
+          <h3 class="mb-4 text-primary">
             Guider<br />
             嚮導
           </h3>
-          <div class="w-50 ratio ratio-1x1 rounded-circle border border-5 mx-auto mb-5"></div>
-          <div>
+          <div class="w-50 ratio ratio-1x1 rounded-circle border border-3 mx-auto mb-5 border-secondary a-background" style="background-image: url({{ asset('images/page/index/role_Guider.png') }})"></div>
+          <div class="text-dark">
             <p>嚮導，同時也是引導者。</p>
             <p>
               引領著旅人打開他們的眼界、<br />
@@ -272,9 +292,9 @@ Buen Camino
       </div>
     </div>
   </section>
-  <section id="banner-the-end" class="index-banner py-5">
+  <section id="banner-the-end" class="index-banner py-4">
     <div class="index-banner__description position-sticky bottom-0">
-      <div class="h-100 container py-5">
+      <div class="h-100 container py-4">
         <div class="h-100 row flex-row-reverse">
           <div class="h-100 text-center d-flex flex-column justify-content-between py-3">
             <h1 class="a-fs-3">Buen Camino</h1>
