@@ -10,6 +10,14 @@ Buen Camino
 
 @section('css')
 <style>
+  p {
+    margin-bottom: 1rem;
+  }
+
+  * {
+    letter-spacing: 0.1rem;
+  }
+
   body {
     padding-top: 0 !important;
   }
@@ -117,85 +125,104 @@ Buen Camino
   <section id="features" class="py-5">
     {{-- <section id="features" style="height: 200vh;"> --}}
     <div class="h-100 container py-0 py-md-5">
-      <div class="h-100 row text-center text-md-start py-0 py-md-5">
+      <div class="h-100 row py-0 py-md-5">
         <div class="h-100 col d-flex flex-column">
           <!-- Attractions -->
           <div class="row mb-9 mb-md-11">
-            <div class="col-12 col-md-2 a-vertical-title a-fs-4 mb-3 mb-md-0">
-              <b class="text-primary">A</b><span class="text-dark">ttractions</span>
+            <div class="col-12 col-md-2 a-vertical-title mb-3 mb-md-0">
+              <h1 class="a-fs-4"><b class="text-primary">A</b><span class="text-dark">ttractions</span></h1>
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-5 mb-md-0">
               <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-primary" style="background-image: url({{ asset('images/page/index/Attractions.png') }})"></div>
             </div>
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly">
-              <p class="a-fs-1 mb-4 mb-md-0 text-primary">「附近有什麼好玩的？」</p>
-              <div class="mb-3 mb-md-0 text-dark">
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+              <h2 class="a-fs-1 mb-4 text-primary text-center text-md-start">「附近有什麼好玩的？」</h2>
+              <div class="text-dark mb-2">
                 <p>當這句話脫口而出的那一刻，阿米狗便應運而生。</p>
-                <p>阿米狗蒐集了世界上各處的有趣地點與活動，也替你留意了那些在你匆忙的步伐中隨時可能擦身而過的事物。</p>
-                <p>想一個人坐在附近的街上靜靜地聽著街頭藝人的低吟淺唱？</p>
-                <p>亦或是在初次拜訪的小鎮上加入熱鬧歡騰的節慶遊行？</p>
-                <p>還是想一個人來趟關於藝術的薰陶之旅？</p>
+                <p>
+                  阿米狗蒐集了世界上各處的有趣地點與活動<br />
+                  也替你留意了那些在匆忙的步伐中隨時可能擦身而過的事物。
+                </p>
+                <p>
+                  想一個人坐在附近的街上靜靜地聽著街頭藝人的低吟淺唱？<br />
+                  亦或是在初次拜訪的小鎮上加入熱鬧歡騰的節慶遊行？<br />
+                  還是想一個人來趟關於藝術的薰陶之旅？
+                </p>
                 <p>心動不如……</p>
               </div>
-              <div>
+              <div class="text-center text-md-start">
                 <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="#">馬上行動！</a>
               </div>
             </div>
           </div>
           <!-- Maps -->
           <div class="row flex-row-reverse mb-9 mb-md-11">
-            <div class="col-12 col-md-2 a-vertical-title a-fs-4 mb-3 mb-md-0" style="transform: rotate(0deg);">
-              <b class="text-primary">M</b><span class="text-dark">ap</span>
+            <div class="col-12 col-md-2 a-vertical-title mb-3 mb-md-0" style="transform: rotate(0deg);">
+              <h1 class="a-fs-4"><b class="text-primary">M</b><span class="text-dark">ap</span></h1>
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end align-items-center mb-5 mb-md-0">
               <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-primary" style="background-image: url({{ asset('images/page/index/Map.png') }})"></div>
             </div>
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly text-center text-md-end">
-              <p class="a-fs-1 mb-4 mb-md-0 text-primary">透過地圖旅行</p>
-              <div class="mb-3 mb-md-0 text-dark">
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+              <p class="a-fs-1 mb-4 text-primary text-center text-md-start">透過地圖旅行</p>
+              <div class="text-dark mb-2">
                 <p>
                   遇到喜歡的骨頭就要收藏起來細細品嘗，<br />
-                  就像看到錢包裡亮晶晶的50元硬幣都捨不得花掉！
+                  就像看到錢包裡亮晶晶的 50 元硬幣都捨不得花掉！
                 </p>
                 <p>
                   阿米狗替你在地圖上標示出了有趣的地點，<br />
-                  讓你可以簡單地透過地圖看看附近有什麼有趣的事情！
+                  讓你可以簡單地透過地圖看看附近有什麼有趣的事情。
                 </p>
                 <p>
                   隨手為喜歡的地點按顆星加入收藏，<br />
                   晚點就可以集滿周末的行程了！
                 </p>
               </div>
-              <div>
-                <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="#">看看阿米狗的行程！</a>
+              <div class="text-center text-md-end">
+                <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="#">看看阿米狗的地圖</a>
+                <div>
+                  <small class="text-muted">
+                    「問我西班牙有哪些有趣的活動？點了不就知道了？」
+                    <div class="text-end">－－阿米狗，西班牙的地頭貓</div>
+                  </small>
+                </div>
               </div>
             </div>
           </div>
           <!-- Itineraries -->
           <div class="row">
-            <div class="col-12 col-md-2 a-vertical-title a-fs-4 mb-3 mb-md-0">
-              <b class="text-primary">I</b><span class="text-dark">tineraries</span>
+            <div class="col-12 col-md-2 a-vertical-title mb-3 mb-md-0">
+              <h1 class="a-fs-4"><b class="text-primary">I</b><span class="text-dark">tineraries</span></h1>
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-5 mb-md-0">
               <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-primary" style="background-image: url({{ asset('images/page/index/Itineraries.png') }})"></div>
             </div>
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly">
-              <p class="a-fs-1 mb-4 mb-md-0 text-primary">獨特的行程表</p>
-              <div class="mb-3 mb-md-0 text-dark">
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+              <p class="a-fs-1 mb-4 text-primary text-center text-md-start">獨特的行程表</p>
+              <div class="text-dark mb-2">
                 <p>
                   收藏起來的地點好想分享給家人朋友們知道？<br />
                   阿米狗已經把分享鍵放在收藏頁裡啦！
                 </p>
-                <p>除了可以將喜歡的地點透過收藏按鈕放進屬於自己的收藏頁面以外，<br />
+                <p>
+                  除了可以將喜歡的地點透過收藏按鈕放進屬於自己的收藏頁面以外，<br />
                   整理控甚至可以將收藏的地點分門別類放進自己的個人地圖，<br />
                   讓你可以將自己的地圖分享給厝邊頭尾～
                 </p>
+                <p>而且阿米狗也提供了將行程表列印或者是寄送到信箱內的功能！</p>
                 <p>
                   還猶豫什麼？快揪團出門踏踏吧！
                 </p>
               </div>
-              <div>
-                <button class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="#">看看行程！</button>
+              <div class="text-center text-md-end">
+                <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="#">下載阿米狗的行程表</a>
+                <div>
+                  <small class="text-muted">
+                    「出去玩沒行程表怎麼行？快按按看這顆魔法按鈕！」
+                    <div class="text-end">－－阿米狗（現在是貓），喵！</div>
+                  </small>
+                </div>
               </div>
             </div>
           </div>
