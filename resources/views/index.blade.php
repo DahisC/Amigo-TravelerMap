@@ -31,22 +31,7 @@ Buen Camino
   .index-banner__description {
     background-color: var(--mdb-primary);
     color: var(--mdb-dark);
-    height: 40%;
   }
-
-  @media (min-width: 768px) {
-    .index-banner__description {
-      height: 25%;
-    }
-  }
-
-  /* section:not(:first-of-type) {
-    padding-top: 55px 0;
-  } */
-
-  /* section:not(:last-of-type) {
-    margin-bottom: 55px;
-  } */
 
   .a-vertical-title {
     display: flex;
@@ -156,7 +141,7 @@ Buen Camino
               <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/Map.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
-              <p class="a-fs-1 mb-4 text-primary text-center text-md-start">透過地圖旅行</p>
+              <h2 class="a-fs-1 mb-4 text-primary text-center text-md-start">透過地圖旅行</h2>
               <div class="text-dark mb-2">
                 <p>
                   遇到喜歡的骨頭就要收藏起來細細品嘗，<br />
@@ -172,7 +157,7 @@ Buen Camino
                 </p>
               </div>
               <div class="text-center text-md-end">
-                <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="#">看看阿米狗的地圖</a>
+                <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="{{ route('maps.show', ['map' => 1]) }}">看看阿米狗的地圖</a>
                 <div class="text-muted">
                   <small class="fst-italic">
                     「問我西班牙有哪些有趣的活動？點了不就知道了？」
@@ -191,7 +176,7 @@ Buen Camino
               <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/Itineraries.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
-              <p class="a-fs-1 mb-4 text-primary text-center text-md-start">獨特的行程表</p>
+              <h2 class="a-fs-1 mb-4 text-primary text-center text-md-start">獨特的行程表</h2>
               <div class="text-dark mb-2">
                 <p>
                   收藏起來的地點好想分享給家人朋友們知道？<br />
