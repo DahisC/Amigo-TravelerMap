@@ -28,6 +28,8 @@ Route::view('/', 'index')->name('homepage'); // 首頁
 
 Route::resource('maps', 'MapController'); // 地圖
 Route::patch('/maps/{map}/pin', 'MapController@pin');
+//PDF
+Route::get('maps/{map}/itineraries' ,'MapController@itineraries');
 Route::resource('attractions', 'AttractionController')->except('create', 'edit'); // 地點
 Route::get('/favorites', 'FavoriteController@index')->name('favorites.index');
 Route::patch('/attractions/{attraction}/favorite', 'AttractionController@favorite')->name('attractions.favorite'); // 收藏地點
