@@ -13,7 +13,7 @@
 </style>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-md navbar-light bg-light position-fixed top-0 start-0 w-100">
+<nav class="navbar navbar-expand-md navbar-light bg-light position-fixed top-0 start-0 w-100 fixed-top">
   <!-- Container wrapper -->
   <div class="container">
     <!-- Toggle button -->
@@ -32,13 +32,9 @@
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-0 align-items-center">
         <li class="nav-item">
-          <a class="nav-link custom-nav-link" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link custom-nav-link" href="#">Team</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link custom-nav-link" href="#">Projects</a>
+          <a class="nav-link custom-nav-link" href="{{ route('maps.index') }}">
+            <i class="fas fa-map me-1"></i>
+          </a>
         </li>
       </ul>
       <!-- Left links -->
@@ -55,21 +51,8 @@
       @auth
       <!-- Avatar -->
       <ul class="navbar-nav align-items-center">
-        <li class="nav-item">
-          <a class="nav-link custom-nav-link" href="{{ route('favorites.index') }}">
-            <i class="fas fa-crosshairs me-1"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link custom-nav-link" href="{{ route('favorites.index') }}">
-            <i class="fas fa-search me-1"></i>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link custom-nav-link" href="{{ route('maps.index') }}">
-            <i class="fas fa-map me-1"></i>
-          </a>
-        </li>
+        
+        
         <li class="nav-item">
           <a class="nav-link custom-nav-link" href="{{ route('favorites.index') }}">
             <i class="fas fa-star me-1"></i>我的收藏
@@ -87,10 +70,10 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="dropdownMenuButton">
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('favorites.index') }}">我的地圖</a>
+                <a class="nav-link" href="{{ route('backstage.index') }}">旅人之家</a>
               </li>
               <li>
-                <hr class="dropdown-divider" />
+                <hr class="dropdown-divider"/>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#" onclick="logout_form.submit()">登出</a>
