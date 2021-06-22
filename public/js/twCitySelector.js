@@ -130,7 +130,7 @@ window.initTWCitySelector = function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\amigo-travelermap\resources\js\twCitySelector.js */"./resources/js/twCitySelector.js");
+module.exports = __webpack_require__(/*! D:\Coding\Amigo-TravelerMap\resources\js\twCitySelector.js */"./resources/js/twCitySelector.js");
 
 
 /***/ })

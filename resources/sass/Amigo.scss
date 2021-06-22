@@ -11,24 +11,35 @@ html {
     color: white;
 }
 
+
+* {
+    letter-spacing: 0.1rem;
+}
+
 p {
-margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .a-fs-1 {
-font-size: 1.33rem;
+    font-size: 1.33rem;
 }
 
 .a-fs-2 {
-font-size: 1.66rem;
+    font-size: 1.66rem;
 }
 
 .a-fs-3 {
-font-size: 2rem;
+    font-size: 2rem;
 }
 
 .a-fs-4 {
-font-size: 4rem;
+    font-size: 4rem;
+}
+
+.a-background {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 // 分隔線，使用 data-text 可以自動將文字置中於分隔線上
@@ -40,11 +51,11 @@ font-size: 4rem;
 }
 
 .a-hr::after {
-position: absolute;
-content: attr(data-text);
-background-color: white;
-padding: 0 10px;
-font-size: 0.8rem;
+    position: absolute;
+    content: attr(data-text);
+    background-color: white;
+    padding: 0 10px;
+    font-size: 0.8rem;
 }
 
 

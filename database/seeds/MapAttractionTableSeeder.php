@@ -15,7 +15,8 @@ class MapAttractionTableSeeder extends Seeder
     {
         $maps = App\Map::all();
         foreach ($maps as $map) {
-            $map->attractions()->attach(Attraction::inRandomOrder()->limit($map->user_id === 1 ? 0 : 3)->get());
+            if ($map->id === 1) continue;
+            $map->attractions()->attach(Attraction::inRandomOrder()->limit(3)->get());
         }
     }
 }

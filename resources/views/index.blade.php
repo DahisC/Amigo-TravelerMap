@@ -10,18 +10,6 @@ Buen Camino
 
 @section('css')
 <style>
-  p {
-    margin-bottom: 1rem;
-  }
-
-  * {
-    letter-spacing: 0.1rem;
-  }
-
-  body {
-    padding-top: 0 !important;
-  }
-
   section:not(.index-banner) {
     min-height: 100vh;
   }
@@ -71,12 +59,6 @@ Buen Camino
       writing-mode: vertical-lr;
       transform: rotate(180deg);
     }
-  }
-
-  .a-background {
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
   }
 </style>
 
