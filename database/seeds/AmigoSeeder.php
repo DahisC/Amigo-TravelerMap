@@ -35,7 +35,7 @@ class AmigoSeeder extends Seeder
             'ticket_info' => '門票15美元，坐卡車1126美元',
             'traffic_info' =>  ' ',
             'parking_info' =>  ' ',
-            'user_id' => $user->id,
+            'user_id' => 1,
         ]);
 
         AttractionPosition::create([

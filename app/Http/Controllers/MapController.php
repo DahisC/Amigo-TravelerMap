@@ -7,8 +7,10 @@ use App\Tag;
 use App\User;
 use App\helpers;
 use App\Attraction;
+use App\Mail\amigo_map;
 use Illuminate\Http\Request;
 use App\Http\Requests\MapRequest;
+use Illuminate\Support\Facades\Mail;
 
 class MapController extends Controller
 {
@@ -103,5 +105,22 @@ class MapController extends Controller
         else $map->attractions()->detach($attraction);
 
         return ['map' => $map];
+    }
+    public function itineraries($id)
+    {
+        $mapId= auth()->user()->maps->filter(function ($map) use ($id) {
+            return $map->id == $id;
+        })->first()->id;
+
+        $all = Map::with([
+            'attractions',
+            'attractions.position'
+        ])->whereHas('attractions',function($query) use($mapId){
+            $query->where('map_id' ,$mapId);
+        })->get()->first();
+
+        return view('emails.itineraries',['map'=>$all]);
+        // Mail::send(new amigo_map($all));
+        // return redirect()->route('sign-in');
     }
 }
