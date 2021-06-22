@@ -28,6 +28,7 @@ Route::view('/', 'index')->name('homepage'); // 首頁
 
 Route::group([
     'prefix' => 'maps',
+    'as' => 'maps.'
 ], function () {
     Route::resource('/', 'MapController'); // 地圖
     Route::middleware('auth')->group(function () {

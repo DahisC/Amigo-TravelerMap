@@ -25,13 +25,23 @@ class FavoriteController extends Controller
                 'attractions.time',
                 'attractions.tags'
             ])->findOrFail(auth()->user()->id)->attractions;
-            // dd($userFavorites);
 
             $userFavorites = $userFavorites->filter(function ($favorite) use ($inputText) {
                
                 return false !== stristr($favorite->name, $inputText);
             });
-            dd($userFavorites);
+
+            if (auth()->check()) {
+                // dd(auth()->user()->id);
+                $userFavorites = User::with([
+                    'attractions',
+                    'attractions.images',
+                    'attractions.position',
+                    'attractions.time',
+                    'attractions.tags'
+                ])->findOrFail(auth()->user()->id)->attractions->paginate(10);
+                return view('favorites.index', compact('userFavorites'));
+            }
         // $tag = Tag::where('name',)
         // Session::flash('toast-test', collect(['type' => 'danger', 'header' => '權限不足', 'body' => '測試']));
         // if (Gate::allows('viewAny', Attraction::class)) { // Bug: 在有登入的情況下，這邊的 if 不會執行
@@ -48,16 +58,6 @@ class FavoriteController extends Controller
         //         return redirect()->route('sign-in');
         //     }
         // }
-        if (auth()->check()) {
-            // dd(auth()->user()->id);
-            $userFavorites = User::with([
-                'attractions',
-                'attractions.images',
-                'attractions.position',
-                'attractions.time',
-                'attractions.tags'
-            ])->findOrFail(auth()->user()->id)->attractions->paginate(10);
-            return view('favorites.index', compact('userFavorites'));
-        }
+       
     }
 }
