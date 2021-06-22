@@ -19138,26 +19138,6 @@ p {
   margin-bottom: 1rem;
 }
 
-.a-fs-0 {
-  font-size: 1rem;
-}
-
-.a-fs-1 {
-  font-size: 1.33rem;
-}
-
-.a-fs-2 {
-  font-size: 1.66rem;
-}
-
-.a-fs-3 {
-  font-size: 2rem;
-}
-
-.a-fs-4 {
-  font-size: 4rem;
-}
-
 .a-background {
   background-size: contain;
   background-repeat: no-repeat;
@@ -19176,5 +19156,55 @@ p {
   background-color: white;
   padding: 0 10px;
   font-size: 0.8rem;
+}
+
+.a-fs-0 {
+  font-size: 1rem;
+}
+
+.a-fs-1 {
+  font-size: 1.25rem;
+}
+
+.a-fs-2 {
+  font-size: 1.5rem;
+}
+
+.a-fs-3 {
+  font-size: 1.75rem;
+}
+
+.a-fs-4 {
+  font-size: 2rem;
+}
+
+@media (min-width: 576px) {
+  .a-fs-4 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .a-fs-1 {
+    font-size: 1.33rem;
+  }
+
+  .a-fs-2 {
+    font-size: 1.66rem;
+  }
+
+  .a-fs-3 {
+    font-size: 2rem;
+  }
+
+  .a-fs-4 {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .a-fs-4 {
+    font-size: 4rem;
+  }
 }
 
