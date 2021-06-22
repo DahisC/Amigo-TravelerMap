@@ -89,4 +89,8 @@ class MapController extends Controller
         $map->attractions()->detach();
         $map->delete();
     }
+    public function pin(Request $request, $id)
+    {
+        dd($request->attractionId, $id);
+    }
 }
