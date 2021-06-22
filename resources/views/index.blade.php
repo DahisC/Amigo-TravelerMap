@@ -111,7 +111,7 @@ Buen Camino
     </div>
   </section>
   <!-- Explore -->
-  <section id="features">
+  <section id="features" class="py-5">
     {{-- <section id="features" style="height: 200vh;"> --}}
     <div class="h-100 container">
       <div class="h-100 row text-center text-md-start">
@@ -122,19 +122,20 @@ Buen Camino
               <b>A</b>ttractions
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-5 mb-md-0">
-              <div class="w-50 ratio ratio-1x1 rounded-circle border border-5"></div>
+              <div class="w-50 ratio ratio-1x1 rounded-circle border border-5 a-background" style="background-image: url({{ asset('images/page/index/Attractions.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly">
               <p class="a-fs-1 mb-4 mb-md-0">「附近有什麼好玩的？」</p>
               <div class="mb-3 mb-md-0">
                 <p>當這句話脫口而出的那一刻，阿米狗便應運而生。</p>
                 <p>阿米狗蒐集了世界上各處的有趣地點與活動，也替你留意了那些在你匆忙的步伐中隨時可能擦身而過的事物。</p>
-                <p> 想一個人坐在附近的街上靜靜地聽著街頭藝人的低吟淺唱？</p>
+                <p>想一個人坐在附近的街上靜靜地聽著街頭藝人的低吟淺唱？</p>
                 <p>亦或是在初次拜訪的小鎮上加入熱鬧歡騰的節慶遊行？</p>
-                <p>這些地點，請讓我一一向你介紹！</p>
+                <p>還是想一個人來趟關於藝術的薰陶之旅？</p>
+                <p>心動不如……</p>
               </div>
               <div>
-                <button class="btn btn-outline-primary">所以有什麼好玩的？</button>
+                <button class="btn btn-outline-primary">馬上行動！</button>
               </div>
             </div>
           </div>
@@ -144,7 +145,7 @@ Buen Camino
               <b>M</b>ap
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-5 mb-md-0">
-              <div class="w-50 ratio ratio-1x1 rounded-circle border border-5"></div>
+              <div class="w-50 ratio ratio-1x1 rounded-circle border border-5 a-background" style="background-image: url({{ asset('images/page/index/Map.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly">
               <p class="a-fs-1 mb-4 mb-md-0">透過地圖旅行</p>
@@ -154,11 +155,11 @@ Buen Camino
                   就像看到錢包裡亮晶晶的50元硬幣都捨不得花掉！
                 </p>
                 <p>
-                  阿米狗替你在地圖上標示出了有趣的地點<br />
+                  阿米狗替你在地圖上標示出了有趣的地點，<br />
                   讓你可以簡單地透過地圖看看附近有什麼有趣的事情！
                 </p>
                 <p>
-                  隨手為喜歡的地點按顆星，<br />
+                  隨手為喜歡的地點按顆星加入收藏，<br />
                   晚點就可以集滿周末的行程了！
                 </p>
               </div>
@@ -173,16 +174,21 @@ Buen Camino
               <b>I</b>tineraries
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center align-items-center mb-5 mb-md-0">
-              <div class="w-50 ratio ratio-1x1 rounded-circle border border-5"></div>
+              <div class="w-50 ratio ratio-1x1 rounded-circle border border-5 a-background" style="background-image: url({{ asset('images/page/index/Itineraries.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-evenly">
-              <p class="a-fs-1 mb-4 mb-md-0">那個行程有夠讚！</p>
+              <p class="a-fs-1 mb-4 mb-md-0">獨特的行程表</p>
               <div class="mb-3 mb-md-0">
-                <p>收藏起來的地點好想分享給家人朋友們知道！</p>
-                <p>阿米狗已經把分享鍵放在收藏頁裡啦！</p>
                 <p>
-                  整理控可以將收藏的地點分門別類放進自己的專屬地圖<br />
-                  快揪團出門踏踏吧！
+                  收藏起來的地點好想分享給家人朋友們知道？<br />
+                  阿米狗已經把分享鍵放在收藏頁裡啦！
+                </p>
+                <p>除了可以將喜歡的地點透過收藏按鈕放進屬於自己的收藏頁面以外，<br />
+                  整理控甚至可以將收藏的地點分門別類放進自己的個人地圖，<br />
+                  讓你可以將自己的地圖分享給厝邊頭尾～
+                </p>
+                <p>
+                  還猶豫什麼？快揪團出門踏踏吧！
                 </p>
               </div>
               <div>
