@@ -207,7 +207,7 @@
         </a>
         @endcan
         <hr class="mx-2" />
-        <button type="button" class="btn btn-primary btn-floating m-1" onclick="locateUser(event)">
+        <button type="button" class="btn btn-primary btn-floating m-1" v-on:click="locateUser(this)">
           <i class="fas fa-crosshairs"></i>
         </button>
         {{-- <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
@@ -336,6 +336,8 @@
   $vue = new Vue({
     el: '#app',
     data: {
+      markerClusters: null,
+      markers: [],
       map: null,
       attractions: attractions || [],
       detailTarget: {},
@@ -349,7 +351,7 @@
       this.initLeaflet();
       this.updateAttractions({ attractions, userFavorites })
 
-      if (addressLatLng) this.locateUser(addressLatLng)
+      if (addressLatLng) this.locateUser(addressLatLng);
       //   if (addressLatLng) locateUser(addressLatLng)
       //   else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
     },
@@ -388,13 +390,13 @@
       },
       // 將 Markers 算繪至地圖上
       renderMarkersOnMap(attractions) {
-        const markers = new L.MarkerClusterGroup().addTo(this.map);
-        attractions.forEach(a => {
-          console.log(a);
-          markers.addLayer(L.marker([a.position.lat, a.position.lng], {
-            icon: defineMarkerIcon(a.tags[0])
-          }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
-        });
+        if (this.markerClusters) this.markerClusters.clearLayers();
+        this.markerClusters = new L.MarkerClusterGroup().addTo(this.map);
+        this.markers = attractions.map(a => L.marker([a.position.lat, a.position.lng], {
+          icon: defineMarkerIcon(a.tags[0])
+        }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
+        this.markerClusters.addLayers(this.markers);
+
 
         function defineMarkerIcon(attractionTag) {
           switch (attractionTag.name) {
