@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/api')->group(function () {
     Route::get('attractions', 'AttractionController@getAttractions')->name('attractions.get');
+    // Route::Resource('/maps', 'API\MapAttractionController')->only(['update', 'destroy']);
 });
 
 
@@ -28,7 +29,7 @@ Route::view('/', 'index')->name('homepage'); // 首頁
 Route::resource('maps', 'MapController'); // 地圖
 Route::patch('/maps/{map}/pin', 'MapController@pin');
 Route::resource('attractions', 'AttractionController')->except('create', 'edit'); // 地點
-Route::get('favorites', 'FavoriteController@index')->name('favorites.index');
+Route::get('/favorites', 'FavoriteController@index')->name('favorites.index');
 Route::patch('/attractions/{attraction}/favorite', 'AttractionController@favorite')->name('attractions.favorite'); // 收藏地點
 
 Route::view('/sign-in', 'sign-in')->name('sign-in'); // 登入
@@ -40,7 +41,7 @@ Route::group([
     'as' => 'backstage.',
     'middleware' => 'auth'
 ], function () {
-    Route::view('/', 'backstage.index')->name('index'); // 後台首頁
+    Route::get('/','backstage\indexController@index')->name('index'); // 後台首頁
     Route::resource('/users', 'Backstage\UserController')->except('show'); // 後台 - 會員管理
     Route::resource('/maps', 'Backstage\MapController')->except('show'); // 後台 - 地圖管理
     Route::resource('/attractions', 'Backstage\AttractionController')->except(['store', 'update', 'show', 'destroy']); // 後台 - 地點管理
@@ -50,6 +51,7 @@ Route::group([
 // 前端測試用路由
 Route::view('/snow', 'Snow.test');
 Route::view('/allen', 'Allen.test');
+//email 模板測試
 Route::get('test', function () {
     $userFavorites = User::with([
         'attractions',
@@ -73,11 +75,11 @@ Route::group([
 Auth::routes();
 
 //faceBook
-Route::get('login/facebook', 'Auth\LoginController@facebook');
+Route::get('login/facebook', 'Auth\LoginController@facebook')->name('login.facebook');
 Route::get('login/facebook/callback', 'Auth\LoginController@facebookCallback');
 
 //github
-Route::get('login/github', 'Auth\LoginController@github');
+Route::get('login/github', 'Auth\LoginController@github')->name('login.github');
 Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
 
 
