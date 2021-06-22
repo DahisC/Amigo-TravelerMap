@@ -26,17 +26,16 @@ Route::prefix('/api')->group(function () {
 
 Route::view('/', 'index')->name('homepage'); // 首頁
 
-Route::group([
-    'prefix' => 'maps',
-    'as' => 'maps.'
-], function () {
-    Route::resource('/', 'MapController'); // 地圖
-    Route::middleware('auth')->group(function () {
-        Route::patch('/{map}/pin', 'MapController@pin');
-        //PDF
-        Route::get('/{map}/itineraries', 'MapController@itineraries');
-    });
+
+
+Route::resource('/maps', 'MapController'); // 地圖
+Route::middleware('auth')->group(function () {
+    Route::patch('/maps/{map}/pin', 'MapController@pin');
+    //PDF
+    Route::get('/maps/{map}/itineraries', 'MapController@itineraries');
 });
+
+
 
 Route::resource('attractions', 'AttractionController')->except('create', 'edit'); // 地點
 Route::get('/favorites', 'FavoriteController@index')->name('favorites.index');
