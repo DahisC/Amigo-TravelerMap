@@ -22,7 +22,7 @@
     </button>
 
     <!-- Navbar brand -->
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="{{ route('homepage') }}">
       <img src="{{ asset('images/Logo.svg') }}" height="20" alt="" loading="lazy" />
     </a>
 
