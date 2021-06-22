@@ -27,6 +27,20 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+
+
+
+foreach (['Admin', 'Guider', 'Traveler'] as $role) {
+    $factory->state(User::class, $role, function () use ($role) {
+        return [
+            'name' => $role,
+            'email' => "$role@gmail.com",
+            'role' => $role,
+            'password' => bcrypt('a')
+        ];
+    });
+}
+
 // $factory->state(User::class, 'admin', function (Faker $faker) {
 //     return [
 //         'name' => 'Admin',
@@ -51,13 +65,3 @@ $factory->define(User::class, function (Faker $faker) {
 //         'password' => bcrypt('a')
 //     ];
 // });
-foreach (['Admin', 'Guider', 'Traveler'] as $role) {
-    $factory->state(User::class, $role, function () use ($role) {
-        return [
-            'name' => $role,
-            'email' => "$role@gmail.com",
-            'role' => $role,
-            'password' => bcrypt('a')
-        ];
-    });
-}

@@ -54,7 +54,7 @@ class MapController extends Controller
 
     public function show($id)
     {
-        $map = Map::find($id)->with('user');
+        $map = Map::with('user')->find($id);
         $mapAttractions = Attraction::with('tags', 'position', 'images')->whereHas('maps', function ($q) use ($id) {
             $q->where('map_id', $id);
         })->get();
@@ -89,18 +89,8 @@ class MapController extends Controller
         $map->attractions()->detach();
         $map->delete();
     }
-    public function pin(Request $request,$id)
+    public function pin(Request $request, $id)
     {
-        $attraction = Attraction::findOrFail($request->attraction_id);
-        $has = Map::where('id', $id)->whereHas('attractions', function ($query) use ($attraction) {
-            $query->where('attraction_id', $attraction->id);
-        })->get()->count();
-
-        //第二不能在上面宣告 會被 $map->whereHas改變
-        $map = Map::find($id);
-        if (!$has) $map->attractions()->attach($attraction);
-        else $map->attractions()->detach($attraction);
-
-        return ['map' => $map];
+        dd($request->attractionId, $id);
     }
 }

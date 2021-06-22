@@ -49,7 +49,7 @@
       </div>
       <div class="modal-footer d-flex justify-content-between">
         {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal2">取消</button> --}}
-        <button type="button" class="btn btn-outline-primary btn-block">關閉</button>
+        <button type="button" class="btn btn-outline-primary btn-block" data-bs-dismiss="modal">關閉</button>
       </div>
     </div>
   </div>

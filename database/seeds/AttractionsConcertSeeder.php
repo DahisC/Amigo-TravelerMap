@@ -15,8 +15,8 @@ class AttractionsConcertSeeder extends Seeder
      */
     public function run()
     {
-        $tag_One =App\Tag::where('name','音樂')->get()->first();
-        $tag_Two =App\Tag::where('name','藝術')->get()->first();
+        $tag_One = App\Tag::where('name', '藝術')->get()->first();
+        // $tag_Two =App\Tag::where('name','音樂')->get()->first();
         $jsonFile = file_get_contents(public_path('concert.json'));
         $attractions = json_decode($jsonFile, true);
         foreach ($attractions as $a) {
@@ -32,7 +32,7 @@ class AttractionsConcertSeeder extends Seeder
                 'user_id' => '1',
             ]);
 
-            $show = preg_split("/\p{Han}{1,2}(縣|市)/u", $a['showInfo'][0]['location'],3);
+            $show = preg_split("/\p{Han}{1,2}(縣|市)/u", $a['showInfo'][0]['location'], 3);
             AttractionPosition::create([
                 'country' => '台灣',
                 'region' =>  $show[0] ?? '',
@@ -43,7 +43,7 @@ class AttractionsConcertSeeder extends Seeder
                 'attraction_id' => $attraction->id
             ]);
 
-            if (!empty($a['startDate'])||!empty($a['endDate'])) {
+            if (!empty($a['startDate']) || !empty($a['endDate'])) {
                 $start_times = preg_split("/\//m", $a['startDate']);
                 $end_times = preg_split("/\//m", $a['endDate']);
 
@@ -67,7 +67,7 @@ class AttractionsConcertSeeder extends Seeder
             ]);
             //tags關聯
             $attraction->tags()->attach($tag_One);
-            $attraction->tags()->attach($tag_Two);
+            // $attraction->tags()->attach($tag_Two);
         };
     }
 }

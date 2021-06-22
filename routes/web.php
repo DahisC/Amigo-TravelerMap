@@ -1,6 +1,8 @@
 <?php
 
 // use view;
+
+use App\Http\Controllers\MapController;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +27,7 @@ Route::prefix('/api')->group(function () {
 Route::view('/', 'index')->name('homepage'); // 首頁
 
 Route::resource('maps', 'MapController'); // 地圖
-Route::post('/maps/{map}/pin','MapController@pin')->name('maps.pin');
+Route::patch('/maps/{map}/pin', 'MapController@pin');
 Route::resource('attractions', 'AttractionController')->except('create', 'edit'); // 地點
 Route::get('/favorites', 'FavoriteController@index')->name('favorites.index');
 Route::patch('/attractions/{attraction}/favorite', 'AttractionController@favorite')->name('attractions.favorite'); // 收藏地點
@@ -49,22 +51,22 @@ Route::group([
 // 前端測試用路由
 Route::view('/snow', 'Snow.test');
 Route::view('/allen', 'Allen.test');
-Route::get('test',function(){
+Route::get('test', function () {
     $userFavorites = User::with([
         'attractions',
         'attractions.position',
     ])->findOrFail(auth()->user()->id)->attractions;
     // dd($userFavorites);
-    return view('emails.show',['attractions'=> $userFavorites]);
+    return view('emails.show', ['attractions' => $userFavorites]);
 });
 
 //PDF
 Route::group([
-    'prefix'=>'pdf',
-    'as'=>'pdf',
-],function(){
-    Route::get('watch','Backstage\UserController@watch');
-    Route::get('output','Backstage\UserController@pdfOutput');
+    'prefix' => 'pdf',
+    'as' => 'pdf',
+], function () {
+    Route::get('watch', 'Backstage\UserController@watch');
+    Route::get('output', 'Backstage\UserController@pdfOutput');
 });
 
 
