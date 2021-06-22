@@ -1,8 +1,8 @@
 @extends('layouts.backstage')
 
 @section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
 @endsection
+
 @section('page-content')
 <div class="container-fluid">
 
@@ -75,21 +75,4 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript">
-    $(function() {
-
-      $("#dataTable").DataTable({
-        searching: false, //關閉filter功能
-        columnDefs: [{
-          targets: [3],
-          orderable: false,
-        }]
-      });
-    });
-
-    $(document).ready(function() {
-      $('#dataTable').DataTable();
-    });
-</script>
 @endsection
