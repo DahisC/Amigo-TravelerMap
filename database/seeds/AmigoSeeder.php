@@ -68,9 +68,13 @@ class AmigoSeeder extends Seeder
             ]);
         }
 
+        // user attraction關聯
+        $user_id = App\User::where('id',$user->id)->get()->first();
+        $attraction->users()->attach($user_id);
+
         // map關聯
         $map_espana = App\Map::where('name','España')->get()->first();
-        $attraction ->maps()->attach($map_espana);
+        $attraction->maps()->attach($map_espana);
 
         // tags關聯
         $tag_One =App\Tag::where('name','節慶')->get()->first();
@@ -112,11 +116,15 @@ class AmigoSeeder extends Seeder
             'attraction_id' => $attraction->id
         ]);
         
-            AttractionImage::create([
-                'url' => '/storage/demo/Primavera_Sound.jpg',
-                'image_desc' =>  '',
-                'attraction_id' => $attraction->id
-            ]);
+        AttractionImage::create([
+            'url' => '/storage/demo/Primavera_Sound.jpg',
+            'image_desc' =>  '',
+            'attraction_id' => $attraction->id
+        ]);
+
+        // user attraction關聯
+        $user_id = App\User::where('id',$user->id)->get()->first();
+        $attraction->users()->attach($user_id);
 
         // map關聯
         $map_espana = App\Map::where('name','España')->get()->first();
@@ -169,6 +177,10 @@ class AmigoSeeder extends Seeder
             ]);
         }
 
+        // user attraction關聯
+        $user_id = App\User::where('id',$user->id)->get()->first();
+        $attraction->users()->attach($user_id);
+
         // map關聯
         $map_espana = App\Map::where('name','España')->get()->first();
         $attraction ->maps()->attach($map_espana);
@@ -220,6 +232,10 @@ class AmigoSeeder extends Seeder
                 'attraction_id' => $attraction->id
             ]);
         }
+
+        // user attraction關聯
+        $user_id = App\User::where('id',$user->id)->get()->first();
+        $attraction->users()->attach($user_id);
 
         // map關聯
         $map_espana = App\Map::where('name','España')->get()->first();
@@ -276,6 +292,10 @@ class AmigoSeeder extends Seeder
                 'attraction_id' => $attraction->id
             ]);
         }
+
+        // user attraction關聯
+        $user_id = App\User::where('id',$user->id)->get()->first();
+        $attraction->users()->attach($user_id);
 
         // map關聯
         $map_espana = App\Map::where('name','España')->get()->first();

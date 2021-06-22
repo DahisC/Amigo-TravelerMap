@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
             AttractionsConcertSeeder::class,
             AttractionsExhibitionSeeder::class,
             AttractionsFestivalSeeder::class,
+            AmigoSeeder::class,
             MapAttractionTableSeeder::class,
             UserAttractionTableSeeder::class,
-            AmigoSeeder::class
         ]);
     }
 }

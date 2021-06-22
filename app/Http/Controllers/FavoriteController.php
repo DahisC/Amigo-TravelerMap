@@ -27,6 +27,7 @@ class FavoriteController extends Controller
         //     }
         // }
         if (auth()->check()) {
+            // dd(auth()->user()->id);
             $userFavorites = User::with([
                 'attractions',
                 'attractions.images',
@@ -34,6 +35,9 @@ class FavoriteController extends Controller
                 'attractions.time',
                 'attractions.tags'
             ])->findOrFail(auth()->user()->id)->attractions->paginate(10);
+            // $userMaps = 
+            // dd($userFavorites);
+
             return view('favorites.index', compact('userFavorites'));
         }
     }
