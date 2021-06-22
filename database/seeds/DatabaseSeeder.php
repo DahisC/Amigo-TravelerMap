@@ -1,8 +1,5 @@
 <?php
 
-use App\Attraction;
-use App\Map;
-use App\Tag;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,6 +21,7 @@ class DatabaseSeeder extends Seeder
             AttractionsFestivalSeeder::class,
             MapAttractionTableSeeder::class,
             UserAttractionTableSeeder::class,
+            AmigoSeeder::class
         ]);
     }
 }
