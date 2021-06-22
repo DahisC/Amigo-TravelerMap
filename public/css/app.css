@@ -19130,8 +19130,12 @@ html {
   color: white;
 }
 
+* {
+  letter-spacing: 0.1rem;
+}
+
 p {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .a-fs-1 {
@@ -19148,6 +19152,12 @@ p {
 
 .a-fs-4 {
   font-size: 4rem;
+}
+
+.a-background {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .a-hr {

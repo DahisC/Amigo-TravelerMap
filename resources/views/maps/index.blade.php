@@ -390,6 +390,7 @@
       renderMarkersOnMap(attractions) {
         const markers = new L.MarkerClusterGroup().addTo(this.map);
         attractions.forEach(a => {
+          console.log(a);
           markers.addLayer(L.marker([a.position.lat, a.position.lng], {
             icon: defineMarkerIcon(a.tags[0])
           }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
