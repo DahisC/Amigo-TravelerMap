@@ -54,12 +54,17 @@
     <div class="col">
       <div class="row">
         @foreach ($userFavorites as $f)
+        {{-- {{ dd($f->images[0]->url)}} --}}
         <div class="col-12">
           <div class="card mb-3 text-dark">
             <div class="row g-0">
               <div class="col-md-4">
-                <div class=" ratio ratio-1x1">
+                <div class=" ratio ratio-4x3">
+                  @if (!empty($f->images))
+                  <img src={{$f->images[0]->url}} alt="..." class="img-fluid rounded" height="200" />
+                  @else
                   <img src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="..." class="img-fluid rounded" height="200" />
+                  @endif
                 </div>
               </div>
               <div class="col-md-8">
@@ -79,10 +84,28 @@
                   </div>
                   <p class="card-text">
                     <small class="text-muted">
-                      <i class="fas fa-fw fa-map-marker-alt"></i>
-                      臺東縣951綠島鄉環島公路6公里處
+                      <i class="fas fa-fw fa-calendar-day"></i>
+                      @if (!empty($f->time->endDate))
+                      日期 {{$f->time->startDate}} ~ {{$f->time->endDate}}
+                      @else
+                      日期 {{$f->time->startDate}}
+                      @endif
                     </small>
                   </p>
+                  <p class="card-text">
+                    <small class="text-muted">
+                      <i class="fas fa-fw fa-university"></i>
+                      官網 <a href="{{$f->website}}">{{$f->name}}</a>
+                    </small>
+                  </p>
+                  <p class="card-text">
+                    <small class="text-muted">
+                      <i class="fas fa-fw fa-map-marker-alt"></i>
+                      地址 {{ $f->position->address}}
+                    </small>
+                  </p>
+
+                 
                   <p class="card-text description">
                     @if (!empty($f->description))
                     {{$f->description}}

@@ -35,8 +35,6 @@ class FavoriteController extends Controller
                 'attractions.time',
                 'attractions.tags'
             ])->findOrFail(auth()->user()->id)->attractions->paginate(10);
-            // $userMaps = 
-            // dd($userFavorites);
 
             return view('favorites.index', compact('userFavorites'));
         }
