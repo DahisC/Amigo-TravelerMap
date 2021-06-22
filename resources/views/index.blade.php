@@ -96,8 +96,8 @@ Buen Camino
     <div class="h-100 container">
       <div class="h-100 row">
         <div class="h-100 col d-flex flex-column justify-content-center align-items-center">
-          <h1 class="mb-4">突然不知道要去哪裡？</h1>
-          <a class="btn btn-primary" href="{{ route('maps.index') }}">帶我去玩！</a>
+          <h1 class="mb-5 a-fs-4">突然不知道要去哪裡？</h1>
+          <a class="btn btn-primary btn-lg" href="{{ route('maps.index') }}">帶我去玩！</a>
         </div>
       </div>
     </div>
@@ -181,11 +181,11 @@ Buen Camino
               </div>
               <div class="text-center text-md-end">
                 <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="#">看看阿米狗的地圖</a>
-                <div>
-                  <small class="text-muted">
+                <div class="text-muted">
+                  <small class="fst-italic">
                     「問我西班牙有哪些有趣的活動？點了不就知道了？」
-                    <div class="text-end">－－阿米狗，西班牙的地頭貓</div>
                   </small>
+                  <div class="text-end"><small>－－阿米狗，西班牙的地頭貓</small></div>
                 </div>
               </div>
             </div>
@@ -217,11 +217,11 @@ Buen Camino
               </div>
               <div class="text-center text-md-end">
                 <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="#">下載阿米狗的行程表</a>
-                <div>
-                  <small class="text-muted">
+                <div class="text-muted">
+                  <small class="fst-italic">
                     「出去玩沒行程表怎麼行？快按按看這顆魔法按鈕！」
-                    <div class="text-end">－－阿米狗（現在是貓），喵！</div>
                   </small>
+                  <div class="text-end"><small>－－阿米狗（現在是貓），喵！</small></div>
                 </div>
               </div>
             </div>
@@ -233,15 +233,15 @@ Buen Camino
   <section id="banner-about-you" class="index-banner py-5">
     <div class="index-banner__description position-sticky bottom-0">
       <div class="h-100 container py-5">
-        <div class="h-100 row flex-row-reverse">
+        <div class="h-100 row flex-row-reverse align-items-center">
           <div class="h-100 col text-center d-flex flex-column justify-content-center">
             <h1 class="a-fs-3"><b>¿Quién eres?</b></h1>
-            <h2 class="a-fs-1 text-muted">Who are YOU?</h2>
+            <h2 class="a-fs-1 text-muted mb-0">Who are YOU?</h2>
           </div>
           <div class="col d-flex flex-column justify-content-center text-center">
             <p><b>在旅途中，我們都可能會彼此交會</b></p>
             <p>作為旅人，在一段旅程中有可能會是一個追尋者，也可能會是引導者。</p>
-            <p>在接下來的旅途中，你想當哪一個？</p>
+            <p class="mb-0">在接下來的旅途中，你想當哪一個？</p>
           </div>
         </div>
       </div>
