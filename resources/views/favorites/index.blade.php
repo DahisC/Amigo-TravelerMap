@@ -123,3 +123,7 @@
   </div>
 </div>
 @endsection
+
+@section('js')
+@stack('stack-js')
+@endsection
