@@ -25,9 +25,9 @@ class AmigoSeeder extends Seeder
             ]);
         Map::create(['name'=>'España','user_id'=>$user->id]);
 
-        // 番茄節
-        $attraction = Attraction::create([
-            'name' =>'蕃茄節 （La Tomatina）',
+        // 番茄節（La Tomatina）
+        $attraction= Attraction::create([
+            'name' =>'蕃茄節（La Tomatina）',
             'website' => 'http://www.thetasteofspain.com/spanish-fiestas/la-tomatina/',
             'tel' =>' ',
             'description' =>'每年八月的最後一個週三，是瓦倫西亞自治區的布紐爾（Buñol）小鎮最舒壓的節日 -- 蕃茄節 （La Tomatina）。 買票入場的參與者們在收到開始的信號後，可以拿起熟透的番茄互相投擲、提起「手打番茄汁」水盆互相潑撒。每年約有40,000名參與者使用超過一噸的番茄一同歡度這個節慶。扔番茄活動大約持續一小時，熟透的番茄將整個城鎮廣場和街道染成紅色小川，甚至可看到許多參與者放鬆地徜徉在這片番茄海中。
@@ -82,8 +82,8 @@ class AmigoSeeder extends Seeder
 
 
         // 巴塞隆納春之聲 (Primavera Sound) 
-        $attraction = Attraction::create([
-            'name' =>'巴塞隆納春之聲 (Primavera Sound) ',
+        $attraction= Attraction::create([
+            'name' =>'巴塞隆納春之聲(Primavera Sound) ',
             'website' => 'https://www.primaverasound.com/ca',
             'tel' =>' ',
             'description' =>'巴塞隆納春之聲從2001年開始舉辦，現已是西班牙及南歐人最重要的音樂節。通常舉辦於五月底至六月初的巴塞隆納 (Primavera Sound Barcelona) 論壇公園 (Parc del Fòrum)，每年都吸引超過20萬名觀眾前往一飽耳福。因回響熱烈，現在也可以在葡萄牙的波多 (NOS Primavera Sound Porto) 參與春之聲音樂祭典。
@@ -128,14 +128,14 @@ class AmigoSeeder extends Seeder
 
         // map關聯
         $map_espana = App\Map::where('name','España')->get()->first();
-        $attraction ->maps()->attach($map_espana);
+        $attraction->maps()->attach($map_espana);
 
         // tags關聯
         $tag_One =App\Tag::where('name','音樂')->get()->first();
         $attraction->tags()->attach($tag_One);
 
         // 科爾多瓦庭院節（El Festival de Patios）
-        $attraction = Attraction::create([
+        $attraction= Attraction::create([
             'name' =>'科爾多瓦庭院節（El Festival de Patios）',
             'website' => 'https://patios.cordoba.es/es/patios',
             'tel' =>' ',
@@ -183,14 +183,14 @@ class AmigoSeeder extends Seeder
 
         // map關聯
         $map_espana = App\Map::where('name','España')->get()->first();
-        $attraction ->maps()->attach($map_espana);
+        $attraction->maps()->attach($map_espana);
 
         // tags關聯
         $tag_One =App\Tag::where('name','景點')->get()->first();
         $attraction->tags()->attach($tag_One);
 
          // 法雅節（Las Fallas）
-         $attraction = Attraction::create([
+         $attraction= Attraction::create([
             'name' =>'法雅節（Las Fallas）',
             'website' => 'https://www.visitvalencia.com/en/events-valencia/festivities/the-fallas',
             'tel' =>' ',
@@ -239,15 +239,15 @@ class AmigoSeeder extends Seeder
 
         // map關聯
         $map_espana = App\Map::where('name','España')->get()->first();
-        $attraction ->maps()->attach($map_espana);
+        $attraction->maps()->attach($map_espana);
 
         // tags關聯
         $tag_One =App\Tag::where('name','節慶')->get()->first();
         $attraction->tags()->attach($tag_One);
 
-        // 奔牛節(La Tomatina)
+        // 奔牛節(Las Fiestas de San Fermín)
         $attraction = Attraction::create([
-            'name' =>'奔牛節(La Tomatina)',
+            'name' =>'奔牛節（Las Fiestas de San Fermín）',
             'website' => 'https://www.visitvalencia.com/en/events-valencia/festivities/the-fallas',
             'tel' =>' ',
             'description' =>'說到西班牙節慶，肯定第一個想到無人不知無人不曉的奔牛節！潘普洛納的奔牛活動，總長其實只有826公尺，節慶中每一頭重約500公斤，時速約24公里的公牛只需要幾分鐘就可以跑完全程，其實並不長，所以奔牛環節也總是在幾分鐘內結束，卻是整個節慶中受傷率最高的時刻。通常在慶典期間，每天都會放出六頭公牛、六頭閹牛，讓參與奔牛的挑戰者們站進事先圈好的舊城區街道中一同奔跑。為了紀念當地的守護神「聖佛明」，奔牛節正式正名為「聖佛明節」(San Fermín)。希望透過這個節慶，將男子不畏死亡的英勇精神一代又一代的傳承下去。
@@ -287,7 +287,7 @@ class AmigoSeeder extends Seeder
         
         for($i=1;$i<=3; $i++) {
             AttractionImage::create([
-                'url' => '/storage/demo/La_Tomatina _1.jpg',
+                'url' => '/storage/demo/Las_Fiestas_de_San_Fermín_1.jpg',
                 'image_desc' =>  '',
                 'attraction_id' => $attraction->id
             ]);
@@ -299,7 +299,7 @@ class AmigoSeeder extends Seeder
 
         // map關聯
         $map_espana = App\Map::where('name','España')->get()->first();
-        $attraction ->maps()->attach($map_espana);
+        $attraction->maps()->attach($map_espana);
 
         // tags關聯
         $tag_One =App\Tag::where('name','節慶')->get()->first();
