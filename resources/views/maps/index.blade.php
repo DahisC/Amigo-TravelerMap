@@ -336,7 +336,8 @@
   $vue = new Vue({
     el: '#app',
     data: {
-      prevLayers: [],
+      markerClusters: null,
+      markers: [],
       map: null,
       attractions: attractions || [],
       detailTarget: {},
@@ -389,12 +390,13 @@
       },
       // 將 Markers 算繪至地圖上
       renderMarkersOnMap(attractions) {
-        const markers = new L.MarkerClusterGroup().addTo(this.map);
-        attractions.forEach(a => {
-          markers.addLayer(L.marker([a.position.lat, a.position.lng], {
-            icon: defineMarkerIcon(a.tags[0])
-          }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
-        });
+        if (this.markerClusters) this.markerClusters.clearLayers();
+        this.markerClusters = new L.MarkerClusterGroup().addTo(this.map);
+        this.markers = attractions.map(a => L.marker([a.position.lat, a.position.lng], {
+          icon: defineMarkerIcon(a.tags[0])
+        }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
+        this.markerClusters.addLayers(this.markers);
+
 
         function defineMarkerIcon(attractionTag) {
           switch (attractionTag.name) {
