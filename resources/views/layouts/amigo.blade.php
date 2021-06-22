@@ -19,7 +19,7 @@
 
 <body>
   @section('nav')
-  @include('partials.navbar')
+  {{-- @include('partials.navbar') --}}
   @show
   @yield('content')
   <script src="{{ asset('js/app.js') }}"></script>

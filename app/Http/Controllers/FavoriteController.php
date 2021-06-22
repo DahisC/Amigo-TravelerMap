@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Attraction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
@@ -11,6 +12,28 @@ class FavoriteController extends Controller
 {
     public function index()
     {
+        if (auth()->check()) {
+            $inputText ='番茄';
+            $userFavorites = User::with([
+                'attractions',
+                'attractions.images',
+                'attractions.position',
+                'attractions.time',
+                'attractions.tags'
+            ])->findOrFail(auth()->user()->id)->attractions;
+            // dd($userFavorites);
+
+            $userFavorites->filter(function ($favorite) use ($inputText) {
+                var_dump(stristr($favorite->name, $inputText));
+                return false !== stristr($favorite->name, $inputText);
+            });
+        
+        
+            // $tagName = ''
+            // $t = Attraction::where('name','LIKE',"%$inputText%")->get();
+            // dd($t);
+        }
+        // $tag = Tag::where('name',)
         // Session::flash('toast-test', collect(['type' => 'danger', 'header' => '權限不足', 'body' => '測試']));
         // if (Gate::allows('viewAny', Attraction::class)) { // Bug: 在有登入的情況下，這邊的 if 不會執行
         //     if (auth()->check()) {
@@ -35,8 +58,7 @@ class FavoriteController extends Controller
                 'attractions.time',
                 'attractions.tags'
             ])->findOrFail(auth()->user()->id)->attractions->paginate(10);
-            // $userMaps = 
-            // dd($userFavorites);
+                       
 
             return view('favorites.index', compact('userFavorites'));
         }
