@@ -1,7 +1,5 @@
 <?php
 
-use App\Map;
-use App\Tag;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +16,10 @@ class DatabaseSeeder extends Seeder
             MapTableSeeder::class,
             TagTableSeeder::class,
             AttractionsTableSeeder::class,
+            AttractionsConcertSeeder::class,
+            AttractionsExhibitionSeeder::class,
+            AttractionsFestivalSeeder::class,
+            AmigoSeeder::class,
             MapAttractionTableSeeder::class,
             UserAttractionTableSeeder::class,
         ]);

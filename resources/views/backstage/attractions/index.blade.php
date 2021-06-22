@@ -16,8 +16,9 @@
 
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">地點 Attractions</h6>
+    <div class="card-header py-3 d-flex justify-content-between">
+      <h6 class="m-0 font-weight-bold text-primary">景點 Attractions</h6>
+      <h6 class="m-0 font-weight-bold text-primary">數量{{ $attractions->count() }}</h6>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -80,20 +81,20 @@
 @section('js')
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-  //   $(function() {
+    $(function() {
 
-  //     $("#myDataTalbe").DataTable({
-  //       searching: false, //關閉filter功能
-  //       columnDefs: [{
-  //         targets: [3],
-  //         orderable: false,
-  //       }]
-  //     });
-  //   });
+      $("#dataTable").DataTable({
+        searching: false, //關閉filter功能
+        columnDefs: [{
+          targets: [3],
+          orderable: false,
+        }]
+      });
+    });
 
-  //   $(document).ready(function() {
-  //     $('#dataTable').DataTable();
-  //   });
+    $(document).ready(function() {
+      $('#dataTable').DataTable();
+    });
 </script>
 <script>
   // window.onload = () => {

@@ -19,7 +19,6 @@ class AttractionsTableSeeder extends Seeder
      */
     public function run()
     {
-        $tags = App\Tag::get();
         $jsonFile = file_get_contents(public_path('TaiwanAttractions.json'));
         $json = json_decode($jsonFile, true);
         $attractions = $json['XML_Head']['Infos']['Info'];
@@ -58,17 +57,10 @@ class AttractionsTableSeeder extends Seeder
                     'attraction_id' => $attraction->id
                 ]);
             }
-            //tags關聯
-            $attraction->tags()->attach($tags);
 
-            // if (!empty($a['Keyword'])) {
-            //     $tags = preg_split("/[、|,|，]+/u", $a['Keyword']);
-            //     foreach ($tags as $tag) {
-            //         $tag = str_replace(' ', '', $tag); // 解決 API 中部份 tag 會有空白的問題
-                    // $attraction_tag = Tag::firstOrCreate(['name' => $tag], factory(App\Tag::class)->raw(['name' => $tag]));
-            //         $attraction->tags()->attach($attraction_tag);
-            //     }
-            // }
+            // $randomTags = Tag::get()->random(2);
+            $tag = App\Tag::where('name', '景點')->get()->first();
+            $attraction->tags()->attach($tag);
         }
     }
 }

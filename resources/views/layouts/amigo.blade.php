@@ -10,17 +10,22 @@
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('css/amigo.css') }}">
   @yield('css')
+  {{-- <style>
+    body {
+      padding-top: 55px;
+    }
+  </style> --}}
 </head>
 
-<body data-spy="scroll" data-target="#list-example" data-offset="0" class="position-relative">
+<body>
   @section('nav')
   @include('partials.navbar')
   @show
   @yield('content')
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('js/twCitySelector.js') }}"></script>
   @yield('js')
+  @include('partials.bootstrap.toast')
 </body>
 
 </html>
