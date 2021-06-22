@@ -86,7 +86,7 @@ Buen Camino
   </section>
   <!-- ¿Quién soy yo? / Who am I? -->
   <section id="banner-about-me" class="index-banner py-4">
-    <div class="index-banner__description position-sticky bottom-0">
+    <div class="index-banner__description position-sticky bottom-0 a-background" style="background-image: url({{ asset('images/page/index/banner_who_am_III.png') }})">
       <div class="h-100 container py-4">
         <div class="h-100 row">
           <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center mb-4 mb-md-0">
