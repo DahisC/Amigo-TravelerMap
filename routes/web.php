@@ -51,6 +51,7 @@ Route::group([
 // 前端測試用路由
 Route::view('/snow', 'Snow.test');
 Route::view('/allen', 'Allen.test');
+//email 模板測試
 Route::get('test', function () {
     $userFavorites = User::with([
         'attractions',
@@ -74,11 +75,11 @@ Route::group([
 Auth::routes();
 
 //faceBook
-Route::get('login/facebook', 'Auth\LoginController@facebook');
+Route::get('login/facebook', 'Auth\LoginController@facebook')->name('login.facebook');
 Route::get('login/facebook/callback', 'Auth\LoginController@facebookCallback');
 
 //github
-Route::get('login/github', 'Auth\LoginController@github');
+Route::get('login/github', 'Auth\LoginController@github')->name('login.github');
 Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
 
 

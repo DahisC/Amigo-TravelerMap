@@ -196,7 +196,6 @@ class AttractionController extends Controller
                     Storage::delete($img->url);
                     $img->delete();
                 });
-                // dd('update');
                 return redirect()->route('backstage.attractions.index');
             }
         }
