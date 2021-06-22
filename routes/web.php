@@ -26,10 +26,17 @@ Route::prefix('/api')->group(function () {
 
 Route::view('/', 'index')->name('homepage'); // 首頁
 
-Route::resource('maps', 'MapController'); // 地圖
-Route::patch('/maps/{map}/pin', 'MapController@pin');
-//PDF
-Route::get('maps/{map}/itineraries' ,'MapController@itineraries');
+Route::group([
+    'prefix' => 'maps',
+], function () {
+    Route::resource('/', 'MapController'); // 地圖
+    Route::middleware('auth')->group(function () {
+        Route::patch('/{map}/pin', 'MapController@pin');
+        //PDF
+        Route::get('/{map}/itineraries', 'MapController@itineraries');
+    });
+});
+
 Route::resource('attractions', 'AttractionController')->except('create', 'edit'); // 地點
 Route::get('/favorites', 'FavoriteController@index')->name('favorites.index');
 Route::patch('/attractions/{attraction}/favorite', 'AttractionController@favorite')->name('attractions.favorite'); // 收藏地點
@@ -43,7 +50,7 @@ Route::group([
     'as' => 'backstage.',
     'middleware' => 'auth'
 ], function () {
-    Route::get('/','backstage\indexController@index')->name('index'); // 後台首頁
+    Route::get('/', 'backstage\indexController@index')->name('index'); // 後台首頁
     Route::resource('/users', 'Backstage\UserController')->except('show'); // 後台 - 會員管理
     Route::resource('/maps', 'Backstage\MapController')->except('show'); // 後台 - 地圖管理
     Route::resource('/attractions', 'Backstage\AttractionController')->except(['store', 'update', 'show', 'destroy']); // 後台 - 地點管理

@@ -10,10 +10,14 @@ use Illuminate\Support\Facades\Session;
 
 class FavoriteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        if (auth()->check()) {
-            $inputText ='番茄';
+            $inputText ='蕃茄';
             $userFavorites = User::with([
                 'attractions',
                 'attractions.images',
@@ -23,16 +27,11 @@ class FavoriteController extends Controller
             ])->findOrFail(auth()->user()->id)->attractions;
             // dd($userFavorites);
 
-            $userFavorites->filter(function ($favorite) use ($inputText) {
-                var_dump(stristr($favorite->name, $inputText));
+            $userFavorites = $userFavorites->filter(function ($favorite) use ($inputText) {
+               
                 return false !== stristr($favorite->name, $inputText);
             });
-        
-        
-            // $tagName = ''
-            // $t = Attraction::where('name','LIKE',"%$inputText%")->get();
-            // dd($t);
-        }
+            dd($userFavorites);
         // $tag = Tag::where('name',)
         // Session::flash('toast-test', collect(['type' => 'danger', 'header' => '權限不足', 'body' => '測試']));
         // if (Gate::allows('viewAny', Attraction::class)) { // Bug: 在有登入的情況下，這邊的 if 不會執行
