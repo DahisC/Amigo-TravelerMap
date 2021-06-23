@@ -8,16 +8,13 @@
     <title>Document</title>
     <style>
         body {
-            font-family: 'Microsoft JhengHei', sans-serif;
+            font-family: 'TaipeiSansTCBeta-Bold', sans-serif;
         }
     </style>
 </head>
 
 <body>
-    {{ $attractions[0]->name }}
-    1111
-    我
-    dasdadaw
+    {{-- {{ $attractions[0]->name }} --}}
 </body>
 
 </html>
