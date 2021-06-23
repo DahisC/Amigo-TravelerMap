@@ -55,12 +55,19 @@
       <div class="row">
         @foreach ($userFavorites as $f)
         <div class="col-12">
-          <div class="card mb-4 d-flex flex-column flex-md-row">
+          <div class="card mb-4 d-flex flex-column flex-md-row" data-id="{{$f->id}}">
             <div class="ratio ratio-1x1" style="width: 250px;">
               <div class="a-background rounded-start" style="background-image: url({{ $f->images[0]->url ?? '' }}); background-size: cover;"></div>
             </div>
             <div class="card-body">
-              123
+              <select name="" id="" class="selectMap">
+                <option value="">請選擇</option>
+                @foreach ( $maps as $map )
+                <option value="{{$map->id}}">{{$map->name}}</option>
+                @endforeach
+
+              </select>
+
             </div>
           </div>
         </div>
@@ -78,6 +85,16 @@
 @endsection
 
 @section('js')
+<script>
+  const selectElementAll = document.querySelectorAll('.selectMap');
+    selectElementAll.forEach((selectElement) => {
+      selectElement.addEventListener('change', (e) => {
+       const mapId = e.target.value;
+       const attractionId = e.target.parentNode.parentNode.dataset.id;
+         axios.patch(`/maps/${mapId}/pin`,{attractionId});
+      });
+    });
+</script>
 @stack('stack-js')
 @endsection
 
@@ -85,7 +102,8 @@
           <div class="card mb-3 text-dark">
             <div class="row g-0">
               <div class="col-3">
-                <div class="ratio ratio-1x1 a-background" style="background-image: url({{ $f->images[0]->url }}); background-size: cover;">
+                <div class="ratio ratio-1x1 a-background" style="background-image: url({{ $f->images[0]->url }});
+background-size: cover;">
 @if (!empty($f->images[0]))
 <!-- <img src={{$f->images[0]->url}} alt="{{ $f->images[0]->image_desc ?? '' }}" class="img-fluid rounded" height="200" /> -->
 @else
