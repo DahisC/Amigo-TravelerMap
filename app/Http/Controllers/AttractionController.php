@@ -19,7 +19,7 @@ class AttractionController extends Controller
     public function store(AttractionRequest $request)
     {
         $user = Auth::user();
-        if (Gate::allows('viewAny',Attraction::class)) {
+        if (Gate::allows('viewAny', Attraction::class)) {
             if ($user->role == "Admin") {
                 // 地點轉Px、Py、防止亂傳地址
                 $response = helpers::getAddressLatLng($request->address);
@@ -111,7 +111,15 @@ class AttractionController extends Controller
         if (Gate::allows('viewAny', $attraction)) {
             if ($user->role == "Admin") {
 
-                $attraction->update($request->all());
+                $attraction->update([
+                    'name' => $request->name,
+                    'website' => $request->website,
+                    'tel' => $request->tel,
+                    'description' => $request->description,
+                    'ticket_info' => $request->ticket_info ?? '',
+                    'traffic_info' => $request->traffic_info ?? '',
+                    'parking_info' => $request->parking_info ?? '',
+                ]);
                 //positcion
                 $response = helpers::getAddressLatLng($request->address);
                 //之後有空試看看 集合增加的方法
@@ -135,7 +143,7 @@ class AttractionController extends Controller
                         ]);
                     };
                 };
-                return redirect()->route('backstage.attractions.index'); 
+                return redirect()->route('backstage.attractions.index');
             }
 
             if (Gate::allows('update', $attraction)) {
@@ -163,18 +171,18 @@ class AttractionController extends Controller
                         ]);
                     };
                 };
-                return redirect()->route('backstage.attractions.index'); 
+                return redirect()->route('backstage.attractions.index');
             }
             return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
         }
     }
 
 
- 
+
     public function destroy(Attraction $attraction)
     {
         $user = Auth::user();
-        
+
         if (Gate::allows('viewAny', $attraction)) {
             if ($user->role == "Admin") {
                 $attraction->delete();
