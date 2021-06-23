@@ -57,8 +57,7 @@
         <div class="col-12">
           <div class="card mb-4 d-flex flex-column flex-md-row" data-id="{{$f->id}}">
             <div class="ratio ratio-1x1" style="width: 250px;">
-              <div class="a-background rounded-start"
-                style="background-image: url({{ $f->images[0]->url }}); background-size: cover;"></div>
+              <div class="a-background rounded-start" style="background-image: url({{ $f->images[0]->url ?? '' }}); background-size: cover;"></div>
             </div>
             <div class="card-body">
               <select name="" id="" class="selectMap">
