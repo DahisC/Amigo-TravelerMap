@@ -13,7 +13,12 @@ use Illuminate\Support\Facades\Gate;
 
 
 class UserController extends Controller
-{
+{   
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         if (Gate::allows('view-admin')) {
@@ -68,20 +73,17 @@ class UserController extends Controller
     }
     public function watch()
     {
-        $pdf = PDF::loadView('welcome')->setOptions(['defaultFont' => 'sans-serif']);
+        // ->setOptions(['defaultFont' => 'sans-serif'])
+        $pdf = PDF::loadView('emails.PDF');
         return $pdf->stream();
         // return $pdf->download('amigo.pdf');
     }
     public function pdfOutput()
     {
-        if (auth()->check()) {
             $userFavorites = User::with([
                 'attractions',
                 'attractions.position',
             ])->findOrFail(auth()->user()->id);
             Mail::send(new amigo_map($userFavorites));
-        } else {
-            return redirect()->route('sign-in');
-        }
     }
 }

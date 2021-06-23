@@ -71,8 +71,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'role' => $data['role'],
             'avatar' =>  $data['role'] === 'Traveler'
-            ?  '\images\avatar\Traveler.png'
-            :  '\images\avatar\Guider.png'
+                ?  '\images\avatar\Traveler.png'
+                :  '\images\avatar\Guider.png'
         ]);
     }
 }
