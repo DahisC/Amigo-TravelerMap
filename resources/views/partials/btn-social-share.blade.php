@@ -1,8 +1,15 @@
-<button class="btn btn-outline-dark btn-sm" type="button" id="dd-social-share" data-mdb-toggle="dropdown" aria-expanded="false">
-  <i class="fas fa-share"></i>
-  分享
-</button>
+<a class="btn btn-link btn-sm" type="button" id="dd-social-share" data-mdb-toggle="dropdown" aria-expanded="false">
+  <i class="fas fa-share text-secondary"></i>
+</a>
 <ul class="dropdown-menu text-dark" aria-labelledby="dd-social-share">
+  <li>
+    <a class="dropdown-item disabled" href="#">
+      分享至社群
+    </a>
+  </li>
+  <li>
+    <hr class="dropdown-divider">
+  </li>
   <li style="background-color: #3b5998;">
     <a id="btn-facebook-share" class="dropdown-item d-flex justify-content-between align-items-center text-center" href="#" data-id="{{ $f->id }}">
       <i class="fab fa-fw fa-facebook-f"></i>
