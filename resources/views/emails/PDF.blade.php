@@ -15,6 +15,9 @@
 
 <body>
     {{ $attractions[0]->name }}
+    1111
+    我
+    dasdadaw
 </body>
 
 </html>

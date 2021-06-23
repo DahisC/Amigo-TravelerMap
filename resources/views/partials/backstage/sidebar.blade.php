@@ -19,7 +19,7 @@
   <li class="nav-item active">
     <a class="nav-link" href="{{ route('backstage.index') }}">
       <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>儀表板</span></a>
+      <span>個人首頁</span></a>
   </li>
 
   <!-- Divider -->

@@ -7,6 +7,7 @@ use App\AttractionTime;
 use App\AttractionImage;
 use App\AttractionPosition;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class AmigoSeeder extends Seeder
 {
@@ -61,8 +62,9 @@ class AmigoSeeder extends Seeder
         ]);
 
         for ($i = 1; $i <= 3; $i++) {
+            
             AttractionImage::create([
-                'url' => "/storage/demo/La_Tomatina_$i.jpeg",
+                'url' => Storage::url('demo')."/La_Tomatina_$i.jpeg",
                 'image_desc' =>  '',
                 'attraction_id' => $attraction->id
             ]);
@@ -117,7 +119,7 @@ class AmigoSeeder extends Seeder
         ]);
 
         AttractionImage::create([
-            'url' => '/storage/demo/Primavera_Sound.jpg',
+            'url' => Storage::url('demo')."/Primavera_Sound.jpg",
             'image_desc' =>  '',
             'attraction_id' => $attraction->id
         ]);
@@ -171,7 +173,7 @@ class AmigoSeeder extends Seeder
 
         for ($i = 1; $i <= 3; $i++) {
             AttractionImage::create([
-                'url' => "/storage/demo/El_Festival_de_Patios_$i.jpg",
+                'url' => Storage::url('demo')."/El_Festival_de_Patios_$i.jpg",
                 'image_desc' =>  '',
                 'attraction_id' => $attraction->id
             ]);
@@ -227,7 +229,7 @@ class AmigoSeeder extends Seeder
 
         for ($i = 1; $i <= 3; $i++) {
             AttractionImage::create([
-                'url' => "/storage/demo/Las_Fallas_$i.jpg",
+                'url' => Storage::url('demo')."/LLas_Fallas_$i.jpg",
                 'image_desc' =>  '',
                 'attraction_id' => $attraction->id
             ]);
@@ -284,10 +286,10 @@ class AmigoSeeder extends Seeder
             'end_day' => '14',
             'attraction_id' => $attraction->id
         ]);
-
+        // /storage/demo/Las_Fiestas_de_San_Fermín_$i.jpg"
         for ($i = 1; $i <= 3; $i++) {
             AttractionImage::create([
-                'url' => "/storage/demo/Las_Fiestas_de_San_Fermín_$i.jpg",
+                'url' => Storage::url('demo')."/Las_Fiestas_de_San_Fermín_$i.jpg",
                 'image_desc' =>  '',
                 'attraction_id' => $attraction->id
             ]);
