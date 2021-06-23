@@ -196,7 +196,7 @@ Buen Camino
                 </p>
               </div>
               <div class="text-center text-md-end">
-                <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="#">
+                <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="#">
                   下載阿米狗的行程表
                   <i class="fas fa-paw ms-1 text-dark" style="transform: rotateZ(-30deg);"></i>
                 </a>
