@@ -2,7 +2,6 @@
 <?php
     $toast = Session::get('toast-test');
 ?>
-@endif
 <div class="toast-container position-fixed p-3 bottom-0 end-0" id="toastPlacement">
   <div class="toast bg-danger text-white" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header bg-{{$toast['type']}} text-white">
@@ -16,6 +15,7 @@
     </div>
   </div>
 </div>
+@endif
 
 
 <script>
