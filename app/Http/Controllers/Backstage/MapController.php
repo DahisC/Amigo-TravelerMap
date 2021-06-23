@@ -18,10 +18,10 @@ class MapController extends Controller
         $user = Auth::user();
         if(Gate::allows('viewAny',Map::class)){
             if($user->role == "Admin"){
-                $maps = Map::get();
+                $maps = Map::paginate(10);
                 return view('backstage.maps.index',compact('maps'));
             }else{
-                $maps = Map::where('user_id',$user->id)->get();
+                $maps = Map::where('user_id',$user->id)->paginate(10);
                 return view('backstage.maps.index',compact('maps'));
             }
         }

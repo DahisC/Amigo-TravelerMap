@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         if (Gate::allows('view-admin')) {
-            $users =  User::get();
+            $users =  User::paginate(10);
             return view('backstage.users.index', compact('users'));
         }
         return view('backstage.index');    //很抱歉，您的權限不足，發送火箭享尊榮服務
