@@ -171,7 +171,7 @@
   <div id="custom-mask" class="h-100 position-absolute p-2 p-md-3 d-flex flex-column flex-md-row justify-content-start justify-content-md-between" style="z-index: 2; pointer-events: none;">
     <div class="nav-wrapper d-flex flex-row flex-md-column align-items-center justify-content-center" style="pointer-events: auto;">
       <a class="@if (isset($map)) mb-auto @else mb-0 @endif" href="{{ route('homepage') }}">
-        <div class="logo rounded-circle shadow bg-primary" style="background-image: url({{ asset('images/Logo.svg') }})"></div>
+        <div class="logo rounded-circle shadow" style="background-image: url({{ asset('images/Logo.svg') }})"></div>
       </a>
       @if (!isset($map))
       <nav class="rounded-pill d-flex flex-row flex-md-column p-1 my-md-auto ms-auto ms-md-0 shadow">
@@ -211,9 +211,15 @@
     </div>
     @endif
     <div class="shadow mt-auto mt-md-0 mx-auto mx-md-0" style="height: fit-content; width: fit-content;">
-      <button type="button" class="btn btn-secondary top-0 end-0" data-bs-toggle="offcanvas" data-bs-target="#custom-offcanvas" aria-controls="custom-offcanvas" style="pointer-events: auto;">
-        <i class="fas fa-bars me-1"></i>
-        <span class="text-dark">@{{ attractions.length }} 個地點</span>
+      <button type="button" class="btn btn-secondary top-0 end-0 d-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#custom-offcanvas" aria-controls="custom-offcanvas" style="pointer-events: auto;">
+        <template v-if="isLoading">
+          <span class="spinner-grow spinner-grow-sm me-1" role="status" aria-hidden="true"></span>
+          讀取中
+        </template>
+        <template v-else>
+          <i class="fas fa-bars me-1"></i>
+          <span class="text-dark">@{{ attractions.length }} 個地點</span>
+        </template>
       </button>
     </div>
   </div>
@@ -254,11 +260,11 @@
           <h6 class="text-primary">@{{ attraction . name }}</h6>
           <p class="card-text overflow-hidden" style="font-size: 0.9rem;">@{{ attraction . description }}</p>
           <div class="d-flex">
-            <button type="button" class="btn btn-primary btn-sm me-2 w-100 guide" v-on:click="locateOnMap(attraction)">
+            <button type="button" class="btn btn-secondary btn-sm me-2 w-100 guide" v-on:click="locateOnMap(attraction)">
               <i class="fas fa-fw fa-map-marker-alt"></i>
               <span class="d-none d-sm-inline">地圖標示</span>
             </button>
-            <button type="button" class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#attraction-detail-modal" v-on:click="detailTarget = attraction">
+            <button type="button" class="btn btn-outline-secondary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#attraction-detail-modal" v-on:click="detailTarget = attraction">
               <i class="fas fa-fw fa-book-open"></i>
               <span class="d-none d-sm-inline">詳細資訊</span>
             </button>
@@ -311,6 +317,7 @@
   $vue = new Vue({
     el: '#app',
     data: {
+      isLoading: false,
       markerClusters: null,
       markers: [],
       map: null,
@@ -414,7 +421,9 @@
       async onUserMarkerMoved({ lat, lng }) {
         if (event) params = { lat, lng } = this.$refs.userMarker.getLatLng();
         else params = { lat, lng }
+        this.isLoading = true;
         const response = await axios.get('/api/attractions', { params });
+        this.isLoading = false;
         this.updateAttractions(response.data);
       }
     },
