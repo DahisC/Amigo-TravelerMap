@@ -44,6 +44,9 @@ class AttractionController extends Controller
                         'lng' => $response['lng'],
                     ])
                 );
+                //tag
+                $tag = Tag::find($request->tags);
+                $attraction->tags()->attach($tag);
                 //img
                 if ($request->hasFile('images')) {
                     foreach ($request->file('images') as $key => $image) {
@@ -84,6 +87,9 @@ class AttractionController extends Controller
                         'lng' => $response['lng'],
                     ])
                 );
+                //tag
+                $tag = Tag::find($request->tags);
+                $attraction->tags()->attach($tag);
                 //img
                 if ($request->hasFile('images')) {
                     foreach ($request->file('images') as $key => $image) {
@@ -106,7 +112,6 @@ class AttractionController extends Controller
     public function update(AttractionRequest $request, Attraction $attraction)
     {
         $user = Auth::user();
-        // $tags = Tag::get();
 
         if (Gate::allows('viewAny', $attraction)) {
             if ($user->role == "Admin") {
@@ -131,7 +136,10 @@ class AttractionController extends Controller
                     'lat' =>  $response['lat'],
                     'lng' => $response['lng'],
                 ]);
-
+                //tag
+                $tag = Tag::find($request->tags);
+                $attraction->tags()->SyncWithoutDetaching($tag);
+                //img
                 if ($request->hasFile('images')) {
                     foreach ($request->file('images') as $key => $image) {
                         $path = $image->store('attractions');
@@ -159,7 +167,10 @@ class AttractionController extends Controller
                     'lat' =>  $response['lat'],
                     'lng' => $response['lng'],
                 ]);
-
+                //tag
+                $tag = Tag::find($request->tags);
+                $attraction->tags()->SyncWithoutDetaching($tag);
+                //img
                 if ($request->hasFile('images')) {
                     foreach ($request->file('images') as $key => $image) {
                         $path = $image->store('attractions');
