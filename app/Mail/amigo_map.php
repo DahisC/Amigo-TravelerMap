@@ -39,7 +39,6 @@ class amigo_map extends Mailable
 
         return $this
             ->to($this->user_to->email)
-            ->from('example@example.com')
             ->attachData($pdf->output(), 'attractions.pdf')
             ->view('emails.show',['attractions'=>$attractions]);
     }

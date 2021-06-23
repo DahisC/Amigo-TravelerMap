@@ -14,7 +14,8 @@
 </head>
 
 <body>
-    {{ $attractions[0]->name }}
+    {{-- {{ $attractions[0]->name }} --}}
+    黃
 </body>
 
 </html>
