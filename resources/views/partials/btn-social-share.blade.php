@@ -1,34 +1,36 @@
-<a class="btn btn-link btn-sm" type="button" id="dd-social-share" data-mdb-toggle="dropdown" aria-expanded="false">
-  <i class="fas fa-share text-secondary"></i>
-</a>
-<ul class="dropdown-menu text-dark" aria-labelledby="dd-social-share">
-  <li>
-    <a class="dropdown-item disabled" href="#">
-      分享至社群
-    </a>
-  </li>
-  <li>
-    <hr class="dropdown-divider">
-  </li>
-  <li style="background-color: #3b5998;">
-    <a id="btn-facebook-share" class="dropdown-item d-flex justify-content-between align-items-center text-center" href="#" data-id="{{ $f->id }}">
-      <i class="fab fa-fw fa-facebook-f"></i>
-      Facebook
-    </a>
-  </li>
-  <li style="background-color: #55acee;">
-    <a id="btn-twitter-share" class="dropdown-item d-flex justify-content-between align-items-center text-center" href="#">
-      <i class="fab fa-fw fa-twitter"></i>
-      Twitter
-    </a>
-  </li>
-  <li style="background-color: #ac2bac;">
-    <a id="btn-instagram-share" class="dropdown-item d-flex justify-content-between align-items-center text-center" href="#">
-      <i class="fab fa-fw fa-instagram"></i>
-      Instagram
-    </a>
-  </li>
-</ul>
+<div class="dropdown">
+  <a class="btn btn-link btn-sm" type="button" id="dd-social-share" data-mdb-toggle="dropdown" aria-expanded="false">
+    <i class="fas fa-share text-secondary"></i>
+  </a>
+  <ul class="dropdown-menu text-dark" aria-labelledby="dd-social-share">
+    <li>
+      <a class="dropdown-item disabled" href="#">
+        分享至社群
+      </a>
+    </li>
+    <li>
+      <hr class="dropdown-divider">
+    </li>
+    <li style="background-color: #3b5998;">
+      <a id="btn-facebook-share" class="dropdown-item d-flex justify-content-between align-items-center text-center" href="#" data-id="{{ $f->id }}">
+        <i class="fab fa-fw fa-facebook-f"></i>
+        Facebook
+      </a>
+    </li>
+    <li style="background-color: #55acee;">
+      <a id="btn-twitter-share" class="dropdown-item d-flex justify-content-between align-items-center text-center" href="#">
+        <i class="fab fa-fw fa-twitter"></i>
+        Twitter
+      </a>
+    </li>
+    <li style="background-color: #ac2bac;">
+      <a id="btn-instagram-share" class="dropdown-item d-flex justify-content-between align-items-center text-center" href="#">
+        <i class="fab fa-fw fa-instagram"></i>
+        Instagram
+      </a>
+    </li>
+  </ul>
+</div>
 
 <script>
   //   window.fbAsyncInit = function() {
