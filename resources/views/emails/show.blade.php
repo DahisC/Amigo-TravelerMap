@@ -87,11 +87,18 @@
         }
 
         .attraction {
-            width:100%;
-	word-break:keep-all;/* 不换行 */
-	white-space:nowrap;/* 不换行 */
-	overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
-	text-overflow:ellipsis;
+            width: 300px;
+            /* padding: 5px */
+            /* height: 100px; */
+            /* text-align: center; */
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            border: #101011 1px solid;
+        }
+        .layui-layer {
+            word-break: break-all;
+            word-wrap: break-word;
         }
     </style>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -183,8 +190,9 @@
                 </tbody>
             </table>
             {{--  2  --}}
-            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                style="background:#ffffff;background-color:#ffffff;width:100%;" class="pt-4">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" id="table"
+                style="background:#ffffff;background-color:#ffffff;width:100%;table-layout:fixed;word-break: break-all;"
+                class="pt-4">
                 <thead>
                     <tr>
                         <th>
@@ -213,11 +221,11 @@
                 <tbody style=" width:100px;
                 table-layout:fixed">
                     @foreach ( $attractions as $attraction)
-                    <tr>
+                    <tr style="border:3px;">
                         <td class="attraction">
                             {{ $attraction->name }}
                         </td class="attraction">
-                        <td>
+                        <td class="attraction">
                             {{ $attraction->tel }}
                         </td>
                         <td colspan="3" class="attraction">
@@ -244,3 +252,20 @@
 </body>
 
 </html>
+
+<script>
+    // window.onload =()=>{
+    //     document.querySelector('#table').addEventListener('mouseenter', function(){
+    //     if (this.offsetWidth < this.scrollWidth) {
+    //             var that = this;
+    //             var text = this.text();
+    //             window.layer.tips(text, that, {
+    //                 tips: 1,
+    //                 time: 2000
+    //             });
+    //         }
+    //     })
+    // }
+    
+        
+</script>

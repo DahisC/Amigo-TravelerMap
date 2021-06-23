@@ -55,43 +55,20 @@
       <div class="row">
         @foreach ($userFavorites as $f)
         <div class="col-12">
-          <div class="card mb-3 text-dark">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <div class=" ratio ratio-1x1">
-                  <img src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="..." class="img-fluid rounded" height="200" />
-                </div>
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h5 class="card-title mb-0 text-primary">
-                      {{ $f->name }}
-                    </h5>
-                    <div>
-                      {{-- <a class="btn btn-outline-primary btn-sm" href="#" role="button">
-                            <i class="fas fa-share"></i>
-                            分享
-                          </a> --}}
-                      @include('partials.btn-social-share')
-                      @include('partials.favorites.btn-add-to-map')
-                    </div>
-                  </div>
-                  <p class="card-text">
-                    <small class="text-muted">
-                      <i class="fas fa-fw fa-map-marker-alt"></i>
-                      臺東縣951綠島鄉環島公路6公里處
-                    </small>
-                  </p>
-                  <p class="card-text description">
-                    @if (!empty($f->description))
-                    {{$f->description}}
-                    @else
-                    <i>暫無相關描述</i>
-                    @endif
-                  </p>
-                </div>
-              </div>
+          <div class="card mb-4 d-flex flex-column flex-md-row" data-id="{{$f->id}}">
+            <div class="ratio ratio-1x1" style="width: 250px;">
+              <div class="a-background rounded-start"
+                style="background-image: url({{ $f->images[0]->url }}); background-size: cover;"></div>
+            </div>
+            <div class="card-body">
+              <select name="" id="" class="selectMap">
+                <option value="">請選擇</option>
+                @foreach ( $maps as $map )
+                <option value="{{$map->id}}">{{$map->name}}</option>
+                @endforeach
+
+              </select>
+
             </div>
           </div>
         </div>
@@ -100,30 +77,83 @@
     </div>
   </div>
   {{-- Pagination --}}
-  <hr />
-  <div class="row">
+  {{-- <hr />
+  <div class=" row">
     <div class="col">
       {{ $userFavorites->links() }}
-      {{-- <nav aria-label="...">
-        <ul class="pagination pagination-circle justify-content-end">
-          <li class="page-item">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一頁</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">2 <span class="visually-hidden">(current)</span></a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">下一頁</a>
-          </li>
-        </ul>
-      </nav> --}}
-    </div>
-  </div>
 </div>
+</div> --}}
 @endsection
 
 @section('js')
+<script>
+  const selectElementAll = document.querySelectorAll('.selectMap');
+    selectElementAll.forEach((selectElement) => {
+      selectElement.addEventListener('change', (e) => {
+       const mapId = e.target.value;
+       const attractionId = e.target.parentNode.parentNode.dataset.id;
+         axios.patch(`/maps/${mapId}/pin`,{attractionId});
+      });
+    });
+</script>
 @stack('stack-js')
 @endsection
+
+{{-- <div class="col-12">
+          <div class="card mb-3 text-dark">
+            <div class="row g-0">
+              <div class="col-3">
+                <div class="ratio ratio-1x1 a-background" style="background-image: url({{ $f->images[0]->url }});
+background-size: cover;">
+@if (!empty($f->images[0]))
+<!-- <img src={{$f->images[0]->url}} alt="{{ $f->images[0]->image_desc ?? '' }}" class="img-fluid rounded" height="200" /> -->
+@else
+<!-- <img src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="..." class="img-fluid rounded" height="200" /> -->
+@endif
+</div>
+</div>
+<div class="col">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h5 class="card-title mb-0 text-primary">
+        {{ $f->name }}
+      </h5>
+      <div>
+        @include('partials.btn-social-share')
+        @include('partials.favorites.btn-add-to-map')
+      </div>
+    </div>
+    @if (isset($f->time))
+    <p class="card-text">
+      <small class="text-muted">
+        <i class="fas fa-fw fa-calendar-day"></i>
+        日期 {{$f->time->startDate ?? ''}} ~ {{$f->time->endDate ?? ''}}
+      </small>
+    </p>
+    @endif
+    <p class="card-text">
+      <small class="text-muted">
+        <i class="fas fa-fw fa-university"></i>
+        官網 <a href="{{$f->website}}">{{$f->name}}</a>
+      </small>
+    </p>
+    <p class="card-text">
+      <small class="text-muted">
+        <i class="fas fa-fw fa-map-marker-alt"></i>
+        地址 {{ $f->position->address}}
+      </small>
+    </p>
+
+
+    <p class="card-text description" title="{{ $f->description }}">
+      @if (!empty($f->description))
+      {{$f->description}}
+      @else
+      <i>暫無相關描述</i>
+      @endif
+    </p>
+  </div>
+</div>
+</div>
+</div>
+</div> --}}

@@ -12,14 +12,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            TagTableSeeder::class,
+            AmigoSeeder::class,
             UsersTableSeeder::class,
             MapTableSeeder::class,
-            TagTableSeeder::class,
             AttractionsTableSeeder::class,
             AttractionsConcertSeeder::class,
             AttractionsExhibitionSeeder::class,
             AttractionsFestivalSeeder::class,
-            AmigoSeeder::class,
             MapAttractionTableSeeder::class,
             UserAttractionTableSeeder::class,
         ]);

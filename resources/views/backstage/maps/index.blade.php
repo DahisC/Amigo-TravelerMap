@@ -1,6 +1,7 @@
 @extends('layouts.backstage')
 
 @section('css')
+<<<<<<< HEAD
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
  
  
@@ -17,7 +18,10 @@
   background-color: #64B999;
  }
   </style> --}}
+=======
+>>>>>>> development
 @endsection
+
 @section('page-content')
   <div class="container-fluid">
 
@@ -93,6 +97,7 @@
 @endsection
 
 @section('js')
+<<<<<<< HEAD
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript">
 
@@ -124,3 +129,6 @@
     $('#dataTable').DataTable();
   </script>
 @endsection
+=======
+@endsection
+>>>>>>> development
