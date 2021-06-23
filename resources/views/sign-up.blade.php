@@ -85,7 +85,7 @@
   </nav>
   <form class="flex-grow-1 position-relative overflow-hidden step1" action="{{ route('register') }}" method="POST">
     @csrf
-    <div id="form_slider" class="h-100 w-100 position-absolute">
+    <div id="form_slider" class="h-100 w-100 position-absolute @if (count($errors) > 0) forward @endif">
       <div class="h-100 w-100 signup-form__choose-role text-center flex-shrink-0 position-absolute">
         {{-- <div class="py-1 text-center text-secondary">
             <p class="mb-1">選擇角色</p>
@@ -133,18 +133,19 @@
         <div class="container" style="height: 90%;">
           <div class="row justify-content-center align-items-center h-100">
             <div class="col-10 col-sm-8 col-md-6 col-lg-5">
-              @if (count($errors) > 0)
-              <div class="alert alert-danger" role="alert">
-                <ul class="mb-0">
-                  @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-                  @endforeach
-                </ul>
-              </div>
-              <hr class="my-0" />
-              @endif
               <div class="card">
-                <hr class="my-0" />
+                <div class="card-body">
+                  @if (count($errors) > 0)
+                  <div class="alert alert-danger" role="alert">
+                    <ul class="mb-0">
+                      @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                      @endforeach
+                    </ul>
+                  </div>
+                  <hr class="my-0" />
+                  @endif
+                </div>
                 <div class="card-body p-4">
                   <div class="form__user-info">
                     <div class="form-outline mb-4">
