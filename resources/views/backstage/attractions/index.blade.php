@@ -1,6 +1,7 @@
 @extends('layouts.backstage')
 
 @section('css')
+
 @endsection
 
 
@@ -39,15 +40,17 @@
             </tr>
           </tfoot>
           <tbody>
-            @foreach ($attractions->take(10) as $a)
+            @foreach ($attractions as $a)
             <tr>
               <td>{{ $a->id }}</td>
               <td>{{ $a->name }}</td>
               <td>
-                <a href="{{ route('attractions.show', ['attraction' => $a->id]) }}" target="_blank" class="btn btn-info btn-circle btn-sm">
+                <a href="{{ route('attractions.show', ['attraction' => $a->id]) }}" target="_blank"
+                  class="btn btn-info btn-circle btn-sm">
                   <i class="fas fa-external-link-alt"></i>
                 </a>
-                <a href="{{ route('backstage.attractions.edit', ['attraction' => $a->id]) }}" class="btn btn-warning btn-circle btn-sm">
+                <a href="{{ route('backstage.attractions.edit', ['attraction' => $a->id]) }}"
+                  class="btn btn-warning btn-circle btn-sm">
                   <i class="fas fa-pen"></i>
                 </a>
 
@@ -56,7 +59,8 @@
                   <i class="fas fa-pen"></i>
                 </a>
 
-                <form id="destroy_form_{{ $a->id }}" action="{{ route('attractions.destroy', ['attraction' => $a->id]) }}" method="POST" class="d-none">
+                <form id="destroy_form_{{ $a->id }}"
+                  action="{{ route('attractions.destroy', ['attraction' => $a->id]) }}" method="POST" class="d-none">
                   @csrf
                   @method('DELETE')
                 </form>
@@ -66,6 +70,7 @@
             @endforeach
           </tbody>
         </table>
+        {{$attractions->links()}}
       </div>
     </div>
   </div>

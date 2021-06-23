@@ -127,7 +127,7 @@
 <script>
   let uplodedImageCounter = 0;
   const attraction = @json(isset($attraction) ? $attraction : null);
-
+  console.log(attraction);
   if (attraction) {
     attraction.images.forEach(image => {
       createImageBlock(image);

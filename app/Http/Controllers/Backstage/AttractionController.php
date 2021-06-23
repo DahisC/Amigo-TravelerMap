@@ -18,10 +18,10 @@ class AttractionController extends Controller
         $user = Auth::user();
         if (Gate::allows('viewAny',Attraction::class)) {
             if($user->role == "Admin"){
-                $attractions = Attraction::get();
+                $attractions = Attraction::paginate(10);
                 return view('backstage.attractions.index',compact('attractions'));
             }else{
-                $attractions = Attraction::where('user_id',$user->id)->get();
+                $attractions = Attraction::where('user_id',$user->id)->paginate(10);
                 return view('backstage.attractions.index',compact('attractions'));
             }
         }
