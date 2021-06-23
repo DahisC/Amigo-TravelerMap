@@ -1,25 +1,6 @@
 @extends('layouts.backstage')
 
 @section('css')
-<<<<<<< HEAD
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
- 
- 
-  
-  
-
-  {{-- <style>
-    .dataTables_wrapper .dataTables_paginate .paginate_button {
-    color: #64B999 !important; 
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
-  background:none;
-  color: white !important; 
-  background-color: #64B999;
- }
-  </style> --}}
-=======
->>>>>>> development
 @endsection
 
 @section('page-content')
@@ -97,38 +78,4 @@
 @endsection
 
 @section('js')
-<<<<<<< HEAD
-  <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript">
-
-
-// $(document).ready(function() {
-//     $('#dataTable').DataTable();
-// } );
-
-
-    // $(function() {
-
-    //   $("#dataTable").DataTable({
-    //     searching: false, //關閉filter功能
-    //     language: {
-    //       paginate: {
-    //         next: ' <div class="m-0 font-weight-bold text-primary">Next</div>',
-    //         previous: ' <div class="m-0 font-weight-bold text-primary">Previous</div>',
-            
-    //       }
-    //     }
-    //   });
-    // });
-
-    // $(document).ready(function() {
-    //   $('#dataTable').DataTable();
-
-    // });
-
-    $('#dataTable').DataTable();
-  </script>
 @endsection
-=======
-@endsection
->>>>>>> development
