@@ -65,9 +65,7 @@
                 @foreach ( $maps as $map )
                 <option value="{{$map->id}}">{{$map->name}}</option>
                 @endforeach
-
               </select>
-
             </div>
           </div>
         </div>
