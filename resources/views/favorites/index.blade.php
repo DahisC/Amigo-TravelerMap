@@ -55,19 +55,48 @@
       <div class="row">
         @foreach ($userFavorites as $f)
         <div class="col-12">
-          <div class="card mb-4 d-flex flex-column flex-md-row" data-id="{{$f->id}}">
-            <div class="ratio ratio-1x1" style="width: 250px;">
-              <div class="a-background rounded-start" style="background-image: url({{ $f->images[0]->url ?? '' }}); background-size: cover;"></div>
-            </div>
-            <div class="card-body">
-              <select name="" id="" class="selectMap">
-                <option value="">請選擇</option>
-                @foreach ( $maps as $map )
-                <option value="{{$map->id}}">{{$map->name}}</option>
-                @endforeach
-
-              </select>
-
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{ asset($f->images[0]->url ?? '') }}" alt="..." class="img-fluid" />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title text-primary">
+                      @if (!empty($f->website))
+                      <a href="{{$f->website}}" target="_blank">
+                        {{ $f->name }}
+                        <small><i class="fas fa-external-link-alt"></i></small>
+                      </a>
+                      @else
+                      {{ $f->name }}
+                      @endif
+                    </h5>
+                    <div class="d-flex">
+                      @include('partials.btn-social-share')
+                      @include('partials.favorites.btn-pin-to-map')
+                    </div>
+                  </div>
+                  <p class="card-text">
+                    @if (isset($f->time))
+                    <div>
+                      <small>
+                        <i class="fas fa-fw fa-calendar-day"></i>
+                        日期 {{$f->time->startDate ?? ''}} ~ {{$f->time->endDate ?? ''}}
+                      </small>
+                    </div>
+                    @endif
+                  </p>
+                  <p class="card-text description" title="{{ $f->description }}">
+                    @if (!empty($f->description))
+                    {{$f->description}}
+                    @else
+                    <i>暫無相關描述</i>
+                    @endif
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -76,83 +105,25 @@
     </div>
   </div>
   {{-- Pagination --}}
-  {{-- <hr />
-  <div class=" row">
+  <hr />
+  {{-- <div class="row">
     <div class="col">
       {{ $userFavorites->links() }}
 </div>
 </div> --}}
+</div>
 @endsection
 
 @section('js')
 <script>
   const selectElementAll = document.querySelectorAll('.selectMap');
-    selectElementAll.forEach((selectElement) => {
-      selectElement.addEventListener('change', (e) => {
-       const mapId = e.target.value;
-       const attractionId = e.target.parentNode.parentNode.dataset.id;
-         axios.patch(`/maps/${mapId}/pin`,{attractionId});
-      });
+  selectElementAll.forEach((selectElement) => {
+    selectElement.addEventListener('change', (e) => {
+      const mapId = e.target.value;
+      const attractionId = e.target.parentNode.parentNode.dataset.id;
+      axios.patch(`/maps/${mapId}/pin`, { attractionId });
     });
+  });
 </script>
 @stack('stack-js')
 @endsection
-
-{{-- <div class="col-12">
-          <div class="card mb-3 text-dark">
-            <div class="row g-0">
-              <div class="col-3">
-                <div class="ratio ratio-1x1 a-background" style="background-image: url({{ $f->images[0]->url }});
-background-size: cover;">
-@if (!empty($f->images[0]))
-<!-- <img src={{$f->images[0]->url}} alt="{{ $f->images[0]->image_desc ?? '' }}" class="img-fluid rounded" height="200" /> -->
-@else
-<!-- <img src="https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.jpg" alt="..." class="img-fluid rounded" height="200" /> -->
-@endif
-</div>
-</div>
-<div class="col">
-  <div class="card-body">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-      <h5 class="card-title mb-0 text-primary">
-        {{ $f->name }}
-      </h5>
-      <div>
-        @include('partials.btn-social-share')
-        @include('partials.favorites.btn-add-to-map')
-      </div>
-    </div>
-    @if (isset($f->time))
-    <p class="card-text">
-      <small class="text-muted">
-        <i class="fas fa-fw fa-calendar-day"></i>
-        日期 {{$f->time->startDate ?? ''}} ~ {{$f->time->endDate ?? ''}}
-      </small>
-    </p>
-    @endif
-    <p class="card-text">
-      <small class="text-muted">
-        <i class="fas fa-fw fa-university"></i>
-        官網 <a href="{{$f->website}}">{{$f->name}}</a>
-      </small>
-    </p>
-    <p class="card-text">
-      <small class="text-muted">
-        <i class="fas fa-fw fa-map-marker-alt"></i>
-        地址 {{ $f->position->address}}
-      </small>
-    </p>
-
-
-    <p class="card-text description" title="{{ $f->description }}">
-      @if (!empty($f->description))
-      {{$f->description}}
-      @else
-      <i>暫無相關描述</i>
-      @endif
-    </p>
-  </div>
-</div>
-</div>
-</div>
-</div> --}}

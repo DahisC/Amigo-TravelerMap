@@ -19208,3 +19208,20 @@ p {
   }
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: #f9f6ed;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #7F6758;
+  border-radius: 999px;
+}
+
