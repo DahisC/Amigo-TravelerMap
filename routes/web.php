@@ -2,10 +2,12 @@
 
 // use view;
 
-use App\Http\Controllers\MapController;
+use App\Attraction;
 use App\User;
+use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,7 +62,7 @@ Route::group([
 // 前端測試用路由
 Route::view('/snow', 'Snow.test');
 Route::view('/allen', 'Allen.test');
-//email 模板測試
+// email 模板測試
 Route::get('test', function () {
     $userFavorites = User::with([
         'attractions',
@@ -69,8 +71,15 @@ Route::get('test', function () {
     // dd($userFavorites);
     return view('emails.show', ['attractions' => $userFavorites]);
 });
+// emtail
+Route::get('/email', function () {
+    $markdown = new Markdown(view(), config('mail.markdown'));
+    return $markdown->render('emails.Itineraries', ['attractions' => Attraction::with('position', 'time')->whereBetween('id', [1, 5])->get()]);
+});
 
-//PDF
+
+
+// PDF
 Route::group([
     'prefix' => 'pdf',
     'as' => 'pdf',
