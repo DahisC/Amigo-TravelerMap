@@ -11,6 +11,10 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"> --}}
 
 <style>
+  :root {
+    --offcanvas-width: 0px;
+  }
+
   .form-check-input~.card {
     border: 2px solid rgba(0, 0, 0, 0);
   }
@@ -28,40 +32,6 @@
   #traveler-map {
     height: 100%;
     z-index: 1;
-  }
-
-  aside {
-    z-index: 2;
-    width: 20%;
-  }
-
-  .nav-icon {
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(45deg, var(--bs-light), #fff8dc);
-    box-shadow: 0 0 10px 1px #f9f6ed;
-    text-decoration: none;
-  }
-
-  .nav-icon>i {
-    font-size: 20px;
-    color: var(--bs-dark);
-  }
-
-  nav>.nav-icon {
-    /* margin-bottom: 20px; */
-    margin: 10px;
-  }
-
-  nav {
-    /* background: linear-gradient(40deg, var(--bs-primary), var(--bs-secondary)); */
-    /* background: url("{{ asset('images/sign-in.png') }}") center center; */
-    /* background-size: cover; */
-    background-color: rgba(254, 250, 238, 0.5);
-    width: fit-content;
-    height: fit-content;
   }
 
   /* marker group */
@@ -115,15 +85,15 @@
   /* Custom offCanvas */
   @media (min-width: 768px) {
     .logo {
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
     }
 
     /* .nav-wrapper {
       height: 100%;
     } */
 
-    .offcanvas-custom {
+    .custom-offcanvas {
       top: 0;
       right: 0;
       left: unset;
@@ -147,8 +117,8 @@
 
   @media (max-width: 767px) {
     .logo {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
     }
 
     /* .nav-wrapper {
@@ -164,7 +134,7 @@
       font-size: 15px;
     }
 
-    .offcanvas-custom {
+    .custom-offcanvas {
       right: 0;
       left: 0;
       height: 50vh;
@@ -182,14 +152,27 @@
       height: 40%;
     }
   }
+
+  #custom-mask {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    #custom-mask {
+      width: calc(100% - var(--offcanvas-width));
+      transition: width .3s ease-in-out;
+    }
+  }
 </style>
 @endsection
 
 @section('content')
 <div id="app" class="h-100">
-  <div class="h-100 w-100 position-absolute p-2 p-md-3 d-flex flex-column flex-md-row justify-content-start justify-content-md-between" style="z-index: 2; pointer-events: none;">
+  <div id="custom-mask" class="h-100 position-absolute p-2 p-md-3 d-flex flex-column flex-md-row justify-content-start justify-content-md-between" style="z-index: 2; pointer-events: none;">
     <div class="nav-wrapper d-flex flex-row flex-md-column align-items-center justify-content-center" style="pointer-events: auto;">
-      <div class="logo rounded-circle shadow bg-primary @if (isset($map)) mb-auto @endif"></div>
+      <a class="@if (isset($map)) mb-auto @else mb-0 @endif" href="{{ route('homepage') }}">
+        <div class="logo rounded-circle shadow bg-primary" style="background-image: url({{ asset('images/Logo.svg') }})"></div>
+      </a>
       @if (!isset($map))
       <nav class="rounded-pill d-flex flex-row flex-md-column p-1 my-md-auto ms-auto ms-md-0 shadow">
         @can('view-auth')
@@ -207,7 +190,7 @@
         </a>
         @endcan
         <hr class="mx-2" />
-        <button type="button" class="btn btn-primary btn-floating m-1" onclick="locateUser(event)">
+        <button type="button" class="btn btn-primary btn-floating m-1" v-on:click="locateUser(this)">
           <i class="fas fa-crosshairs"></i>
         </button>
         {{-- <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
@@ -223,36 +206,28 @@
       @endif
     </div>
     @if (isset($map))
-    <div class="shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-event: auto;">
-      {{ $map->name }}｜<i class="fas fa-user"></i> {{ $map->user->name }}
+    <div class="shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-event: auto;">
+      <i class="fas fa-eye me-0 me-md-1"></i><span class="d-none d-md-inline">唯讀模式</span>
     </div>
     @endif
     <div class="shadow mt-auto mt-md-0 mx-auto mx-md-0" style="height: fit-content; width: fit-content;">
-      <button type="button" class="btn btn-primary top-0 end-0" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="pointer-events: auto;">
+      <button type="button" class="btn btn-secondary top-0 end-0" data-bs-toggle="offcanvas" data-bs-target="#custom-offcanvas" aria-controls="custom-offcanvas" style="pointer-events: auto;">
         <i class="fas fa-bars me-1"></i>
         <span class="text-dark">@{{ attractions.length }} 個地點</span>
       </button>
     </div>
   </div>
   <div id="traveler-map"></div>
-  <div class="offcanvas offcanvas-custom bg-white" id="offcanvasRight" data-bs-backdrop="false">
-    <div class="offcanvas-header shadow">
-      <div class="d-flex align-items-center">
-        {{-- <button type="button" class="btn btn-outline-primary btn-floating" data-mdb-ripple-color="dark" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
-            <i class="fas fa-search"></i>
-          </button> --}}
-        <span class="badge rounded-pill bg-primary mx-1">
-          景點
-          <i class="fas fa-fw fa-times"></i>
-        </span>
-        <span class="badge rounded-pill bg-primary mx-1">
-          自然環境
-          <i class="fas fa-fw fa-times"></i>
-        </span>
-        <span class="badge rounded-pill bg-primary mx-1">
-          人為藝術
-          <i class="fas fa-fw fa-times"></i>
-        </span>
+  <div id="custom-offcanvas" class="offcanvas custom-offcanvas bg-white" data-bs-backdrop="false">
+    <div class="offcanvas-header shadow bg-primary">
+      <div class="w-100 d-flex justify-content-between align-items-center" style="font-size: 0.9rem;">
+        @if (isset($map))
+        <div><i class="fas fa-fw fa-map me-1"></i>{{ $map->name }}</div>
+        <div><i class="fas fa-fw fa-user me-1"></i>{{ $map->user->name }}</div>
+        @else
+        <div class="mx-auto">今天想去哪裡玩？</div>
+        @endif
+
       </div>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
@@ -336,6 +311,8 @@
   $vue = new Vue({
     el: '#app',
     data: {
+      markerClusters: null,
+      markers: [],
       map: null,
       attractions: attractions || [],
       detailTarget: {},
@@ -345,11 +322,10 @@
       this.$refs.userMarker = userMarker;
       this.$refs.userMarker.addEventListener('moveend', this.onUserMarkerMoved)
       //   userMarker.addEventListener('moveend', this.onUserMarkerMoved);
-      console.log(userMarker);
       this.initLeaflet();
       this.updateAttractions({ attractions, userFavorites })
 
-      if (addressLatLng) this.locateUser(addressLatLng)
+      if (addressLatLng) this.locateUser(addressLatLng);
       //   if (addressLatLng) locateUser(addressLatLng)
       //   else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
     },
@@ -388,13 +364,13 @@
       },
       // 將 Markers 算繪至地圖上
       renderMarkersOnMap(attractions) {
-        const markers = new L.MarkerClusterGroup().addTo(this.map);
-        attractions.forEach(a => {
-          console.log(a);
-          markers.addLayer(L.marker([a.position.lat, a.position.lng], {
-            icon: defineMarkerIcon(a.tags[0])
-          }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
-        });
+        if (this.markerClusters) this.markerClusters.clearLayers();
+        this.markerClusters = new L.MarkerClusterGroup().addTo(this.map);
+        this.markers = attractions.map(a => L.marker([a.position.lat, a.position.lng], {
+          icon: defineMarkerIcon(a.tags[0])
+        }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
+        this.markerClusters.addLayers(this.markers);
+
 
         function defineMarkerIcon(attractionTag) {
           switch (attractionTag.name) {
@@ -445,7 +421,6 @@
 
   });
 
-
   // 當使用者移動定位標籤後
   //   async function onUserMarkerMoved({ lat, lng }) {
   //     let params;
@@ -455,5 +430,17 @@
   //     $vue.updateAttractions(response.data);
   //     // renderMarkersOnMap(response.data.attractions);
   //   }
+</script>
+<script>
+  window.onload = () => {
+    const customOffcanvas = document.getElementById('custom-offcanvas');
+    console.log(customOffcanvas);
+    customOffcanvas.addEventListener('show.bs.offcanvas', () => {
+      document.querySelector(":root").style.setProperty("--offcanvas-width", "400px");
+    });
+    customOffcanvas.addEventListener('hide.bs.offcanvas', () => {
+      document.querySelector(":root").style.setProperty("--offcanvas-width", "0px");
+    });
+  }
 </script>
 @endsection

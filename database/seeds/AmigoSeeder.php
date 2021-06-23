@@ -18,12 +18,12 @@ class AmigoSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'name' => 'Amigo',
+            'name' => '阿米狗',
             'email' => "Amigo@gmail.com",
-            'role' => 'Traveler',
+            'role' => 'Guider',
             'password' => bcrypt('a')
         ]);
-        Map::create(['name' => 'España', 'user_id' => $user->id]);
+        Map::create(['name' => 'España | 西班牙揪４要這樣逛！', 'user_id' => $user->id]);
 
         // 番茄節（La Tomatina）
         $attraction = Attraction::create([
@@ -73,7 +73,7 @@ class AmigoSeeder extends Seeder
         $attraction->users()->attach($user_id);
 
         // map關聯
-        $map_espana = App\Map::where('name', 'España')->get()->first();
+        $map_espana = App\Map::where('id', '1')->get()->first();
         $attraction->maps()->attach($map_espana);
 
         // tags關聯
@@ -127,7 +127,7 @@ class AmigoSeeder extends Seeder
         $attraction->users()->attach($user_id);
 
         // map關聯
-        $map_espana = App\Map::where('name', 'España')->get()->first();
+        $map_espana = App\Map::where('id', '1')->get()->first();
         $attraction->maps()->attach($map_espana);
 
         // tags關聯
@@ -182,7 +182,7 @@ class AmigoSeeder extends Seeder
         $attraction->users()->attach($user_id);
 
         // map關聯
-        $map_espana = App\Map::where('name', 'España')->get()->first();
+        $map_espana = App\Map::where('id', '1')->get()->first();
         $attraction->maps()->attach($map_espana);
 
         // tags關聯
@@ -238,7 +238,7 @@ class AmigoSeeder extends Seeder
         $attraction->users()->attach($user_id);
 
         // map關聯
-        $map_espana = App\Map::where('name', 'España')->get()->first();
+        $map_espana = App\Map::where('id', '1')->get()->first();
         $attraction->maps()->attach($map_espana);
 
         // tags關聯
@@ -298,7 +298,7 @@ class AmigoSeeder extends Seeder
         $attraction->users()->attach($user_id);
 
         // map關聯
-        $map_espana = App\Map::where('name', 'España')->get()->first();
+        $map_espana = App\Map::where('id', '1')->get()->first();
         $attraction->maps()->attach($map_espana);
 
         // tags關聯
