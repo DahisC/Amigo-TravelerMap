@@ -13,7 +13,7 @@
     </li>
     @foreach ($userMaps as $map)
     <li>
-      <a id="btn-instagram-share" class="dropdown-item d-flex justify-content-between align-items-center text-center" href="#">
+      <a id="btn-instagram-share" class="dropdown-item d-flex justify-content-between align-items-center text-center" href="#" onclick="pinToMap({{ $map->id }}, {{ $f->id }})">
         {{ $map->name }}
         <i class="fas fa-map-marker-alt"></i>
       </a>
@@ -25,7 +25,7 @@
 @push('stack-js')
 <script>
   async function pinToMap(mapId, attractionId) {
-    const result = await axios.patch('/maps/2/pin', {
+    const result = await axios.patch(`/maps/${mapId}/pin`, {
       attractionId
     });
   }
