@@ -50,7 +50,7 @@ class AttractionController extends Controller
                         $path = $image->store('attractions');
                         $attraction->images()->save(
                             AttractionImage::make([
-                                'url' => Storage::url($path),
+                                'url' => $path,
                                 'image_desc' => $request->image_desc[$key] ?? '',
                             ])
                         );
@@ -90,7 +90,7 @@ class AttractionController extends Controller
                         $path = $image->store('attractions');
                         $attraction->images()->save(
                             AttractionImage::make([
-                                'url' => Storage::url($path),
+                                'url' => $path,
                                 'image_desc' => $request->image_desc[$key] ?? '',
                             ])
                         );
@@ -137,7 +137,7 @@ class AttractionController extends Controller
                         $path = $image->store('attractions');
                         AttractionImage::updateOrCreate([
                             'attraction_id' => $attraction->id,
-                            'url' => Storage::url($path),
+                            'url' => $path,
                         ], [
                             'image_desc' => $request->image_desc[$key] ?? '',
                         ]);
@@ -165,7 +165,7 @@ class AttractionController extends Controller
                         $path = $image->store('attractions');
                         AttractionImage::updateOrCreate([
                             'attraction_id' => $attraction->id,
-                            'url' => Storage::url($path),
+                            'url' => $path,
                         ], [
                             'image_desc' => $request->image_desc[$key] ?? '',
                         ]);
