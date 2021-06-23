@@ -67,6 +67,7 @@
             @endforeach
           </tbody>
         </table>
+        {{$maps->links()}}
       </div>
     </div>
   </div>

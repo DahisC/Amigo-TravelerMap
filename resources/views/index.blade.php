@@ -165,7 +165,7 @@ Buen Camino
                   <small class="fst-italic">
                     「問我西班牙有哪些有趣的活動？點了不就知道了？」
                   </small>
-                  <div class="text-end"><small>－－阿米狗，西班牙的地頭貓</small></div>
+                  {{-- <div class="text-end"><small>－－阿米狗，西班牙的地頭貓</small></div> --}}
                 </div>
               </div>
             </div>
@@ -204,7 +204,7 @@ Buen Camino
                   <small class="fst-italic">
                     「出去玩沒行程表怎麼行？快按按看這顆魔法按鈕！」
                   </small>
-                  <div class="text-end"><small>－－阿米狗（現在是貓），喵！</small></div>
+                  {{-- <div class="text-end"><small>－－阿米狗（現在是貓），喵！</small></div> --}}
                 </div>
               </div>
             </div>

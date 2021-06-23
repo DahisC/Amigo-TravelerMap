@@ -8,7 +8,7 @@
     <title>Document</title>
     <style>
         body {
-            font-family: 'Microsoft JhengHei', sans-serif;
+            font-family: 'TaipeiSansTCBeta-Bold', sans-serif;
         }
     </style>
 </head>

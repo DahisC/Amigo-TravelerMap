@@ -100,15 +100,15 @@
       </div>
       <div class="col">
         <label for="select_city" class="form-label">縣市 Region</label>
-        <select class="form-control @error('region') is-invalid @enderror" id="select_city" value="{{ $attraction->region ?? '' }}"></select>
+        <select class="form-control @error('region') is-invalid @enderror" id="select_city" value="{{ $attraction->position->region ?? '' }}"></select>
       </div>
       <div class="col">
         <label for="select_area" class="form-label">區域 Town</label>
-        <select class="form-control @error('town') is-invalid @enderror" id="select_area" value="{{ $attraction->town ?? '' }}"></select>
+        <select class="form-control @error('town') is-invalid @enderror" id="select_area" value="{{ $attraction->position->town ?? '' }}"></select>
       </div>
       <div class="col-12">
         <label for="address" class="form-label">地址 Address</label>
-        <input class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ $attraction->address ?? old('address') }}" />
+        <input class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ $attraction->position->address ?? old('address') }}" />
       </div>
     </div>
     <hr />
@@ -127,7 +127,6 @@
 <script>
   let uplodedImageCounter = 0;
   const attraction = @json(isset($attraction) ? $attraction : null);
-
   if (attraction) {
     attraction.images.forEach(image => {
       createImageBlock(image);

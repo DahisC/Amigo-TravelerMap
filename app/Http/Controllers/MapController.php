@@ -93,33 +93,33 @@ class MapController extends Controller
     }
     public function pin(Request $request, $id)
     {
-        //第一不能用find 
+        //第一不能用find
         $attraction = Attraction::findOrFail($request->attractionId);
-        $has = Map::where('id', $id)->whereHas('attractions', function ($query) use ($attraction) {
+        $isPinned = Map::where('id', $id)->whereHas('attractions', function ($query) use ($attraction) {
             $query->where('attraction_id', $attraction->id);
         })->get()->count();
 
         //第二不能在上面宣告 會被 $map->whereHas改變
         $map = Map::find($id);
-        if (!$has) $map->attractions()->attach($attraction);
+        if (!$isPinned) $map->attractions()->attach($attraction);
         else $map->attractions()->detach($attraction);
 
-        return ['map' => $map];
+        return response(['result' => $isPinned ? 'pinned' : 'removed']);
     }
     public function itineraries($id)
     {
-        $mapId= auth()->user()->maps->filter(function ($map) use ($id) {
+        $mapId = auth()->user()->maps->filter(function ($map) use ($id) {
             return $map->id == $id;
         })->first()->id;
 
         $all = Map::with([
             'attractions',
             'attractions.position'
-        ])->whereHas('attractions',function($query) use($mapId){
-            $query->where('map_id' ,$mapId);
+        ])->whereHas('attractions', function ($query) use ($mapId) {
+            $query->where('map_id', $mapId);
         })->get()->first();
 
-        return view('emails.itineraries',['map'=>$all]);
+        return view('emails.itineraries', ['map' => $all]);
         // Mail::send(new amigo_map($all));
         // return redirect()->route('sign-in');
     }
