@@ -58,20 +58,21 @@
           <div class="card mb-3">
             <div class="row g-0">
               <div class="col-md-4">
-                <img src="{{ asset($f->images[0]->url ?? '') }}" alt="..." class="img-fluid" />
+                <img src="{{ asset($f->images[0]->url ?? '') }}" alt="{{ $f->images[0]->image_desc ?? '' }}" class="w-100 h-100" style="object-fit: cover;" />
               </div>
               <div class="col-md-8">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-start mb-2">
                     <h5 class="card-title text-primary">
-                      @if (!empty($f->website))
+                      <a href="{{ route('attractions.show', ['attraction' => $f->id]) }}">{{ $f->name }}</a>
+                      {{-- @if (!empty($f->website))
                       <a href="{{$f->website}}" target="_blank">
-                        {{ $f->name }}
-                        <small><i class="fas fa-external-link-alt"></i></small>
+                      {{ $f->name }}
+                      <small><i class="fas fa-external-link-alt"></i></small>
                       </a>
                       @else
                       {{ $f->name }}
-                      @endif
+                      @endif --}}
                     </h5>
                     <div class="d-flex">
                       @include('partials.btn-social-share')
@@ -81,12 +82,18 @@
                   <p class="card-text">
                     @if (isset($f->time))
                     <div>
-                      <small>
-                        <i class="fas fa-fw fa-calendar-day"></i>
-                        日期 {{$f->time->startDate ?? ''}} ~ {{$f->time->endDate ?? ''}}
+                      <small class="d-flex">
+                        <span><i class="fas fa-fw fa-calendar me-1"></i></span>
+                        <span>{{$f->time->startDate ?? ''}} ~ {{$f->time->endDate ?? ''}}</span>
                       </small>
                     </div>
                     @endif
+                    <div>
+                      <small class="d-flex">
+                        <span><i class="fas fa-fw fa-map-marker me-1"></i></span>
+                        <span>{{$f->position->country ?? ''}}, {{$f->position->address ?? ''}}</span>
+                      </small>
+                    </div>
                   </p>
                   <p class="card-text description" title="{{ $f->description }}">
                     @if (!empty($f->description))
@@ -115,7 +122,7 @@
 @endsection
 
 @section('js')
-<script>
+{{-- <script>
   const selectElementAll = document.querySelectorAll('.selectMap');
   selectElementAll.forEach((selectElement) => {
     selectElement.addEventListener('change', (e) => {
@@ -124,6 +131,6 @@
       axios.patch(`/maps/${mapId}/pin`, { attractionId });
     });
   });
-</script>
+</script> --}}
 @stack('stack-js')
 @endsection
