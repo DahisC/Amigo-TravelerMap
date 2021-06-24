@@ -16,22 +16,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Megrim&display=swap" rel="stylesheet">
 <style>
   body {
-    /* background-color: #9ad3bc; */
     background: url('images/sign-in.png') no-repeat center center;
     background-size: cover;
   }
 
   .container {
     height: 100vh;
-  }
-
-  /* i {
-    transform: rotate(-15deg);
-  } */
-
-  .logo {
-    font-family: 'Megrim', cursive !important;
-    text-decoration: none;
   }
 </style>
 @endsection
@@ -51,6 +41,11 @@
         </div>
         <hr class="my-0" />
         @endif
+        <div class="card-body text-center">
+          <a href="{{ route('homepage') }}">
+            <img src="{{ asset('images/logo.svg') }}" alt="Logo" width="60">
+          </a>
+        </div>
         <div class="card-body px-0">
           <form method="POST" action="{{ route('login') }}">
             @csrf
@@ -84,8 +79,8 @@
       <div class="row mb-4">
         <div class="col-6 d-flex align-items-center">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
-            <label class="form-check-label" for="form1Example3">
+            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} checked />
+            <label class="form-check-label" for="remember">
               <small>給我記住</small>
             </label>
           </div>
@@ -110,8 +105,8 @@
       <button type="submit" class="btn btn-primary btn-block">登入</button>
       <hr class="a-hr mt-5" data-text="或透過社群網站登入" />
       <div class="d-flex">
-        <a class="btn btn-primary w-100 me-2" style="background-color: #3b5998;" href="{{route('login.facebook')}}" role="button"><i class="fab fa-facebook-f"></i></a>
-        <a class="btn btn-primary w-100" style="background-color: #dd4b39;" href="{{route('login.github')}}" role="button"><i class="fab fa-google"></i></a>
+        <a class="btn btn-primary w-100 me-2" style="background-color: #3b5998;" href="{{ route('login.facebook') }}" role="button"><i class="fab fa-facebook-f"></i></a>
+        <a class="btn btn-primary w-100" style="background-color: #dd4b39;" href="{{ route('login.github') }}" role="button"><i class="fab fa-google"></i></a>
       </div>
       </form>
     </div>

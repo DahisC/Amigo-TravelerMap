@@ -20,7 +20,7 @@
 
 @section('content')
 <div class="container py-5">
-  <div class="row">
+  <div class="row py-5">
     <div class="col">
       <h1 class="text-primary a-fs-3">我的收藏</h1>
       <hr />
@@ -28,15 +28,18 @@
   </div>
   <div class="row">
     <div class="d-none d-md-block col-4">
-
       <div class="input-group row-sm-4 position-sticky" style="top: 0px;">
-        <div class="form-outline">
-          <input type="search" id="form1" class="form-control" />
-          <label class="form-label" for="form1">Search</label>
-        </div>
-        <button type="button" class="btn btn-primary" id="inputButton">
-          <i class="fas fa-search"></i>
-        </button>
+
+        <form action="/favorites" method="get">
+          <div class="form-outline">
+            <input type="search" id="form1" class="form-control" name="search" />
+            <label class="form-label" for="form1">Search</label>
+          </div>
+
+          <button type="Submit" class="btn btn-primary" id="inputButton">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
       </div>
 
       <div class="list-group position-sticky" style="top: 0px;">
@@ -69,8 +72,7 @@
           <div class="card mb-3">
             <div class="row g-0">
               <div class="col-md-4">
-                <img src="{{ asset($f->images[0]->url ?? '') }}" alt="{{ $f->images[0]->image_desc ?? '' }}"
-                  class="w-100 h-100" style="object-fit: cover;" />
+                <img src="{{ asset($f->images[0]->url ?? '') }}" alt="{{ $f->images[0]->image_desc ?? '' }}" class="w-100 h-100" style="object-fit: cover;" />
               </div>
               <div class="col-md-8">
                 <div class="card-body">
@@ -134,15 +136,17 @@
 @endsection
 
 @section('js')
-<script>
+{{-- <script>
   document.querySelector('#inputButton').addEventListener('click',function(){
         const text = document.querySelector('#form1').value;
-        axios.get('/favorites',{params: { 
-          search:  text , 
+        axios.get('/favorites',{params: {
+          search:  text ,
         }})
-        .then((res)=>console.log(res))
+.then((res)=>console.log(res))
 });
-</script>
+</script> --}}
+
+
 {{-- <script>
   const selectElementAll = document.querySelectorAll('.selectMap');
   selectElementAll.forEach((selectElement) => {

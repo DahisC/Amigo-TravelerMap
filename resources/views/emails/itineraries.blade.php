@@ -1,16 +1,28 @@
 @component('mail::message')
 
+<p>
+  嗨！{{$user->name}} 安安！
+
+  很高興看到你來！
+</p> 
+<p>你選了好多有趣的活動！
+我已經把他們都排好，等不及要讓你看看這些地點了！</p> 
+<p>準備好收拾行囊，開啟下一段旅程了嗎?</p> 
+
+
 @component('mail::panel')
 <p style="text-align: center;">{{ $map->name }}</p>
 @endcomponent
 
 ## 行程摘要
 ---
-
 <ol>
   @foreach ($map->attractions as $index => $a)
   <li>
-    <p><b>{{ $a->position->country }}，{{ $a->name }}</b></p>
+    {{-- {{dd($a)}} --}}
+    {{-- {{dd($user)}} --}}
+    <a href="{{ url("$a->website") }}"><p><b>{{ $a->position->country }}，{{ $a->name}}</b></p></a>
+
     @if (!empty($a->time->startDate) && !empty($a->time->endDate))
     <p><small>時間　{{ $a->time->startDate }} ~ {{ $a->time->endDate }}</small></p>
     @endif
@@ -18,6 +30,8 @@
   </li>
   @endforeach
 </ol>
+
+
 
 ---
 

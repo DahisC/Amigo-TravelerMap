@@ -49,7 +49,6 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role === "Guider";
         });
 
-
         Gate::define('view-traveler', function ($user) {
             return $user->role === "Traveler";
         });

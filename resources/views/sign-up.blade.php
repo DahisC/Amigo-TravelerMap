@@ -20,11 +20,6 @@
     height: 100vh;
   }
 
-  .logo {
-    font-family: 'Megrim', cursive !important;
-    text-decoration: none;
-  }
-
   #form_slider {
     /* overflow: hidden; */
     left: 0%;
@@ -47,32 +42,32 @@
   } */
 
   @media (min-width: 576px) {
-    .role-card {
-      height: 100%;
+    .role-card__wrapper {
+      padding: 200px 20px;
     }
   }
 
   @media (min-width: 768px) {
-    .role-card {
-      width: 80%;
+    .role-card__wrapper {
+      padding: 180px 50px;
     }
   }
 
   @media (min-width: 992px) {
-    .role-card {
-      width: 70%;
+    .role-card__wrapper {
+      padding: 180px 100px;
     }
   }
 
   @media (min-width: 1200px) {
-    .role-card {
-      width: 60%;
+    .role-card__wrapper {
+      padding: 180px 200px;
     }
   }
 
   @media (min-width: 1400px) {
-    .role-card {
-      width: 50%;
+    .role-card__wrapper {
+      padding: 180px 350px;
     }
   }
 </style>
@@ -80,9 +75,6 @@
 
 @section('content')
 <div class="d-flex flex-column h-100">
-  <nav class="text-center shadow-sm py-2">
-    <a class="h1 logo text-secondary" href="/">Amigo</a>
-  </nav>
   <form class="flex-grow-1 position-relative overflow-hidden step1" action="{{ route('register') }}" method="POST">
     @csrf
     <div id="form_slider" class="h-100 w-100 position-absolute @if (count($errors) > 0) forward @endif">
@@ -91,8 +83,8 @@
             <p class="mb-1">選擇角色</p>
             <small>透過建立活動可以讓其它使用者透過地圖得知關於你的表演資訊！</small>
           </div> --}}
-        <div class="d-flex flex-column flex-sm-row p-sm-3 px-md-4 px-lg-5" style="height: 90%;">
-          <div class="role-card d-flex flex-column me-sm-3 py-2 px-sm-3 px-md-5 py-md-3 rounded">
+        <div class="role-card__wrapper d-flex flex-column justift-content-center flex-sm-row" style="height: 90%;">
+          <div class="h-100 role-card d-flex flex-column me-sm-3 py-2 px-sm-3 px-md-5 py-md-3 rounded">
             <div class="form-check">
               <label for="role-Traveler" class="form-check-label text-dark fw-bold">
                 <input id="role-Traveler" type="radio" class="form-check-input" value="Traveler" checked name="role">
@@ -101,13 +93,13 @@
             </div>
             <small>你是旅人，有著熱愛冒險的靈魂</small>
             <hr />
-            <div class="flex-grow-1" style="background: url({{ asset('images/page/sign-up/role_traveler.png') }}) top center no-repeat; background-size: cover;">
+            <div class="flex-grow-1 a-background" style="background-image: url({{ asset('images/page/sign-up/role-traveler.png') }});">
             </div>
             <hr />
             <small class="text-danger">※無法在網站中建立自己的活動</small>
           </div>
 
-          <div class="role-card d-flex flex-column ms-sm-3 py-2 px-sm-3 px-md-5 py-md-3 rounded">
+          <div class="h-100 role-card d-flex flex-column ms-sm-3 py-2 px-sm-3 px-md-5 py-md-3 rounded">
             <div class="form-check">
               <label class="form-check-label text-dark fw-bold">
                 <input id="role-Artist" type="radio" class="form-check-input" name="role" value="Guider">
@@ -116,7 +108,7 @@
             </div>
             <small>比起冒險，你更希望能感動人心</small>
             <hr />
-            <div class="flex-grow-1" style="background: url({{ asset('images/page/sign-up/role_guider.png') }}) top center no-repeat; background-size: cover;">
+            <div class="flex-grow-1 a-background" style="background-image: url({{ asset('images/page/sign-up/role-guider.png') }});">
             </div>
             <hr />
             <small class="text-success">※可以在網站中建立自己的活動</small>
@@ -145,6 +137,11 @@
                   </div>
                   <hr class="my-0" />
                   @endif
+                </div>
+                <div class="card-body text-center">
+                  <a href="{{ route('homepage') }}">
+                    <img src="{{ asset('images/logo.svg') }}" alt="Logo" width="60">
+                  </a>
                 </div>
                 <div class="card-body p-4">
                   <div class="form__user-info">
@@ -214,8 +211,8 @@
                   <button type="submit" class="btn btn-primary w-100">註冊</button>
                   <hr class="a-hr mt-5" data-text="或透過社群網站登入" />
                   <div class="d-flex">
-                    <a class="btn btn-primary w-100 me-2" style="background-color: #3b5998;" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-primary w-100" style="background-color: #dd4b39;" href="#!" role="button"><i class="fab fa-google"></i></a>
+                    <a class="btn btn-primary w-100 me-2" style="background-color: #3b5998;" href="{{route('login.facebook')}}" role="button"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-primary w-100" style="background-color: #dd4b39;" href="{{route('login.github')}}" role="button"><i class="fab fa-google"></i></a>
                   </div>
 
                 </div>
