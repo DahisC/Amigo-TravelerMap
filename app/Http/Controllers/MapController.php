@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Mail;
 
 class MapController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'show', 'generateItineraries');
+    }
+
     public function index(Request $request)
     {
         $userFavorites = User::favorites();
@@ -109,8 +114,8 @@ class MapController extends Controller
     }
     public function generateItineraries($mapId)
     {
-        if (auth()->check())  $user = auth()->user();
-        else $user = null;
+        if (auth()->check()) $user = auth()->user();
+        else $user = User::find(1);
         $map = Map::with([
             'attractions',
             'attractions.position'
@@ -118,12 +123,10 @@ class MapController extends Controller
             $query->where('map_id', $mapId);
         })->get()->first();
 
-        Mail::send(new Itineraries($map, $user));
+        Mail::send(new Itineraries($map, $user)); // for test
 
         $markdown = new Markdown(view(), config('mail.markdown'));
         return $markdown->render('emails.Itineraries', compact('map', 'user'));
-        // Mail::send(new amigo_map($all));
-        // return redirect()->route('sign-in');
     }
     // public function watch()
     // {
