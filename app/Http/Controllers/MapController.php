@@ -7,7 +7,7 @@ use App\Tag;
 use App\User;
 use App\helpers;
 use App\Attraction;
-use App\Mail\amigo_map;
+use App\Mail\Itineraries;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Markdown;
 use App\Http\Requests\MapRequest;
@@ -109,6 +109,8 @@ class MapController extends Controller
     }
     public function generateItineraries($mapId)
     {
+        if (auth()->check())  $user = auth()->user();
+        else $user = null;
         $map = Map::with([
             'attractions',
             'attractions.position'
@@ -116,11 +118,26 @@ class MapController extends Controller
             $query->where('map_id', $mapId);
         })->get()->first();
 
-        // return view('emails.itineraries', compact('map'));
+        Mail::send(new Itineraries($map, $user));
 
         $markdown = new Markdown(view(), config('mail.markdown'));
-        return $markdown->render('emails.Itineraries', compact('map'));
+        return $markdown->render('emails.Itineraries', compact('map', 'user'));
         // Mail::send(new amigo_map($all));
         // return redirect()->route('sign-in');
     }
+    // public function watch()
+    // {
+    //     // ->setOptions(['defaultFont' => 'sans-serif'])
+    //     $pdf = PDF::loadView('emails.PDF');
+    //     return $pdf->stream();
+    //     // return $pdf->download('amigo.pdf');
+    // }
+    // public function pdfOutput()
+    // {
+    //     $userFavorites = User::with([
+    //         'attractions',
+    //         'attractions.position',
+    //     ])->findOrFail(auth()->user()->id);
+    //     Mail::send(new amigo_map($userFavorites));
+    // }
 }

@@ -16,9 +16,13 @@ class Itineraries extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $map;
+    public $user;
+
+    public function __construct($map, $user)
     {
-        //
+        $this->map = $map;
+        $this->user = $user;
     }
 
     /**
@@ -28,6 +32,6 @@ class Itineraries extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.Itineraries');
+        return $this->from('example@example.com')->to('dahischeng@gmail.com')->markdown('emails.Itineraries', ['map' => $this->map, 'user' => $this->user]);
     }
 }
