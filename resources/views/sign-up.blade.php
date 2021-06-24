@@ -101,7 +101,7 @@
             </div>
             <small>你是旅人，有著熱愛冒險的靈魂</small>
             <hr />
-            <div class="flex-grow-1" style="background: url({{ asset('images/page/sign-up/role_traveler.png') }}) top center no-repeat; background-size: cover;">
+            <div class="flex-grow-1" style="background: url({{ asset('images/page/sign-up/role-traveler.png') }}) top center no-repeat; background-size: cover;">
             </div>
             <hr />
             <small class="text-danger">※無法在網站中建立自己的活動</small>
@@ -116,7 +116,7 @@
             </div>
             <small>比起冒險，你更希望能感動人心</small>
             <hr />
-            <div class="flex-grow-1" style="background: url({{ asset('images/page/sign-up/role_guider.png') }}) top center no-repeat; background-size: cover;">
+            <div class="flex-grow-1" style="background: url({{ asset('images/page/sign-up/role-guider.png') }}) top center no-repeat; background-size: cover;">
             </div>
             <hr />
             <small class="text-success">※可以在網站中建立自己的活動</small>
