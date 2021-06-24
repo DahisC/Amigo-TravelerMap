@@ -67,7 +67,7 @@ class RegisterController extends Controller
     {
         switch ($data['role']) {
             case 'Traveler':
-                $data['role'] = '\images\avatar\avatar-travele.png';
+                $data['role'] = '\images\avatar\avatar-traveler.png';
                 break;
             case 'Guider':
                 $data['role'] = '\images\avatar\avatar-guider.png';
