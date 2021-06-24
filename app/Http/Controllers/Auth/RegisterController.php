@@ -65,8 +65,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // $role = $data['role'];
-        // $data['role'] = "\images\avatar\avatar-$role.png";
         switch ($data['role']) {
             case 'Traveler':
                 $data['role'] = '\images\avatar\avatar-travele.png';
@@ -77,7 +75,6 @@ class RegisterController extends Controller
             case 'Amdin':
                 $data['role'] = '\images\avatar\avatar-admin.png';
         };
-        // dd($data['role']);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
