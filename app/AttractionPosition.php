@@ -11,7 +11,7 @@ class AttractionPosition extends Model
     protected $fillable = [
         'country', 'region', 'town', 'address', 'lat', 'lng' ,'attraction_id',
     ];
-    public function Attraction()
+    public function attraction()
     {
         return $this->belongsTo('App\Attraction')->withDefault();
     }
