@@ -31,6 +31,6 @@ class amigo extends Mailable
     {
         return $this
         ->to('adwxsghu@gmail.com')
-        ->markdown('emails.Itineraries', ['attractions' => $this->attractions]);
+        ->markdown('emails.Itineraries', ['attractions' => $this->attractions]);;
     }
 }
