@@ -2,7 +2,7 @@
 
 @section('title')
 @parent
-註冊
+加入冒險
 @endsection
 
 @section('nav')

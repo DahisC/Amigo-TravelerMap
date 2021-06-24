@@ -2,9 +2,12 @@
 
 // use view;
 
+use App\Attraction;
+use App\User;
+use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\MapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,11 +32,10 @@ Route::view('/', 'index')->name('homepage'); // 首頁
 
 Route::resource('/maps', 'MapController'); // 地圖
 
-    //napAttraction
-    Route::patch('/maps/{map}/pin', 'MapController@pin');
-    //PDF
-    Route::get('/maps/{map}/itineraries', 'MapController@generateItineraries')->name('maps.itineraries');
-
+//napAttraction
+Route::patch('/maps/{map}/pin', 'MapController@pin');
+//PDF
+Route::get('/maps/{map}/itineraries', 'MapController@generateItineraries')->name('maps.itineraries');
 
 
 
@@ -50,7 +52,7 @@ Route::group([
     'as' => 'backstage.',
     'middleware' => 'auth'
 ], function () {
-    Route::get('/', 'backstage\indexController@index')->name('index'); // 後台首頁
+    Route::get('/', 'Backstage\IndexController@index')->name('index'); // 後台首頁
     Route::resource('/users', 'Backstage\UserController')->except('show'); // 後台 - 會員管理
     Route::resource('/maps', 'Backstage\MapController')->except('show'); // 後台 - 地圖管理
     Route::resource('/attractions', 'Backstage\AttractionController')->except(['store', 'update', 'show', 'destroy']); // 後台 - 地點管理
@@ -92,11 +94,5 @@ Route::get('login/facebook/callback', 'Auth\LoginController@facebookCallback');
 Route::get('login/github', 'Auth\LoginController@github')->name('login.github');
 Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
 
-Route::get('/artisan/reset', function () {
-    dump('- resetting - | migrate:reset');
-    Artisan::command('migrate:reset', function () {
-        dump('- reseted - | migrate:reset');
-    });
-});
 
 // Route::get('/home', 'HomeController@index')->name('home');
