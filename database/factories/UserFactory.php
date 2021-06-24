@@ -25,7 +25,7 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'api_token' => Str::random(80),
         'remember_token' => Str::random(10),
-        'avatar' => 'images/avatar/avatar-traveler.png'
+        'avatar' => '/images/avatar/avatar-traveler.png'
     ];
 });
 
@@ -38,7 +38,7 @@ foreach (['Admin', 'Guider', 'Traveler'] as $role) {
             'email' => "$role@gmail.com",
             'role' => $role,
             'password' => bcrypt('a'),
-            'avatar' => 'images/avatar/avatar-' . strtolower($role) . '.png'
+            'avatar' => '/images/avatar/avatar-' . strtolower($role) . '.png'
         ];
     });
 }
