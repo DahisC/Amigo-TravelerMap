@@ -268,7 +268,7 @@
     <div class="mx-auto">今天想去哪裡玩？</div>
     @endif
   </div> --}}
-  <div class="w-100 d-flex justify-content-between align-items-center" style="font-size: 0.9rem;">
+  <div class="w-100 d-flex justify-content-start align-items-center" style="font-size: 0.9rem;">
     @if (!$viewMode)
     <button id="btn_filtNothing" type="button" :class="filter === 'NOTHING' ? 'btn-dark' : 'btn-outline-dark'" class="btn btn-sm me-2" v-on:click="filter = 'NOTHING'">
       <i class="fas fa-fw fa-map-marker-alt"></i>
@@ -291,7 +291,7 @@
 <div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-md-column align-items-md-center">
   <p v-if="attractions.length === 0">快來看看有什麼吧～</p>
   <div v-else v-for="(attraction, i) in attractions" class="attraction-card card mb-0 mb-md-3 me-2 me-md-0 shadow flex-shrink-0">
-    <div class="attraction-card__top position-relative shadow flex-shrink-0">
+    <div class="attraction-card__top position-relative shadow flex-shrink-0 bg-primary">
       <div class="position-absolute w-100 h-100">
         <div>
           <span v-for="tag in attraction.tags" class="badge d-block m-2" style="width: fit-content;" :style="{ 'background-color': tag.color }">@{{ tag.name }}</span>
@@ -312,8 +312,8 @@
           @endif
         </div>
       </div>
-      <img v-if="attraction.images.length !== 0" :src="attraction.images[0].url" class="h-100 card-img-top img-fluid" style="object-fit: cover;" />
-      <img v-else :src="'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg'" class="h-100 card-img-top img-fluid" />
+      <img v-if="attraction.images.length !== 0" :src="attraction.images[0].url" class="h-100 card-img-top img-fluid" style="object-fit: cover;" onerror="this.onerror=null; this.src='{{ asset('images/page/index/map.png') }}'" />
+      <img v-else src="{{ asset('images/page/index/map.png') }}" class="h-100 card-img-top img-fluid" style="object-fit: cover;" />
     </div>
     <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-hidden">
       <h6 class="text-primary">@{{ attraction . name }}</h6>
@@ -353,9 +353,12 @@
   const $map = @json($map);
   const mapAttractions = @json($mapAttractions);
   const $user = @json($user);
+  const exploreMode = @json($exploreMode);
+  const viewMode = @json($viewMode);
+  const editMode = @json($editMode);
 
   window.addEventListener('load', () => {
-    if (/^\/maps\/?$/.test(window.location.pathname)) {
+    if (exploreMode) {
       introJs().setOptions({
         steps: [{
           element: document.querySelector('#info_exploreMode'),
@@ -384,7 +387,7 @@
         }]
       }).start();
     } else {
-      if ($user.id === $map.user_id) {
+      if (editMode) {
         introJs().setOptions({
           steps: [{
             element: document.querySelector('#info_editMode'),
@@ -451,6 +454,11 @@
     autoPanSpeed: 25,
   });
 
+  function setDefaultFilterMode() {
+    if (exploreMode) return 'NOTHING';
+    if (viewMode) return 'PINNED';
+    if (editMode) return 'PINNED';
+  }
 
   /* Vue */
   $vue = new Vue({
@@ -464,7 +472,7 @@
       detailTarget: {},
       userFavorites: userFavorites || [],
       mapAttractions: mapAttractions || [],
-      filter: 'NOTHING', // 'PINNED', 'FAVORITED'
+      filter: setDefaultFilterMode(), // 'PINNED', 'FAVORITED'
     },
     mounted() {
       this.$refs.userMarker = userMarker;

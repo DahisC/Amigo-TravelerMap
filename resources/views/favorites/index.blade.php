@@ -27,9 +27,8 @@
     </div>
   </div>
   <div class="row">
-    <div class="d-none d-md-block col-4">
+    {{-- <div class="d-none d-md-block col-4">
       <div class="input-group row-sm-4 position-sticky" style="top: 0px;">
-
         <form action="/favorites" method="get">
           <div class="form-outline">
             <input type="search" id="form1" class="form-control" name="search" />
@@ -41,7 +40,6 @@
           </button>
         </form>
       </div>
-
       <div class="list-group position-sticky" style="top: 0px;">
         <label class="list-group-item">
           <input class="form-check-input me-1" type="checkbox" value="" />
@@ -64,15 +62,15 @@
           Vestibulum at eros
         </label>
       </div>
-    </div>
+    </div> --}}
     <div class="col">
       <div class="row">
         @foreach ($userFavorites as $f)
         <div class="col-12">
           <div class="card mb-3">
             <div class="row g-0">
-              <div class="col-md-4">
-                <img src="{{ asset($f->images[0]->url ?? '') }}" alt="{{ $f->images[0]->image_desc ?? '' }}" class="w-100 h-100" style="object-fit: cover;" />
+              <div class="col-md-4 a-background bg-primary">
+                <img src="{{ asset($f->images[0]->url ?? '') }}" alt="{{ $f->images[0]->image_desc ?? '' }}" class="w-100 h-100" style="object-fit: contain;" onerror="this.onerror=null; this.src='{{ asset('images/page/index/map.png') }}'" />
               </div>
               <div class="col-md-8">
                 <div class="card-body">
