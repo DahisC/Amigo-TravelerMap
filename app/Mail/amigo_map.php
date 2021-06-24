@@ -37,11 +37,9 @@ class amigo_map extends Mailable
         // dd($attractions);
         $pdf = PDF::loadView('emails.PDF', ['attractions' => $user_attractions])->setPaper('a4');
 
-        // return $this
-        // ->to($this->user_to->email)
-        // ->from('example@example.com')
-        // ->attachData($pdf->output(), 'attractions.pdf')
-        // ->view('emails.show',['attractions'=>$attractions]);
-        return $this->subject('測試')->from('dahis4work@gmail.com')->markdown('emails.orders.shipped', ['mailData' => $this->mailData]);
+        return $this
+            ->to($this->user_to->email)
+            ->attachData($pdf->output(), 'attractions.pdf')
+            ->view('emails.show',['attractions'=>$attractions]);
     }
 }
