@@ -68,10 +68,8 @@ class MapController extends Controller
         $user = auth()->user() ?? null;
         $attractions =  Attraction::with('tags', 'position', 'images', 'time')->take(10)->get();
         $map = Map::with('user', 'attractions')->find($id);
-        $mapAttractions = $map->attractions->pluck('id');
-        // $mapAttractions = Attraction::with('tags', 'position', 'images')->whereHas('maps', function ($q) use ($id) {
-        //     $q->where('map_id', $id);
-        // })->get();
+        // $mapAttractions = $map->attractions->pluck('id');
+        $mapAttractions = $map->attractions;
         $userFavorites = User::favorites();
         $addressLatLng = null;
         return view('maps.index', [
@@ -115,7 +113,8 @@ class MapController extends Controller
         $map = Map::with('attractions')->find($id);
         if (!$isPinned) $map->attractions()->attach($attraction);
         else $map->attractions()->detach($attraction);
-        $mapAttractions = Map::with('attractions')->find($id)->attractions->pluck('id'); // 如果使用 $map-> 會取得更新前的舊陣列
+        // $mapAttractions = Map::with('attractions')->find($id)->attractions->pluck('id'); // 如果使用 $map-> 會取得更新前的舊陣列
+        $mapAttractions = Map::with('attractions')->find($id)->attractions;
         return compact('mapAttractions');
     }
     public function generateItineraries($mapId)

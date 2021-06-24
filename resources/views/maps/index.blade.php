@@ -270,17 +270,17 @@
   </div> --}}
   <div class="w-100 d-flex justify-content-between align-items-center" style="font-size: 0.9rem;">
     @if (!$viewMode)
-    <button id="btn_filtNothing" type="button" class="btn btn-dark btn-sm me-2 w-100 guide">
+    <button id="btn_filtNothing" type="button" :class="filter === 'NOTHING' ? 'btn-dark' : 'btn-outline-dark'" class="btn btn-sm me-2" v-on:click="filter = 'NOTHING'">
       <i class="fas fa-fw fa-map-marker-alt"></i>
       所有 @{{ attractions.length }}
     </button>
-    <button id="btn_filtFavorites" type="button" class="btn btn-outline-dark btn-sm me-2 w-100 guide">
+    <button id="btn_filtFavorites" type="button" :class="filter === 'FAVORITED' ? 'btn-dark' : 'btn-outline-dark'" class="btn btn-sm me-2" v-on:click="filter = 'FAVORITED'">
       <i class="fas fa-fw fa-star"></i>
       收藏 @{{ userFavorites.length }}
     </button>
     @endif
     @if ($editMode || $viewMode)
-    <button id="btn_filtPinned" type="button" class="btn btn-outline-dark btn-sm me-2 w-100 guide">
+    <button id="btn_filtPinned" type="button" :class="filter === 'PINNED' ? 'btn-dark' : 'btn-outline-dark'" class="btn btn-sm me-2" v-on:click="filter = 'PINNED'">
       <i class="fas fa-map-marked-alt"></i>
       釘選 @{{ mapAttractions.length }}
     </button>
@@ -299,15 +299,15 @@
                 <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
         </div>
         <div class="position-absolute end-0 bottom-0 m-2">
-          <button type="button" class="btn btn-primary btn-sm btn-floating" style="font-size: 0.8rem;" v-on:click="addToFavorite(attraction.id)">
+          <button type="button" :class="isFavorited(attraction.id) ? 'btn-primary' : 'btn-outline-primary'" class="btn btn-sm btn-floating" style="font-size: 0.8rem;" v-on:click="addToFavorite(attraction.id)">
             <i v-if="isFavorited(attraction.id)" class="fas fa-star"></i>
             <i v-else class="far fa-star"></i>
             {{-- <span class="d-none d-sm-inline">收藏</span> --}}
           </button>
           @if ($editMode)
-          <button :id="'btn_pinToMap_' + i" type="button" class="btn btn-primary btn-sm btn-floating" style="font-size: 0.8rem;" v-on:click="pinToMap(attraction.id)">
+          <button :id="'btn_pinToMap_' + i" type="button" :class="isPinned(attraction.id) ? 'btn-primary' : 'btn-outline-primary'" class="btn btn-sm btn-floating" style="font-size: 0.8rem;" v-on:click="pinToMap(attraction.id)">
             <i v-if="isPinned(attraction.id)" class="fas fa-map-marked-alt"></i>
-            <i v-else class="fas fa-pen"></i>
+            <i v-else class="fas fa-map"></i>
           </button>
           @endif
         </div>
@@ -464,6 +464,7 @@
       detailTarget: {},
       userFavorites: userFavorites || [],
       mapAttractions: mapAttractions || [],
+      filter: 'NOTHING', // 'PINNED', 'FAVORITED'
     },
     mounted() {
       this.$refs.userMarker = userMarker;
@@ -515,7 +516,7 @@
         this.mapAttractions = mapAttractions;
       },
       isPinned(attractionId) {
-        return this.mapAttractions.includes(attractionId);
+        return this.mapAttractions.map(mA => mA.id).includes(attractionId);
       },
       // 將 Markers 算繪至地圖上
       renderMarkersOnMap(attractions) {
