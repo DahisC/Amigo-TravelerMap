@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\User;
-use Illuminate\Http\Request;
+use App\Attraction;
+use App\Mail\amigo;
 use App\Http\Requests\UserRequest;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Controllers\Controller;
-use App\Mail\amigo_map;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 
 class UserController extends Controller
@@ -80,10 +80,8 @@ class UserController extends Controller
     }
     public function pdfOutput()
     {
-            $userFavorites = User::with([
-                'attractions',
-                'attractions.position',
-            ])->findOrFail(auth()->user()->id);
-            Mail::send(new amigo_map($userFavorites));
+            $attractions = Attraction::with('position', 'time')->whereBetween('id', [1, 5])->get();
+            Mail::send(new amigo($attractions));
+            // Mail::send(new amigo_map($userFavorites));
     }
 }
