@@ -71,7 +71,7 @@ Buen Camino
   </section>
   <!-- ¿Quién soy yo? / Who am I? -->
   <section id="banner-about-me" class="index-banner py-4">
-    <div class="index-banner__description position-sticky bottom-0 a-background" style="background-image: url({{ asset('images/page/index/banner_who_am_III.png') }})">
+    <div class="index-banner__description position-sticky bottom-0 a-background" style="background-image: url({{ asset('images/page/index/banner-who-am-III.png') }})">
       <div class="h-100 container py-4">
         <div class="h-100 row">
           <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center mb-4 mb-md-0">
@@ -110,7 +110,7 @@ Buen Camino
               <h1 class="a-fs-4"><b class="text-primary">A</b><span class="text-dark">ttractions</span></h1>
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-5 mb-md-0">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/Attractions.png') }})"></div>
+              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/attractions.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
               <h2 class="a-fs-1 mb-4 text-primary text-center text-md-start">「附近有什麼好玩的？」</h2>
@@ -138,7 +138,7 @@ Buen Camino
               <h1 class="a-fs-4"><b class="text-primary">M</b><span class="text-dark">ap</span></h1>
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end align-items-center mb-5 mb-md-0">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/Map.png') }})"></div>
+              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/map.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
               <h2 class="a-fs-1 mb-4 text-primary text-center text-md-start">透過地圖旅行</h2>
@@ -176,7 +176,7 @@ Buen Camino
               <h1 class="a-fs-4"><b class="text-primary">I</b><span class="text-dark">tineraries</span></h1>
             </div>
             <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-5 mb-md-0">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/Itineraries.png') }})"></div>
+              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/itineraries.png') }})"></div>
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
               <h2 class="a-fs-1 mb-4 text-primary text-center text-md-start">獨特的行程表</h2>
@@ -249,7 +249,7 @@ Buen Camino
             Traveler<br />
             旅人
           </h3>
-          <div class="w-50 ratio ratio-1x1 rounded-circle border border-3 mx-auto mb-5 border-secondary a-background" style="background-image: url({{ asset('images/page/index/role_Traveler.png') }})"></div>
+          <div class="w-50 ratio ratio-1x1 rounded-circle border border-3 mx-auto mb-5 border-secondary a-background" style="background-image: url({{ asset('images/page/index/role-traveler.png') }})"></div>
           <div class="text-dark">
             <p>旅人，同時也是追尋者。</p>
             <p>
@@ -267,7 +267,7 @@ Buen Camino
             Guider<br />
             嚮導
           </h3>
-          <div class="w-50 ratio ratio-1x1 rounded-circle border border-3 mx-auto mb-5 border-secondary a-background" style="background-image: url({{ asset('images/page/index/role_Guider.png') }})"></div>
+          <div class="w-50 ratio ratio-1x1 rounded-circle border border-3 mx-auto mb-5 border-secondary a-background" style="background-image: url({{ asset('images/page/index/role-guider.png') }})"></div>
           <div class="text-dark">
             <p>嚮導，同時也是引導者。</p>
             <p>

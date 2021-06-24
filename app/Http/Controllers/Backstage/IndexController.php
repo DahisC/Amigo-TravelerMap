@@ -10,8 +10,8 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $putAttraction = Attraction::where('user_id',auth()->user()->id)->count();
-        return view('backstage.index',[
+        $putAttraction = Attraction::where('user_id', auth()->user()->id)->count();
+        return view('backstage.index', [
             'put' => $putAttraction,
         ]);
     }

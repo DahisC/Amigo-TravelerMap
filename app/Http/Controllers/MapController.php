@@ -128,7 +128,7 @@ class MapController extends Controller
         Mail::send(new Itineraries($map, $user));
 
         $markdown = new Markdown(view(), config('mail.markdown'));
-        return $markdown->render('emails.Itineraries', compact('map', 'user'));
+        return $markdown->render('emails.itineraries', compact('map', 'user'));
         // Mail::send(new amigo_map($all));
         // return redirect()->route('sign-in');
     }
