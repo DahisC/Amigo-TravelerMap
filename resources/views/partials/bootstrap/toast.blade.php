@@ -17,9 +17,14 @@
 </div>
 @endif
 
+
 <script>
   const hasToast = "{{ Session::has('toast-test') }}";
   if (hasToast) {
+    makeAToast();
+  }
+
+  function makeAToast() {
     const toastElList = [].slice.call(document.querySelectorAll('.toast'))
     const toastList = toastElList.map(function(toastEl) {
       return new bootstrap.Toast(toastEl)
