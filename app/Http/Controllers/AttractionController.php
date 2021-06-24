@@ -249,15 +249,9 @@ class AttractionController extends Controller
         }
         return response(compact('attractions', 'userFavorites'));
     }
-
-    public function addIntoPersonalMap()
+    public function show($id)
     {
-        // 將地點放入個人地圖
-    }
-
-    public function show()
-    {
-        // 地點的詳細資料
-        return view('attraction.show');
+        $attraction = Attraction::with('images', 'position', 'tags')->find($id);
+        return view('attractions.show', compact('attraction'));
     }
 }
