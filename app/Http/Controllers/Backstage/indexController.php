@@ -6,7 +6,7 @@ use App\Attraction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class indexController extends Controller
+class IndexController extends Controller
 {
     public function index()
     {
