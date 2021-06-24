@@ -65,14 +65,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        switch ($data['role']) {
+            case 'Traveler':
+                $data['role'] = '\images\avatar\avatar-traveler.png';
+                break;
+            case 'Guider':
+                $data['role'] = '\images\avatar\avatar-guider.png';
+                break;
+            case 'Amdin':
+                $data['role'] = '\images\avatar\avatar-admin.png';
+        };
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role' => $data['role'],
-            'avatar' =>  $data['role'] === 'Traveler'
-                ?  '\images\avatar\Traveler.png'
-                :  '\images\avatar\Guider.png'
+            'avatar' =>  $data['role']
         ]);
     }
 }

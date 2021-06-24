@@ -17,7 +17,7 @@
         Facebook
       </a>
     </li>
-    <li style="background-color: #55acee;">
+    {{-- <li style="background-color: #55acee;">
       <a id="btn-twitter-share" class="dropdown-item d-flex justify-content-between align-items-center text-center" href="#">
         <i class="fab fa-fw fa-twitter"></i>
         Twitter
@@ -28,7 +28,7 @@
         <i class="fab fa-fw fa-instagram"></i>
         Instagram
       </a>
-    </li>
+    </li> --}}
   </ul>
 </div>
 

@@ -234,7 +234,13 @@ class AttractionController extends Controller
 
         if (!$isFavorited) $attraction->users()->attach(auth()->user()->id);
         else $attraction->users()->detach(auth()->user()->id);
-        $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+        $userFavorites = User::with([
+            'attractions',
+            'attractions.images',
+            'attractions.position',
+            'attractions.time',
+            'attractions.tags'
+        ])->find(auth()->user()->id)->attractions;
 
         return ['userFavorites' => $userFavorites];
     }

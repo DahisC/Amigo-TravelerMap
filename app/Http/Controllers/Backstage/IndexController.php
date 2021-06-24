@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\backstage;
 
 use App\Attraction;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
