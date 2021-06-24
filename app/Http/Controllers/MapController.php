@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Mail;
 class MapController extends Controller
 {
     public function __construct()
-    {   
-        $this->middleware('auth')->except('generateItineraries','index','show');
+    {
+        $this->middleware('auth')->except('index', 'show');
     }
 
     public function index(Request $request)
@@ -114,8 +114,10 @@ class MapController extends Controller
     }
     public function generateItineraries($mapId)
     {
-        if (auth()->check())  $user = auth()->user();
-        else $user = null;
+        if ($mapId === 1) $this->middleware('auth')->except('generateItineraries');
+
+        if (auth()->check()) $user = auth()->user();
+        else $user = User::find(1);
         $map = Map::with([
             'attractions',
             'attractions.position'

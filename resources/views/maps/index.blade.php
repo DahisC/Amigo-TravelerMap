@@ -1,5 +1,13 @@
 @extends('layouts.amigo')
 
+@section('title')
+@if (isset($map))
+檢視地圖：{{ $map->name }}
+@else
+探索附近的地點
+@endif
+@endsection
+
 @section('nav')
 
 @endsection
@@ -190,30 +198,30 @@
         </a>
         @endcan
         <hr class="mx-2" />
-        <button type="button" class="btn btn-primary btn-floating m-1" v-on:click="locateUser(this)">
+        <button id="btn_locateUser" type="button" class="btn btn-primary btn-floating m-1" v-on:click="locateUser(this)">
           <i class="fas fa-crosshairs"></i>
         </button>
         {{-- <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
             <i class="fas fa-search"></i>
           </button> --}}
-        <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
+        <button id="btn_searchAttractions" type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
           <i class="fas fa-search"></i>
         </button>
-        <button type="button" class="btn btn-primary btn-floating m-1">
+        {{-- <button id="btn_createMap" type="button" class="btn btn-primary btn-floating m-1">
           <i class="fas fa-map"></i>
-        </button>
+        </button> --}}
       </nav>
       @endif
     </div>
     @if (isset($map))
     <div class="shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto;">
-      <i class="fas fa-eye me-0 me-md-1"></i><span class="d-none d-md-inline">唯讀模式</span>
+      <span id="info_viewMode" class="d-none d-md-inline"><i class="fas fa-eye me-0 me-md-1"></i>唯讀模式</span>
       ｜
-      <a class="text-dark" href="{{ route('maps.itineraries', ['map' => $map->id]) }}">匯出</a>
+      <a id="btn_export" class="text-dark" href="{{ route('maps.itineraries', ['map' => $map->id]) }}">匯出</a>
     </div>
     @endif
     <div class="shadow mt-auto mt-md-0 mx-auto mx-md-0" style="height: fit-content; width: fit-content;">
-      <button type="button" class="btn btn-secondary top-0 end-0 d-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#custom-offcanvas" aria-controls="custom-offcanvas" style="pointer-events: auto;">
+      <button id="btn_toggleOffcanvas" type="button" class="btn btn-secondary top-0 end-0 d-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#custom-offcanvas" aria-controls="custom-offcanvas" style="pointer-events: auto;">
         <template v-if="isLoading">
           <span class="spinner-grow spinner-grow-sm me-1" role="status" aria-hidden="true"></span>
           讀取中
@@ -289,6 +297,51 @@
 <script src="{{ asset('js/leaflet.js') }}"></script>
 
 <script>
+  window.addEventListener('load', () => {
+    const attractions = @json($attractions);
+    if (/^\/maps\/?$/.test(window.location.pathname)) {
+      introJs().setOptions({
+        steps: [{
+          title: '探索功能',
+          intro: '阿米狗替你在地圖上整理了各式各樣地點的資訊，讓你可以簡單地按下幾個按鈕找到那些有趣的地點！'
+        },
+        {
+          element: document.querySelector('#btn_locateUser'),
+          title: '定位自己',
+          intro: '定位後會在周圍顯示那些有趣的地點。並且也可以拖曳自己的圖標重新定位！'
+        },
+        {
+          element: document.querySelector('#btn_toggleOffcanvas'),
+          title: '展開側邊欄',
+          intro: '側邊欄收集了那些在地圖上位於你周圍的地點資訊，而此處的地點也會隨著你的位置變動而自動更新！'
+        },
+        {
+          element: document.querySelector('#btn_searchAttractions'),
+          title: '搜尋區域',
+          intro: '當然，你也可以搜尋你感興趣的某個區域。<3'
+        }]
+      }).start();
+    } else {
+      introJs().setOptions({
+        steps: [{
+          title: '檢視功能',
+          intro: '你正在檢視某個人的個人地圖。<br />在阿米狗的網站中，旅人們可以透過這種方式分享彼此的旅行路線。'
+        },
+        {
+          element: document.querySelector('#info_viewMode'),
+          title: '唯讀模式',
+          intro: '在檢視地圖時，你沒辦法使用定位或搜尋功能，也沒辦法變更側邊欄中顯示的地點。'
+        },
+        {
+          element: document.querySelector('#btn_export'),
+          title: '匯出行程表',
+          intro: '別擔心，雖然你沒辦法變更這張地圖，但是你可以按下這顆按鈕將這張地圖的地點轉變成行程表寄到你的信箱裡！'
+        }]
+      }).start();
+    }
+
+  });
+
   /* 後端變數 */
   const addressLatLng = @json($addressLatLng);
   const attractions = @json($attractions);
@@ -329,14 +382,13 @@
     },
     mounted() {
       this.$refs.userMarker = userMarker;
-      this.$refs.userMarker.addEventListener('moveend', this.onUserMarkerMoved)
-      //   userMarker.addEventListener('moveend', this.onUserMarkerMoved);
+      this.$refs.userMarker.addEventListener('moveend', this.onUserMarkerMoved);
       this.initLeaflet();
-      this.updateAttractions({ attractions, userFavorites })
+      this.updateAttractions({ attractions, userFavorites });
 
       if (addressLatLng) this.locateUser(addressLatLng);
-      //   if (addressLatLng) locateUser(addressLatLng)
-      //   else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
+      else if (attractions[0]) this.map.flyTo({ lat: attractions[0].position.lat, lng: attractions[0].position.lng }, 7, { animate: false });
+
     },
     methods: {
       initLeaflet() {
@@ -415,7 +467,7 @@
         }
 
         function flyToUserPosition({ lat, lng }) {
-          vue.map.flyTo([lat, lng], 15);
+          vue.map.flyTo([lat, lng], 15, { animate: true, duration: 1.5 });
           userMarker.setLatLng([lat, lng]).setOpacity(1).addTo(vue.map);
           vue.onUserMarkerMoved({ lat, lng });
         }

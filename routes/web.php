@@ -32,11 +32,10 @@ Route::view('/', 'index')->name('homepage'); // 首頁
 
 Route::resource('/maps', 'MapController'); // 地圖
 
-    //napAttraction
-    Route::patch('/maps/{map}/pin', 'MapController@pin');
-    //PDF
-    Route::get('/maps/{map}/itineraries', 'MapController@generateItineraries')->name('maps.itineraries');
-
+//napAttraction
+Route::patch('/maps/{map}/pin', 'MapController@pin');
+//PDF
+Route::get('/maps/{map}/itineraries', 'MapController@generateItineraries')->name('maps.itineraries');
 
 
 
