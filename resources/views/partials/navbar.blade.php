@@ -33,7 +33,7 @@
 
     <!-- Navbar brand -->
     <a class="navbar-brand m-0 p-0 me-3" href="{{ route('homepage') }}">
-      <img class="m-0" src="{{ asset('images/Logo.svg') }}" alt="" loading="lazy" height="40" />
+      <img class="m-0" src="{{ asset('images/logo.svg') }}" alt="" loading="lazy" height="40" />
     </a>
 
     <!-- Collapsible wrapper -->

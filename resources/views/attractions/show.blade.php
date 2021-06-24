@@ -29,7 +29,13 @@
 
   <div class="container py-5" style="min-width:576px">
     <div class="row py-5">
-      <div class="col py-5">
+      <div class="col">
+        <h1 class="text-primary a-fs-3">地點資料</h1>
+        <hr />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <div class="card mb-3">
           <!-- Carousel wrapper -->
           <div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel">

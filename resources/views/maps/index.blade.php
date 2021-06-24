@@ -179,7 +179,7 @@
   <div id="custom-mask" class="h-100 position-absolute p-2 p-md-3 d-flex flex-column flex-md-row justify-content-start justify-content-md-between" style="z-index: 2; pointer-events: none;">
     <div class="nav-wrapper d-flex flex-row flex-md-column align-items-center justify-content-center" style="pointer-events: auto;">
       <a class="@if (isset($map)) mb-auto @else mb-0 @endif" href="{{ route('homepage') }}">
-        <div class="logo rounded-circle shadow a-background" style="background-image: url({{ asset('images/Logo.svg') }});"></div>
+        <div class="logo rounded-circle shadow a-background" style="background-image: url({{ asset('images/logo.svg') }});"></div>
       </a>
       @if (!isset($map))
       <nav class="rounded-pill d-flex flex-row flex-md-column p-1 my-md-auto mx-auto mx-md-0 shadow">
