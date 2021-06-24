@@ -16,7 +16,7 @@ class FavoriteController extends Controller
     }
 
     public function index(Request $request)
-    {   
+    {
         $userFavorites = User::with([
             'attractions',
             'attractions.images',
@@ -25,22 +25,16 @@ class FavoriteController extends Controller
             'attractions.tags'
         ])->findOrFail(auth()->user()->id)->attractions;
 
-        switch ($request->search) {
-            case 'text':
-                $inputText = '蕃茄';
-                $userFavorites = $userFavorites->filter(function ($favorite) use ($inputText) {
-                    return false !== stristr($favorite->name, $inputText);
-                });
-            case 'tag':
-                $tag ='景點';
-                $userFavorites = $userFavorites->whereHas('tags',function($tag){
-                    $tag->where('tag_id',);
-                });
+        if ($request->search) {
+            $inputText = $request->search;
+            $userFavorites = $userFavorites->filter(function ($favorite) use ($inputText) {
+                return false !== stristr($favorite->name, $inputText);
+            });
         };
-        // dd($userFavorites);
+
         $userFavorites->paginate(10);
-        $maps =auth()->user()->maps;
-        return view('favorites.index', compact('userFavorites','maps'));
+        $maps = auth()->user()->maps;
+        return view('favorites.index', compact('userFavorites', 'maps'));
         // $tag = Tag::where('name',)
         // Session::flash('toast-test', collect(['type' => 'danger', 'header' => '權限不足', 'body' => '測試']));
         // if (Gate::allows('viewAny', Attraction::class)) { // Bug: 在有登入的情況下，這邊的 if 不會執行
