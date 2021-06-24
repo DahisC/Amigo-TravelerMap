@@ -1,21 +1,27 @@
 @component('mail::message')
 
 @component('mail::panel')
-<p style="text-align: center;">España | 西班牙揪４要這樣逛！</p>
+<p style="text-align: center;">{{ $map->name }}</p>
 @endcomponent
 
 ## 行程摘要
 ---
 
-@foreach ($attractions as $index => $a)
-{{ $index + 1 }}. {{ $a->position->country }}，{{ $a->name }}
-> {{ $a->time->startDate }} ~ {{ $a->time->endDate }}
-@endforeach
+<ol>
+  @foreach ($map->attractions as $index => $a)
+  <li>
+    <p><b>{{ $a->position->country }}，{{ $a->name }}</b></p>
+    @if (!empty($a->time->startDate) && !empty($a->time->endDate))
+    <p><small>時間　{{ $a->time->startDate }} ~ {{ $a->time->endDate }}</small></p>
+    @endif
+    <p><small>地址　{{ $a->position->address }}</small></p>
+  </li>
+  @endforeach
+</ol>
 
 ---
 
 <img src="{{ asset('images/email/as_Traveler.png') }}" alt="旅人裝備" />
-
 
 ---
 
@@ -30,7 +36,7 @@
 
 ---
 
-<p style="text-align: right; margin-bottom: 0;"><small>匯出時間 {{ date('Y-m-d H:i:s') }}</small></p>
+<p style="text-align: right; margin-bottom: 0;"><small><i>匯出時間 {{ date('Y-m-d H:i:s') }}</i></small></p>
 
 @component('mail::button', ['url' => ''])
 查看地圖

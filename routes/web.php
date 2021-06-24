@@ -2,12 +2,9 @@
 
 // use view;
 
-use App\Attraction;
-use App\User;
-use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MapController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +32,7 @@ Route::middleware('auth')->group(function () {
     //napAttraction
     Route::patch('/maps/{map}/pin', 'MapController@pin');
     //PDF
-    Route::get('/maps/{map}/itineraries', 'MapController@itineraries');
+    Route::get('/maps/{map}/itineraries', 'MapController@generateItineraries')->name('maps.itineraries');
 });
 
 
@@ -64,20 +61,15 @@ Route::group([
 Route::view('/snow', 'Snow.test');
 Route::view('/allen', 'Allen.test');
 // email 模板測試
-Route::get('test', function () {
-    $userFavorites = User::with([
-        'attractions',
-        'attractions.position',
-    ])->findOrFail(auth()->user()->id)->attractions;
-    // dd($userFavorites);
-    return view('emails.show', ['attractions' => $userFavorites]);
-});
+// Route::get('test', function () {
+//     $userFavorites = User::with([
+//         'attractions',
+//         'attractions.position',
+//     ])->findOrFail(auth()->user()->id)->attractions;
+//     // dd($userFavorites);
+//     return view('emails.show', ['attractions' => $userFavorites]);
+// });
 // emtail
-Route::get('/email', function () {
-    $markdown = new Markdown(view(), config('mail.markdown'));
-    return $markdown->render('emails.Itineraries', ['attractions' => Attraction::with('position', 'time')->whereBetween('id', [1, 5])->get()]);
-});
-
 
 
 // PDF
@@ -88,7 +80,6 @@ Route::group([
     Route::get('watch', 'Backstage\UserController@watch');
     Route::get('output', 'Backstage\UserController@pdfOutput');
 });
-
 
 // 會員模組
 Auth::routes();
@@ -101,5 +92,11 @@ Route::get('login/facebook/callback', 'Auth\LoginController@facebookCallback');
 Route::get('login/github', 'Auth\LoginController@github')->name('login.github');
 Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
 
+Route::get('/artisan/reset', function () {
+    dump('- resetting - | migrate:reset');
+    Artisan::command('migrate:reset', function () {
+        dump('- reseted - | migrate:reset');
+    });
+});
 
 // Route::get('/home', 'HomeController@index')->name('home');

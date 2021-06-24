@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Gate;
 
 
 class UserController extends Controller
-{   
+{
     public function __construct()
     {
         $this->middleware('auth');
@@ -70,20 +70,5 @@ class UserController extends Controller
             return redirect()->route('backstage.users.index');
         }
         return view('backstage.index');    //很抱歉，您的權限不足，發送火箭享尊榮服務
-    }
-    public function watch()
-    {
-        // ->setOptions(['defaultFont' => 'sans-serif'])
-        $pdf = PDF::loadView('emails.PDF');
-        return $pdf->stream();
-        // return $pdf->download('amigo.pdf');
-    }
-    public function pdfOutput()
-    {
-            $userFavorites = User::with([
-                'attractions',
-                'attractions.position',
-            ])->findOrFail(auth()->user()->id);
-            Mail::send(new amigo_map($userFavorites));
     }
 }

@@ -206,8 +206,10 @@
       @endif
     </div>
     @if (isset($map))
-    <div class="shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-event: auto;">
+    <div class="shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto;">
       <i class="fas fa-eye me-0 me-md-1"></i><span class="d-none d-md-inline">唯讀模式</span>
+      ｜
+      <a class="text-dark" href="{{ route('maps.itineraries', ['map' => $map->id]) }}">匯出</a>
     </div>
     @endif
     <div class="shadow mt-auto mt-md-0 mx-auto mx-md-0" style="height: fit-content; width: fit-content;">
