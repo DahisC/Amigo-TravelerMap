@@ -194,10 +194,13 @@
       <div class="logo rounded-circle shadow a-background" style="background-image: url({{ asset('images/logo.svg') }});"></div>
       </a> --}}
       <nav class="rounded-pill d-flex flex-row flex-md-column p-1 my-md-auto mx-auto mx-md-0 shadow">
+        <a href="{{ route('homepage') }}" class="btn btn-primary btn-floating m-1">
+          <img src="{{ asset('images/logo.svg') }}" class="rounded-circle me-1" width="100%" alt="Avatar" loading="lazy" />
+        </a>
         @can('view-auth')
         {{-- 會員後台的按鈕，記得更新 --}}
-        <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
-          <i class="fas fa-feather-alt"></i>
+        <a href="{{ route('backstage.index') }}" class="btn btn-primary btn-floating m-1">
+          <img src="{{ auth()->user()->avatar }}" class="rounded-circle me-1" width="100%" alt="Avatar" loading="lazy" />
         </a>
         @else
         {{-- 遊客看見的按鈕 --}}
@@ -286,7 +289,8 @@
   <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 </div>
 <div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-md-column align-items-md-center">
-  <div v-for="(attraction, i) in attractions" class="attraction-card card mb-0 mb-md-3 me-2 me-md-0 shadow flex-shrink-0">
+  <p v-if="attractions.length === 0">快來看看有什麼吧～</p>
+  <div v-else v-for="(attraction, i) in attractions" class="attraction-card card mb-0 mb-md-3 me-2 me-md-0 shadow flex-shrink-0">
     <div class="attraction-card__top position-relative shadow flex-shrink-0">
       <div class="position-absolute w-100 h-100">
         <div>
