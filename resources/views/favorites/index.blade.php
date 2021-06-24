@@ -27,17 +27,19 @@
     </div>
   </div>
   <div class="row">
-    <div class="d-none d-md-block col-3">
+    <div class="d-none d-md-block col-4">
 
-      <div class="input-group rounded col-3 ">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-          aria-describedby="search-addon" />
-        <span class="input-group-text border-0" id="search-addon">
+      <div class="input-group row-sm-4 position-sticky" style="top: 0px;">
+        <div class="form-outline">
+          <input type="search" id="form1" class="form-control" />
+          <label class="form-label" for="form1">Search</label>
+        </div>
+        <button type="button" class="btn btn-primary" id="inputButton">
           <i class="fas fa-search"></i>
-        </span>
+        </button>
       </div>
 
-      {{-- <div class="list-group position-sticky" style="top: 0px;">
+      <div class="list-group position-sticky" style="top: 0px;">
         <label class="list-group-item">
           <input class="form-check-input me-1" type="checkbox" value="" />
           Cras justo odio
@@ -58,7 +60,7 @@
           <input class="form-check-input me-1" type="checkbox" value="" />
           Vestibulum at eros
         </label>
-      </div> --}}
+      </div>
     </div>
     <div class="col">
       <div class="row">
@@ -67,7 +69,8 @@
           <div class="card mb-3">
             <div class="row g-0">
               <div class="col-md-4">
-                <img src="{{ asset($f->images[0]->url ?? '') }}" alt="{{ $f->images[0]->image_desc ?? '' }}" class="w-100 h-100" style="object-fit: cover;" />
+                <img src="{{ asset($f->images[0]->url ?? '') }}" alt="{{ $f->images[0]->image_desc ?? '' }}"
+                  class="w-100 h-100" style="object-fit: cover;" />
               </div>
               <div class="col-md-8">
                 <div class="card-body">
@@ -131,6 +134,15 @@
 @endsection
 
 @section('js')
+<script>
+  document.querySelector('#inputButton').addEventListener('click',function(){
+        const text = document.querySelector('#form1').value;
+        axios.get('/favorites',{params: { 
+          search:  text , 
+        }})
+        .then((res)=>console.log(res))
+});
+</script>
 {{-- <script>
   const selectElementAll = document.querySelectorAll('.selectMap');
   selectElementAll.forEach((selectElement) => {

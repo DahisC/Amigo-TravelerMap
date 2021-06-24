@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Mail;
 
 class MapController extends Controller
 {
+    public function __construct()
+    {   
+        $this->middleware('auth')->except('generateItineraries','index','show');
+    }
+
     public function index(Request $request)
     {
         $userFavorites = User::favorites();
