@@ -11,7 +11,7 @@ class AttractionImage extends Model
     protected $fillable = [
         'url', 'image_desc', 'attraction_id',
     ];
-    public function Attraction()
+    public function attraction()
     {
         return $this->belongsTo('App\Attraction')->withDefault();
     }
