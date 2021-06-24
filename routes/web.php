@@ -34,7 +34,7 @@ Route::resource('/maps', 'MapController'); // 地圖
 Route::middleware('auth')->group(function () {
     Route::patch('/maps/{map}/pin', 'MapController@pin');
     //PDF
-    Route::get('/maps/{map}/itineraries', 'MapController@itineraries');
+    Route::get('/maps/{map}/itineraries', 'MapController@generateItineraries')->name('maps.itineraries');
 });
 
 
@@ -63,20 +63,15 @@ Route::group([
 Route::view('/snow', 'Snow.test');
 Route::view('/allen', 'Allen.test');
 // email 模板測試
-Route::get('test', function () {
-    $userFavorites = User::with([
-        'attractions',
-        'attractions.position',
-    ])->findOrFail(auth()->user()->id)->attractions;
-    // dd($userFavorites);
-    return view('emails.show', ['attractions' => $userFavorites]);
-});
+// Route::get('test', function () {
+//     $userFavorites = User::with([
+//         'attractions',
+//         'attractions.position',
+//     ])->findOrFail(auth()->user()->id)->attractions;
+//     // dd($userFavorites);
+//     return view('emails.show', ['attractions' => $userFavorites]);
+// });
 // emtail
-Route::get('/email', function () {
-    $markdown = new Markdown(view(), config('mail.markdown'));
-    return $markdown->render('emails.Itineraries', ['attractions' => Attraction::with('position', 'time')->whereBetween('id', [1, 5])->get()]);
-});
-
 
 
 // PDF
@@ -87,7 +82,6 @@ Route::group([
     Route::get('watch', 'Backstage\UserController@watch');
     Route::get('output', 'Backstage\UserController@pdfOutput');
 });
-
 
 // 會員模組
 Auth::routes();
