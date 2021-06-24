@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+use App\Attraction;
 use Illuminate\Database\Seeder;
 
 class MapAttractionTableSeeder extends Seeder
@@ -11,10 +13,10 @@ class MapAttractionTableSeeder extends Seeder
      */
     public function run()
     {
-        $attraction = App\Attraction::all();
         $maps = App\Map::all();
-        for ($i=0; $i <$attraction->count(); $i++) {
-            $maps->random()->attractions()->attach($attraction->random());
+        foreach ($maps as $map) {
+            if ($map->id === 1) continue;
+            $map->attractions()->attach(Attraction::inRandomOrder()->limit(3)->get());
         }
     }
 }

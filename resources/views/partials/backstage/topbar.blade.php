@@ -162,10 +162,9 @@
 
      <!-- Nav Item - User Information -->
      <li class="nav-item dropdown no-arrow">
-       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-         aria-haspopup="true" aria-expanded="false">
+       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-         <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+         <img class="img-profile rounded-circle" src="{{Auth::user()->avatar}}">
        </a>
        <!-- Dropdown - User Information -->
        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -193,8 +192,7 @@
  <!-- End of Topbar -->
 
  <!-- Logout Modal -->
- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-   aria-hidden="true">
+ <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
      <div class="modal-content">
        <div class="modal-header">
@@ -209,16 +207,14 @@
          <a class="btn btn-primary" href="#" onclick="logout_form.submit();">
            登出
          </a>
-
-         <form id="logout_form" action="{{ route('logout') }}" method="POST" class="d-none">
-           @csrf
-         </form>
        </div>
      </div>
    </div>
  </div>
 
+ @include('partials.form.logout-form')
+
  <!-- Logout Form -->
- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-   @csrf
- </form>
+ {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+ @csrf
+ </form> --}}

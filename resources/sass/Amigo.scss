@@ -1,14 +1,113 @@
-.btn {
-    border-radius: 999px;
+// Bootstrap 樣式覆蓋
+
+// .btn {
+//     border-radius: 999px;
+// }
+
+// 通用
+
+html {
+    font-size: 16px;
+    color: white;
 }
 
-.banner {
-    > div {
-        > div {
-            flex-grow: 1;
-            &:nth-of-child(2) {
-                max-height: 34%;
-            }
-        }
+
+* {
+    letter-spacing: 0.1rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+.a-background {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+// 分隔線，使用 data-text 可以自動將文字置中於分隔線上
+
+.a-hr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.a-hr::after {
+    position: absolute;
+    content: attr(data-text);
+    background-color: white;
+    padding: 0 10px;
+    font-size: 0.8rem;
+}
+
+// 字體大小
+
+.a-fs-0 {
+    font-size: 1rem;
+  }
+
+  .a-fs-1 {
+    font-size: 1.25rem;
+  }
+
+  .a-fs-2 {
+    font-size: 1.5rem;
+  }
+
+  .a-fs-3 {
+    font-size: 1.75rem;
+  }
+
+  .a-fs-4 {
+    font-size: 2rem;
+  }
+
+  @media (min-width: 576px) {
+    .a-fs-4 {
+      font-size: 2rem;
     }
+  }
+
+  @media (min-width: 768px) {
+    .a-fs-1 {
+      font-size: 1.33rem;
+    }
+
+    .a-fs-2 {
+      font-size: 1.66rem;
+    }
+
+    .a-fs-3 {
+      font-size: 2rem;
+    }
+
+    .a-fs-4 {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .a-fs-4 {
+      font-size: 4rem;
+    }
+  }
+
+// 捲動軸
+
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f9f6ed;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #7F6758;
+    border-radius: 999px;
 }

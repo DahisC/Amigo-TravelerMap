@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+use App\Attraction;
 use Illuminate\Database\Seeder;
 
 class UserAttractionTableSeeder extends Seeder
@@ -11,10 +13,10 @@ class UserAttractionTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = App\User::all();
-        $attraction = App\Attraction::all();
-        for ($i=0; $i <$attraction->count(); $i++) {
-            $users->random()->attractions()->attach($attraction->random());
-        };
+        $users = User::all();
+        foreach ($users as $user) {
+            if ($user->id === 1) continue;
+            $user->attractions()->attach(Attraction::inRandomOrder()->limit(3)->get());
+        }
     }
 }

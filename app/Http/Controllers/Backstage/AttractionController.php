@@ -2,54 +2,60 @@
 
 namespace App\Http\Controllers\Backstage;
 
-use App\User;
 use App\Tag;
+use App\User;
 use App\Attraction;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\AttractionRequest;
+
 
 class AttractionController extends Controller
 {
-    static function ifTraveler()
-    {
-        dump(111);
-        
-        if (Gate::allows('Traveler')) {
-            dump(222);
-            dd(redirect());
-            // return redirect()->route('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
-            dump(223);
-        }
-        dump(333);
-    }
-    
     public function index()
     {
-        self::ifTraveler();
-        dump(444);
-
-        $attractions = Attraction::get();
-        return view('backstage.attractions.index', compact('attractions'));
+        $user = Auth::user();
+        if (Gate::allows('viewAny', Attraction::class)) {
+            if ($user->role == "Admin") {
+                $attractions = Attraction::paginate(10);
+                return view('backstage.attractions.index', compact('attractions'));
+            } else {
+                $attractions = Attraction::where('user_id', $user->id)->paginate(10);
+                return view('backstage.attractions.index', compact('attractions'));
+            }
+        }
+        return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
+
+
 
     public function create()
     {
-        if (Gate::allows('Traveler')) {
-            return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
+        if (Gate::allows('view-guider', Attraction::class)) {
+            $tags = Tag::get();
+            return view('backstage.attractions.factory', compact('tags'));
         }
-        $tags = Tag::get();
-        return view('backstage.attractions.factory', compact('tags'));
+        return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 
     public function edit($id)
     {
-        if (Gate::allows('Traveler')) {
-            return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
-        }
-        $attraction = Attraction::with('tags', 'images', 'position')->find($id);
         $tags = Tag::get();
-        return view('backstage.attractions.factory', compact('attraction', 'tags'));
+        $attraction = Attraction::with([
+            'position',
+            'images',
+            'tags'
+        ])->find($id);
+        if (Gate::allows('viewAny', $attraction)) {
+            if (auth()->user()->role == "Admin") {
+                // dd($attractions);
+                return view('backstage.attractions.factory', compact('attraction', 'tags'));
+            }
+            if (Gate::allows('update', $attraction)) {
+                return view('backstage.attractions.factory', compact('attraction', 'tags'));
+            }
+        }
+        return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
 }

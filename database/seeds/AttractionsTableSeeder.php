@@ -19,8 +19,6 @@ class AttractionsTableSeeder extends Seeder
      */
     public function run()
     {
-        $tags = App\Tag::get();
-
         $jsonFile = file_get_contents(public_path('TaiwanAttractions.json'));
         $json = json_decode($jsonFile, true);
         $attractions = $json['XML_Head']['Infos']['Info'];
@@ -60,8 +58,9 @@ class AttractionsTableSeeder extends Seeder
                 ]);
             }
 
-            $randomTags = Tag::get()->random(2);
-            $attraction->tags()->attach($randomTags);
+            // $randomTags = Tag::get()->random(2);
+            $tag = App\Tag::where('name', '景點')->get()->first();
+            $attraction->tags()->attach($tag);
         }
     }
 }

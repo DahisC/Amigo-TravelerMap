@@ -1,7 +1,7 @@
 @extends('layouts.backstage')
 
 @section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+
 @endsection
 
 
@@ -16,8 +16,9 @@
 
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">地點 Attractions</h6>
+    <div class="card-header py-3 d-flex justify-content-between">
+      <h6 class="m-0 font-weight-bold text-primary">景點 Attractions</h6>
+      <h6 class="m-0 font-weight-bold text-primary">數量{{ $attractions->count() }}</h6>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -39,7 +40,7 @@
             </tr>
           </tfoot>
           <tbody>
-            @foreach ($attractions->take(10) as $a)
+            @foreach ($attractions as $a)
             <tr>
               <td>{{ $a->id }}</td>
               <td>{{ $a->name }}</td>
@@ -58,8 +59,8 @@
                   <i class="fas fa-pen"></i>
                 </a>
 
-                <form id="destroy_form_{{ $a->id }}" action="{{ route('attractions.destroy', ['attraction' => $a->id]) }}"
-                  method="POST" class="d-none">
+                <form id="destroy_form_{{ $a->id }}"
+                  action="{{ route('attractions.destroy', ['attraction' => $a->id]) }}" method="POST" class="d-none">
                   @csrf
                   @method('DELETE')
                 </form>
@@ -69,6 +70,7 @@
             @endforeach
           </tbody>
         </table>
+        {{$attractions->links()}}
       </div>
     </div>
   </div>
@@ -78,34 +80,17 @@
 
 
 @section('js')
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript">
-  //   $(function() {
-
-  //     $("#myDataTalbe").DataTable({
-  //       searching: false, //關閉filter功能
-  //       columnDefs: [{
-  //         targets: [3],
-  //         orderable: false,
-  //       }]
-  //     });
-  //   });
-
-  //   $(document).ready(function() {
-  //     $('#dataTable').DataTable();
-  //   });
-</script>
 <script>
   // window.onload = () => {
-    //   document.querySelectorAll('.delete-btn').forEach(function(btn) {
-    //     btn.addEventListener('click', function() {
+  //   document.querySelectorAll('.delete-btn').forEach(function(btn) {
+  //     btn.addEventListener('click', function() {
 
-    //       const id = this.getAttribute('data-id');
-    //       if (confirm('是否刪除')) {
-    //         document.querySelector(id).submit();
-    //       }
-    //     });
-    //   })
-    // }
+  //       const id = this.getAttribute('data-id');
+  //       if (confirm('是否刪除')) {
+  //         document.querySelector(id).submit();
+  //       }
+  //     });
+  //   })
+  // }
 </script>
 @endsection

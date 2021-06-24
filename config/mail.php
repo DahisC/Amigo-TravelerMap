@@ -74,7 +74,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'example@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
@@ -90,7 +90,7 @@ return [
     */
 
     'markdown' => [
-        'theme' => 'default',
+        'theme' => 'Amigo',
 
         'paths' => [
             resource_path('views/vendor/mail'),

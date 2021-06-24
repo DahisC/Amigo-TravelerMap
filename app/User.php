@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role',
+        'name', 'email', 'password', 'role', 'avatar',
     ];
 
     /**
@@ -44,5 +44,13 @@ class User extends Authenticatable
     public function attractions()
     {
         return $this->belongsToMany('App\Attraction', 'user_attraction', 'user_id', 'attraction_id')->withTimestamps();
+    }
+    static function favorites()
+    {
+        if (auth()->check()) {
+            return User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+        } else {
+            return [];
+        }
     }
 }

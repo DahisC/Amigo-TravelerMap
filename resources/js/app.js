@@ -9,6 +9,7 @@ require('./bootstrap'); // Lodash & Axios
 // require('alpinejs');
 
 window.Vue = require('vue');
+window.introJs = require('intro.js');
 
 // window.initCitySelector = () => {
 //   new TwCitySelector({

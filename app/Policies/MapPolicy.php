@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use App\Map;
-use App\Post;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MapPolicy
@@ -19,7 +19,7 @@ class MapPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->role === "Guider" || $user->role === "Traveler";
     }
 
     /**
@@ -42,8 +42,7 @@ class MapPolicy
      */
     public function create(User $user)
     {
-        // dd('MapPolicy');
-        return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
+        return $user->role === "Guider" || $user->role === "Traveler";
     }
 
     /**
@@ -53,11 +52,9 @@ class MapPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function update(User $user, Map $maps)
+    public function update(User $user, Map $map)
     {
-        dd('MapPolicy');
-        dd(1);
-        return $user->id === $maps->user_id | $user->id === 1;
+        return $user->id === $map->user_id;
     }
 
     /**
@@ -67,9 +64,9 @@ class MapPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function delete(User $user, Map $maps)
+    public function delete(User $user, Map $map)
     {
-        // dd('MapPolicy');
+        return $user->role === "Guider" || $user->role === "Traveler" && $user->id === $map->user_id ;
     }
 
     /**
@@ -79,9 +76,9 @@ class MapPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function restore(User $user, Map $maps)
+    public function restore(User $user, Map $map)
     {
-        // dd('MapPolicy');
+        // dd('MapPolicy','restore');
     }
 
     /**

@@ -28,22 +28,32 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
+        // 攔截檢查
+        Gate::before(function($user,$ability){
+            if($user->role === "Admin" ){
+                return true;
+            };
+        });
+
+        // 定義授權規則 -- 在這裡呼叫Auth靜態介面的方法
         $this->registerPolicies($gate);
         
-        // 註冊任何認證或授權的服務
-        $gate->define('Admin', function ($user) {
-            return $user->role === "Admin";
+        Gate::resource('map', 'App\Policies\MapPolicy');
+        // Gate::resource('attraction', 'App\Policies\AttractionPolicy');
+        Gate::resource('attraction', 'App\\AttractionPosition');
+
+        Gate::define('view-admin', function ($user) {
+            return $user->role === "Admin" ;
         });
-        $gate->define('Guider', function ($user) {
+        Gate::define('view-guider', function ($user) {
             return $user->role === "Guider";
         });
-        $gate->define('Traveler', function ($user) {
+
+        Gate::define('view-traveler', function ($user) {
             return $user->role === "Traveler";
         });
-
-        $gate->define('Auth', function ($user) {
-            return $user->role === "Admin" | $user->role === "Guider" | $user->role === "Traveler";
+        Gate::define('view-auth', function ($user) {
+            return $user->role === "Guider" | $user->role === "Traveler";
         });
-
     }
 }

@@ -7,23 +7,25 @@ use App\Tag;
 use App\User;
 use App\helpers;
 use App\Attraction;
+use App\Mail\Itineraries;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Markdown;
 use App\Http\Requests\MapRequest;
+use Illuminate\Support\Facades\Mail;
 
 class MapController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'show');
+    }
+
     public function index(Request $request)
     {
-        // $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions;
-        // $x = collect();
-        // foreach ($user->attractions as $f) {
-        //     $x->put($f->id, true);
-        // }
-        //
-        $userFavorites = User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+        $userFavorites = User::favorites();
         $tags = Tag::get();
         $addressLatLng = null;
-        $query = Attraction::query()->with('tags', 'position', 'images');
+        $query = Attraction::query()->with('tags', 'position', 'images', 'time');
         switch ($request->searchBy) {
             case 'area':
                 $addressLatLng = helpers::getAddressLatLng($request->q);
@@ -40,9 +42,8 @@ class MapController extends Controller
                 $attractions = [];
                 break;
         }
-
         if ($request->tag) $query->QueryTags($request->tag);
-        return view('maps.index', compact('attractions', 'tags', 'addressLatLng', 'userFavorites'));
+        return view('maps.index', compact('attractions', 'addressLatLng', 'userFavorites'));
     }
 
     public function create()
@@ -61,7 +62,18 @@ class MapController extends Controller
 
     public function show($id)
     {
-        return view('test2');
+        $map = Map::with('user')->find($id);
+        $mapAttractions = Attraction::with('tags', 'position', 'images')->whereHas('maps', function ($q) use ($id) {
+            $q->where('map_id', $id);
+        })->get();
+        $userFavorites = User::favorites();
+        $addressLatLng = null;
+        return view('maps.index', [
+            'map' => $map,
+            'attractions' => $mapAttractions,
+            'userFavorites' => $userFavorites,
+            'addressLatLng' => $addressLatLng,
+        ]);
     }
 
     public function edit($id)
@@ -77,8 +89,6 @@ class MapController extends Controller
                 'name' => $request->name,
             ]);
         };
-
-
         return redirect()->route('maps.show', ['map' => $map->id]);
     }
 
@@ -87,4 +97,54 @@ class MapController extends Controller
         $map->attractions()->detach();
         $map->delete();
     }
+    public function pin(Request $request, $id)
+    {
+        //第一不能用find
+        $attraction = Attraction::findOrFail($request->attractionId);
+        $isPinned = Map::where('id', $id)->whereHas('attractions', function ($query) use ($attraction) {
+            $query->where('attraction_id', $attraction->id);
+        })->get()->count();
+
+        //第二不能在上面宣告 會被 $map->whereHas改變
+        $map = Map::find($id);
+        if (!$isPinned) $map->attractions()->attach($attraction);
+        else $map->attractions()->detach($attraction);
+
+        return response(['result' => $isPinned ? 'pinned' : 'removed']);
+    }
+    public function generateItineraries($mapId)
+    {
+        if ($mapId === 1) $this->middleware('auth')->except('generateItineraries');
+
+        if (auth()->check()) $user = auth()->user();
+        else $user = User::find(1);
+        $map = Map::with([
+            'attractions',
+            'attractions.position'
+        ])->whereHas('attractions', function ($query) use ($mapId) {
+            $query->where('map_id', $mapId);
+        })->get()->first();
+
+        Mail::send(new Itineraries($map, $user));
+
+        $markdown = new Markdown(view(), config('mail.markdown'));
+        return $markdown->render('emails.Itineraries', compact('map', 'user'));
+        // Mail::send(new amigo_map($all));
+        // return redirect()->route('sign-in');
+    }
+    // public function watch()
+    // {
+    //     // ->setOptions(['defaultFont' => 'sans-serif'])
+    //     $pdf = PDF::loadView('emails.PDF');
+    //     return $pdf->stream();
+    //     // return $pdf->download('amigo.pdf');
+    // }
+    // public function pdfOutput()
+    // {
+    //     $userFavorites = User::with([
+    //         'attractions',
+    //         'attractions.position',
+    //     ])->findOrFail(auth()->user()->id);
+    //     Mail::send(new amigo_map($userFavorites));
+    // }
 }

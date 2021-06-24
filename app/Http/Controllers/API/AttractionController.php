@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\User;
-use App\Attraction;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+
 
 
 class AttractionController extends Controller

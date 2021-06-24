@@ -1,5 +1,13 @@
 @extends('layouts.amigo')
 
+@section('title')
+@if (isset($map))
+檢視地圖：{{ $map->name }}
+@else
+探索附近的地點
+@endif
+@endsection
+
 @section('nav')
 
 @endsection
@@ -11,6 +19,10 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css"> --}}
 
 <style>
+  :root {
+    --offcanvas-width: 0px;
+  }
+
   .form-check-input~.card {
     border: 2px solid rgba(0, 0, 0, 0);
   }
@@ -28,39 +40,6 @@
   #traveler-map {
     height: 100%;
     z-index: 1;
-  }
-
-  aside {
-    z-index: 2;
-    width: 20%;
-  }
-
-  .nav-icon {
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(45deg, var(--bs-light), #fff8dc);
-    box-shadow: 0 0 10px 1px #f9f6ed;
-    text-decoration: none;
-  }
-
-  .nav-icon>i {
-    font-size: 20px;
-    color: var(--bs-dark);
-  }
-
-  nav>.nav-icon {
-    /* margin-bottom: 20px; */
-    margin: 10px;
-  }
-
-  nav {
-    /* background: linear-gradient(40deg, var(--bs-primary), var(--bs-secondary)); */
-    /* background: url("{{ asset('images/sign-in.png') }}") center center; */
-    /* background-size: cover; */
-    width: fit-content;
-    height: fit-content;
   }
 
   /* marker group */
@@ -112,13 +91,17 @@
 
 
   /* Custom offCanvas */
-  @media (min-width: 576px) {
+  @media (min-width: 768px) {
     .logo {
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
     }
 
-    .offcanvas-custom {
+    /* .nav-wrapper {
+      height: 100%;
+    } */
+
+    .custom-offcanvas {
       top: 0;
       right: 0;
       left: unset;
@@ -140,11 +123,15 @@
     }
   }
 
-  @media (max-width: 575px) {
+  @media (max-width: 767px) {
     .logo {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
     }
+
+    /* .nav-wrapper {
+      width: 100%;
+    } */
 
     .nav-icon {
       width: 30px;
@@ -155,7 +142,7 @@
       font-size: 15px;
     }
 
-    .offcanvas-custom {
+    .custom-offcanvas {
       right: 0;
       left: 0;
       height: 50vh;
@@ -173,23 +160,35 @@
       height: 40%;
     }
   }
+
+  #custom-mask {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    #custom-mask {
+      width: calc(100% - var(--offcanvas-width));
+      transition: width .3s ease-in-out;
+    }
+  }
 </style>
 @endsection
 
 @section('content')
 <div id="app" class="h-100">
-  <div class="position-fixed d-flex flex-row flex-sm-column justify-content-between align-items-center p-3" style="z-index: 2;">
-    <div class="logo rounded-circle shadow bg-primary"></div>
-    <nav class="rounded-pill d-flex flex-row flex-sm-column shadow p-1">
-      @can('Auth')
+  <div id="custom-mask" class="h-100 position-absolute p-2 p-md-3 d-flex flex-column flex-md-row justify-content-start justify-content-md-between" style="z-index: 2; pointer-events: none;">
+    <div class="nav-wrapper d-flex flex-row flex-md-column align-items-center justify-content-center" style="pointer-events: auto;">
+      <a class="@if (isset($map)) mb-auto @else mb-0 @endif" href="{{ route('homepage') }}">
+        <div class="logo rounded-circle shadow a-background" style="background-image: url({{ asset('images/Logo.svg') }});"></div>
+      </a>
+      @if (!isset($map))
+      <nav class="rounded-pill d-flex flex-row flex-md-column p-1 my-md-auto mx-auto mx-md-0 shadow">
+        @can('view-auth')
         {{-- 會員後台的按鈕，記得更新 --}}
         <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
           <i class="fas fa-feather-alt"></i>
         </a>
-        <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
-          <i class="fas fa-user-plus"></i>
-        </a>
-      @else
+        @else
         {{-- 遊客看見的按鈕 --}}
         <a href="{{ route('sign-in') }}" class="btn btn-primary btn-floating m-1">
           <i class="fas fa-feather-alt"></i>
@@ -197,57 +196,66 @@
         <a href="{{ route('sign-up') }}" class="btn btn-primary btn-floating m-1">
           <i class="fas fa-user-plus"></i>
         </a>
-      @endcan
-      <hr class="mx-2" />
-      <button type="button" class="btn btn-primary btn-floating m-1" onclick="locateUser(event)">
-        <i class="fas fa-crosshairs"></i>
-      </button>
-      <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-        <i class="fas fa-search"></i>
-      </button>
-      <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
-        <i class="fas fa-search"></i>
-      </button>
-      <button type="button" class="btn btn-primary btn-floating m-1">
-        <i class="fas fa-map"></i>
-      </button>
-      @if (Auth::check())
-      <p>{{ Auth::user()->name }}</p>
+        @endcan
+        <hr class="mx-2" />
+        <button id="btn_locateUser" type="button" class="btn btn-primary btn-floating m-1" v-on:click="locateUser(this)">
+          <i class="fas fa-crosshairs"></i>
+        </button>
+        {{-- <button type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+            <i class="fas fa-search"></i>
+          </button> --}}
+        <button id="btn_searchAttractions" type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
+          <i class="fas fa-search"></i>
+        </button>
+        {{-- <button id="btn_createMap" type="button" class="btn btn-primary btn-floating m-1">
+          <i class="fas fa-map"></i>
+        </button> --}}
+      </nav>
       @endif
-    </nav>
+    </div>
+    @if (isset($map))
+    <div class="shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto;">
+      <span id="info_viewMode" class="d-none d-md-inline"><i class="fas fa-eye me-0 me-md-1"></i>唯讀模式</span>
+      ｜
+      <a id="btn_export" class="text-dark" href="{{ route('maps.itineraries', ['map' => $map->id]) }}">匯出</a>
+    </div>
+    @endif
+    <div class="shadow mt-auto mt-md-0 mx-auto mx-md-0" style="height: fit-content; width: fit-content;">
+      <button id="btn_toggleOffcanvas" type="button" class="btn btn-secondary top-0 end-0 d-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#custom-offcanvas" aria-controls="custom-offcanvas" style="pointer-events: auto;">
+        <template v-if="isLoading">
+          <span class="spinner-grow spinner-grow-sm me-1" role="status" aria-hidden="true"></span>
+          讀取中
+        </template>
+        <template v-else>
+          <i class="fas fa-bars me-1"></i>
+          <span class="text-dark">@{{ attractions.length }} 個地點</span>
+        </template>
+      </button>
+    </div>
   </div>
   <div id="traveler-map"></div>
+  <div id="custom-offcanvas" class="offcanvas custom-offcanvas bg-white" data-bs-backdrop="false">
+    <div class="offcanvas-header shadow bg-primary">
+      <div class="w-100 d-flex justify-content-between align-items-center" style="font-size: 0.9rem;">
+        @if (isset($map))
+        <div><i class="fas fa-fw fa-map me-1"></i>{{ $map->name }}</div>
+        <div><i class="fas fa-fw fa-user me-1"></i>{{ $map->user->name }}</div>
+        @else
+        <div class="mx-auto">今天想去哪裡玩？</div>
+        @endif
 
-  <div class="offcanvas offcanvas-custom bg-white" id="offcanvasRight" data-bs-backdrop="false">
-    <div class="offcanvas-header shadow">
-      <div class="d-flex align-items-center">
-        {{-- <button type="button" class="btn btn-outline-primary btn-floating" data-mdb-ripple-color="dark" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
-          <i class="fas fa-search"></i>
-        </button> --}}
-        <span class="badge rounded-pill bg-primary mx-1">
-          景點
-          <i class="fas fa-fw fa-times"></i>
-        </span>
-        <span class="badge rounded-pill bg-primary mx-1">
-          自然環境
-          <i class="fas fa-fw fa-times"></i>
-        </span>
-        <span class="badge rounded-pill bg-primary mx-1">
-          人為藝術
-          <i class="fas fa-fw fa-times"></i>
-        </span>
       </div>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <hr class="my-0" />
     <div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-sm-column">
-      <div v-for="attraction in attractions" class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 shadow">
+      <div v-for="attraction in attractions" class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 shadow flex-shrink-0">
         <div class="attraction-card__top position-relative shadow flex-shrink-0">
           <div class="position-absolute w-100 h-100">
             <div>
               <span v-for="tag in attraction.tags" class="badge d-block m-2" style="width: fit-content;" :style="{ 'background-color': tag.color }">@{{ tag.name }}</span>
               {{-- <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
-              <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
+                <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
             </div>
             <button type="button" class="btn btn-primary btn-sm btn-floating position-absolute end-0 bottom-0 m-2" style="font-size: 0.8rem;" v-on:click="addToFavorite(attraction.id)">
               <i v-if="isFavorited(attraction.id)" class="far fa-star"></i>
@@ -262,11 +270,11 @@
           <h6 class="text-primary">@{{ attraction . name }}</h6>
           <p class="card-text overflow-hidden" style="font-size: 0.9rem;">@{{ attraction . description }}</p>
           <div class="d-flex">
-            <button type="button" class="btn btn-primary btn-sm me-2 w-100 guide" v-on:click="locateOnMap(attraction)">
+            <button type="button" class="btn btn-secondary btn-sm me-2 w-100 guide" v-on:click="locateOnMap(attraction)">
               <i class="fas fa-fw fa-map-marker-alt"></i>
               <span class="d-none d-sm-inline">地圖標示</span>
             </button>
-            <button type="button" class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#attraction-detail-modal" v-on:click="detailTarget = attraction">
+            <button type="button" class="btn btn-outline-secondary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#attraction-detail-modal" v-on:click="detailTarget = attraction">
               <i class="fas fa-fw fa-book-open"></i>
               <span class="d-none d-sm-inline">詳細資訊</span>
             </button>
@@ -274,10 +282,9 @@
         </div>
       </div>
     </div>
-
   </div>
   @include('partials.maps.attraction-detail-modal')
-  @include('partials.maps.search-attraction-modal', compact('tags'))
+  @include('partials.maps.search-attraction-modal')
   {{-- @include('partials.maps.create-map-modal') --}}
 </div>
 
@@ -286,82 +293,69 @@
 @endsection
 
 @section('js')
+@stack('stack-js')
 <script src="{{ asset('js/leaflet.js') }}"></script>
 
 <script>
-  new TwCitySelector({
-    el: '#city-county-selector',
-    elCounty: '#select_city', // 在 el 裡查找 element
-    elDistrict: '#select_area', // 在 el 裡查找 element
-    elZipcode: '#zipcode', // 在 el 裡查找 element
-    countyFieldName: 'region',
-    districtFieldName: 'town'
+  window.addEventListener('load', () => {
+    const attractions = @json($attractions);
+    if (/^\/maps\/?$/.test(window.location.pathname)) {
+      introJs().setOptions({
+        steps: [{
+          title: '探索功能',
+          intro: '阿米狗替你在地圖上整理了各式各樣地點的資訊，讓你可以簡單地按下幾個按鈕找到那些有趣的地點！'
+        },
+        {
+          element: document.querySelector('#btn_locateUser'),
+          title: '定位自己',
+          intro: '定位後會在周圍顯示那些有趣的地點。並且也可以拖曳自己的圖標重新定位！'
+        },
+        {
+          element: document.querySelector('#btn_toggleOffcanvas'),
+          title: '展開側邊欄',
+          intro: '側邊欄收集了那些在地圖上位於你周圍的地點資訊，而此處的地點也會隨著你的位置變動而自動更新！'
+        },
+        {
+          element: document.querySelector('#btn_searchAttractions'),
+          title: '搜尋區域',
+          intro: '當然，你也可以搜尋你感興趣的某個區域。<3'
+        }]
+      }).start();
+    } else {
+      introJs().setOptions({
+        steps: [{
+          title: '檢視功能',
+          intro: '你正在檢視某個人的個人地圖。<br />在阿米狗的網站中，旅人們可以透過這種方式分享彼此的旅行路線。'
+        },
+        {
+          element: document.querySelector('#info_viewMode'),
+          title: '唯讀模式',
+          intro: '在檢視地圖時，你沒辦法使用定位或搜尋功能，也沒辦法變更側邊欄中顯示的地點。'
+        },
+        {
+          element: document.querySelector('#btn_export'),
+          title: '匯出行程表',
+          intro: '別擔心，雖然你沒辦法變更這張地圖，但是你可以按下這顆按鈕將這張地圖的地點轉變成行程表寄到你的信箱裡！'
+        }]
+      }).start();
+    }
+
   });
-</script>
 
-
-<script>
   /* 後端變數 */
   const addressLatLng = @json($addressLatLng);
   const attractions = @json($attractions);
   const userFavorites = @json($userFavorites);
-  console.log(userFavorites);
 
-  if (addressLatLng) locateUser(addressLatLng)
-  else locateUser({ lat: 22.627278, lng: 120.301435 });
-
-  /* Vue */
-  $vue = new Vue({
-    el: '#app',
-    data: {
-      attractions: attractions || [],
-      detailTarget: {},
-      userFavorites: userFavorites || [],
-    },
-    methods: {
-      updateAttractions({ attractions, userFavorites }) {
-        this.attractions = attractions;
-        this.userFavorites = userFavorites;
-      },
-      locateOnMap(attraction) {
-        const { lat, lng } = attraction.position;
-        map.flyTo([lat, lng], 17);
-      },
-      async addToFavorite(attractionId) {
-        const { data } = await axios.patch(`/attractions/${attractionId}/favorite`);
-        const { userFavorites } = data;
-        this.userFavorites = userFavorites;
-      },
-      isFavorited(attractionId) {
-        console.log(attractionId);
-        return this.userFavorites.includes(attractionId);
-      }
-    },
-    // computed: {
-    //   isFavorited: function(attractionId) {
-    //     console.log(attractionId);
-    //     return this.userFavorites.includes(attractionId);
-    //   }
-    // }
-  });
-
-  /* Leaflet 設置 */
-  const map = L.map('traveler-map').setView([24.131871399999998, 120.67749420000001], 15);
-  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoiZGFoaXNjIiwiYSI6ImNrOTVmZ24xNzBiM2wzZXAycnNxYTJoemgifQ.y51LxBKtrU9iu_Z8O8sSEQ'
-  }).addTo(map);
-
-  // 地圖縮放工具列位置
-  map.zoomControl.setPosition("bottomleft");
+  //   if (addressLatLng) locateUser(addressLatLng)
+  //   else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
 
   // 使用者 Marker 外觀
-  const userIcon = L.icon({ iconUrl: "images/map/050-street-view.png", iconSize: [30, 30], });
-  const viewIcon = L.icon({ iconUrl: "images/map/023-pin-10.png", iconSize: [30, 30], });
+  const userIcon = L.icon({ iconUrl: "/images/map/050-street-view.png", iconSize: [30, 30], });
+  const viewIcon = L.icon({ iconUrl: "/images/map/023-pin-10.png", iconSize: [30, 30], });
+  const festivalIcon = L.icon({ iconUrl: "/images/map/022-pin-9.png", iconSize: [30, 30], });
+  const artIcon = L.icon({ iconUrl: "/images/map/010-pin-3.png", iconSize: [30, 30], });
+
 
   // 使用者 Marker 物件
   const userMarker = L.marker([0, 0], {
@@ -373,52 +367,143 @@
     autoPanSpeed: 25,
   });
 
-  /* Leaflet 處理函式 */
-  // 定位自己
 
-  function locateUser(customPosition) {
-    if (navigator.geolocation) {
-      const options = { enableHighAccuracy: true };
+  /* Vue */
+  $vue = new Vue({
+    el: '#app',
+    data: {
+      isLoading: false,
+      markerClusters: null,
+      markers: [],
+      map: null,
+      attractions: attractions || [],
+      detailTarget: {},
+      userFavorites: userFavorites || [],
+    },
+    mounted() {
+      this.$refs.userMarker = userMarker;
+      this.$refs.userMarker.addEventListener('moveend', this.onUserMarkerMoved);
+      this.initLeaflet();
+      this.updateAttractions({ attractions, userFavorites });
 
-      const locateSuccessHandler = (position) => {
-        const { latitude: lat, longitude: lng } = position.coords;
-        if (customPosition.lat && customPosition.lng) flyToUserPosition({ lat: customPosition.lat, lng: customPosition.lng })
-        else flyToUserPosition({ lat, lng });
-      };
+      if (addressLatLng) this.locateUser(addressLatLng);
+      else if (attractions[0]) this.map.flyTo({ lat: attractions[0].position.lat, lng: attractions[0].position.lng }, 7, { animate: false });
 
-      const locateFailedHandler = () => { alert('定位失敗。'); };
+    },
+    methods: {
+      initLeaflet() {
+        /* Leaflet 設置 */
+        this.map = L.map('traveler-map', { zoomControl: false }).setView([24.131871399999998, 120.67749420000001], 15);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+          //   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'pk.eyJ1IjoiZGFoaXNjIiwiYSI6ImNrOTVmZ24xNzBiM2wzZXAycnNxYTJoemgifQ.y51LxBKtrU9iu_Z8O8sSEQ'
+        }).addTo(this.map);
 
-      navigator.geolocation.getCurrentPosition(locateSuccessHandler, locateFailedHandler, options);
-    } else {
-      alert("抱歉！瀏覽器不支援 Geolocation");
-    }
+        // 地圖縮放工具列位置
+        // this.map.zoomControl.setPosition("bottomleft");
+      },
+      updateAttractions({ attractions, userFavorites }) {
+        this.attractions = attractions;
+        this.userFavorites = userFavorites;
+        this.renderMarkersOnMap(attractions);
+      },
+      locateOnMap(attraction) {
+        const { lat, lng } = attraction.position;
+        this.map.flyTo([lat, lng], 17, { animate: true, duration: 1.5 });
+      },
+      async addToFavorite(attractionId) {
+        const { data } = await axios.patch(`/attractions/${attractionId}/favorite`);
+        const { userFavorites } = data;
+        this.userFavorites = userFavorites;
+      },
+      isFavorited(attractionId) {
+        return this.userFavorites.includes(attractionId);
+      },
+      // 將 Markers 算繪至地圖上
+      renderMarkersOnMap(attractions) {
+        if (this.markerClusters) this.markerClusters.clearLayers();
+        this.markerClusters = new L.MarkerClusterGroup().addTo(this.map);
+        this.markers = attractions.map(a => L.marker([a.position.lat, a.position.lng], {
+          icon: defineMarkerIcon(a.tags[0])
+        }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
+        this.markerClusters.addLayers(this.markers);
 
-    function flyToUserPosition({ lat, lng }) {
-      map.flyTo([lat, lng], 15);
-      userMarker.setLatLng([lat, lng]).setOpacity(1).addTo(map);
-      onUserMarkerMoved({ lat, lng });
-    }
-  }
+
+        function defineMarkerIcon(attractionTag) {
+          switch (attractionTag.name) {
+            case '景點':
+              return viewIcon;
+            case '節慶':
+              return festivalIcon;
+            case '藝術':
+              return artIcon;
+            default:
+              return viewIcon;
+          }
+        }
+      },
+      /* Leaflet 處理函式 */
+      // 定位自己
+      locateUser(customPosition) {
+        const vue = this;
+        if (navigator.geolocation) {
+          const options = { enableHighAccuracy: true };
+
+          const locateSuccessHandler = (position) => {
+            const { latitude: lat, longitude: lng } = position.coords;
+            if (customPosition.lat && customPosition.lng) flyToUserPosition({ lat: customPosition.lat, lng: customPosition.lng })
+            else flyToUserPosition({ lat, lng });
+          };
+
+          const locateFailedHandler = () => { alert('定位失敗。'); };
+
+          navigator.geolocation.getCurrentPosition(locateSuccessHandler, locateFailedHandler, options);
+        } else {
+          alert("抱歉！瀏覽器不支援 Geolocation");
+        }
+
+        function flyToUserPosition({ lat, lng }) {
+          vue.map.flyTo([lat, lng], 15, { animate: true, duration: 1.5 });
+          userMarker.setLatLng([lat, lng]).setOpacity(1).addTo(vue.map);
+          vue.onUserMarkerMoved({ lat, lng });
+        }
+      },
+      async onUserMarkerMoved({ lat, lng }) {
+        if (event) params = { lat, lng } = this.$refs.userMarker.getLatLng();
+        else params = { lat, lng }
+        this.isLoading = true;
+        const response = await axios.get('/api/attractions', { params });
+        this.isLoading = false;
+        this.updateAttractions(response.data);
+      }
+    },
+
+  });
 
   // 當使用者移動定位標籤後
-  userMarker.addEventListener('moveend', onUserMarkerMoved);
-  async function onUserMarkerMoved({ lat, lng }) {
-    let params;
-    if (event) params = { lat, lng } = this.getLatLng();
-    else params = { lat, lng }
-    const response = await axios.get('/api/attractions', { params });
-    $vue.updateAttractions(response.data);
-    renderMarkersOnMap(response.data.attractions);
-  }
-
-  // 將 Markers 算繪至地圖上
-  function renderMarkersOnMap(attractions) {
-    const markers = new L.MarkerClusterGroup().addTo(map);
-    attractions.forEach(a => {
-      markers.addLayer(L.marker([a.position.lat, a.position.lng], {
-        icon: viewIcon
-      }).bindPopup(`<b>${a.name}</b><br>${a.tel}<br>${a.position.address}`));
-    })
+  //   async function onUserMarkerMoved({ lat, lng }) {
+  //     let params;
+  //     if (event) params = { lat, lng } = this.getLatLng();
+  //     else params = { lat, lng }
+  //     const response = await axios.get('/api/attractions', { params });
+  //     $vue.updateAttractions(response.data);
+  //     // renderMarkersOnMap(response.data.attractions);
+  //   }
+</script>
+<script>
+  window.onload = () => {
+    const customOffcanvas = document.getElementById('custom-offcanvas');
+    console.log(customOffcanvas);
+    customOffcanvas.addEventListener('show.bs.offcanvas', () => {
+      document.querySelector(":root").style.setProperty("--offcanvas-width", "400px");
+    });
+    customOffcanvas.addEventListener('hide.bs.offcanvas', () => {
+      document.querySelector(":root").style.setProperty("--offcanvas-width", "0px");
+    });
   }
 </script>
 @endsection
