@@ -26,26 +26,9 @@ class MapController extends Controller
         $map = null;
         $mapAttractions = [];
         $userFavorites = User::favorites();
-        $tags = Tag::get();
-        $addressLatLng = null;
-        $query = Attraction::query()->with('tags', 'position', 'images', 'time');
-        switch ($request->searchBy) {
-            case 'area':
-                $addressLatLng = helpers::getAddressLatLng($request->q);
-                $query->queryNearbyAttractions($addressLatLng['lat'], $addressLatLng['lng'], $request->range);
-                $attractions = $query->get();
-                break;
-            case 'address':
-                if ($request->region) $query->queryRegion($request->region);
-                if ($request->town) $query->queryTown($request->town);
-                $attractions = $query->get();
-                break;
-            default:
-                $addressLatLng = null;
-                $attractions = [];
-                break;
-        }
-        if ($request->tag) $query->queryTags($request->tag);
+        $searchResult = $this->searchAttractions($request);
+        $attractions = $searchResult['attractions'];
+        $addressLatLng = $searchResult['addressLatLng'];
         return view('maps.index', compact('attractions', 'addressLatLng', 'userFavorites', 'map', 'mapAttractions', 'user'));
     }
 
@@ -63,15 +46,25 @@ class MapController extends Controller
         return redirect()->route('maps.show', ['map' => $map->id]);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        $searchResult = $this->searchAttractions($request);
+        $attractions = $searchResult['attractions'];
+        $addressLatLng = $searchResult['addressLatLng'];
+        // $attractions =  Attraction::with('tags', 'position', 'images', 'time')->take(10)->get();
+        // $addressLatLng = null;
         $user = auth()->user() ?? null;
-        $attractions =  Attraction::with('tags', 'position', 'images', 'time')->take(10)->get();
-        $map = Map::with('user', 'attractions')->find($id);
+        $map = Map::with([
+            'user',
+            'attractions',
+            'attractions.images',
+            'attractions.position',
+            'attractions.time',
+            'attractions.tags'
+        ])->find($id);
         // $mapAttractions = $map->attractions->pluck('id');
         $mapAttractions = $map->attractions;
         $userFavorites = User::favorites();
-        $addressLatLng = null;
         return view('maps.index', [
             'map' => $map,
             'mapAttractions' => $mapAttractions,
@@ -110,11 +103,19 @@ class MapController extends Controller
             $query->where('attraction_id', $attraction->id);
         })->get()->count();
 
-        $map = Map::with('attractions')->find($id);
+        $map = Map::with([
+            'attractions',
+        ])->find($id);
         if (!$isPinned) $map->attractions()->attach($attraction);
         else $map->attractions()->detach($attraction);
         // $mapAttractions = Map::with('attractions')->find($id)->attractions->pluck('id'); // 如果使用 $map-> 會取得更新前的舊陣列
-        $mapAttractions = Map::with('attractions')->find($id)->attractions;
+        $mapAttractions = Map::with([
+            'attractions',
+            'attractions.images',
+            'attractions.position',
+            'attractions.time',
+            'attractions.tags'
+        ])->find($id)->attractions;
         return compact('mapAttractions');
     }
     public function generateItineraries($mapId)
@@ -136,6 +137,29 @@ class MapController extends Controller
         return $markdown->render('emails.itineraries', compact('map', 'user'));
         // Mail::send(new amigo_map($all));
         // return redirect()->route('sign-in');
+    }
+    private function searchAttractions($request)
+    {
+        $addressLatLng = null;
+        $query = Attraction::query()->with('tags', 'position', 'images', 'time');
+        if ($request->tag) $query->queryTags($request->tag);
+        switch ($request->searchBy) {
+            case 'area':
+                $addressLatLng = helpers::getAddressLatLng($request->q);
+                $query->queryNearbyAttractions($addressLatLng['lat'], $addressLatLng['lng'], $request->range);
+                $attractions = $query->get();
+                break;
+            case 'address':
+                if ($request->region) $query->queryRegion($request->region);
+                if ($request->town) $query->queryTown($request->town);
+                $attractions = $query->get();
+                break;
+            default:
+                $addressLatLng = null;
+                $attractions = [];
+                break;
+        }
+        return compact('attractions', 'addressLatLng');
     }
     // public function watch()
     // {

@@ -476,6 +476,7 @@
       displayingAttractions: [],
     },
     mounted() {
+      this.changeDisplayingAttractions(this.filter);
       this.$refs.userMarker = userMarker;
       this.$refs.userMarker.addEventListener('moveend', this.onUserMarkerMoved);
       this.initLeaflet();
