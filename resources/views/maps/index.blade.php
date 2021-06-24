@@ -153,11 +153,17 @@
     }
 
     .attraction-card {
-      max-width: 50%;
+      max-width: 35%;
     }
 
     .attraction-card__top {
       height: 40%;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .attraction-card {
+      max-width: 50%;
     }
   }
 
@@ -175,13 +181,18 @@
 @endsection
 
 @section('content')
+<?php
+    $exploreMode = !isset($map);
+    $viewMode = isset($map) && auth()->check() && auth()->user()->id !== $map->user_id;
+    $editMode = isset($map) && auth()->check() && auth()->user()->id === $map->user_id;
+?>
+
 <div id="app" class="h-100">
   <div id="custom-mask" class="h-100 position-absolute p-2 p-md-3 d-flex flex-column flex-md-row justify-content-start justify-content-md-between" style="z-index: 2; pointer-events: none;">
     <div class="nav-wrapper d-flex flex-row flex-md-column align-items-center justify-content-center" style="pointer-events: auto;">
-      <a class="@if (isset($map)) mb-auto @else mb-0 @endif" href="{{ route('homepage') }}">
-        <div class="logo rounded-circle shadow a-background" style="background-image: url({{ asset('images/logo.svg') }});"></div>
-      </a>
-      @if (!isset($map))
+      {{-- <a class="@if (isset($map)) mb-auto @else mb-0 @endif" href="{{ route('homepage') }}">
+      <div class="logo rounded-circle shadow a-background" style="background-image: url({{ asset('images/logo.svg') }});"></div>
+      </a> --}}
       <nav class="rounded-pill d-flex flex-row flex-md-column p-1 my-md-auto mx-auto mx-md-0 shadow">
         @can('view-auth')
         {{-- 會員後台的按鈕，記得更新 --}}
@@ -197,6 +208,8 @@
           <i class="fas fa-user-plus"></i>
         </a>
         @endcan
+        {{-- @if (isset($map) && auth()->check() && auth()->user()->id === $map->user_id) --}}
+        @if ($exploreMode || $editMode)
         <hr class="mx-2" />
         <button id="btn_locateUser" type="button" class="btn btn-primary btn-floating m-1" v-on:click="locateUser(this)">
           <i class="fas fa-crosshairs"></i>
@@ -207,85 +220,117 @@
         <button id="btn_searchAttractions" type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
           <i class="fas fa-search"></i>
         </button>
-        {{-- <button id="btn_createMap" type="button" class="btn btn-primary btn-floating m-1">
+        <button id="btn_createMap" type="button" class="btn btn-primary btn-floating m-1">
           <i class="fas fa-map"></i>
-        </button> --}}
+        </button>
+        @endif
       </nav>
-      @endif
     </div>
-    @if (isset($map))
-    <div class="shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto;">
-      <span id="info_viewMode" class="d-none d-md-inline"><i class="fas fa-eye me-0 me-md-1"></i>唯讀模式</span>
+    <div class="shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto; user-select: none;">
+      @if (!$exploreMode)
+      @if ($editMode)
+      <span id="info_editMode"><i class="fas fa-pen me-0 me-md-1"></i><span class="d-none d-md-inline">編輯模式</span></span>
+      @endif
+      @if ($viewMode)
+      <span id="info_viewMode"><i class="fas fa-eye me-0 me-md-1"></i><span class="d-none d-md-inline">檢視模式</span></span>
+      @endif
       ｜
       <a id="btn_export" class="text-dark" href="{{ route('maps.itineraries', ['map' => $map->id]) }}">匯出</a>
+      @endif
+      @if ($exploreMode)
+      <span id="info_exploreMode"><i class="fas fa-search me-0 me-md-1"></i><span class="d-none d-md-inline">探索模式</span></span>
+      @endif
     </div>
-    @endif
     <div class="shadow mt-auto mt-md-0 mx-auto mx-md-0" style="height: fit-content; width: fit-content;">
-      <button id="btn_toggleOffcanvas" type="button" class="btn btn-secondary top-0 end-0 d-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#custom-offcanvas" aria-controls="custom-offcanvas" style="pointer-events: auto;">
+      <button id="btn_toggleOffcanvas" type="button" class="btn btn-secondary top-0 end-0" data-bs-toggle="offcanvas" data-bs-target="#custom-offcanvas" aria-controls="custom-offcanvas" style="pointer-events: auto;">
         <template v-if="isLoading">
           <span class="spinner-grow spinner-grow-sm me-1" role="status" aria-hidden="true"></span>
-          讀取中
+          {{-- 讀取中 --}}
         </template>
         <template v-else>
-          <i class="fas fa-bars me-1"></i>
-          <span class="text-dark">@{{ attractions.length }} 個地點</span>
+          <i class="fas fa-bars"></i>
+          {{-- <span class="text-dark">@{{ attractions.length }} 個地點</span> --}}
         </template>
       </button>
     </div>
   </div>
   <div id="traveler-map"></div>
-  <div id="custom-offcanvas" class="offcanvas custom-offcanvas bg-white" data-bs-backdrop="false">
+  <div id="custom-offcanvas" class="show offcanvas custom-offcanvas bg-white" data-bs-backdrop="false">
     <div class="offcanvas-header shadow bg-primary">
-      <div class="w-100 d-flex justify-content-between align-items-center" style="font-size: 0.9rem;">
+      {{-- <div class="w-100 d-flex justify-content-between align-items-center" style="font-size: 0.9rem;">
         @if (isset($map))
         <div><i class="fas fa-fw fa-map me-1"></i>{{ $map->name }}</div>
-        <div><i class="fas fa-fw fa-user me-1"></i>{{ $map->user->name }}</div>
-        @else
-        <div class="mx-auto">今天想去哪裡玩？</div>
-        @endif
-
-      </div>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <hr class="my-0" />
-    <div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-sm-column">
-      <div v-for="attraction in attractions" class="attraction-card card mb-0 mb-sm-3 mx-2 me-sm-0 shadow flex-shrink-0">
-        <div class="attraction-card__top position-relative shadow flex-shrink-0">
-          <div class="position-absolute w-100 h-100">
-            <div>
-              <span v-for="tag in attraction.tags" class="badge d-block m-2" style="width: fit-content;" :style="{ 'background-color': tag.color }">@{{ tag.name }}</span>
-              {{-- <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
+    <div><i class="fas fa-fw fa-user me-1"></i>{{ $map->user->name }}</div>
+    @else
+    <div class="mx-auto">今天想去哪裡玩？</div>
+    @endif
+  </div> --}}
+  <div class="w-100 d-flex justify-content-between align-items-center" style="font-size: 0.9rem;">
+    @if (!$viewMode)
+    <button id="btn_filtNothing" type="button" class="btn btn-dark btn-sm me-2 w-100 guide">
+      <i class="fas fa-fw fa-map-marker-alt"></i>
+      所有 @{{ attractions.length }}
+    </button>
+    <button id="btn_filtFavorites" type="button" class="btn btn-outline-dark btn-sm me-2 w-100 guide">
+      <i class="fas fa-fw fa-star"></i>
+      收藏 @{{ userFavorites.length }}
+    </button>
+    @endif
+    @if ($editMode || $viewMode)
+    <button id="btn_filtPinned" type="button" class="btn btn-outline-dark btn-sm me-2 w-100 guide">
+      <i class="fas fa-map-marked-alt"></i>
+      釘選 @{{ mapAttractions.length }}
+    </button>
+    @endif
+  </div>
+  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+</div>
+<div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-md-column align-items-md-center">
+  <div v-for="(attraction, i) in attractions" class="attraction-card card mb-0 mb-md-3 me-2 me-md-0 shadow flex-shrink-0">
+    <div class="attraction-card__top position-relative shadow flex-shrink-0">
+      <div class="position-absolute w-100 h-100">
+        <div>
+          <span v-for="tag in attraction.tags" class="badge d-block m-2" style="width: fit-content;" :style="{ 'background-color': tag.color }">@{{ tag.name }}</span>
+          {{-- <span class="badge bg-primary d-block m-2" style="width: fit-content;">景點</span>
                 <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
-            </div>
-            <button type="button" class="btn btn-primary btn-sm btn-floating position-absolute end-0 bottom-0 m-2" style="font-size: 0.8rem;" v-on:click="addToFavorite(attraction.id)">
-              <i v-if="isFavorited(attraction.id)" class="far fa-star"></i>
-              <i v-else class="fas fa-star"></i>
-              {{-- <span class="d-none d-sm-inline">收藏</span> --}}
-            </button>
-          </div>
-          <img v-if="attraction.images.length !== 0" :src="attraction.images[0].url" class="h-100 card-img-top img-fluid" />
-          <img v-else :src="'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg'" class="h-100 card-img-top img-fluid" />
         </div>
-        <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-hidden">
-          <h6 class="text-primary">@{{ attraction . name }}</h6>
-          <p class="card-text overflow-hidden" style="font-size: 0.9rem;">@{{ attraction . description }}</p>
-          <div class="d-flex">
-            <button type="button" class="btn btn-secondary btn-sm me-2 w-100 guide" v-on:click="locateOnMap(attraction)">
-              <i class="fas fa-fw fa-map-marker-alt"></i>
-              <span class="d-none d-sm-inline">地圖標示</span>
-            </button>
-            <button type="button" class="btn btn-outline-secondary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#attraction-detail-modal" v-on:click="detailTarget = attraction">
-              <i class="fas fa-fw fa-book-open"></i>
-              <span class="d-none d-sm-inline">詳細資訊</span>
-            </button>
-          </div>
+        <div class="position-absolute end-0 bottom-0 m-2">
+          <button type="button" class="btn btn-primary btn-sm btn-floating" style="font-size: 0.8rem;" v-on:click="addToFavorite(attraction.id)">
+            <i v-if="isFavorited(attraction.id)" class="fas fa-star"></i>
+            <i v-else class="far fa-star"></i>
+            {{-- <span class="d-none d-sm-inline">收藏</span> --}}
+          </button>
+          @if ($editMode)
+          <button :id="'btn_pinToMap_' + i" type="button" class="btn btn-primary btn-sm btn-floating" style="font-size: 0.8rem;" v-on:click="pinToMap(attraction.id)">
+            <i v-if="isPinned(attraction.id)" class="fas fa-map-marked-alt"></i>
+            <i v-else class="fas fa-pen"></i>
+          </button>
+          @endif
         </div>
+      </div>
+      <img v-if="attraction.images.length !== 0" :src="attraction.images[0].url" class="h-100 card-img-top img-fluid" style="object-fit: cover;" />
+      <img v-else :src="'https://cdn.pixabay.com/photo/2014/12/21/09/33/map-574792_960_720.jpg'" class="h-100 card-img-top img-fluid" />
+    </div>
+    <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-hidden">
+      <h6 class="text-primary">@{{ attraction . name }}</h6>
+      <p class="card-text overflow-hidden" style="font-size: 0.9rem;">@{{ attraction . description }}</p>
+      <div class="d-flex">
+        <button type="button" class="btn btn-secondary btn-sm me-2 w-100 guide" v-on:click="locateOnMap(attraction)">
+          <i class="fas fa-fw fa-map-marker-alt"></i>
+          <span class="d-none d-md-inline">地圖標示</span>
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#attraction-detail-modal" v-on:click="detailTarget = attraction">
+          <i class="fas fa-fw fa-book-open"></i>
+          <span class="d-none d-md-inline">詳細資訊</span>
+        </button>
       </div>
     </div>
   </div>
-  @include('partials.maps.attraction-detail-modal')
-  @include('partials.maps.search-attraction-modal')
-  {{-- @include('partials.maps.create-map-modal') --}}
+</div>
+</div>
+@include('partials.maps.attraction-detail-modal')
+@include('partials.maps.search-attraction-modal')
+{{-- @include('partials.maps.create-map-modal') --}}
 </div>
 
 
@@ -297,55 +342,89 @@
 <script src="{{ asset('js/leaflet.js') }}"></script>
 
 <script>
+  /* 後端變數 - 命名應該要統一用 $ 代表 Laravel 傳來的變數，但先不改QQ */
+  const addressLatLng = @json($addressLatLng);
+  const attractions = @json($attractions);
+  const userFavorites = @json($userFavorites);
+  const $map = @json($map);
+  const mapAttractions = @json($mapAttractions);
+  const $user = @json($user);
+
   window.addEventListener('load', () => {
-    const attractions = @json($attractions);
     if (/^\/maps\/?$/.test(window.location.pathname)) {
       introJs().setOptions({
         steps: [{
-          title: '探索功能',
-          intro: '阿米狗替你在地圖上整理了各式各樣地點的資訊，讓你可以簡單地按下幾個按鈕找到那些有趣的地點！'
+          element: document.querySelector('#info_exploreMode'),
+          title: '探索模式',
+          intro: '在探索模式中，你可以盡情地探索那些我們幫你蒐集好的有趣事物！<br /><br />有別於一般的地圖，我們的地圖也提供了那些短暫出現卻又精彩萬分的事物，現在就來看看如何與它們相遇！'
         },
         {
           element: document.querySelector('#btn_locateUser'),
           title: '定位自己',
-          intro: '定位後會在周圍顯示那些有趣的地點。並且也可以拖曳自己的圖標重新定位！'
-        },
-        {
-          element: document.querySelector('#btn_toggleOffcanvas'),
-          title: '展開側邊欄',
-          intro: '側邊欄收集了那些在地圖上位於你周圍的地點資訊，而此處的地點也會隨著你的位置變動而自動更新！'
+          intro: '定位後會立即在你的周圍顯示那些有趣的地點。<br /><br />並且也可以拖曳自己的圖標重新定位！'
         },
         {
           element: document.querySelector('#btn_searchAttractions'),
           title: '搜尋區域',
           intro: '當然，你也可以搜尋你感興趣的某個區域。<3'
+        },
+        {
+          element: document.querySelector('#btn_toggleOffcanvas'),
+          title: '展開側邊欄',
+          intro: '側邊欄收集了那些在地圖上位於你周圍的地點資訊，而此處的地點也會隨著你的位置變動而自動更新！<br /><br />當你透過搜尋按鈕進行搜尋時，側邊欄則會忽略你週遭的地點，取而代之的是會顯示你關注區域中的地點資訊。'
+        },
+        {
+          element: document.querySelector('#btn_createMap'),
+          title: '你的旅人地圖',
+          intro: '當你在探索模式中想規劃下一次行程的路線時，按下這個按鈕可以建立屬於你自己的旅人地圖。<br /><br />在旅人地圖的介面中，你可以將感興趣的地點釘選至地圖裡，並與其它旅人分享這份屬於你的地圖！'
         }]
       }).start();
     } else {
-      introJs().setOptions({
-        steps: [{
-          title: '檢視功能',
-          intro: '你正在檢視某個人的個人地圖。<br />在阿米狗的網站中，旅人們可以透過這種方式分享彼此的旅行路線。'
-        },
-        {
-          element: document.querySelector('#info_viewMode'),
-          title: '唯讀模式',
-          intro: '在檢視地圖時，你沒辦法使用定位或搜尋功能，也沒辦法變更側邊欄中顯示的地點。'
-        },
-        {
-          element: document.querySelector('#btn_export'),
-          title: '匯出行程表',
-          intro: '別擔心，雖然你沒辦法變更這張地圖，但是你可以按下這顆按鈕將這張地圖的地點轉變成行程表寄到你的信箱裡！'
-        }]
-      }).start();
+      if ($user.id === $map.user_id) {
+        introJs().setOptions({
+          steps: [{
+            element: document.querySelector('#info_editMode'),
+            title: '編輯模式',
+            intro: '這是一張由你建立的旅人地圖！<br /><br />在編輯模式裡，你可以像探索模式一樣瀏覽所有地點，並且透過釘選按鈕將地點加入你的地圖中。'
+          },
+          {
+            element: document.querySelector('#btn_pinToMap_0'),
+            title: '釘選按鈕',
+            intro: '透過釘選按鈕，你可以將感興趣的地點釘選至你的個人地圖中。<br /><br />而透過這種方式釘選的地點會與該地圖綁定，這樣就可以規劃一張屬於你自己的地圖了！'
+          },
+          {
+            element: document.querySelector('#btn_filtPinned'),
+            title: '顯示釘選的地點',
+            intro: '為了讓旅人們可以一眼看見自己的地圖裡有哪些地點被釘選了，我們也替你準備了這個按鈕！'
+          },
+          {
+            title: '分享你的地圖',
+            intro: '透過地圖建立起旅人們之間的聯繫是阿米狗的宗旨，而這也是我們稱之為旅人地圖的原因！<br /><br />希望你喜歡<3<br /><br /><i>Buen Camino</i>'
+          }]
+        }).start();
+      } else {
+        introJs().setOptions({
+          steps: [{
+            element: document.querySelector('#info_viewMode'),
+            title: '檢視模式',
+            intro: '這是一張由其它旅人建立的旅人地圖。<br /><br />在檢視模式裡，你沒辦法使用大部分的地圖功能，但是你可以看見此地圖釘選的地點資訊。'
+          },
+          {
+            element: document.querySelector('#btn_export'),
+            title: '匯出行程表',
+            intro: '當然，你還是可以把這張地圖的地點匯出成行程表！'
+          }]
+        }).start();
+      }
+
     }
 
   });
 
-  /* 後端變數 */
-  const addressLatLng = @json($addressLatLng);
-  const attractions = @json($attractions);
-  const userFavorites = @json($userFavorites);
+  //   let _map = '<?php if(isset($map)) { echo json_encode($map); } else { echo null; } ?>';
+  //   console.log($$map, _map);
+  //   $map = JSON.parse($map);
+  //   console.log($map);
 
   //   if (addressLatLng) locateUser(addressLatLng)
   //   else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
@@ -379,12 +458,13 @@
       attractions: attractions || [],
       detailTarget: {},
       userFavorites: userFavorites || [],
+      mapAttractions: mapAttractions || [],
     },
     mounted() {
       this.$refs.userMarker = userMarker;
       this.$refs.userMarker.addEventListener('moveend', this.onUserMarkerMoved);
       this.initLeaflet();
-      this.updateAttractions({ attractions, userFavorites });
+      this.updateAttractions({ attractions, userFavorites, mapAttractions });
 
       if (addressLatLng) this.locateUser(addressLatLng);
       else if (attractions[0]) this.map.flyTo({ lat: attractions[0].position.lat, lng: attractions[0].position.lng }, 7, { animate: false });
@@ -406,9 +486,10 @@
         // 地圖縮放工具列位置
         // this.map.zoomControl.setPosition("bottomleft");
       },
-      updateAttractions({ attractions, userFavorites }) {
+      updateAttractions({ attractions, userFavorites, mapAttractions }) {
         this.attractions = attractions;
         this.userFavorites = userFavorites;
+        if (mapAttractions) this.mapAttractions = mapAttractions;
         this.renderMarkersOnMap(attractions);
       },
       locateOnMap(attraction) {
@@ -422,6 +503,14 @@
       },
       isFavorited(attractionId) {
         return this.userFavorites.includes(attractionId);
+      },
+      async pinToMap(attractionId) {
+        const { data } = await axios.patch(`/maps/${$map.id}/pin`, { attractionId });
+        const { mapAttractions } = data;
+        this.mapAttractions = mapAttractions;
+      },
+      isPinned(attractionId) {
+        return this.mapAttractions.includes(attractionId);
       },
       // 將 Markers 算繪至地圖上
       renderMarkersOnMap(attractions) {
@@ -497,7 +586,6 @@
 <script>
   window.onload = () => {
     const customOffcanvas = document.getElementById('custom-offcanvas');
-    console.log(customOffcanvas);
     customOffcanvas.addEventListener('show.bs.offcanvas', () => {
       document.querySelector(":root").style.setProperty("--offcanvas-width", "400px");
     });

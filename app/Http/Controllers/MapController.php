@@ -22,6 +22,9 @@ class MapController extends Controller
 
     public function index(Request $request)
     {
+        $user = auth()->user() ?? null;
+        $map = null;
+        $mapAttractions = [];
         $userFavorites = User::favorites();
         $tags = Tag::get();
         $addressLatLng = null;
@@ -33,8 +36,8 @@ class MapController extends Controller
                 $attractions = $query->get();
                 break;
             case 'address':
-                if ($request->region) $query->QueryRegion($request->region);
-                if ($request->town) $query->QueryTown($request->town);
+                if ($request->region) $query->queryRegion($request->region);
+                if ($request->town) $query->queryTown($request->town);
                 $attractions = $query->get();
                 break;
             default:
@@ -42,8 +45,8 @@ class MapController extends Controller
                 $attractions = [];
                 break;
         }
-        if ($request->tag) $query->QueryTags($request->tag);
-        return view('maps.index', compact('attractions', 'addressLatLng', 'userFavorites'));
+        if ($request->tag) $query->queryTags($request->tag);
+        return view('maps.index', compact('attractions', 'addressLatLng', 'userFavorites', 'map', 'mapAttractions', 'user'));
     }
 
     public function create()
@@ -62,17 +65,22 @@ class MapController extends Controller
 
     public function show($id)
     {
-        $map = Map::with('user')->find($id);
-        $mapAttractions = Attraction::with('tags', 'position', 'images')->whereHas('maps', function ($q) use ($id) {
-            $q->where('map_id', $id);
-        })->get();
+        $user = auth()->user() ?? null;
+        $attractions =  Attraction::with('tags', 'position', 'images', 'time')->take(10)->get();
+        $map = Map::with('user', 'attractions')->find($id);
+        $mapAttractions = $map->attractions->pluck('id');
+        // $mapAttractions = Attraction::with('tags', 'position', 'images')->whereHas('maps', function ($q) use ($id) {
+        //     $q->where('map_id', $id);
+        // })->get();
         $userFavorites = User::favorites();
         $addressLatLng = null;
         return view('maps.index', [
             'map' => $map,
-            'attractions' => $mapAttractions,
+            'mapAttractions' => $mapAttractions,
             'userFavorites' => $userFavorites,
             'addressLatLng' => $addressLatLng,
+            'attractions' => $attractions,
+            'user' => $user
         ]);
     }
 
@@ -99,18 +107,16 @@ class MapController extends Controller
     }
     public function pin(Request $request, $id)
     {
-        //第一不能用find
         $attraction = Attraction::findOrFail($request->attractionId);
         $isPinned = Map::where('id', $id)->whereHas('attractions', function ($query) use ($attraction) {
             $query->where('attraction_id', $attraction->id);
         })->get()->count();
 
-        //第二不能在上面宣告 會被 $map->whereHas改變
-        $map = Map::find($id);
+        $map = Map::with('attractions')->find($id);
         if (!$isPinned) $map->attractions()->attach($attraction);
         else $map->attractions()->detach($attraction);
-
-        return response(['result' => $isPinned ? 'pinned' : 'removed']);
+        $mapAttractions = Map::with('attractions')->find($id)->attractions->pluck('id'); // 如果使用 $map-> 會取得更新前的舊陣列
+        return compact('mapAttractions');
     }
     public function generateItineraries($mapId)
     {
