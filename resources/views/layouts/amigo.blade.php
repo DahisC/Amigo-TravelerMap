@@ -24,7 +24,7 @@
   @include('partials.navbar')
   @show
   @yield('content')
-  <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset(mix('js/app.js')) }}"></script>
   <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   @yield('js')
   @include('partials.bootstrap.toast')
