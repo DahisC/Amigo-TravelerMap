@@ -31,15 +31,14 @@ class amigo_map extends Mailable
      */
     public function build()
     {
-        $user_attractions =$this->user_to->attractions;
+        $user_attractions = $this->user_to->attractions;
         //->setOptions(['defaultFont' => 'sans-serif'])
         $attractions = $this->user_to->attractions;
         // dd($attractions);
-        $pdf = PDF::loadView('emails.PDF',['attractions'=>$user_attractions])->setPaper('a4');
+        $pdf = PDF::loadView('emails.PDF', ['attractions' => $user_attractions])->setPaper('a4');
 
         return $this
             ->to($this->user_to->email)
-            ->from('example@example.com')
             ->attachData($pdf->output(), 'attractions.pdf')
             ->view('emails.show',['attractions'=>$attractions]);
     }

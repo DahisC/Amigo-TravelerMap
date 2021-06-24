@@ -64,7 +64,7 @@ Buen Camino
       <div class="h-100 row">
         <div class="h-100 col d-flex flex-column justify-content-center align-items-center">
           <h1 class="mb-5 a-fs-4">突然不知道要去哪裡？</h1>
-          <a class="btn btn-secondary btn-lg" href="{{ route('maps.index') }}">帶我去玩！</a>
+          <a class="btn btn-secondary btn-lg" href="{{ route('maps.index') }}">探索周遭的地點</a>
         </div>
       </div>
     </div>
@@ -125,10 +125,10 @@ Buen Camino
                   亦或是在初次拜訪的小鎮上加入熱鬧歡騰的節慶遊行？<br />
                   還是想一個人來趟關於藝術的薰陶之旅？
                 </p>
-                <p>心動不如……</p>
+                <p>這些地點，我們都幫你整理好了～</p>
               </div>
               <div class="text-center text-md-start">
-                <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="#">馬上行動！</a>
+                <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="{{ route('attractions.index') }}">去看看！</a>
               </div>
             </div>
           </div>
@@ -157,12 +157,15 @@ Buen Camino
                 </p>
               </div>
               <div class="text-center text-md-end">
-                <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="{{ route('maps.show', ['map' => 1]) }}">看看阿米狗的地圖</a>
+                <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="{{ route('maps.show', ['map' => 1]) }}">
+                  看看阿米狗的地圖
+                  <i class="fas fa-paw ms-1 text-dark" style="transform: rotateZ(-30deg);"></i>
+                </a>
                 <div class="text-muted">
                   <small class="fst-italic">
                     「問我西班牙有哪些有趣的活動？點了不就知道了？」
                   </small>
-                  <div class="text-end"><small>－－阿米狗，西班牙的地頭貓</small></div>
+                  {{-- <div class="text-end"><small>－－阿米狗，西班牙的地頭貓</small></div> --}}
                 </div>
               </div>
             </div>
@@ -193,12 +196,15 @@ Buen Camino
                 </p>
               </div>
               <div class="text-center text-md-end">
-                <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="#">下載阿米狗的行程表</a>
+                <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="{{ route('maps.itineraries', ['map' => 1]) }}">
+                  觀看阿米狗的行程表
+                  <i class="fas fa-paw ms-1 text-dark" style="transform: rotateZ(-30deg);"></i>
+                </a>
                 <div class="text-muted">
                   <small class="fst-italic">
                     「出去玩沒行程表怎麼行？快按按看這顆魔法按鈕！」
                   </small>
-                  <div class="text-end"><small>－－阿米狗（現在是貓），喵！</small></div>
+                  {{-- <div class="text-end"><small>－－阿米狗（現在是貓），喵！</small></div> --}}
                 </div>
               </div>
             </div>
@@ -280,14 +286,18 @@ Buen Camino
   <section id="banner-the-end" class="index-banner py-4">
     <div class="index-banner__description position-sticky bottom-0">
       <div class="h-100 container py-4">
-        <div class="h-100 row flex-row-reverse">
-          <div class="h-100 text-center d-flex flex-column justify-content-between py-3">
-            <h1 class="a-fs-3">Buen Camino</h1>
-            <h2 class="a-fs-2">一路順風</h2>
-            <div class="col d-flex flex-column justify-content-center">
-              <p>在西班牙文中，「Camino」指的是道路；但如今也被代稱為歐洲古老的道路：Camino de Santiago－－意即聖地牙哥朝聖之路。</p>
-              <p>朝聖之路是旅人一路從歐洲前往西班牙聖地牙哥大教堂的路線，途中的旅人會以「Buen Camino」祝福那些同在這條路上風雨同行的彼此。</p>
-            </div>
+        <div class="h-100 row">
+          <div class="col-12 text-center d-flex flex-column justify-content-center mb-4">
+            <h1 class="a-fs-3"><b>Buen Camino</b></h1>
+            <h2 class="a-fs-2 text-muted">一路順風</h2>
+          </div>
+          <div class="col-12 d-flex flex-column justify-content-center text-center">
+            <p>
+              <i>在西班牙文中，「Camino」指的是道路；但如今也被代稱為歐洲古老的道路：Camino de Santiago－－意即聖地牙哥朝聖之路。</i>
+            </p>
+            <p>
+              <i>朝聖之路是旅人一路從歐洲前往西班牙聖地牙哥大教堂的路線，途中的旅人會以「Buen Camino」祝福那些同在這條路上風雨同行的彼此。</i>
+            </p>
           </div>
         </div>
       </div>

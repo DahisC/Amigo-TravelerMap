@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Map;
 use App\Tag;
 use Illuminate\Support\Facades\URL;
 
@@ -37,6 +38,11 @@ class AppServiceProvider extends ServiceProvider
             $view->with('tags', Tag::get());
         });
 
+        view()->composer('partials.favorites.btn-pin-to-map', function ($view) {
+            $view->with('userMaps', Map::where('user_id', auth()->user()->id)->get());
+        });
+
+
         //分頁自定義
         /**
          * Paginate a standard Laravel Collection.
@@ -47,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
          * @param string $pageName
          * @return array
          */
-        Collection::macro('paginate', function($perPage, $total = null, $page = null, $pageName = 'page') {
+        Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page') {
             $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
 
             return new LengthAwarePaginator(

@@ -2,10 +2,12 @@
 
 // use view;
 
-use App\Http\Controllers\MapController;
+use App\Attraction;
 use App\User;
+use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +28,17 @@ Route::prefix('/api')->group(function () {
 
 Route::view('/', 'index')->name('homepage'); // 首頁
 
-Route::resource('maps', 'MapController'); // 地圖
-Route::patch('/maps/{map}/pin', 'MapController@pin');
-//PDF
-Route::get('maps/{map}/itineraries' ,'MapController@itineraries');
+
+
+Route::resource('/maps', 'MapController'); // 地圖
+Route::middleware('auth')->group(function () {
+    Route::patch('/maps/{map}/pin', 'MapController@pin');
+    //PDF
+    Route::get('/maps/{map}/itineraries', 'MapController@generateItineraries')->name('maps.itineraries');
+});
+
+
+
 Route::resource('attractions', 'AttractionController')->except('create', 'edit'); // 地點
 Route::get('/favorites', 'FavoriteController@index')->name('favorites.index');
 Route::patch('/attractions/{attraction}/favorite', 'AttractionController@favorite')->name('attractions.favorite'); // 收藏地點
@@ -43,7 +52,7 @@ Route::group([
     'as' => 'backstage.',
     'middleware' => 'auth'
 ], function () {
-    Route::get('/','backstage\indexController@index')->name('index'); // 後台首頁
+    Route::get('/', 'backstage\indexController@index')->name('index'); // 後台首頁
     Route::resource('/users', 'Backstage\UserController')->except('show'); // 後台 - 會員管理
     Route::resource('/maps', 'Backstage\MapController')->except('show'); // 後台 - 地圖管理
     Route::resource('/attractions', 'Backstage\AttractionController')->except(['store', 'update', 'show', 'destroy']); // 後台 - 地點管理
@@ -53,17 +62,19 @@ Route::group([
 // 前端測試用路由
 Route::view('/snow', 'Snow.test');
 Route::view('/allen', 'Allen.test');
-//email 模板測試
-Route::get('test', function () {
-    $userFavorites = User::with([
-        'attractions',
-        'attractions.position',
-    ])->findOrFail(auth()->user()->id)->attractions;
-    // dd($userFavorites);
-    return view('emails.show', ['attractions' => $userFavorites]);
-});
+// email 模板測試
+// Route::get('test', function () {
+//     $userFavorites = User::with([
+//         'attractions',
+//         'attractions.position',
+//     ])->findOrFail(auth()->user()->id)->attractions;
+//     // dd($userFavorites);
+//     return view('emails.show', ['attractions' => $userFavorites]);
+// });
+// emtail
 
-//PDF
+
+// PDF
 Route::group([
     'prefix' => 'pdf',
     'as' => 'pdf',
@@ -71,7 +82,6 @@ Route::group([
     Route::get('watch', 'Backstage\UserController@watch');
     Route::get('output', 'Backstage\UserController@pdfOutput');
 });
-
 
 // 會員模組
 Auth::routes();

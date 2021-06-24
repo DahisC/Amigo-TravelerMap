@@ -19,7 +19,7 @@ class AttractionController extends Controller
     public function store(AttractionRequest $request)
     {
         $user = Auth::user();
-        if (Gate::allows('viewAny',Attraction::class)) {
+        if (Gate::allows('viewAny', Attraction::class)) {
             if ($user->role == "Admin") {
                 // 地點轉Px、Py、防止亂傳地址
                 $response = helpers::getAddressLatLng($request->address);
@@ -44,6 +44,9 @@ class AttractionController extends Controller
                         'lng' => $response['lng'],
                     ])
                 );
+                //tag
+                $tag = Tag::find($request->tags);
+                $attraction->tags()->attach($tag);
                 //img
                 if ($request->hasFile('images')) {
                     foreach ($request->file('images') as $key => $image) {
@@ -84,6 +87,9 @@ class AttractionController extends Controller
                         'lng' => $response['lng'],
                     ])
                 );
+                //tag
+                $tag = Tag::find($request->tags);
+                $attraction->tags()->attach($tag);
                 //img
                 if ($request->hasFile('images')) {
                     foreach ($request->file('images') as $key => $image) {
@@ -106,12 +112,19 @@ class AttractionController extends Controller
     public function update(AttractionRequest $request, Attraction $attraction)
     {
         $user = Auth::user();
-        // $tags = Tag::get();
 
         if (Gate::allows('viewAny', $attraction)) {
             if ($user->role == "Admin") {
 
-                $attraction->update($request->all());
+                $attraction->update([
+                    'name' => $request->name,
+                    'website' => $request->website,
+                    'tel' => $request->tel,
+                    'description' => $request->description,
+                    'ticket_info' => $request->ticket_info ?? '',
+                    'traffic_info' => $request->traffic_info ?? '',
+                    'parking_info' => $request->parking_info ?? '',
+                ]);
                 //positcion
                 $response = helpers::getAddressLatLng($request->address);
                 //之後有空試看看 集合增加的方法
@@ -123,7 +136,10 @@ class AttractionController extends Controller
                     'lat' =>  $response['lat'],
                     'lng' => $response['lng'],
                 ]);
-
+                //tag
+                $tag = Tag::find($request->tags);
+                $attraction->tags()->SyncWithoutDetaching($tag);
+                //img
                 if ($request->hasFile('images')) {
                     foreach ($request->file('images') as $key => $image) {
                         $path = $image->store('attractions');
@@ -135,7 +151,7 @@ class AttractionController extends Controller
                         ]);
                     };
                 };
-                return redirect()->route('backstage.attractions.index'); 
+                return redirect()->route('backstage.attractions.index');
             }
 
             if (Gate::allows('update', $attraction)) {
@@ -151,7 +167,10 @@ class AttractionController extends Controller
                     'lat' =>  $response['lat'],
                     'lng' => $response['lng'],
                 ]);
-
+                //tag
+                $tag = Tag::find($request->tags);
+                $attraction->tags()->SyncWithoutDetaching($tag);
+                //img
                 if ($request->hasFile('images')) {
                     foreach ($request->file('images') as $key => $image) {
                         $path = $image->store('attractions');
@@ -163,18 +182,18 @@ class AttractionController extends Controller
                         ]);
                     };
                 };
-                return redirect()->route('backstage.attractions.index'); 
+                return redirect()->route('backstage.attractions.index');
             }
             return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
         }
     }
 
 
- 
+
     public function destroy(Attraction $attraction)
     {
         $user = Auth::user();
-        
+
         if (Gate::allows('viewAny', $attraction)) {
             if ($user->role == "Admin") {
                 $attraction->delete();
@@ -230,8 +249,15 @@ class AttractionController extends Controller
         }
         return response(compact('attractions', 'userFavorites'));
     }
+
     public function addIntoPersonalMap()
     {
         // 將地點放入個人地圖
+    }
+
+    public function show()
+    {
+        // 地點的詳細資料
+        return view('attraction.show');
     }
 }
