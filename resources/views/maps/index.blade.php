@@ -434,10 +434,11 @@
   //   else locateUser({ lat: 22.627278, lng: 120.301435 }); // for test
 
   // 使用者 Marker 外觀
-  const userIcon = L.icon({ iconUrl: "/images/map/050-street-view.png", iconSize: [30, 30], });
-  const viewIcon = L.icon({ iconUrl: "/images/map/023-pin-10.png", iconSize: [30, 30], });
-  const festivalIcon = L.icon({ iconUrl: "/images/map/022-pin-9.png", iconSize: [30, 30], });
-  const artIcon = L.icon({ iconUrl: "/images/map/010-pin-3.png", iconSize: [30, 30], });
+  const iconSize = [50, 50];
+  const userIcon = L.icon({ iconUrl: "/images/page/maps/marker-user.png", iconSize });
+  const viewIcon = L.icon({ iconUrl: "/images/page/maps/marker-view.svg", iconSize });
+  const festivalIcon = L.icon({ iconUrl: "/images/page/maps/marker-festival.svg", iconSize });
+  const artIcon = L.icon({ iconUrl: "/images/page/maps/marker-art.svg", iconSize });
 
 
   // 使用者 Marker 物件
