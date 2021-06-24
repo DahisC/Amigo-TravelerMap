@@ -289,8 +289,8 @@
   <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 </div>
 <div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-md-column align-items-md-center">
-  <p v-if="attractions.length === 0">快來看看有什麼吧～</p>
-  <div v-else v-for="(attraction, i) in attractions" class="attraction-card card mb-0 mb-md-3 me-2 me-md-0 shadow flex-shrink-0">
+  <p v-if="displayingAttractions.length === 0">快來看看有什麼吧～</p>
+  <div v-else v-for="(attraction, i) in displayingAttractions" class="attraction-card card mb-0 mb-md-3 me-2 me-md-0 shadow flex-shrink-0">
     <div class="attraction-card__top position-relative shadow flex-shrink-0 bg-primary">
       <div class="position-absolute w-100 h-100">
         <div>
@@ -299,13 +299,13 @@
                 <span class="badge bg-primary d-block m-2" style="width: fit-content;">生態</span> --}}
         </div>
         <div class="position-absolute end-0 bottom-0 m-2">
-          <button type="button" :class="isFavorited(attraction.id) ? 'btn-primary' : 'btn-outline-primary'" class="btn btn-sm btn-floating" style="font-size: 0.8rem;" v-on:click="addToFavorite(attraction.id)">
+          <button type="button" :class="isFavorited(attraction.id) ? 'btn-secondary' : 'btn-outline-secondary'" class="btn btn-sm btn-floating" style="font-size: 0.8rem;" v-on:click="addToFavorite(attraction.id)">
             <i v-if="isFavorited(attraction.id)" class="fas fa-star"></i>
             <i v-else class="far fa-star"></i>
             {{-- <span class="d-none d-sm-inline">收藏</span> --}}
           </button>
           @if ($editMode)
-          <button :id="'btn_pinToMap_' + i" type="button" :class="isPinned(attraction.id) ? 'btn-primary' : 'btn-outline-primary'" class="btn btn-sm btn-floating" style="font-size: 0.8rem;" v-on:click="pinToMap(attraction.id)">
+          <button :id="'btn_pinToMap_' + i" type="button" :class="isPinned(attraction.id) ? 'btn-secondary' : 'btn-outline-secondary'" class="btn btn-sm btn-floating" style="font-size: 0.8rem;" v-on:click="pinToMap(attraction.id)">
             <i v-if="isPinned(attraction.id)" class="fas fa-map-marked-alt"></i>
             <i v-else class="fas fa-map"></i>
           </button>
@@ -313,7 +313,7 @@
         </div>
       </div>
       <img v-if="attraction.images.length !== 0" :src="attraction.images[0].url" class="h-100 card-img-top img-fluid" style="object-fit: cover;" onerror="this.onerror=null; this.src='{{ asset('images/page/index/map.png') }}'" />
-      <img v-else src="{{ asset('images/page/index/map.png') }}" class="h-100 card-img-top img-fluid" style="object-fit: cover;" />
+      {{-- <img v-else src="{{ asset('images/page/index/map.png') }}" class="h-100 card-img-top img-fluid" style="object-fit: cover;" /> --}}
     </div>
     <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-hidden">
       <h6 class="text-primary">@{{ attraction . name }}</h6>
@@ -473,6 +473,7 @@
       userFavorites: userFavorites || [],
       mapAttractions: mapAttractions || [],
       filter: setDefaultFilterMode(), // 'PINNED', 'FAVORITED'
+      displayingAttractions: [],
     },
     mounted() {
       this.$refs.userMarker = userMarker;
@@ -485,6 +486,9 @@
 
     },
     methods: {
+      initDisplayingAttractions() {
+
+      },
       initLeaflet() {
         /* Leaflet 設置 */
         this.map = L.map('traveler-map', { zoomControl: false }).setView([24.131871399999998, 120.67749420000001], 15);
@@ -516,7 +520,7 @@
         this.userFavorites = userFavorites;
       },
       isFavorited(attractionId) {
-        return this.userFavorites.includes(attractionId);
+        return this.userFavorites.map(uF => uF.id).includes(attractionId);
       },
       async pinToMap(attractionId) {
         const { data } = await axios.patch(`/maps/${$map.id}/pin`, { attractionId });
@@ -582,9 +586,29 @@
         const response = await axios.get('/api/attractions', { params });
         this.isLoading = false;
         this.updateAttractions(response.data);
+      },
+      changeDisplayingAttractions(filter) {
+        switch (filter) {
+          case 'NOTHING':
+            this.displayingAttractions = this.attractions;
+            break;
+          case 'PINNED':
+            this.displayingAttractions = this.mapAttractions;
+            break;
+          case 'FAVORITED':
+            this.displayingAttractions = this.userFavorites;
+            break;
+          default:
+            this.displayingAttractions = [];
+            break;
+        }
       }
     },
-
+    watch: {
+      filter: function(next, prev) {
+        this.changeDisplayingAttractions(next)
+      }
+    }
   });
 
   // 當使用者移動定位標籤後

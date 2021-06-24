@@ -48,7 +48,14 @@ class User extends Authenticatable
     static function favorites()
     {
         if (auth()->check()) {
-            return User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+            // return User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+            return User::with([
+                'attractions',
+                'attractions.images',
+                'attractions.position',
+                'attractions.time',
+                'attractions.tags'
+            ])->find(auth()->user()->id)->attractions;
         } else {
             return [];
         }
