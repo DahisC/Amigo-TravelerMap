@@ -9,6 +9,7 @@ use App\helpers;
 use App\Attraction;
 use App\Mail\amigo_map;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Markdown;
 use App\Http\Requests\MapRequest;
 use Illuminate\Support\Facades\Mail;
 
@@ -106,20 +107,19 @@ class MapController extends Controller
 
         return response(['result' => $isPinned ? 'pinned' : 'removed']);
     }
-    public function itineraries($id)
+    public function generateItineraries($mapId)
     {
-        $mapId = auth()->user()->maps->filter(function ($map) use ($id) {
-            return $map->id == $id;
-        })->first()->id;
-
-        $all = Map::with([
+        $map = Map::with([
             'attractions',
             'attractions.position'
         ])->whereHas('attractions', function ($query) use ($mapId) {
             $query->where('map_id', $mapId);
         })->get()->first();
 
-        return view('emails.itineraries', ['map' => $all]);
+        // return view('emails.itineraries', compact('map'));
+
+        $markdown = new Markdown(view(), config('mail.markdown'));
+        return $markdown->render('emails.Itineraries', compact('map'));
         // Mail::send(new amigo_map($all));
         // return redirect()->route('sign-in');
     }
