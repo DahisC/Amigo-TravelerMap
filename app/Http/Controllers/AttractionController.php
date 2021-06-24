@@ -249,8 +249,15 @@ class AttractionController extends Controller
         }
         return response(compact('attractions', 'userFavorites'));
     }
+
     public function addIntoPersonalMap()
     {
         // 將地點放入個人地圖
+    }
+
+    public function show()
+    {
+        // 地點的詳細資料
+        return view('attraction.show');
     }
 }
