@@ -32,6 +32,7 @@ Route::view('/', 'index')->name('homepage'); // 首頁
 
 Route::resource('/maps', 'MapController'); // 地圖
 Route::middleware('auth')->group(function () {
+    //napAttraction
     Route::patch('/maps/{map}/pin', 'MapController@pin');
     //PDF
     Route::get('/maps/{map}/itineraries', 'MapController@itineraries');

@@ -28,7 +28,16 @@
   </div>
   <div class="row">
     <div class="d-none d-md-block col-3">
-      <div class="list-group position-sticky" style="top: 0px;">
+
+      <div class="input-group rounded col-3 ">
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+          aria-describedby="search-addon" />
+        <span class="input-group-text border-0" id="search-addon">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+
+      {{-- <div class="list-group position-sticky" style="top: 0px;">
         <label class="list-group-item">
           <input class="form-check-input me-1" type="checkbox" value="" />
           Cras justo odio
@@ -49,7 +58,7 @@
           <input class="form-check-input me-1" type="checkbox" value="" />
           Vestibulum at eros
         </label>
-      </div>
+      </div> --}}
     </div>
     <div class="col">
       <div class="row">
