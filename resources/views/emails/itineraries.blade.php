@@ -7,15 +7,17 @@
 ## 行程摘要
 ---
 
-@foreach ($map->attractions as $index => $a)
-**{{ $index + 1 }}. {{ $a->position->country }}，{{ $a->name }}**
-@if (!empty($a->time->startDate) && !empty($a->time->endDate))
-> 時間　{{ $a->time->startDate }} ~ {{ $a->time->endDate }}
-@endif
-
-> 地址　{{ $a->position->address }}
-
-@endforeach
+<ol>
+  @foreach ($map->attractions as $index => $a)
+  <li>
+    <p><b>{{ $a->position->country }}，{{ $a->name }}</b></p>
+    @if (!empty($a->time->startDate) && !empty($a->time->endDate))
+    <p><small>時間　{{ $a->time->startDate }} ~ {{ $a->time->endDate }}</small></p>
+    @endif
+    <p><small>地址　{{ $a->position->address }}</small></p>
+  </li>
+  @endforeach
+</ol>
 
 ---
 

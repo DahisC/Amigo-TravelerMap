@@ -2,12 +2,9 @@
 
 // use view;
 
-use App\Attraction;
-use App\User;
-use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MapController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,5 +91,11 @@ Route::get('login/facebook/callback', 'Auth\LoginController@facebookCallback');
 Route::get('login/github', 'Auth\LoginController@github')->name('login.github');
 Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
 
+Route::get('/artisan/reset', function () {
+    dump('- resetting - | migrate:reset');
+    Artisan::command('migrate:reset', function () {
+        dump('- reseted - | migrate:reset');
+    });
+});
 
 // Route::get('/home', 'HomeController@index')->name('home');
