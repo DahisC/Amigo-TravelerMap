@@ -43,31 +43,31 @@
 
   @media (min-width: 576px) {
     .role-card__wrapper {
-      padding: 200px 20px;
+      padding: 0px 20px;
     }
   }
 
   @media (min-width: 768px) {
     .role-card__wrapper {
-      padding: 180px 50px;
+      padding: 0px 50px;
     }
   }
 
   @media (min-width: 992px) {
     .role-card__wrapper {
-      padding: 180px 100px;
+      padding: 0px 100px;
     }
   }
 
   @media (min-width: 1200px) {
     .role-card__wrapper {
-      padding: 180px 200px;
+      padding: 0px 200px;
     }
   }
 
   @media (min-width: 1400px) {
     .role-card__wrapper {
-      padding: 180px 350px;
+      padding: 0px 350px;
     }
   }
 </style>
@@ -83,7 +83,7 @@
             <p class="mb-1">選擇角色</p>
             <small>透過建立活動可以讓其它使用者透過地圖得知關於你的表演資訊！</small>
           </div> --}}
-        <div class="role-card__wrapper d-flex flex-column justift-content-center flex-sm-row" style="height: 90%;">
+        <div class="role-card__wrapper d-flex flex-column justift-content-center flex-sm-row py-0 py-sm-5" style="height: 90%;">
           <div class="h-100 role-card d-flex flex-column me-sm-3 py-2 px-sm-3 px-md-5 py-md-3 rounded">
             <div class="form-check">
               <label for="role-Traveler" class="form-check-label text-dark fw-bold">

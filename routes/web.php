@@ -32,7 +32,6 @@ Route::view('/', 'index')->name('homepage'); // 首頁
 
 Route::resource('/maps', 'MapController'); // 地圖
 
-//napAttraction
 Route::patch('/maps/{map}/pin', 'MapController@pin');
 //PDF
 Route::get('/maps/{map}/itineraries', 'MapController@generateItineraries')->name('maps.itineraries');
@@ -52,7 +51,7 @@ Route::group([
     'as' => 'backstage.',
     'middleware' => 'auth'
 ], function () {
-    Route::get('/', 'backstage\IndexController@index')->name('index'); // 後台首頁
+    Route::get('/', 'Backstage\IndexController@index')->name('index'); // 後台首頁
     Route::resource('/users', 'Backstage\UserController')->except('show'); // 後台 - 會員管理
     Route::resource('/maps', 'Backstage\MapController')->except('show'); // 後台 - 地圖管理
     Route::resource('/attractions', 'Backstage\AttractionController')->except(['store', 'update', 'show', 'destroy']); // 後台 - 地點管理
