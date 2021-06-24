@@ -214,8 +214,8 @@
                   <button type="submit" class="btn btn-primary w-100">註冊</button>
                   <hr class="a-hr mt-5" data-text="或透過社群網站登入" />
                   <div class="d-flex">
-                    <a class="btn btn-primary w-100 me-2" style="background-color: #3b5998;" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-primary w-100" style="background-color: #dd4b39;" href="#!" role="button"><i class="fab fa-google"></i></a>
+                    <a class="btn btn-primary w-100 me-2" style="background-color: #3b5998;" href="{{route('login.facebook')}}" role="button"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-primary w-100" style="background-color: #dd4b39;" href="{{route('login.github')}}" role="button"><i class="fab fa-google"></i></a>
                   </div>
 
                 </div>
