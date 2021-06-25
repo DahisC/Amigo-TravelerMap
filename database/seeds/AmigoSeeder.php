@@ -88,7 +88,7 @@ class AmigoSeeder extends Seeder
             'tel' => ' ',
             'description' => '巴塞隆納春之聲從2001年開始舉辦，現已是西班牙及南歐人最重要的音樂節。通常舉辦於五月底至六月初的巴塞隆納 (Primavera Sound Barcelona) 論壇公園 (Parc del Fòrum)，每年都吸引超過20萬名觀眾前往一飽耳福。因回響熱烈，現在也可以在葡萄牙的波多 (NOS Primavera Sound Porto) 參與春之聲音樂祭典。
             巴塞隆納春之聲的音樂類型豐富，從搖滾、流行、嘻哈、電子樂……。也曾四年邀請台灣樂團前往表演，包括:「漂流出口」、The Fur.、「雷擎」、「落差草原」、Meuko! Meuko!及「血肉果汁機」，將台灣音樂帶往國際舞台，在西班牙及南歐形成一股小旋風。也是少數能在國外聽到台灣音樂的音樂活動。',
-            'ticket_info' => 'https://www.primaverasound.com/es/barcelona/primavera-pro',
+            'ticket_info' => '280.00 €',
             'traffic_info' =>  'https://www.primaverasound.com/ca/barcelona/how-to-arrive-primavera-sound-barcelona',
             'parking_info' =>  ' ',
             'user_id' => $user->id,
