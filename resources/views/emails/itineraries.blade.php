@@ -1,28 +1,29 @@
 @component('mail::message')
 
+## 哈囉！旅人 <b>{{$user->name}}</b>
+---
 <p>
-  嗨！{{$user->name}} 安安！
+  日安！正在計劃下一次的旅行嗎？
+</p>
+<p>
+  你選了好多有趣的活動！
+  我已經把它們都排好，等不及要讓你看看這些地點了！
+</p>
+<p>準備好收拾行囊，開啟下一段旅程了嗎？</p>
 
-  很高興看到你來！
-</p> 
-<p>你選了好多有趣的活動！
-我已經把他們都排好，等不及要讓你看看這些地點了！</p> 
-<p>準備好收拾行囊，開啟下一段旅程了嗎?</p> 
-
-
-@component('mail::panel')
-<p style="text-align: center;">{{ $map->name }}</p>
+@component('mail::button', ['url' => route('maps.show', ['map' => $map->id])])
+查看地圖
 @endcomponent
 
 ## 行程摘要
 ---
+@component('mail::panel')
+<p style="text-align: center;">{{ $map->name }}</p>
+@endcomponent
 <ol>
   @foreach ($map->attractions as $index => $a)
   <li>
-    {{-- {{dd($a)}} --}}
-    {{-- {{dd($user)}} --}}
-    <a href="{{ url("$a->website") }}"><p><b>{{ $a->position->country }}，{{ $a->name}}</b></p></a>
-
+    <p><b>{{ $a->position->country }}，{{ $a->name}}</b></p>
     @if (!empty($a->time->startDate) && !empty($a->time->endDate))
     <p><small>時間　{{ $a->time->startDate }} ~ {{ $a->time->endDate }}</small></p>
     @endif
@@ -48,12 +49,12 @@
   <small>請透過附件的 PDF 檔案確認詳細的行程內容</small>
 </div>
 
+@component('mail::button', ['url' => route('maps.show', ['map' => $map->id])])
+輸出為 PDF
+@endcomponent
+
 ---
 
 <p style="text-align: right; margin-bottom: 0;"><small><i>匯出時間 {{ date('Y-m-d H:i:s') }}</i></small></p>
-
-@component('mail::button', ['url' => ''])
-查看地圖
-@endcomponent
 
 @endcomponent

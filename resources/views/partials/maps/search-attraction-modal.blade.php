@@ -9,7 +9,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="search_form" method="GET" action="{{ route('maps.index') }}">
+        <form id="search_form" method="GET" action="{{ isset($map) ? route('maps.show', ['map' => $map->id]) : route('maps.index') }}">
           <div class="container">
             <div class="row">
               <!-- 關鍵字 -->

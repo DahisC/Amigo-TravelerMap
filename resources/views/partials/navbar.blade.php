@@ -33,7 +33,7 @@
 
     <!-- Navbar brand -->
     <a class="navbar-brand m-0 p-0 me-3" href="{{ route('homepage') }}">
-      <img class="m-0" src="{{ asset('images/Logo.svg') }}" alt="" loading="lazy" height="40" />
+      <img class="m-0" src="{{ asset('images/logo.svg') }}" alt="" loading="lazy" height="40" />
     </a>
 
     <!-- Collapsible wrapper -->
@@ -81,7 +81,7 @@
         <li class="nav-item">
           <div class="dropdown">
             <a class="nav-link p-0 ms-3" href="{{ route('backstage.index') }}" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
-              <img src="https://mdbootstrap.com/img/new/avatars/2.jpg" class="rounded-circle me-1" height="30" alt="Avatar" loading="lazy" />
+              <img src="{{ auth()->user()->avatar }}" class="rounded-circle me-1" height="30" alt="Avatar" loading="lazy" />
             </a>
             <ul class="dropdown-menu dropdown-menu-end text-center" aria-labelledby="dropdownMenuButton">
               <li class="nav-item">
