@@ -21,7 +21,8 @@ class AmigoSeeder extends Seeder
             'name' => '阿米狗',
             'email' => "Amigo@gmail.com",
             'role' => 'Guider',
-            'password' => bcrypt('a')
+            'password' => bcrypt('a'),
+            'avatar' => '/images/avatar/avatar-traveler.png'
         ]);
         Map::create(['name' => 'España | 西班牙揪４要這樣逛！', 'user_id' => $user->id]);
 

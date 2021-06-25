@@ -195,7 +195,7 @@
       </a> --}}
       <nav class="rounded-pill d-flex flex-row flex-md-column p-1 my-md-auto mx-auto mx-md-0 shadow">
         <a href="{{ route('homepage') }}" class="btn btn-primary btn-floating m-1">
-          <img src="{{ asset('images/logo.svg') }}" class="rounded-circle me-1" width="100%" alt="Avatar" loading="lazy" />
+          <img src="{{ asset('/images/logo.svg') }}" class="rounded-circle me-1" width="100%" alt="Homepage" loading="lazy" />
         </a>
         @can('view-auth')
         {{-- 會員後台的按鈕，記得更新 --}}
@@ -232,7 +232,7 @@
         @endif
       </nav>
     </div>
-    <div class="text-center shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto; user-select: none;">
+    <div class="text-center shadow rounded bg-primary px-3 py-2 mx-auto mx-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto; user-select: none;">
       @if (!$exploreMode)
       @if ($editMode)
       <span id="info_editMode"><i class="fas fa-pen me-0 me-md-1"></i><span class="d-none d-md-inline">編輯模式</span></span>
