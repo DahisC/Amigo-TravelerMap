@@ -11,7 +11,9 @@
   <link rel="stylesheet" href="{{ asset('css/amigo.css') }}">
   @yield('css')
   <style>
-
+    .accordion-button:not(.collapsed){
+      color: white;
+    }
 
   </style>
 
@@ -55,26 +57,27 @@
                   <h5>First slide label</h5>
                   <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                 </div>
-              </div>
-
-              <!-- Single item -->
-              <div class="carousel-item">
-                <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(22).jpg" class="d-block w-100" alt="..." />
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>Second slide label</h5>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </div> 
+              @foreach ( $attraction->images as $image)
+                <!-- Single item -->
+                <div class="carousel-item">
+                  <img src="{{asset($image->url)}}" class="d-block w-100" alt="..." />
+                  <div class="carousel-caption d-none d-md-block">
+                    <h5>Second slide label</h5>
+                    <p>{{ $attraction->image->image_desc ?? ''}}</p>
+                  </div>
                 </div>
-              </div>
+              @endforeach
+            </div> 
 
               <!-- Single item -->
-              <div class="carousel-item">
+              {{-- <div class="carousel-item">
                 <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(23).jpg" class="d-block w-100" alt="..." />
                 <div class="carousel-caption d-none d-md-block">
                   <h5>Third slide label</h5>
                   <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
                 </div>
-              </div>
-            </div>
+              </div>--}}
             <!-- Inner -->
 
             <!-- Controls -->
@@ -88,23 +91,97 @@
             </button>
           </div>
           <!-- Carousel wrapper -->
-          {{-- <img src="https://mdbootstrap.com/img/new/slides/041.jpg" class="card-img-top" alt="..." /> --}}
           <div class="card-body">
-            <h5 class="card-title">{{ $attraction->name }}</h5>
+            <a class="card-title h5 text-dark" href="{{ $attraction->website }}">{{ $attraction->name }}</a>
+            
             <p class="card-text">
               @foreach ($attraction->tags as $tag)
               <span class="badge d-block me-2" style="width: fit-content; background-color: {{ $tag->color }}">{{ $tag->name }}</span>
               @endforeach
             </p>
+
+              {{-- collapse --}}
+            <div class="col d-block d-md-flex">
+              <div class="accordion col-12 col-md-6 p-1" id="accordionFlushExample">
+                <div class="rounded-2 ">
+                  <h2 class=" accordion-header" id="flush-headingOne">
+                    <button
+                      class="rounded-2 accordion-button collapsed bg-secondary"
+                      type="button"
+                      data-mdb-toggle="collapse"
+                      data-mdb-target="#flush-collapseOne"
+                      aria-expanded="false"
+                      aria-controls="flush-collapseOne">
+                      聯絡資訊
+                    </button>
+                  </h2>
+                  
+                  <div
+                    id="flush-collapseOne"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="flush-headingOne"
+                    data-mdb-parent="#accordionFlushExample"
+                  >
+                    <div class="accordion-body">
+                      @if ($attraction->traffic_info)
+                      <i class="fas fa-fw fa-map-marker-alt me-2"></i>{{ $attraction->position->country }}, {{ $attraction->position->address }}
+                      @endif
+                      @if ($attraction->traffic_info)
+                      <div><i class="fas fa-fw fa-phone me-2"></i>{{ $attraction->tel }}</div>
+                      @endif
+                      
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="accordion col-12 col-md-6 p-1" id="accordionFlushExample">
+                <div class="rounded-2 ">
+                  <h2 class=" accordion-header" id="flush-headingTwo">
+                    <button
+                      class="rounded-2 accordion-button collapsed bg-secondary"
+                      type="button"
+                      data-mdb-toggle="collapse"
+                      data-mdb-target="#flush-collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="flush-collapseTwo">
+                      交通資訊
+                    </button>
+                  </h2>
+                  
+                  <div
+                    id="flush-collapseTwo"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="flush-headingTwo"
+                    data-mdb-parent="#accordionFlushExample"
+                  >
+                    <div class="accordion-body">
+                      @if ($attraction->traffic_info)
+                        <div><i class="fas fa-fw fa-subway me-2"></i>{{ $attraction->traffic_info }}</div>
+                      @endif
+                      @if ($attraction->parking_info)
+                        <div><i class="fas fa-fw fa-parking me-2"></i>{{ $attraction->parking_info }}</div>
+                      @endif
+                      {{-- <div><i class="fas fa-fw fa-subway me-2"></i>{{ $attraction->traffic_info }}</div>
+                      <div><i class="fas fa-fw fa-parking me-2"></i>{{ $attraction->parking_info }}</div> --}}
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+
             <p class="card-text">
               {{ $attraction->description }}
             </p>
             <div class="card-text">
               <div>
-                <i class="fas fa-fw fa-map-marker-alt me-2"></i>{{ $attraction->position->country }}, {{ $attraction->position->address }}
+                <div><i class="fas fa-fw fa-ticket-alt me-2"></i>{{ $attraction->ticket_info }}</div>
+
               </div>
-              <div>
-                <i class="fas fa-fw fa-phone me-2"></i>{{ $attraction->position->country }}, {{ $attraction->position->address }}
+                
+              
+               
               </div>
             </div>
           </div>
@@ -113,8 +190,14 @@
     </div>
   </div>
 
-
   {{-- @include('partials.backstage.footer') --}}
 </body>
 
 </html>
+<script>
+
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-mdb-toggle="tooltip"]')) 
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {   
+  return new bootstrap.Tooltip(tooltipTriggerEl) })
+</script>
