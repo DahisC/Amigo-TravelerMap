@@ -67,20 +67,20 @@ class RegisterController extends Controller
     {
         switch ($data['role']) {
             case 'Traveler':
-                $data['role'] = '\images\avatar\avatar-traveler.png';
+                $avatar = '\images\avatar\avatar-traveler.png';
                 break;
             case 'Guider':
-                $data['role'] = '\images\avatar\avatar-guider.png';
+                $avatar = '\images\avatar\avatar-guider.png';
                 break;
             case 'Amdin':
-                $data['role'] = '\images\avatar\avatar-admin.png';
+                $avatar = '\images\avatar\avatar-admin.png';
         };
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role' => $data['role'],
-            'avatar' =>  $data['role']
+            'avatar' =>  $avatar
         ]);
     }
 }
