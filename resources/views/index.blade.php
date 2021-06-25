@@ -128,7 +128,7 @@ Buen Camino
                 <p>這些地點，我們都幫你整理好了～</p>
               </div>
               <div class="text-center text-md-start">
-                <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="{{ route('attractions.index') }}">去看看！</a>
+                {{-- <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="{{ route('attractions.index') }}">去看看！</a> --}}
               </div>
             </div>
           </div>
