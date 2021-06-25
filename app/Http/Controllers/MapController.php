@@ -37,11 +37,11 @@ class MapController extends Controller
         return view('maps.factory');
     }
 
-    public function store(MapRequest $request)
+    public function store(Request $request)
     {
         $map = Map::create([
             'user_id' => auth()->user()->id,
-            'name' => $request->name,
+            'name' => $request->name ?? auth()->user()->name . '的旅人地圖',
         ]);
         return redirect()->route('maps.show', ['map' => $map->id]);
     }

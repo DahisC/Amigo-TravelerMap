@@ -195,7 +195,7 @@
       </a> --}}
       <nav class="rounded-pill d-flex flex-row flex-md-column p-1 my-md-auto mx-auto mx-md-0 shadow">
         <a href="{{ route('homepage') }}" class="btn btn-primary btn-floating m-1">
-          <img src="{{ asset('images/logo.svg') }}" class="rounded-circle me-1" width="100%" alt="Avatar" loading="lazy" />
+          <img src="{{ asset('/images/logo.svg') }}" class="rounded-circle me-1" width="100%" alt="Homepage" loading="lazy" />
         </a>
         @can('view-auth')
         {{-- 會員後台的按鈕，記得更新 --}}
@@ -223,13 +223,16 @@
         <button id="btn_searchAttractions" type="button" class="btn btn-primary btn-floating m-1" data-bs-toggle="modal" data-bs-target="#search-attraction-modal">
           <i class="fas fa-search"></i>
         </button>
-        <button id="btn_createMap" type="button" class="btn btn-primary btn-floating m-1">
+        <button id="btn_createMap" type="button" class="btn btn-primary btn-floating m-1" onclick="event.preventDefault(); form_createMap.submit();">
           <i class="fas fa-map"></i>
         </button>
+        <form id="form_createMap" method="POST" action="{{ route('maps.store') }}">
+          @csrf
+        </form>
         @endif
       </nav>
     </div>
-    <div class="shadow rounded bg-primary px-3 py-2 ms-auto ms-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto; user-select: none;">
+    <div class="text-center shadow rounded bg-primary px-3 py-2 mx-auto mx-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto; user-select: none;">
       @if (!$exploreMode)
       @if ($editMode)
       <span id="info_editMode"><i class="fas fa-pen me-0 me-md-1"></i><span class="d-none d-md-inline">編輯模式</span></span>
@@ -237,6 +240,8 @@
       @if ($viewMode)
       <span id="info_viewMode"><i class="fas fa-eye me-0 me-md-1"></i><span class="d-none d-md-inline">檢視模式</span></span>
       @endif
+      ｜
+      {{ $map->name }}
       ｜
       <a id="btn_export" class="text-dark" href="{{ route('maps.itineraries', ['map' => $map->id]) }}">匯出</a>
       @endif
@@ -313,7 +318,7 @@
         </div>
       </div>
       <img v-if="attraction.images.length !== 0" :src="attraction.images[0].url" class="h-100 card-img-top img-fluid" style="object-fit: cover;" onerror="this.onerror=null; this.src='{{ asset('images/page/index/map.png') }}'" />
-      {{-- <img v-else src="{{ asset('images/page/index/map.png') }}" class="h-100 card-img-top img-fluid" style="object-fit: cover;" /> --}}
+      <img v-else src="{{ asset('images/page/index/map.png') }}" class="h-100 card-img-top img-fluid" style="object-fit: cover;" />
     </div>
     <div class="attraction-card__bot card-body d-flex flex-column justify-content-between overflow-hidden">
       <h6 class="text-primary">@{{ attraction . name }}</h6>
