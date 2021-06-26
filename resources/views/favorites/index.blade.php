@@ -38,17 +38,17 @@
           <i class="fas fa-search"></i>
         </button>
       </div>
-      <div class="list-group position-sticky" style="top: 0px;">
+      <div class="list-group position-sticky search-group" style="top: 0px;">
         <label class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" />
+          <input class="form-check-input me-1" type="checkbox" value="1" />
           景點
         </label>
         <label class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" />
+          <input class="form-check-input me-1" type="checkbox" value="2" />
           藝術
         </label>
         <label class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" />
+          <input class="form-check-input me-1" type="checkbox" value="3" />
           節慶
         </label>
       </div>
@@ -125,23 +125,18 @@
 
 @section('js')
 <script>
-  // document.querySelector('#inputButton').addEventListener('click', function() {
-  //   const text = document.querySelector('#form1').value;
-  //   query(text);
-  // });
-
-  // document.querySelectorAll('.form-check-input').forEach((input) => {
-  //   input.addEventListener('change', () => {
-  //     query();
-  //   })
-  // });
+  document.querySelector('.search-group').addEventListener('change', ({ target }) => {
+    axiosFun('tag', target.value);
+  });
 
   async function query() {
     const text = document.querySelector('#form1').value;
-    await axiosFun(text);
+    await axiosFun('search', text);
   }
 
-  function axiosFun(input) {
+
+  function axiosFun(search, input) {
+    console.log(search);
     axios.get('/favorites', {
         params: {
           search: input,
@@ -150,17 +145,5 @@
       .then((res) => console.log(res))
   }
 </script>
-
-
-{{-- <script>
-  const selectElementAll = document.querySelectorAll('.selectMap');
-  selectElementAll.forEach((selectElement) => {
-    selectElement.addEventListener('change', (e) => {
-      const mapId = e.target.value;
-      const attractionId = e.target.parentNode.parentNode.dataset.id;
-      axios.patch(`/maps/${mapId}/pin`, { attractionId });
-    });
-  });
-</script> --}}
 @stack('stack-js')
 @endsection
