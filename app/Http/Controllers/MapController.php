@@ -103,7 +103,6 @@ class MapController extends Controller
         else $map->attractions()->detach($attraction);
         // $mapAttractions = Map::with('attractions')->find($id)->attractions->pluck('id'); // 如果使用 $map-> 會取得更新前的舊陣列
         $mapAttractions = Map::relative($id)->attractions;
-        dd($mapAttractions);
         return compact('mapAttractions');
     }
     public function generateItineraries($mapId)
