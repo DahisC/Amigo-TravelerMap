@@ -17,13 +17,7 @@ class FavoriteController extends Controller
 
     public function index(Request $request)
     {
-        $userFavorites = User::with([
-            'attractions',
-            'attractions.images',
-            'attractions.position',
-            'attractions.time',
-            'attractions.tags'
-        ])->findOrFail(auth()->user()->id)->attractions;
+        $userFavorites = User::favorites();
 
         if ($request->search) {
             $inputText = $request->search;
