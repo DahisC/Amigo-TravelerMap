@@ -134,12 +134,11 @@
     await axiosFun('search', text);
   }
 
-
+  // 這邊 search log出來會有tag search 但params的key吃不到 求解
   function axiosFun(search, input) {
-    console.log(search);
-    axios.get('/favorites', {
+   return  axios.get('/favorites', {
         params: {
-          search: input,
+          search : input,
         }
       })
       .then((res) => console.log(res))

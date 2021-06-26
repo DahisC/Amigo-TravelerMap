@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Map;
-use App\Tag;
 use App\User;
 use App\helpers;
 use App\Attraction;
@@ -11,6 +10,7 @@ use App\Mail\Itineraries;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Markdown;
 use App\Http\Requests\MapRequest;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Mail;
 
 class MapController extends Controller
@@ -117,7 +117,7 @@ class MapController extends Controller
         ])->whereHas('attractions', function ($query) use ($mapId) {
             $query->where('map_id', $mapId);
         })->get()->first();
-
+        // dd($user,$map);
         Mail::send(new Itineraries($map, $user));
 
         $markdown = new Markdown(view(), config('mail.markdown'));
@@ -125,6 +125,22 @@ class MapController extends Controller
         // Mail::send(new amigo_map($all));
         // return redirect()->route('sign-in');
     }
+
+    // public function watch()
+    // {
+    //     // ->setOptions(['defaultFont' => 'sans-serif'])
+    //     $pdf = PDF::loadView('emails.PDF');
+    //     return $pdf->stream();
+    //     // return $pdf->download('amigo.pdf');
+    // }
+    // public function pdfOutput()
+    // {
+    //     $userFavorites = User::with([
+    //         'attractions',
+    //         'attractions.position',
+    //     ])->findOrFail(auth()->user()->id);
+    //     Mail::send(new Itineraries($userFavorites));
+    // }
     private function searchAttractions($request)
     {
         $addressLatLng = null;
@@ -148,19 +164,4 @@ class MapController extends Controller
         }
         return compact('attractions', 'addressLatLng');
     }
-    // public function watch()
-    // {
-    //     // ->setOptions(['defaultFont' => 'sans-serif'])
-    //     $pdf = PDF::loadView('emails.PDF');
-    //     return $pdf->stream();
-    //     // return $pdf->download('amigo.pdf');
-    // }
-    // public function pdfOutput()
-    // {
-    //     $userFavorites = User::with([
-    //         'attractions',
-    //         'attractions.position',
-    //     ])->findOrFail(auth()->user()->id);
-    //     Mail::send(new amigo_map($userFavorites));
-    // }
 }

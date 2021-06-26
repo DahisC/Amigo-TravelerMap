@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\User;
-use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Controllers\Controller;
-use App\Mail\amigo_map;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
 
 
