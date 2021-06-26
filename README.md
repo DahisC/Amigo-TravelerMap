@@ -12,3 +12,6 @@
 
 - 開發環境：amigo-local
 - 正式環境：amigo-production
+
+[網址](https://110-03-nchu-amigo.dev-hub.io/sign-up)
+[手動部署](https://forge.laravel.com/servers/475876/sites/1372589/deploy/http?token=t8nbDaoVkF7OFKk08iM9iJcUHirlMLWN4Xpw9pgM)
