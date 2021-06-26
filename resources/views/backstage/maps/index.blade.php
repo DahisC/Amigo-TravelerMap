@@ -40,8 +40,10 @@
         <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
+              @can('view-admin')
               <th>ID</th>
               <th>建立者</th>
+              @endcan
               <th>名稱</th>
               <th>動作</th>
               <th>最後編輯時間</th>
@@ -59,8 +61,10 @@
           <tbody>
             @foreach ($maps as $a)
             <tr>
+              @can('view-admin')
               <td>{{ $a->id }}</td>
               <td>{{ $a->user_id }}</td>
+              @endcan
               <td>{{ $a->name }}</td>
               <td>
                 <a href="{{ route('maps.show', ['map' => $a->id]) }}" target="_blank" class="btn btn-info btn-circle btn-sm">
