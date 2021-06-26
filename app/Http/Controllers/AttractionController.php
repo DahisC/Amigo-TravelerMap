@@ -231,17 +231,10 @@ class AttractionController extends Controller
         $isFavorited = Attraction::where('id', $id)->whereHas('users', function ($q) {
             $q->where('user_id', auth()->user()->id);
         })->get()->count();
-
         if (!$isFavorited) $attraction->users()->attach(auth()->user()->id);
         else $attraction->users()->detach(auth()->user()->id);
-        $userFavorites = User::with([
-            'attractions',
-            'attractions.images',
-            'attractions.position',
-            'attractions.time',
-            'attractions.tags'
-        ])->find(auth()->user()->id)->attractions;
-
+        $userFavorites = User::favorites();
+      
         return ['userFavorites' => $userFavorites];
     }
     public function getAttractions(Request $request)

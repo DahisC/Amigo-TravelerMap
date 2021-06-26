@@ -27,42 +27,32 @@
     </div>
   </div>
   <div class="row">
-    {{-- <div class="d-none d-md-block col-4">
+    <div class="d-none d-md-block col-4">
       <div class="input-group row-sm-4 position-sticky" style="top: 0px;">
-        <form action="/favorites" method="get">
-          <div class="form-outline">
-            <input type="search" id="form1" class="form-control" name="search" />
-            <label class="form-label" for="form1">Search</label>
-          </div>
+        <div class="form-outline">
+          <input type="search" id="form1" class="form-control" name="search" />
+          <label class="form-label" for="form1">Search</label>
+        </div>
 
-          <button type="Submit" class="btn btn-primary" id="inputButton">
-            <i class="fas fa-search"></i>
-          </button>
-        </form>
+        <button class="btn btn-primary" id="inputButton" onclick="query()">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
       <div class="list-group position-sticky" style="top: 0px;">
         <label class="list-group-item">
           <input class="form-check-input me-1" type="checkbox" value="" />
-          Cras justo odio
+          景點
         </label>
         <label class="list-group-item">
           <input class="form-check-input me-1" type="checkbox" value="" />
-          Dapibus ac facilisis in
+          藝術
         </label>
         <label class="list-group-item">
           <input class="form-check-input me-1" type="checkbox" value="" />
-          Morbi leo risus
-        </label>
-        <label class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" />
-          Porta ac consectetur ac
-        </label>
-        <label class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" />
-          Vestibulum at eros
+          節慶
         </label>
       </div>
-    </div> --}}
+    </div>
     <div class="col">
       <div class="row">
         @foreach ($userFavorites as $f)
@@ -134,15 +124,32 @@
 @endsection
 
 @section('js')
-{{-- <script>
-  document.querySelector('#inputButton').addEventListener('click',function(){
-        const text = document.querySelector('#form1').value;
-        axios.get('/favorites',{params: {
-          search:  text ,
-        }})
-.then((res)=>console.log(res))
-});
-</script> --}}
+<script>
+  // document.querySelector('#inputButton').addEventListener('click', function() {
+  //   const text = document.querySelector('#form1').value;
+  //   query(text);
+  // });
+
+  // document.querySelectorAll('.form-check-input').forEach((input) => {
+  //   input.addEventListener('change', () => {
+  //     query();
+  //   })
+  // });
+
+  async function query() {
+    const text = document.querySelector('#form1').value;
+    await axiosFun(text);
+  }
+
+  function axiosFun(input) {
+    axios.get('/favorites', {
+        params: {
+          search: input,
+        }
+      })
+      .then((res) => console.log(res))
+  }
+</script>
 
 
 {{-- <script>
