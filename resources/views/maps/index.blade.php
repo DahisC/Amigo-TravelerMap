@@ -397,24 +397,25 @@
       if (editMode) {
         introJs().setOptions({
           steps: [{
-            element: document.querySelector('#info_editMode'),
-            title: '編輯模式',
-            intro: '這是一張由你建立的旅人地圖！<br /><br />在編輯模式裡，你可以像探索模式一樣瀏覽所有地點，並且透過釘選按鈕將地點加入你的地圖中。'
-          },
-          {
-            element: document.querySelector('#btn_pinToMap_0'),
-            title: '釘選按鈕',
-            intro: '透過釘選按鈕，你可以將感興趣的地點釘選至你的個人地圖中。<br /><br />而透過這種方式釘選的地點會與該地圖綁定，這樣就可以規劃一張屬於你自己的地圖了！'
-          },
-          {
-            element: document.querySelector('#btn_filtPinned'),
-            title: '顯示釘選的地點',
-            intro: '為了讓旅人們可以一眼看見自己的地圖裡有哪些地點被釘選了，我們也替你準備了這個按鈕！'
-          },
-          {
-            title: '分享你的地圖',
-            intro: '透過地圖建立起旅人們之間的聯繫是阿米狗的宗旨，而這也是我們稱之為旅人地圖的原因！<br /><br />希望你喜歡<3<br /><br /><i>Buen Camino</i>'
-          }]
+              element: document.querySelector('#info_editMode'),
+              title: '編輯模式',
+              intro: '這是一張由你建立的旅人地圖！<br /><br />在編輯模式裡，你可以像探索模式一樣瀏覽所有地點，並且透過釘選按鈕將地點加入你的地圖中。'
+            },
+            //   {
+            //     element: document.querySelector('#btn_pinToMap_0'),
+            //     title: '釘選按鈕',
+            //     intro: '透過釘選按鈕，你可以將感興趣的地點釘選至你的個人地圖中。<br /><br />而透過這種方式釘選的地點會與該地圖綁定，這樣就可以規劃一張屬於你自己的地圖了！'
+            //   },
+            {
+              element: document.querySelector('#btn_filtPinned'),
+              title: '顯示釘選的地點',
+              intro: '為了讓旅人們可以一眼看見自己的地圖裡有哪些地點被釘選了，我們也替你準備了這個按鈕！'
+            },
+            {
+              title: '分享你的地圖',
+              intro: '透過地圖建立起旅人們之間的聯繫是阿米狗的宗旨，而這也是我們稱之為旅人地圖的原因！<br /><br />希望你喜歡<3<br /><br /><i>Buen Camino</i>'
+            }
+          ]
         }).start();
       } else {
         introJs().setOptions({
@@ -464,7 +465,7 @@
   function setDefaultFilterMode() {
     if (exploreMode) return 'NOTHING';
     if (viewMode) return 'PINNED';
-    if (editMode) return 'PINNED';
+    if (editMode) return 'NOTHING';
   }
 
   /* Vue */
