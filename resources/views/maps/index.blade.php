@@ -263,7 +263,7 @@
     </div>
   </div>
   <div id="traveler-map"></div>
-  <div id="custom-offcanvas" class="show offcanvas custom-offcanvas bg-white" data-bs-backdrop="false">
+  <div id="custom-offcanvas" class=" offcanvas custom-offcanvas bg-white" data-bs-scroll="true" data-bs-backdrop="false">
     <div class="offcanvas-header shadow bg-primary">
       {{-- <div class="w-100 d-flex justify-content-between align-items-center" style="font-size: 0.9rem;">
         @if (isset($map))
@@ -363,6 +363,9 @@
   const editMode = @json($editMode);
 
   window.addEventListener('load', () => {
+    const myOffcanvas = new bootstrap.Offcanvas(document.getElementById('custom-offcanvas'));
+    myOffcanvas.show();
+
     if (exploreMode) {
       introJs().setOptions({
         steps: [{
