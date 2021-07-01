@@ -232,18 +232,26 @@
         @endif
       </nav>
     </div>
-    <div class="text-center shadow rounded bg-primary px-3 py-2 mx-auto mx-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto; user-select: none;">
+    <div class=" d-flex align-items-center text-center shadow rounded bg-primary px-3 py-2 mx-auto mx-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto; user-select: none;">
       @if (!$exploreMode)
       @if ($editMode)
-      <span id="info_editMode"><i class="fas fa-pen me-0 me-md-1"></i><span class="d-none d-md-inline">編輯模式</span></span>
+      <span id="info_editMode"><i class="fas fa-pen me-0 me-md-1"></i><span class="d-none d-md-inline">編輯模式</span></span>｜
+      <div class="dropdown">
+        <a class="btn btn-dark btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-mdb-toggle="dropdown" aria-expanded="false">
+          {{ $map->name }}
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          @foreach ($userPersonalMaps as $pm)
+          <li><a class="dropdown-item" href="{{ route('maps.show', ['map' => $pm->id]) }}">{{ $pm->name }}</a></li>
+          @endforeach
+        </ul>
+      </div>
       @endif
       @if ($viewMode)
-      <span id="info_viewMode"><i class="fas fa-eye me-0 me-md-1"></i><span class="d-none d-md-inline">檢視模式</span></span>
-      @endif
-      ｜
+      <span id="info_viewMode"><i class="fas fa-eye me-0 me-md-1"></i><span class="d-none d-md-inline">檢視模式｜</span></span>
       {{ $map->name }}
-      ｜
-      <a id="btn_export" class="text-dark" href="{{ route('maps.itineraries', ['map' => $map->id]) }}">匯出</a>
+      @endif
+      ｜<a id="btn_export" class="text-dark" href="{{ route('maps.itineraries', ['map' => $map->id]) }}">匯出</a>
       @endif
       @if ($exploreMode)
       <span id="info_exploreMode"><i class="fas fa-search me-0 me-md-1"></i><span class="d-none d-md-inline">探索模式</span></span>

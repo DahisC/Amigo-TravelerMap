@@ -60,4 +60,13 @@ class User extends Authenticatable
             return [];
         }
     }
+    static function personalMaps()
+    {
+        if (auth()->check()) {
+            // return User::with('attractions')->find(auth()->user()->id)->attractions->pluck('id');
+            return User::with('maps')->find(auth()->user()->id)->maps;
+        } else {
+            return [];
+        }
+    }
 }
