@@ -232,18 +232,26 @@
         @endif
       </nav>
     </div>
-    <div class="text-center shadow rounded bg-primary px-3 py-2 mx-auto mx-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto; user-select: none;">
+    <div class=" d-flex align-items-center text-center shadow rounded bg-primary px-3 py-2 mx-auto mx-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto; user-select: none;">
       @if (!$exploreMode)
       @if ($editMode)
-      <span id="info_editMode"><i class="fas fa-pen me-0 me-md-1"></i><span class="d-none d-md-inline">編輯模式</span></span>
+      <span id="info_editMode"><i class="fas fa-pen me-0 me-md-1"></i><span class="d-none d-md-inline">編輯模式</span></span>｜
+      <div class="dropdown">
+        <a class="btn btn-dark btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-mdb-toggle="dropdown" aria-expanded="false">
+          {{ $map->name }}
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          @foreach ($userPersonalMaps as $pm)
+          <li><a class="dropdown-item" href="{{ route('maps.show', ['map' => $pm->id]) }}">{{ $pm->name }}</a></li>
+          @endforeach
+        </ul>
+      </div>
       @endif
       @if ($viewMode)
-      <span id="info_viewMode"><i class="fas fa-eye me-0 me-md-1"></i><span class="d-none d-md-inline">檢視模式</span></span>
-      @endif
-      ｜
+      <span id="info_viewMode"><i class="fas fa-eye me-0 me-md-1"></i><span class="d-none d-md-inline">檢視模式</span></span>｜
       {{ $map->name }}
-      ｜
-      <a id="btn_export" class="text-dark" href="{{ route('maps.itineraries', ['map' => $map->id]) }}">匯出</a>
+      @endif
+      ｜<a id="btn_export" class="text-dark" href="{{ route('maps.itineraries', ['map' => $map->id]) }}">匯出</a>
       @endif
       @if ($exploreMode)
       <span id="info_exploreMode"><i class="fas fa-search me-0 me-md-1"></i><span class="d-none d-md-inline">探索模式</span></span>
@@ -397,24 +405,25 @@
       if (editMode) {
         introJs().setOptions({
           steps: [{
-            element: document.querySelector('#info_editMode'),
-            title: '編輯模式',
-            intro: '這是一張由你建立的旅人地圖！<br /><br />在編輯模式裡，你可以像探索模式一樣瀏覽所有地點，並且透過釘選按鈕將地點加入你的地圖中。'
-          },
-          {
-            element: document.querySelector('#btn_pinToMap_0'),
-            title: '釘選按鈕',
-            intro: '透過釘選按鈕，你可以將感興趣的地點釘選至你的個人地圖中。<br /><br />而透過這種方式釘選的地點會與該地圖綁定，這樣就可以規劃一張屬於你自己的地圖了！'
-          },
-          {
-            element: document.querySelector('#btn_filtPinned'),
-            title: '顯示釘選的地點',
-            intro: '為了讓旅人們可以一眼看見自己的地圖裡有哪些地點被釘選了，我們也替你準備了這個按鈕！'
-          },
-          {
-            title: '分享你的地圖',
-            intro: '透過地圖建立起旅人們之間的聯繫是阿米狗的宗旨，而這也是我們稱之為旅人地圖的原因！<br /><br />希望你喜歡<3<br /><br /><i>Buen Camino</i>'
-          }]
+              element: document.querySelector('#info_editMode'),
+              title: '編輯模式',
+              intro: '這是一張由你建立的旅人地圖！<br /><br />在編輯模式裡，你可以像探索模式一樣瀏覽所有地點，並且透過釘選按鈕將地點加入你的地圖中。'
+            },
+            //   {
+            //     element: document.querySelector('#btn_pinToMap_0'),
+            //     title: '釘選按鈕',
+            //     intro: '透過釘選按鈕，你可以將感興趣的地點釘選至你的個人地圖中。<br /><br />而透過這種方式釘選的地點會與該地圖綁定，這樣就可以規劃一張屬於你自己的地圖了！'
+            //   },
+            {
+              element: document.querySelector('#btn_filtPinned'),
+              title: '顯示釘選的地點',
+              intro: '為了讓旅人們可以一眼看見自己的地圖裡有哪些地點被釘選了，我們也替你準備了這個按鈕！'
+            },
+            {
+              title: '分享你的地圖',
+              intro: '透過地圖建立起旅人們之間的聯繫是阿米狗的宗旨，而這也是我們稱之為旅人地圖的原因！<br /><br />希望你喜歡<3<br /><br /><i>Buen Camino</i>'
+            }
+          ]
         }).start();
       } else {
         introJs().setOptions({
@@ -464,7 +473,7 @@
   function setDefaultFilterMode() {
     if (exploreMode) return 'NOTHING';
     if (viewMode) return 'PINNED';
-    if (editMode) return 'PINNED';
+    if (editMode) return 'NOTHING';
   }
 
   /* Vue */
@@ -613,11 +622,12 @@
             this.displayingAttractions = [];
             break;
         }
+        this.renderMarkersOnMap(this.displayingAttractions);
       }
     },
     watch: {
       filter: function(next, prev) {
-        this.changeDisplayingAttractions(next)
+        this.changeDisplayingAttractions(next);
       }
     }
   });
