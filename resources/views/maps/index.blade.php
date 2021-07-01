@@ -183,7 +183,7 @@
 @section('content')
 <?php
     $exploreMode = !isset($map);
-    $viewMode = isset($map) && auth()->check() && auth()->user()->id !== $map->user_id;
+    $viewMode = isset($map) && (!auth()->check() || (auth()->check() && auth()->user()->id !== $map->user_id));
     $editMode = isset($map) && auth()->check() && auth()->user()->id === $map->user_id;
 ?>
 
