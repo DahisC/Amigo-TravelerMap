@@ -183,7 +183,7 @@
 @section('content')
 <?php
     $exploreMode = !isset($map);
-    $viewMode = isset($map) && auth()->check() && auth()->user()->id !== $map->user_id;
+    $viewMode = isset($map) && (!auth()->check() || (auth()->check() && auth()->user()->id !== $map->user_id));
     $editMode = isset($map) && auth()->check() && auth()->user()->id === $map->user_id;
 ?>
 
@@ -257,13 +257,13 @@
         </template>
         <template v-else>
           <i class="fas fa-bars"></i>
-          {{-- <span class="text-dark">@{{ attractions.length }} 個地點</span> --}}
+          <span class="badge bg-primary">@{{ displayingAttractions.length }}</span>
         </template>
       </button>
     </div>
   </div>
   <div id="traveler-map"></div>
-  <div id="custom-offcanvas" class="show offcanvas custom-offcanvas bg-white" data-bs-backdrop="false">
+  <div id="custom-offcanvas" class=" offcanvas custom-offcanvas bg-white" data-bs-scroll="true" data-bs-backdrop="false">
     <div class="offcanvas-header shadow bg-primary">
       {{-- <div class="w-100 d-flex justify-content-between align-items-center" style="font-size: 0.9rem;">
         @if (isset($map))
@@ -293,7 +293,7 @@
   </div>
   <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 </div>
-<div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-md-column align-items-md-center">
+<div id="offcanvas__attractions-wrapper" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-md-column align-items-md-center">
   <p v-if="displayingAttractions.length === 0">快來看看有什麼吧～</p>
   <div v-else v-for="(attraction, i) in displayingAttractions" class="attraction-card card mb-0 mb-md-3 me-2 me-md-0 shadow flex-shrink-0">
     <div class="attraction-card__top position-relative shadow flex-shrink-0 bg-primary">
@@ -362,7 +362,9 @@
   const viewMode = @json($viewMode);
   const editMode = @json($editMode);
 
-  window.addEventListener('load', () => {
+  window.addEventListener('load', async () => {
+    await initOffcanvas();
+
     if (exploreMode) {
       introJs().setOptions({
         steps: [{
@@ -381,8 +383,8 @@
           intro: '當然，你也可以搜尋你感興趣的某個區域。<3'
         },
         {
-          element: document.querySelector('#btn_toggleOffcanvas'),
-          title: '展開側邊欄',
+          element: document.querySelector('#offcanvas__attractions-wrapper'),
+          title: '側邊欄',
           intro: '側邊欄收集了那些在地圖上位於你周圍的地點資訊，而此處的地點也會隨著你的位置變動而自動更新！<br /><br />當你透過搜尋按鈕進行搜尋時，側邊欄則會忽略你週遭的地點，取而代之的是會顯示你關注區域中的地點資訊。'
         },
         {
@@ -481,14 +483,14 @@
       displayingAttractions: [],
     },
     mounted() {
-      this.changeDisplayingAttractions(this.filter);
+      //   this.changeDisplayingAttractions(this.filter); // 20210702 可能不需要，暫時註解
       this.$refs.userMarker = userMarker;
       this.$refs.userMarker.addEventListener('moveend', this.onUserMarkerMoved);
       this.initLeaflet();
       this.updateAttractions({ attractions, userFavorites, mapAttractions });
 
       if (addressLatLng) this.locateUser(addressLatLng);
-      else if (attractions[0]) this.map.flyTo({ lat: attractions[0].position.lat, lng: attractions[0].position.lng }, 7, { animate: false });
+      else if (this.displayingAttractions[0]) this.map.flyTo({ lat: this.displayingAttractions[0].position.lat, lng: this.displayingAttractions[0].position.lng }, 7, { animate: false });
 
     },
     methods: {
@@ -514,7 +516,9 @@
         this.attractions = attractions;
         this.userFavorites = userFavorites;
         if (mapAttractions) this.mapAttractions = mapAttractions;
-        this.renderMarkersOnMap(attractions);
+        this.changeDisplayingAttractions(this.filter);
+        // console.log(this.displayingAttractions);
+        this.renderMarkersOnMap(this.displayingAttractions);
       },
       locateOnMap(attraction) {
         const { lat, lng } = attraction.position;
@@ -591,6 +595,7 @@
         this.isLoading = true;
         const response = await axios.get('/api/attractions', { params });
         this.isLoading = false;
+        this.filter = 'NOTHING';
         this.updateAttractions(response.data);
       },
       changeDisplayingAttractions(filter) {
@@ -628,14 +633,22 @@
   //   }
 </script>
 <script>
-  window.onload = () => {
-    const customOffcanvas = document.getElementById('custom-offcanvas');
-    customOffcanvas.addEventListener('show.bs.offcanvas', () => {
-      document.querySelector(":root").style.setProperty("--offcanvas-width", "400px");
-    });
-    customOffcanvas.addEventListener('hide.bs.offcanvas', () => {
-      document.querySelector(":root").style.setProperty("--offcanvas-width", "0px");
-    });
+  function initOffcanvas() {
+    return new Promise((resolve, reject) => {
+      const customOffcanvas = document.getElementById('custom-offcanvas');
+
+      customOffcanvas.addEventListener('show.bs.offcanvas', () => {
+        document.querySelector(":root").style.setProperty("--offcanvas-width", "400px");
+      });
+      customOffcanvas.addEventListener('hide.bs.offcanvas', () => {
+        document.querySelector(":root").style.setProperty("--offcanvas-width", "0px");
+      });
+
+      const myOffcanvas = new bootstrap.Offcanvas(customOffcanvas);
+      myOffcanvas.show();
+
+      setTimeout(() => { resolve() }, 1000);
+    })
   }
 </script>
 @endsection
