@@ -46,13 +46,12 @@
               <hr />
               <p>額外搜尋條件</p>
               <div class="col-12">
-                {{-- <label for="search-form__input_range" class="form-label">標籤</label> --}}
                 <div class="input-group mb-3">
                   <button class="btn btn-primary dropdown-toggle" type="button" data-mdb-toggle="dropdown" style="border-radius: 0.25rem;">
                     標籤
                   </button>
                   <ul class="dropdown-menu">
-                    @foreach ($tags->take(10) as $tag)
+                    @foreach ($tags as $tag)
                     <li class="p-2"><a class="dropdown-item" href="#" onclick="input_tag1.value = this.textContent">{{ $tag->name }}</a></li>
                     @endforeach
                   </ul>
