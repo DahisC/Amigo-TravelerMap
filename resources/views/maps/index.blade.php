@@ -293,7 +293,7 @@
   </div>
   <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 </div>
-<div id="test" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-md-column align-items-md-center">
+<div id="offcanvas__attractions-wrapper" class="p-3 p-sm-4 overflow-auto d-flex flex-row flex-md-column align-items-md-center">
   <p v-if="displayingAttractions.length === 0">快來看看有什麼吧～</p>
   <div v-else v-for="(attraction, i) in displayingAttractions" class="attraction-card card mb-0 mb-md-3 me-2 me-md-0 shadow flex-shrink-0">
     <div class="attraction-card__top position-relative shadow flex-shrink-0 bg-primary">
@@ -384,8 +384,8 @@
           intro: '當然，你也可以搜尋你感興趣的某個區域。<3'
         },
         {
-          element: document.querySelector('#btn_toggleOffcanvas'),
-          title: '展開側邊欄',
+          element: document.querySelector('#offcanvas__attractions-wrapper'),
+          title: '側邊欄',
           intro: '側邊欄收集了那些在地圖上位於你周圍的地點資訊，而此處的地點也會隨著你的位置變動而自動更新！<br /><br />當你透過搜尋按鈕進行搜尋時，側邊欄則會忽略你週遭的地點，取而代之的是會顯示你關注區域中的地點資訊。'
         },
         {
@@ -517,6 +517,7 @@
         this.attractions = attractions;
         this.userFavorites = userFavorites;
         if (mapAttractions) this.mapAttractions = mapAttractions;
+        this.changeDisplayingAttractions(this.filter);
         this.renderMarkersOnMap(attractions);
       },
       locateOnMap(attraction) {
@@ -594,6 +595,7 @@
         this.isLoading = true;
         const response = await axios.get('/api/attractions', { params });
         this.isLoading = false;
+        this.filter = 'NOTHING';
         this.updateAttractions(response.data);
       },
       changeDisplayingAttractions(filter) {
