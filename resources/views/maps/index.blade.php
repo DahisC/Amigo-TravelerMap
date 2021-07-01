@@ -257,7 +257,7 @@
         </template>
         <template v-else>
           <i class="fas fa-bars"></i>
-          {{-- <span class="text-dark">@{{ attractions.length }} 個地點</span> --}}
+          <span class="badge bg-primary">@{{ displayingAttractions.length }}</span>
         </template>
       </button>
     </div>
