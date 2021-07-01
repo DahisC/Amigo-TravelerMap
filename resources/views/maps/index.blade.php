@@ -484,7 +484,7 @@
       displayingAttractions: [],
     },
     mounted() {
-      this.changeDisplayingAttractions(this.filter);
+      //   this.changeDisplayingAttractions(this.filter); // 20210702 可能不需要，暫時註解
       this.$refs.userMarker = userMarker;
       this.$refs.userMarker.addEventListener('moveend', this.onUserMarkerMoved);
       this.initLeaflet();
