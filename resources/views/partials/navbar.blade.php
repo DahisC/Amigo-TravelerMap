@@ -41,11 +41,11 @@
 
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-0 align-items-center">
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="nav-link custom-nav-link" href="{{ route('attractions.index') }}">
-            <i class="fas fa-map-marker-alt me-1"></i>有趣的地點
-          </a>
-        </li>
+        <i class="fas fa-map-marker-alt me-1"></i>有趣的地點
+        </a>
+        </li> --}}
         <li class="nav-item">
           <a class="nav-link custom-nav-link" href="{{ route('maps.index') }}">
             <i class="fas fa-map me-1"></i>地圖
