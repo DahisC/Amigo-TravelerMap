@@ -613,11 +613,12 @@
             this.displayingAttractions = [];
             break;
         }
+        this.renderMarkersOnMap(this.displayingAttractions);
       }
     },
     watch: {
       filter: function(next, prev) {
-        this.changeDisplayingAttractions(next)
+        this.changeDisplayingAttractions(next);
       }
     }
   });
