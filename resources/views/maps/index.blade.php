@@ -362,9 +362,8 @@
   const viewMode = @json($viewMode);
   const editMode = @json($editMode);
 
-  window.addEventListener('load', () => {
-    const myOffcanvas = new bootstrap.Offcanvas(document.getElementById('custom-offcanvas'));
-    myOffcanvas.show();
+  window.addEventListener('load', async () => {
+    await initOffcanvas();
 
     if (exploreMode) {
       introJs().setOptions({
@@ -634,14 +633,22 @@
   //   }
 </script>
 <script>
-  window.onload = () => {
-    const customOffcanvas = document.getElementById('custom-offcanvas');
-    customOffcanvas.addEventListener('show.bs.offcanvas', () => {
-      document.querySelector(":root").style.setProperty("--offcanvas-width", "400px");
-    });
-    customOffcanvas.addEventListener('hide.bs.offcanvas', () => {
-      document.querySelector(":root").style.setProperty("--offcanvas-width", "0px");
-    });
+  function initOffcanvas() {
+    return new Promise((resolve, reject) => {
+      const customOffcanvas = document.getElementById('custom-offcanvas');
+
+      customOffcanvas.addEventListener('show.bs.offcanvas', () => {
+        document.querySelector(":root").style.setProperty("--offcanvas-width", "400px");
+      });
+      customOffcanvas.addEventListener('hide.bs.offcanvas', () => {
+        document.querySelector(":root").style.setProperty("--offcanvas-width", "0px");
+      });
+
+      const myOffcanvas = new bootstrap.Offcanvas(customOffcanvas);
+      myOffcanvas.show();
+
+      setTimeout(() => { resolve() }, 1000);
+    })
   }
 </script>
 @endsection
