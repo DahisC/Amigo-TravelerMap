@@ -518,7 +518,8 @@
         this.userFavorites = userFavorites;
         if (mapAttractions) this.mapAttractions = mapAttractions;
         this.changeDisplayingAttractions(this.filter);
-        this.renderMarkersOnMap(attractions);
+        // console.log(this.displayingAttractions);
+        this.renderMarkersOnMap(this.displayingAttractions);
       },
       locateOnMap(attraction) {
         const { lat, lng } = attraction.position;
