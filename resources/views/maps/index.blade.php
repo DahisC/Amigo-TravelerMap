@@ -491,7 +491,7 @@
       this.updateAttractions({ attractions, userFavorites, mapAttractions });
 
       if (addressLatLng) this.locateUser(addressLatLng);
-      else if (attractions[0]) this.map.flyTo({ lat: attractions[0].position.lat, lng: attractions[0].position.lng }, 7, { animate: false });
+      else if (this.displayingAttractions[0]) this.map.flyTo({ lat: this.displayingAttractions[0].position.lat, lng: this.displayingAttractions[0].position.lng }, 7, { animate: false });
 
     },
     methods: {
