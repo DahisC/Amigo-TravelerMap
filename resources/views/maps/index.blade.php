@@ -248,7 +248,7 @@
       </div>
       @endif
       @if ($viewMode)
-      <span id="info_viewMode"><i class="fas fa-eye me-0 me-md-1"></i><span class="d-none d-md-inline">檢視模式｜</span></span>
+      <span id="info_viewMode"><i class="fas fa-eye me-0 me-md-1"></i><span class="d-none d-md-inline">檢視模式</span></span>｜
       {{ $map->name }}
       @endif
       ｜<a id="btn_export" class="text-dark" href="{{ route('maps.itineraries', ['map' => $map->id]) }}">匯出</a>
