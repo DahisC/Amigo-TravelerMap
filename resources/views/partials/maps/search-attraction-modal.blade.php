@@ -36,23 +36,22 @@
                   </div>
                 </div>
               </div>
-              <div class="form-check mb-3">
+              {{-- <div class="form-check mb-3">
                 <input class="form-check-input" type="radio" name="searchBy" id="search-form__byAddress" value="address" />
                 <label class="form-check-label mb-3" for="search-form__byAddress">根據地址搜尋</label>
                 <div class="card p-3">
                   @include('partials.form.select-city-county')
                 </div>
-              </div>
+              </div> --}}
               <hr />
               <p>額外搜尋條件</p>
               <div class="col-12">
-                {{-- <label for="search-form__input_range" class="form-label">標籤</label> --}}
                 <div class="input-group mb-3">
                   <button class="btn btn-primary dropdown-toggle" type="button" data-mdb-toggle="dropdown" style="border-radius: 0.25rem;">
                     標籤
                   </button>
                   <ul class="dropdown-menu">
-                    @foreach ($tags->take(10) as $tag)
+                    @foreach ($tags as $tag)
                     <li class="p-2"><a class="dropdown-item" href="#" onclick="input_tag1.value = this.textContent">{{ $tag->name }}</a></li>
                     @endforeach
                   </ul>

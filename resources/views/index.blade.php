@@ -284,9 +284,9 @@ Buen Camino
     </div>
   </section>
   <section id="banner-the-end" class="index-banner py-4">
-    <div class="index-banner__description position-sticky bottom-0">
+    <div class="index-banner__description position-sticky bottom-0 a-background" style="background-image: url({{ asset('images/page/index/buen-camino.png') }}); background-size:">
       <div class="h-100 container py-4">
-        <div class="h-100 row">
+        <div class="h-100 row py-0 py-md-4">
           <div class="col-12 text-center d-flex flex-column justify-content-center mb-4">
             <h1 class="a-fs-3"><b>Buen Camino</b></h1>
             <h2 class="a-fs-2 text-muted">一路順風</h2>
@@ -304,7 +304,4 @@ Buen Camino
     </div>
   </section>
 </main>
-{{-- <footer style="height: 50vh">
-  Footer
-</footer> --}}
 @endsection
