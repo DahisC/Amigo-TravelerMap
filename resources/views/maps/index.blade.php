@@ -350,6 +350,8 @@
 {{-- @include('partials.maps.create-map-modal') --}}
 </div>
 
+@section('footer')
+@endsection
 
 
 @endsection
