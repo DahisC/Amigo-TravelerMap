@@ -1,5 +1,5 @@
 <footer class="bg-dark text-light py-4">
-  <div class="container" class="py-4">
+  <div class="container py-4">
     <div class="row">
       <div class="col text-center">
         <img src="{{ asset('images/logo_light.svg') }}" alt="" width="60">
