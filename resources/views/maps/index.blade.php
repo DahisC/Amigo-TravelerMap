@@ -232,7 +232,7 @@
         @endif
       </nav>
     </div>
-    <div class=" d-flex align-items-center text-center shadow rounded bg-primary px-3 py-2 mx-auto mx-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto; user-select: none;">
+    <div class="d-flex align-items-center text-center shadow rounded bg-primary px-3 py-2 mx-auto mx-md-0 text-dark" style="height: fit-content; width: fit-content; font-size: 0.8rem; pointer-events: auto; user-select: none;">
       @if (!$exploreMode)
       @if ($editMode)
       <span id="info_editMode"><i class="fas fa-pen me-0 me-md-1"></i><span class="d-none d-md-inline">編輯模式</span></span>｜
@@ -271,7 +271,7 @@
     </div>
   </div>
   <div id="traveler-map"></div>
-  <div id="custom-offcanvas" class=" offcanvas custom-offcanvas bg-white" data-bs-scroll="true" data-bs-backdrop="false">
+  <div id="custom-offcanvas" class=" offcanvas custom-offcanvas bg-white" data-bs-backdrop="false">
     <div class="offcanvas-header shadow bg-primary">
       {{-- <div class="w-100 d-flex justify-content-between align-items-center" style="font-size: 0.9rem;">
         @if (isset($map))
@@ -646,19 +646,16 @@
 </script>
 <script>
   function initOffcanvas() {
+    const customOffcanvas = document.getElementById('custom-offcanvas');
+    customOffcanvas.addEventListener('show.bs.offcanvas', () => {
+      document.querySelector(":root").style.setProperty("--offcanvas-width", "400px");
+    });
+    customOffcanvas.addEventListener('hide.bs.offcanvas', () => {
+      document.querySelector(":root").style.setProperty("--offcanvas-width", "0px");
+    });
     return new Promise((resolve, reject) => {
-      const customOffcanvas = document.getElementById('custom-offcanvas');
-
-      customOffcanvas.addEventListener('show.bs.offcanvas', () => {
-        document.querySelector(":root").style.setProperty("--offcanvas-width", "400px");
-      });
-      customOffcanvas.addEventListener('hide.bs.offcanvas', () => {
-        document.querySelector(":root").style.setProperty("--offcanvas-width", "0px");
-      });
-
       const myOffcanvas = new bootstrap.Offcanvas(customOffcanvas);
-      myOffcanvas.show();
-
+      btn_toggleOffcanvas.click();
       setTimeout(() => { resolve() }, 1000);
     })
   }
