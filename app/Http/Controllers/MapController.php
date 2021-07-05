@@ -120,9 +120,10 @@ class MapController extends Controller
         ])->whereHas('attractions', function ($query) use ($mapId) {
             $query->where('map_id', $mapId);
         })->get()->first();
-        // dd($user,$map);
-        Mail::send(new Itineraries($map, $user));
 
+        set_time_limit(0);
+        Mail::send(new Itineraries($map, $user));
+        // set_time_limit(0);
         $markdown = new Markdown(view(), config('mail.markdown'));
         return $markdown->render('emails.itineraries', compact('map', 'user'));
         // Mail::send(new amigo_map($all));
