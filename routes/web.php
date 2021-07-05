@@ -102,8 +102,6 @@ Route::get('db/reset', function () {
     Artisan::call('migrate:reset', [
         '--force' => true
     ]);
-    Artisan::call('migrate --seed', [
-        '--force' => true
-    ]);
+    Artisan::call('migrate --seed');
     dd(Artisan::output());
 });
