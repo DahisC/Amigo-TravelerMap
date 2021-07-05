@@ -15,10 +15,10 @@ Buen Camino
   }
 
   /* 修正子元素無法從父元素繼承 height: 100% 高度的問題 */
-  section:not(.index-banner)>.container,
+  /* section:not(.index-banner)>.container,
   section:not(.index-banner)>.container>.row {
     min-height: inherit;
-  }
+  } */
 
   #header {
     height: 100vh;
@@ -72,8 +72,8 @@ Buen Camino
   <!-- ¿Quién soy yo? / Who am I? -->
   <section id="banner-about-me" class="index-banner py-4">
     <div class="index-banner__description position-sticky bottom-0 a-background" style="background-image: url({{ asset('images/page/index/banner-who-am-III.png') }})">
-      <div class="h-100 container py-4">
-        <div class="h-100 row">
+      <div class="container py-4">
+        <div class="row">
           <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center mb-4 mb-md-0">
             <h1 class="a-fs-3"><b>¿Quién soy yo?</b></h1>
             <h2 class="a-fs-2 text-muted">Who am I?</h2>
@@ -101,11 +101,11 @@ Buen Camino
   <!-- Explore -->
   <section id="features" class="py-5">
     {{-- <section id="features" style="height: 200vh;"> --}}
-    <div class="h-100 container py-0 py-md-5">
-      <div class="h-100 row py-0 py-md-5">
-        <div class="h-100 col d-flex flex-column">
+    <div class="container py-0 py-md-5">
+      <div class="row py-0 py-md-5">
+        <div class="col d-flex flex-column">
           <!-- Attractions -->
-          <div class="row mb-9 mb-md-11">
+          <div class="row mb-8 mb-md-11">
             <div class="col-12 col-md-2 a-vertical-title mb-3 mb-md-0">
               <h1 class="a-fs-4"><b class="text-primary">A</b><span class="text-dark">ttractions</span></h1>
             </div>
@@ -127,96 +127,96 @@ Buen Camino
                 </p>
                 <p>這些地點，我們都幫你整理好了～</p>
               </div>
-              <div class="text-center text-md-start">
-                {{-- <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="{{ route('attractions.index') }}">去看看！</a> --}}
+              {{-- <div class="text-center text-md-start">
+                <a class="btn btn-outline-secondary" data-mdb-ripple-color="secondary" href="{{ route('attractions.index') }}">去看看！</a>
+            </div> --}}
+          </div>
+        </div>
+        <!-- Maps -->
+        <div class="row flex-row-reverse mb-8 mb-md-11">
+          <div class="col-12 col-md-2 a-vertical-title mb-3 mb-md-0" style="transform: rotate(0deg);">
+            <h1 class="a-fs-4"><b class="text-primary">M</b><span class="text-dark">ap</span></h1>
+          </div>
+          <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end align-items-center mb-5 mb-md-0">
+            <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/map.png') }})"></div>
+          </div>
+          <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+            <h2 class="a-fs-1 mb-4 text-primary text-center text-md-start">透過地圖旅行</h2>
+            <div class="text-dark mb-2">
+              <p>
+                遇到喜歡的骨頭就要收藏起來細細品嘗，<br />
+                就像看到錢包裡亮晶晶的 50 元硬幣都捨不得花掉！
+              </p>
+              <p>
+                阿米狗替你在地圖上標示出了有趣的地點，<br />
+                讓你可以簡單地透過地圖看看附近有什麼有趣的事情。
+              </p>
+              <p>
+                隨手為喜歡的地點按顆星加入收藏，<br />
+                晚點就可以集滿周末的行程了！
+              </p>
+            </div>
+            <div class="text-center text-md-end">
+              <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="{{ route('maps.show', ['map' => 1]) }}">
+                看看阿米狗的地圖
+                <i class="fas fa-paw ms-1 text-dark" style="transform: rotateZ(-30deg);"></i>
+              </a>
+              <div class="text-muted">
+                <small class="fst-italic">
+                  「問我西班牙有哪些有趣的活動？點了不就知道了？」
+                </small>
+                {{-- <div class="text-end"><small>－－阿米狗，西班牙的地頭貓</small></div> --}}
               </div>
             </div>
           </div>
-          <!-- Maps -->
-          <div class="row flex-row-reverse mb-9 mb-md-11">
-            <div class="col-12 col-md-2 a-vertical-title mb-3 mb-md-0" style="transform: rotate(0deg);">
-              <h1 class="a-fs-4"><b class="text-primary">M</b><span class="text-dark">ap</span></h1>
-            </div>
-            <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end align-items-center mb-5 mb-md-0">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/map.png') }})"></div>
-            </div>
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
-              <h2 class="a-fs-1 mb-4 text-primary text-center text-md-start">透過地圖旅行</h2>
-              <div class="text-dark mb-2">
-                <p>
-                  遇到喜歡的骨頭就要收藏起來細細品嘗，<br />
-                  就像看到錢包裡亮晶晶的 50 元硬幣都捨不得花掉！
-                </p>
-                <p>
-                  阿米狗替你在地圖上標示出了有趣的地點，<br />
-                  讓你可以簡單地透過地圖看看附近有什麼有趣的事情。
-                </p>
-                <p>
-                  隨手為喜歡的地點按顆星加入收藏，<br />
-                  晚點就可以集滿周末的行程了！
-                </p>
-              </div>
-              <div class="text-center text-md-end">
-                <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="{{ route('maps.show', ['map' => 1]) }}">
-                  看看阿米狗的地圖
-                  <i class="fas fa-paw ms-1 text-dark" style="transform: rotateZ(-30deg);"></i>
-                </a>
-                <div class="text-muted">
-                  <small class="fst-italic">
-                    「問我西班牙有哪些有趣的活動？點了不就知道了？」
-                  </small>
-                  {{-- <div class="text-end"><small>－－阿米狗，西班牙的地頭貓</small></div> --}}
-                </div>
-              </div>
-            </div>
+        </div>
+        <!-- Itineraries -->
+        <div class="row">
+          <div class="col-12 col-md-2 a-vertical-title mb-3 mb-md-0">
+            <h1 class="a-fs-4"><b class="text-primary">I</b><span class="text-dark">tineraries</span></h1>
           </div>
-          <!-- Itineraries -->
-          <div class="row">
-            <div class="col-12 col-md-2 a-vertical-title mb-3 mb-md-0">
-              <h1 class="a-fs-4"><b class="text-primary">I</b><span class="text-dark">tineraries</span></h1>
+          <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-5 mb-md-0">
+            <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/itineraries.png') }})"></div>
+          </div>
+          <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+            <h2 class="a-fs-1 mb-4 text-primary text-center text-md-start">獨特的行程表</h2>
+            <div class="text-dark mb-2">
+              <p>
+                收藏起來的地點好想分享給家人朋友們知道？<br />
+                阿米狗已經把分享鍵放在收藏頁裡啦！
+              </p>
+              <p>
+                除了可以將喜歡的地點透過收藏按鈕放進屬於自己的收藏頁面以外，<br />
+                整理控甚至可以將收藏的地點分門別類放進自己的個人地圖，<br />
+                讓你可以將自己的地圖分享給厝邊頭尾～
+              </p>
+              <p>而且阿米狗也提供了將行程表列印或者是寄送到信箱內的功能！</p>
+              <p>
+                還猶豫什麼？快揪團出門踏踏吧！
+              </p>
             </div>
-            <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-start align-items-center mb-5 mb-md-0">
-              <div class="w-75 ratio ratio-1x1 rounded-circle border border-3 a-background border-secondary" style="background-image: url({{ asset('images/page/index/itineraries.png') }})"></div>
-            </div>
-            <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
-              <h2 class="a-fs-1 mb-4 text-primary text-center text-md-start">獨特的行程表</h2>
-              <div class="text-dark mb-2">
-                <p>
-                  收藏起來的地點好想分享給家人朋友們知道？<br />
-                  阿米狗已經把分享鍵放在收藏頁裡啦！
-                </p>
-                <p>
-                  除了可以將喜歡的地點透過收藏按鈕放進屬於自己的收藏頁面以外，<br />
-                  整理控甚至可以將收藏的地點分門別類放進自己的個人地圖，<br />
-                  讓你可以將自己的地圖分享給厝邊頭尾～
-                </p>
-                <p>而且阿米狗也提供了將行程表列印或者是寄送到信箱內的功能！</p>
-                <p>
-                  還猶豫什麼？快揪團出門踏踏吧！
-                </p>
-              </div>
-              <div class="text-center text-md-end">
-                <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="{{ route('maps.itineraries', ['map' => 1]) }}">
-                  觀看阿米狗的行程表
-                  <i class="fas fa-paw ms-1 text-dark" style="transform: rotateZ(-30deg);"></i>
-                </a>
-                <div class="text-muted">
-                  <small class="fst-italic">
-                    「出去玩沒行程表怎麼行？快按按看這顆魔法按鈕！」
-                  </small>
-                  {{-- <div class="text-end"><small>－－阿米狗（現在是貓），喵！</small></div> --}}
-                </div>
+            <div class="text-center text-md-end">
+              <a class="btn btn-outline-secondary mb-2" data-mdb-ripple-color="secondary" href="{{ route('maps.itineraries', ['map' => 1]) }}">
+                觀看阿米狗的行程表
+                <i class="fas fa-paw ms-1 text-dark" style="transform: rotateZ(-30deg);"></i>
+              </a>
+              <div class="text-muted">
+                <small class="fst-italic">
+                  「出去玩沒行程表怎麼行？快按按看這顆魔法按鈕！」
+                </small>
+                {{-- <div class="text-end"><small>－－阿米狗（現在是貓），喵！</small></div> --}}
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    </div>
   </section>
   <section id="banner-about-you" class="index-banner py-4">
     <div class="index-banner__description position-sticky bottom-0 a-background" style="background-image: url({{ asset('images/page/index/banner-who-are-you.png') }})">
-      <div class="h-100 container py-4">
-        <div class="h-100 row">
+      <div class="container py-4">
+        <div class="row">
           <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center mb-4 mb-md-0">
             <h1 class="a-fs-3"><b>¿Quién eres?</b></h1>
             <h2 class="a-fs-2 text-muted">Who are YOU?</h2>
@@ -240,11 +240,11 @@ Buen Camino
       </div>
     </div>
   </section>
-  <section id="roles" class="py-5 py-md-0">
+  <section id="roles" class="py-5">
     {{-- https://stackoverflow.com/questions/8468066/child-inside-parent-with-min-height-100-not-inheriting-height --}}
-    <div class="h-100 container">
-      <div class="h-100 row align-items-center">
-        <div class="h-100 col-12 col-md-6 text-center mb-9 mb-md-0 d-flex flex-column justify-content-center">
+    <div class="container py-0 py-md-5">
+      <div class="row align-items-center py-0 py-md-5">
+        <div class="col-12 col-md-6 text-center mb-8 mb-md-0 d-flex flex-column justify-content-center">
           <h3 class="mb-4 text-primary">
             Traveler<br />
             旅人
@@ -262,7 +262,7 @@ Buen Camino
             </p>
           </div>
         </div>
-        <div class="h-100 col-12 col-md-6 text-center d-flex flex-column justify-content-center">
+        <div class="col-12 col-md-6 text-center mb-8 mb-md-0 d-flex flex-column justify-content-center">
           <h3 class="mb-4 text-primary">
             Guider<br />
             嚮導
@@ -281,12 +281,17 @@ Buen Camino
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col text-center">
+          <a class="btn btn-secondary" href="{{ route('sign-up') }}">加入冒險</a>
+        </div>
+      </div>
     </div>
   </section>
   <section id="banner-the-end" class="index-banner py-4">
-    <div class="index-banner__description position-sticky bottom-0">
-      <div class="h-100 container py-4">
-        <div class="h-100 row">
+    <div class="index-banner__description position-sticky bottom-0 a-background" style="background-image: url({{ asset('images/page/index/buen-camino.png') }}); background-size:">
+      <div class="container py-4">
+        <div class="row py-0 py-md-4">
           <div class="col-12 text-center d-flex flex-column justify-content-center mb-4">
             <h1 class="a-fs-3"><b>Buen Camino</b></h1>
             <h2 class="a-fs-2 text-muted">一路順風</h2>
@@ -304,7 +309,4 @@ Buen Camino
     </div>
   </section>
 </main>
-{{-- <footer style="height: 50vh">
-  Footer
-</footer> --}}
 @endsection

@@ -26,10 +26,11 @@ class MapController extends Controller
         $map = null;
         $mapAttractions = [];
         $userFavorites = User::favorites();
+        $userPersonalMaps = User::personalMaps();
         $searchResult = $this->searchAttractions($request);
         $attractions = $searchResult['attractions'];
         $addressLatLng = $searchResult['addressLatLng'];
-        return view('maps.index', compact('attractions', 'addressLatLng', 'userFavorites', 'map', 'mapAttractions', 'user'));
+        return view('maps.index', compact('attractions', 'addressLatLng', 'userFavorites', 'map', 'mapAttractions', 'user', 'userPersonalMaps'));
     }
 
     public function create()
@@ -48,6 +49,7 @@ class MapController extends Controller
 
     public function show(Request $request, $id)
     {
+        $userPersonalMaps = User::personalMaps();
         $searchResult = $this->searchAttractions($request);
         $attractions = $searchResult['attractions'];
         $addressLatLng = $searchResult['addressLatLng'];
@@ -64,7 +66,8 @@ class MapController extends Controller
             'userFavorites' => $userFavorites,
             'addressLatLng' => $addressLatLng,
             'attractions' => $attractions,
-            'user' => $user
+            'user' => $user,
+            'userPersonalMaps' => $userPersonalMaps
         ]);
     }
 

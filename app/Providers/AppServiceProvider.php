@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // 在 Production 環境時強制將網頁內使用的網址協定變更為 https
         if (config('app.env') === 'production') {
-            URL::forceScheme('https');
+                    URL::forceScheme('https');
         }
 
         view()->composer('partials.maps.search-attraction-modal', function ($view) {

@@ -5,7 +5,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MapController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,3 +86,12 @@ Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
 
 
 // Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('db/reset', function () {
+    dump('Resetting database...');
+    Artisan::call('migrate:reset', [
+        '--force' => true
+    ]);
+    Artisan::call('migrate --seed');
+    dd(Artisan::output());
+});
