@@ -15,10 +15,10 @@ Buen Camino
   }
 
   /* 修正子元素無法從父元素繼承 height: 100% 高度的問題 */
-  section:not(.index-banner)>.container,
+  /* section:not(.index-banner)>.container,
   section:not(.index-banner)>.container>.row {
     min-height: inherit;
-  }
+  } */
 
   #header {
     height: 100vh;
@@ -105,7 +105,7 @@ Buen Camino
       <div class="row py-0 py-md-5">
         <div class="col d-flex flex-column">
           <!-- Attractions -->
-          <div class="row mb-9 mb-md-11">
+          <div class="row mb-8 mb-md-11">
             <div class="col-12 col-md-2 a-vertical-title mb-3 mb-md-0">
               <h1 class="a-fs-4"><b class="text-primary">A</b><span class="text-dark">ttractions</span></h1>
             </div>
@@ -133,7 +133,7 @@ Buen Camino
           </div>
         </div>
         <!-- Maps -->
-        <div class="row flex-row-reverse mb-9 mb-md-11">
+        <div class="row flex-row-reverse mb-8 mb-md-11">
           <div class="col-12 col-md-2 a-vertical-title mb-3 mb-md-0" style="transform: rotate(0deg);">
             <h1 class="a-fs-4"><b class="text-primary">M</b><span class="text-dark">ap</span></h1>
           </div>
@@ -240,11 +240,11 @@ Buen Camino
       </div>
     </div>
   </section>
-  <section id="roles" class="py-5 py-md-0">
+  <section id="roles" class="py-5">
     {{-- https://stackoverflow.com/questions/8468066/child-inside-parent-with-min-height-100-not-inheriting-height --}}
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-12 col-md-6 text-center mb-9 mb-md-0 d-flex flex-column justify-content-center">
+    <div class="container py-0 py-md-5">
+      <div class="row align-items-center py-0 py-md-5">
+        <div class="col-12 col-md-6 text-center mb-8 mb-md-0 d-flex flex-column justify-content-center">
           <h3 class="mb-4 text-primary">
             Traveler<br />
             旅人
@@ -262,7 +262,7 @@ Buen Camino
             </p>
           </div>
         </div>
-        <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center">
+        <div class="col-12 col-md-6 text-center mb-8 mb-md-0 d-flex flex-column justify-content-center">
           <h3 class="mb-4 text-primary">
             Guider<br />
             嚮導
@@ -279,6 +279,11 @@ Buen Camino
               同時也可以在地圖上建立自己的活動。
             </p>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <a class="btn btn-secondary" href="{{ route('sign-up') }}">加入冒險</a>
         </div>
       </div>
     </div>
