@@ -99,7 +99,11 @@ Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
 
 Route::get('db/reset', function () {
     dump('Resetting database...');
-    Artisan::call('migrate:reset');
-    Artisan::call('migrate --seed');
+    Artisan::call('migrate:reset', [
+        '--force' => true
+    ]);
+    Artisan::call('migrate --seed', [
+        '--force' => true
+    ]);
     dd(Artisan::output());
 });
