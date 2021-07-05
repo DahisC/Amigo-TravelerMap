@@ -60,9 +60,9 @@ Buen Camino
 </div> --}}
 <main>
   <section id="header">
-    <div class="h-100 container">
-      <div class="h-100 row">
-        <div class="h-100 col d-flex flex-column justify-content-center align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col d-flex flex-column justify-content-center align-items-center">
           <h1 class="mb-5 a-fs-4">突然不知道要去哪裡？</h1>
           <a class="btn btn-secondary btn-lg" href="{{ route('maps.index') }}">探索周遭的地點</a>
         </div>
@@ -72,8 +72,8 @@ Buen Camino
   <!-- ¿Quién soy yo? / Who am I? -->
   <section id="banner-about-me" class="index-banner py-4">
     <div class="index-banner__description position-sticky bottom-0 a-background" style="background-image: url({{ asset('images/page/index/banner-who-am-III.png') }})">
-      <div class="h-100 container py-4">
-        <div class="h-100 row">
+      <div class="container py-4">
+        <div class="row">
           <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center mb-4 mb-md-0">
             <h1 class="a-fs-3"><b>¿Quién soy yo?</b></h1>
             <h2 class="a-fs-2 text-muted">Who am I?</h2>
@@ -101,9 +101,9 @@ Buen Camino
   <!-- Explore -->
   <section id="features" class="py-5">
     {{-- <section id="features" style="height: 200vh;"> --}}
-    <div class="h-100 container py-0 py-md-5">
-      <div class="h-100 row py-0 py-md-5">
-        <div class="h-100 col d-flex flex-column">
+    <div class="container py-0 py-md-5">
+      <div class="row py-0 py-md-5">
+        <div class="col d-flex flex-column">
           <!-- Attractions -->
           <div class="row mb-9 mb-md-11">
             <div class="col-12 col-md-2 a-vertical-title mb-3 mb-md-0">
@@ -215,8 +215,8 @@ Buen Camino
   </section>
   <section id="banner-about-you" class="index-banner py-4">
     <div class="index-banner__description position-sticky bottom-0 a-background" style="background-image: url({{ asset('images/page/index/banner-who-are-you.png') }})">
-      <div class="h-100 container py-4">
-        <div class="h-100 row">
+      <div class="container py-4">
+        <div class="row">
           <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center mb-4 mb-md-0">
             <h1 class="a-fs-3"><b>¿Quién eres?</b></h1>
             <h2 class="a-fs-2 text-muted">Who are YOU?</h2>
@@ -242,9 +242,9 @@ Buen Camino
   </section>
   <section id="roles" class="py-5 py-md-0">
     {{-- https://stackoverflow.com/questions/8468066/child-inside-parent-with-min-height-100-not-inheriting-height --}}
-    <div class="h-100 container">
-      <div class="h-100 row align-items-center">
-        <div class="h-100 col-12 col-md-6 text-center mb-9 mb-md-0 d-flex flex-column justify-content-center">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-12 col-md-6 text-center mb-9 mb-md-0 d-flex flex-column justify-content-center">
           <h3 class="mb-4 text-primary">
             Traveler<br />
             旅人
@@ -262,7 +262,7 @@ Buen Camino
             </p>
           </div>
         </div>
-        <div class="h-100 col-12 col-md-6 text-center d-flex flex-column justify-content-center">
+        <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center">
           <h3 class="mb-4 text-primary">
             Guider<br />
             嚮導
@@ -285,8 +285,8 @@ Buen Camino
   </section>
   <section id="banner-the-end" class="index-banner py-4">
     <div class="index-banner__description position-sticky bottom-0 a-background" style="background-image: url({{ asset('images/page/index/buen-camino.png') }}); background-size:">
-      <div class="h-100 container py-4">
-        <div class="h-100 row py-0 py-md-4">
+      <div class="container py-4">
+        <div class="row py-0 py-md-4">
           <div class="col-12 text-center d-flex flex-column justify-content-center mb-4">
             <h1 class="a-fs-3"><b>Buen Camino</b></h1>
             <h2 class="a-fs-2 text-muted">一路順風</h2>
