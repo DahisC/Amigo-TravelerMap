@@ -15,6 +15,7 @@ class FavoriteController extends Controller
 
     public function index(Request $request)
     {
+        dd($request->search,$request->tag);
         $userFavorites = User::favorites();
         if ($request->search) {
             $userFavorites = Attraction::keyWord($request->search,$userFavorites);

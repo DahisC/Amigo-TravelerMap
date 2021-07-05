@@ -126,19 +126,19 @@
 @section('js')
 <script>
   document.querySelector('.search-group').addEventListener('change', ({ target }) => {
-    axiosFun('tag', target.value);
+    axiosFun(target.value);
   });
 
   async function query() {
     const text = document.querySelector('#form1').value;
-    await axiosFun('search', text);
+    await axiosFun(text);
   }
 
   // 這邊 search log出來會有tag search 但params的key吃不到 求解
-  function axiosFun(search, input) {
+  function axiosFun(input) {
    return  axios.get('/favorites', {
         params: {
-          search : input,
+          search: input,
         }
       })
       .then((res) => console.log(res))

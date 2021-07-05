@@ -88,10 +88,12 @@ Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
 // Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('db/reset', function () {
-    dump('Resetting database...');
-    Artisan::call('migrate:reset', [
-        '--force' => true
-    ]);
-    Artisan::call('migrate --seed');
-    dd(Artisan::output());
+    // dump('Resetting database...');
+    Artisan::call('migrate:refresh');
+    Artisan::call('db:seed', [ '--class' => DatabaseSeeder::class, ]);
+    // Artisan::call('migrate:reset', [
+    //     '--force' => true
+    // ]);
+    // Artisan::call('migrate --seed');
+    // dd(Artisan::output());
 });
