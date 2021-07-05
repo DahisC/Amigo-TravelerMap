@@ -89,8 +89,14 @@ Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
 
 Route::get('db/reset', function () {
     // dump('Resetting database...');
+    // Extend maximum execution time to 3 minutes
+    set_time_limit(180);
     Artisan::call('migrate:refresh');
-    Artisan::call('db:seed', [ '--class' => DatabaseSeeder::class, ]);
+    Artisan::call('db:seed');
+    // Back to the default
+    set_time_limit(30);
+    // Artisan::call('migrate:refresh');
+    // Artisan::call('db:seed', ['--class' => DatabaseSeeder::class,]);
     // Artisan::call('migrate:reset', [
     //     '--force' => true
     // ]);

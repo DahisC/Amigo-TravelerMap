@@ -56,7 +56,7 @@ class MapController extends Controller
         // $attractions =  Attraction::with('tags', 'position', 'images', 'time')->take(10)->get();
         // $addressLatLng = null;
         $user = auth()->user() ?? null;
-        $map = Map::relative($id);
+        $map = Map::withRelations($id);
         // $mapAttractions = $map->attractions->pluck('id');
         $mapAttractions = $map->attractions;
         $userFavorites = User::favorites();
@@ -105,7 +105,7 @@ class MapController extends Controller
         if (!$isPinned) $map->attractions()->attach($attraction);
         else $map->attractions()->detach($attraction);
         // $mapAttractions = Map::with('attractions')->find($id)->attractions->pluck('id'); // 如果使用 $map-> 會取得更新前的舊陣列
-        $mapAttractions = Map::relative($id)->attractions;
+        $mapAttractions = Map::withRelations($id)->attractions;
         return compact('mapAttractions');
     }
     public function generateItineraries($mapId)
