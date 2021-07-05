@@ -60,9 +60,9 @@ Buen Camino
 </div> --}}
 <main>
   <section id="header">
-    <div class="container">
-      <div class="row">
-        <div class="col d-flex flex-column justify-content-center align-items-center">
+    <div class="h-100 container">
+      <div class="h-100 row">
+        <div class="h-100 col d-flex flex-column justify-content-center align-items-center">
           <h1 class="mb-5 a-fs-4">突然不知道要去哪裡？</h1>
           <a class="btn btn-secondary btn-lg" href="{{ route('maps.index') }}">探索周遭的地點</a>
         </div>
