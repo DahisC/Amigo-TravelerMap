@@ -151,6 +151,9 @@ class AttractionController extends Controller
                         ]);
                     };
                 };
+                if(session('attraction_url')){
+                    return redirect(session('attraction_url'));
+                }
                 return redirect()->route('backstage.attractions.index');
             }
 
@@ -182,6 +185,9 @@ class AttractionController extends Controller
                         ]);
                     };
                 };
+                if(session('attraction_url')){
+                    return redirect(session('attraction_url'));
+                }
                 return redirect()->route('backstage.attractions.index');
             }
             return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
