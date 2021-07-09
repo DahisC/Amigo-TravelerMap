@@ -151,6 +151,9 @@ class AttractionController extends Controller
                         ]);
                     };
                 };
+                if(session('attraction_url')){
+                    return redirect(session('attraction_url'));
+                }
                 return redirect()->route('backstage.attractions.index');
             }
 
@@ -182,6 +185,9 @@ class AttractionController extends Controller
                         ]);
                     };
                 };
+                if(session('attraction_url')){
+                    return redirect(session('attraction_url'));
+                }
                 return redirect()->route('backstage.attractions.index');
             }
             return view('backstage.index'); //很抱歉，您的權限不足，發送火箭享尊榮服務
@@ -231,17 +237,10 @@ class AttractionController extends Controller
         $isFavorited = Attraction::where('id', $id)->whereHas('users', function ($q) {
             $q->where('user_id', auth()->user()->id);
         })->get()->count();
-
         if (!$isFavorited) $attraction->users()->attach(auth()->user()->id);
         else $attraction->users()->detach(auth()->user()->id);
-        $userFavorites = User::with([
-            'attractions',
-            'attractions.images',
-            'attractions.position',
-            'attractions.time',
-            'attractions.tags'
-        ])->find(auth()->user()->id)->attractions;
-
+        $userFavorites = User::favorites();
+      
         return ['userFavorites' => $userFavorites];
     }
     public function getAttractions(Request $request)

@@ -68,4 +68,10 @@ class Attraction extends Model
             $positionQuery->where('town', $town);
         });
     }
+    static function keyWord($inputText, $userFavorites)
+    {
+        return  $userFavorites = $userFavorites->filter(function ($favorite) use ($inputText) {
+            return false !== stristr($favorite->name, $inputText);
+        });
+    }
 }

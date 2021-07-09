@@ -27,42 +27,32 @@
     </div>
   </div>
   <div class="row">
-    {{-- <div class="d-none d-md-block col-4">
+    <div class="d-none d-md-block col-4">
       <div class="input-group row-sm-4 position-sticky" style="top: 0px;">
-        <form action="/favorites" method="get">
-          <div class="form-outline">
-            <input type="search" id="form1" class="form-control" name="search" />
-            <label class="form-label" for="form1">Search</label>
-          </div>
+        <div class="form-outline">
+          <input type="search" id="form1" class="form-control" name="search" />
+          <label class="form-label" for="form1">Search</label>
+        </div>
 
-          <button type="Submit" class="btn btn-primary" id="inputButton">
-            <i class="fas fa-search"></i>
-          </button>
-        </form>
+        <button class="btn btn-primary" id="inputButton" onclick="query()">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
-      <div class="list-group position-sticky" style="top: 0px;">
+      <div class="list-group position-sticky search-group" style="top: 0px;">
         <label class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" />
-          Cras justo odio
+          <input class="form-check-input me-1" type="checkbox" value="1" />
+          景點
         </label>
         <label class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" />
-          Dapibus ac facilisis in
+          <input class="form-check-input me-1" type="checkbox" value="2" />
+          藝術
         </label>
         <label class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" />
-          Morbi leo risus
-        </label>
-        <label class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" />
-          Porta ac consectetur ac
-        </label>
-        <label class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" value="" />
-          Vestibulum at eros
+          <input class="form-check-input me-1" type="checkbox" value="3" />
+          節慶
         </label>
       </div>
-    </div> --}}
+    </div>
     <div class="col">
       <div class="row">
         @foreach ($userFavorites as $f)
@@ -134,26 +124,25 @@
 @endsection
 
 @section('js')
-{{-- <script>
-  document.querySelector('#inputButton').addEventListener('click',function(){
-        const text = document.querySelector('#form1').value;
-        axios.get('/favorites',{params: {
-          search:  text ,
-        }})
-.then((res)=>console.log(res))
-});
-</script> --}}
-
-
-{{-- <script>
-  const selectElementAll = document.querySelectorAll('.selectMap');
-  selectElementAll.forEach((selectElement) => {
-    selectElement.addEventListener('change', (e) => {
-      const mapId = e.target.value;
-      const attractionId = e.target.parentNode.parentNode.dataset.id;
-      axios.patch(`/maps/${mapId}/pin`, { attractionId });
-    });
+<script>
+  document.querySelector('.search-group').addEventListener('change', ({ target }) => {
+    axiosFun(target.value);
   });
-</script> --}}
+
+  async function query() {
+    const text = document.querySelector('#form1').value;
+    await axiosFun(text);
+  }
+
+  // 這邊 search log出來會有tag search 但params的key吃不到 求解
+  function axiosFun(input) {
+   return  axios.get('/favorites', {
+        params: {
+          search: input,
+        }
+      })
+      .then((res) => console.log(res))
+  }
+</script>
 @stack('stack-js')
 @endsection

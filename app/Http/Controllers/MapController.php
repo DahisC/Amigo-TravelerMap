@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Map;
-use App\Tag;
 use App\User;
 use App\helpers;
 use App\Attraction;
@@ -11,6 +10,7 @@ use App\Mail\Itineraries;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Markdown;
 use App\Http\Requests\MapRequest;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Mail;
 
 class MapController extends Controller
@@ -56,14 +56,7 @@ class MapController extends Controller
         // $attractions =  Attraction::with('tags', 'position', 'images', 'time')->take(10)->get();
         // $addressLatLng = null;
         $user = auth()->user() ?? null;
-        $map = Map::with([
-            'user',
-            'attractions',
-            'attractions.images',
-            'attractions.position',
-            'attractions.time',
-            'attractions.tags'
-        ])->find($id);
+        $map = Map::withRelations($id);
         // $mapAttractions = $map->attractions->pluck('id');
         $mapAttractions = $map->attractions;
         $userFavorites = User::favorites();
@@ -112,13 +105,7 @@ class MapController extends Controller
         if (!$isPinned) $map->attractions()->attach($attraction);
         else $map->attractions()->detach($attraction);
         // $mapAttractions = Map::with('attractions')->find($id)->attractions->pluck('id'); // 如果使用 $map-> 會取得更新前的舊陣列
-        $mapAttractions = Map::with([
-            'attractions',
-            'attractions.images',
-            'attractions.position',
-            'attractions.time',
-            'attractions.tags'
-        ])->find($id)->attractions;
+        $mapAttractions = Map::withRelations($id)->attractions;
         return compact('mapAttractions');
     }
     public function generateItineraries($mapId)
@@ -134,13 +121,30 @@ class MapController extends Controller
             $query->where('map_id', $mapId);
         })->get()->first();
 
+        set_time_limit(0);
         Mail::send(new Itineraries($map, $user));
-
+        // set_time_limit(0);
         $markdown = new Markdown(view(), config('mail.markdown'));
         return $markdown->render('emails.itineraries', compact('map', 'user'));
         // Mail::send(new amigo_map($all));
         // return redirect()->route('sign-in');
     }
+
+    // public function watch()
+    // {
+    //     // ->setOptions(['defaultFont' => 'sans-serif'])
+    //     $pdf = PDF::loadView('emails.PDF');
+    //     return $pdf->stream();
+    //     // return $pdf->download('amigo.pdf');
+    // }
+    // public function pdfOutput()
+    // {
+    //     $userFavorites = User::with([
+    //         'attractions',
+    //         'attractions.position',
+    //     ])->findOrFail(auth()->user()->id);
+    //     Mail::send(new Itineraries($userFavorites));
+    // }
     private function searchAttractions($request)
     {
         $addressLatLng = null;
@@ -164,19 +168,4 @@ class MapController extends Controller
         }
         return compact('attractions', 'addressLatLng');
     }
-    // public function watch()
-    // {
-    //     // ->setOptions(['defaultFont' => 'sans-serif'])
-    //     $pdf = PDF::loadView('emails.PDF');
-    //     return $pdf->stream();
-    //     // return $pdf->download('amigo.pdf');
-    // }
-    // public function pdfOutput()
-    // {
-    //     $userFavorites = User::with([
-    //         'attractions',
-    //         'attractions.position',
-    //     ])->findOrFail(auth()->user()->id);
-    //     Mail::send(new amigo_map($userFavorites));
-    // }
 }

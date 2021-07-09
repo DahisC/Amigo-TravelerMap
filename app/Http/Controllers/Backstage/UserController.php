@@ -3,14 +3,10 @@
 namespace App\Http\Controllers\Backstage;
 
 use App\User;
-use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Controllers\Controller;
-use App\Mail\amigo_map;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
-
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -21,6 +17,7 @@ class UserController extends Controller
 
     public function index()
     {
+        Session::put('user_url',request()->fullUrl);
         if (Gate::allows('view-admin')) {
             $users =  User::paginate(10);
             return view('backstage.users.index', compact('users'));
@@ -49,6 +46,9 @@ class UserController extends Controller
     {
         if (Gate::allows('view-admin', $user)) {
             return view('backstage.users.factory', compact('user'));
+        }
+        if(session('user_url')){
+            return redirect(session('user_url'));
         }
         return view('backstage.index');    //很抱歉，您的權限不足，發送火箭享尊榮服務
     }
