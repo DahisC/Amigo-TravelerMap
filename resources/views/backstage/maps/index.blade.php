@@ -40,8 +40,10 @@
         <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
+              @can('view-admin')
               <th>ID</th>
               <th>建立者</th>
+              @endcan
               <th>名稱</th>
               <th>動作</th>
               <th>最後編輯時間</th>
@@ -57,28 +59,30 @@
             </tr>
           </tfoot> --}}
           <tbody>
-            @foreach ($maps as $a)
+            @foreach ($maps as $m)
             <tr>
-              <td>{{ $a->id }}</td>
-              <td>{{ $a->user_id }}</td>
-              <td>{{ $a->name }}</td>
+              @can('view-admin')
+              <td>{{ $m->id }}</td>
+              <td>{{ $m->user_id }}</td>
+              @endcan
+              <td>{{ $m->name }}</td>
               <td>
-                <a href="{{ route('maps.show', ['map' => $a->id]) }}" target="_blank" class="btn btn-info btn-circle btn-sm">
+                <a href="{{ route('maps.show', ['map' => $m->id]) }}" target="_blank" class="btn btn-info btn-circle btn-sm">
                   <i class="fas fa-external-link-alt"></i>
                 </a>
-                <a href="{{ route('backstage.maps.edit', ['map' => $a->id]) }}" class="btn btn-warning btn-circle btn-sm">
+                <a href="{{ route('backstage.maps.edit', ['map' => $m->id]) }}" class="btn btn-warning btn-circle btn-sm">
                   <i class="fas fa-pen"></i>
                 </a>
                 <a class="btn btn-danger btn-circle btn-sm" onclick="event.preventDefault();
-                document.getElementById('delete_form_{{ $a->id }}').submit();">
+                document.getElementById('delete_form_{{ $m->id }}').submit();">
                   <i class="fas fa-trash"></i>
                 </a>
-                <form id="delete_form_{{ $a->id }}" action="{{ route('backstage.maps.destroy', ['map' => $a->id]) }}" method="POST" class="d-none">
+                <form id="delete_form_{{ $m->id }}" action="{{ route('backstage.maps.destroy', ['map' => $m->id]) }}" method="POST" class="d-none">
                   @csrf
                   @method('DELETE')
                 </form>
               </td>
-              <td>{{ $a->updated_at }}</td>
+              <td>{{ $m->updated_at }}</td>
             </tr>
             @endforeach
           </tbody>

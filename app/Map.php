@@ -19,4 +19,15 @@ class Map extends Model
     {
         return $this->belongsToMany('App\Attraction', 'map_attraction', 'map_id', 'attraction_id')->withTimestamps();
     }
+    static function withRelations($id)
+    {
+        return Map::with([
+            'user',
+            'attractions',
+            'attractions.images',
+            'attractions.position',
+            'attractions.time',
+            'attractions.tags'
+        ])->find($id);
+    }
 }

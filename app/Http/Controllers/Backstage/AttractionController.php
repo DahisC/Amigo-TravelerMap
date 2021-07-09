@@ -9,12 +9,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
 
 
 class AttractionController extends Controller
 {
     public function index()
     {
+        Session::put('attraction_url',request()->fullUrl());
         $user = Auth::user();
         if (Gate::allows('viewAny', Attraction::class)) {
             if ($user->role == "Admin") {
@@ -40,7 +42,7 @@ class AttractionController extends Controller
     }
 
     public function edit($id)
-    {
+    {   
         $tags = Tag::get();
         $attraction = Attraction::with([
             'position',
