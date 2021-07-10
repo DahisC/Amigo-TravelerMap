@@ -32,7 +32,7 @@ Route::view('/', 'index')->name('homepage'); // 首頁
 Route::resource('/maps', 'MapController'); // 地圖
 
 Route::patch('/maps/{map}/pin', 'MapController@pin');
-//eamil 
+//eamil
 Route::get('/maps/{map}/itineraries', 'MapController@generateItineraries')->name('maps.itineraries');
 
 
@@ -88,18 +88,11 @@ Route::get('login/github/callback', 'Auth\LoginController@githubCallback');
 // Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('db/reset', function () {
-    // dump('Resetting database...');
-    // Extend maximum execution time to 3 minutes
-    set_time_limit(0);
-    Artisan::call('migrate:refresh');
-    Artisan::call('db:seed');
-    // Back to the default
-    set_time_limit(0);
-    // Artisan::call('migrate:refresh');
-    // Artisan::call('db:seed', ['--class' => DatabaseSeeder::class,]);
-    // Artisan::call('migrate:reset', [
-    //     '--force' => true
-    // ]);
-    // Artisan::call('migrate --seed');
-    // dd(Artisan::output());
+    if (!defined('STDIN')) define('STDIN', fopen("php://stdin", "r"));
+    dump('Resetting database...');
+    Artisan::call('migrate:reset', [
+        '--force' => true
+    ]);
+    Artisan::call('migrate --seed');
+    dd(Artisan::output());
 });
