@@ -36,7 +36,7 @@
 
 ---
 
-<img src="{{ asset('images/email/as_Traveler.png') }}" alt="旅人裝備" />
+<img src="{{ asset('images/email/as_traveler.png') }}" alt="旅人裝備" />
 
 ---
 
