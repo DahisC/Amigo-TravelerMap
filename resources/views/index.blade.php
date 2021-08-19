@@ -216,7 +216,7 @@ Buen Camino
   <section id="banner-about-you" class="index-banner py-4">
     <div class="index-banner__description position-sticky bottom-0 a-background" style="background-image: url({{ asset('images/page/index/banner-who-are-you.png') }})">
       <div class="container py-4">
-        <div class="row">
+        <div class="row flex-row-reverse">
           <div class="col-12 col-md-6 text-center d-flex flex-column justify-content-center mb-4 mb-md-0">
             <h1 class="a-fs-3"><b>¿Quién eres?</b></h1>
             <h2 class="a-fs-2 text-muted">Who are YOU?</h2>
