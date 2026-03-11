@@ -15,3 +15,7 @@
 
 [網址](https://110-03-nchu-amigo.dev-hub.io)
 [手動部署](https://forge.laravel.com/servers/475876/sites/1372589/deploy/http?token=t8nbDaoVkF7OFKk08iM9iJcUHirlMLWN4Xpw9pgM)
+
+## 相關文件
+
+[Notion](https://www.notion.so/cd327ed4e11749aaaae3e5ac36238d42)
